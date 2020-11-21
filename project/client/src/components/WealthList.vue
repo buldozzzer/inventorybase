@@ -5,23 +5,33 @@
       <b-form-select v-model="selectMode" :options="modes"></b-form-select>
     </b-form-group>
     <div class="mb-2">
-      <b-form-checkbox v-model="stickyHeader" inline>Зафиксировать названия колонок</b-form-checkbox>
-      <!--      <b-form-checkbox v-model="noCollapse" inline>No border collapse</b-form-checkbox>-->
     </div>
-    <b-table striped hover class="myTable"
-             sticky-header="850px"
+<!--    sticky-header="850px"-->
+    <b-table
+             sticky-header="500px"
              :items="items"
              :fields="itemFields"
-             :no-border-collapse="noCollapse"
              @row-selected="onRowSelected">
       <template #head()="scope">
         <div class="text-nowrap">
           {{ scope.label }}
         </div>
       </template>
+
+      <template #head(index)="scope">
+        <div class="text-nowrap">Номер</div>
+      </template>
+      <template #cell(edit_remove)="row">
+        <div class="text-nowrap">
+          <b-button variant="danger" @click="removeItem(row.item)">X</b-button>
+          <b-button variant="warning" @click="editItem(row.item)">edit</b-button>
+        </div>
+      </template>
+
       <template #cell(index)="data">
         {{ data.index + 1 }}
       </template>
+
       <template #cell(Компоненты)="row">
         <b-button size="sm" @click="row.toggleDetails" class="mr-2">
           {{ row.detailsShowing ? 'Скрыть' : 'Показать' }} Компоненты
@@ -58,23 +68,23 @@ export default {
       componentFields: [
         'index',
         {
-          key: "name",
+          key: 'name',
           label: "Наименование",
         },
         {
           key: "serial_n",
-          label: "серйный номер",
+          label: "Серйный номер",
         },
         {
           key: "category",
-          label: "категория",
+          label: "Категория",
         },
         {
           key: "type",
-          label: "тип",
+          label: "Тип",
         }, {
           key: "view",
-          label: "вид",
+          label: "Вид",
         }, {
           key: "location",
           label: "Местонахождение",
@@ -83,9 +93,15 @@ export default {
       itemFields: [
         'index',
         {
+          key: "edit_remove",
+          stickyColumn: true,
+          isRowHeader: true,
+          variant: 'primary'
+        },{
           key: "name",
           label: "Наименование",
           sortable: true,
+
         },
         'Компоненты',
         {
