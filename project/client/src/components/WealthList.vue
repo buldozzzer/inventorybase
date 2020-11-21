@@ -1,11 +1,10 @@
 <template>
   <!--    eslint-disable-->
   <div>
-    <b-form-group label="">
+    <b-form-group>
       <b-button variant="danger" class="mt-3" @click="removeItems(selected)">Удалить выбранные</b-button>
+      <b-button variant="danger" class="mt-3" @click="selectAllRows">Выбрать все записи</b-button>
     </b-form-group>
-    <div class="mb-2">
-    </div>
     <!--    sticky-header="850px"-->
     <b-table striped hover
              ref="selectableTable"
