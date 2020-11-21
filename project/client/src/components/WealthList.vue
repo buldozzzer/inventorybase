@@ -2,12 +2,14 @@
   <!--    eslint-disable-->
   <div>
     <b-form-group label="">
-      <b-form-select v-model="selectMode" :options="modes"></b-form-select>
+      <b-button variant="danger" class="mt-3" @click="removeItems(selected)">Удалить выбранные</b-button>
     </b-form-group>
     <div class="mb-2">
     </div>
-<!--    sticky-header="850px"-->
-    <b-table
+    <!--    sticky-header="850px"-->
+    <b-table striped hover
+             ref="selectableTable"
+             selectable
              sticky-header="500px"
              :items="items"
              :fields="itemFields"
@@ -18,13 +20,21 @@
         </div>
       </template>
 
+      <template #head(selected)="scope">
+        <div class="text-nowrap"></div>
+      </template>
       <template #head(index)="scope">
         <div class="text-nowrap">Номер</div>
       </template>
+
+      <template #head(edit_remove)="scope">
+        <div class="text-nowrap">Изменить/Удалить</div>
+      </template>
       <template #cell(edit_remove)="row">
         <div class="text-nowrap">
-          <b-button variant="danger" @click="removeItem(row.item)">X</b-button>
-          <b-button variant="warning" @click="editItem(row.item)">edit</b-button>
+          <b-button variant="warning" @click="editItem(row.item)">Редактировать</b-button>
+          <br>
+          <b-button variant="danger" class="mt-3" @click="removeItem(row.item)">Удалить</b-button>
         </div>
       </template>
 
@@ -48,6 +58,18 @@
           </template>
           <b-button size="sm" @click="row.toggleDetails">Скрыть компоненты</b-button>
         </b-table>
+      </template>
+
+      <template #cell(selected)="{ rowSelected }">
+        <template v-if="rowSelected">
+          <span aria-hidden="true">&check;</span>
+          <span class="sr-only">Selected</span>
+        </template>
+        <template v-else>
+          <span aria-hidden="true">&nbsp;</span>
+          <span class="sr-only">Not selected</span>
+        </template>
+
       </template>
     </b-table>
   </div>
@@ -91,13 +113,17 @@ export default {
         },
       ],
       itemFields: [
-        'index',
         {
+          key: "selected",
+          class: 'text-center'
+        }, {
           key: "edit_remove",
           stickyColumn: true,
           isRowHeader: true,
-          variant: 'primary'
-        },{
+          class: 'text-center'
+        },
+        'index',
+        {
           key: "name",
           label: "Наименование",
           sortable: true,
@@ -216,6 +242,22 @@ export default {
       });
       if (response.status !== 204) {
         alert(JSON.stringify(await response.json(), null, 2));
+      }
+      await this.fetchItems()
+    },
+    async removeItems(selectedItems) {
+      for (let element of selectedItems) {
+        const {id} = element;
+        const response = await fetch(`http://localhost:8000/api/v1/wealth/${id}/`, {
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+          },
+        })
+        if (response.status !== 204) {
+          alert(JSON.stringify(await response.json(), null, 2));
+        }
       }
       await this.fetchItems()
     },
