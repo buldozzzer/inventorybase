@@ -1,6 +1,6 @@
 <template>
   <div>
-    <b-table :items="employees" :fields="fields" responsive="sm"></b-table>
+    <b-table  :items="employees" :fields="fields" responsive="sm"></b-table>
     <table>
       <thead>
       <th>Фамилия</th>

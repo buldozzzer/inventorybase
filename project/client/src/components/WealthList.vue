@@ -1,160 +1,196 @@
 <template>
+  <!--    eslint-disable-->
   <div>
-    <b-table :items="wealth" :fields="fields" responsive="sm"></b-table>
-    <table>
-      <tbody>
-      <!--        eslint-disable-->
-      <tr v-for="w in wealth" :key="w.id">
-        <td>{{ w.sirname }}</td>
-        <td>{{ w.name }}</td>
-        <td>{{ w.secname }}</td>
-        <td>{{ w.position }}</td>
-        <td>{{ w.rank }}</td>
-        <td>{{ w.gender }}</td>
-        <td>
-          <b-button variant="danger" @click="removeWealth(w)">X</b-button>
-        </td>
-        <td>
-          <b-button variant="warning" @click="editWealth(w)">edit</b-button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
+    <b-form-group label="">
+      <b-form-select v-model="selectMode" :options="modes"></b-form-select>
+    </b-form-group>
+    <div class="mb-2">
+      <b-form-checkbox v-model="stickyHeader" inline>Зафиксировать названия колонок</b-form-checkbox>
+      <!--      <b-form-checkbox v-model="noCollapse" inline>No border collapse</b-form-checkbox>-->
+    </div>
+    <b-table striped hover class="myTable"
+             sticky-header="850px"
+             :items="items"
+             :fields="itemFields"
+             :no-border-collapse="noCollapse"
+             @row-selected="onRowSelected">
+      <template #head()="scope">
+        <div class="text-nowrap">
+          {{ scope.label }}
+        </div>
+      </template>
+      <template #cell(index)="data">
+        {{ data.index + 1 }}
+      </template>
+      <template #cell(Компоненты)="row">
+        <b-button size="sm" @click="row.toggleDetails" class="mr-2">
+          {{ row.detailsShowing ? 'Скрыть' : 'Показать' }} Компоненты
+        </b-button>
+        <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails">
+          Отобржать компоненты
+        </b-form-checkbox>
+      </template>
 
-    <input placeholder="Фамилия" v-model="createdWealth.sirname">
-    <input placeholder="Имя" v-model="createdWealth.name">
-    <input placeholder="Отчество" v-model="createdWealth.secname">
-    <input placeholder="Должность" v-model="createdWealth.position">
-    <input placeholder="Звание" v-model="createdWealth.rank">
-    <input placeholder="Пол" v-model="createdWealth.gender">
-    <b-button variant="outline-primary" @click="createdWealth">Добавить</b-button>
-
-    <table>
-      <thead>
-      <tr>
-        <th>Фамилия</th>
-        <th>Имя</th>
-        <th>Отчество</th>
-        <th>Должность</th>
-        <th>Звание</th>
-        <th>Пол</th>
-      </tr>
-      </thead>
-      <tbody>
-      <tr v-for="w in wealth" :key="w.id">
-        <td>{{ w.sirname }}</td>
-        <td>{{ w.name }}</td>
-        <td>{{ w.secname }}</td>
-        <td>{{ w.position }}</td>
-        <td>{{ w.rank }}</td>
-        <td>{{ w.gender }}</td>
-        <td>
-          <button type="button" class="btn btn-warning btn-sm">Update</button>
-          <button type="button" class="btn btn-danger btn-sm">Delete</button>
-        </td>
-      </tr>
-      </tbody>
-    </table>
-
+      <template #row-details="row">
+        <b-table resposive :items="row.item.components" :fields="componentFields">
+          <template #cell(index)="data">
+            {{ data.index + 1 }}
+          </template>
+          <b-button size="sm" @click="row.toggleDetails">Скрыть компоненты</b-button>
+        </b-table>
+      </template>
+    </b-table>
   </div>
 </template>
 
 
 <script>
 export default {
+  /* eslint-disable */
   name: "WealthList",
+
   data() {
     return {
       /* eslint-disable */
-      fields: [
-        {
-          key: "user",
-          sortable: true
-        },
-        {
-          key: "response",
-          sortable: true
-        },
+      modes: ['multi', 'range'],
+      stickyHeader: false,
+      noCollapse: false,
+      componentFields: [
+        'index',
         {
           key: "name",
+          label: "Наименование",
+        },
+        {
+          key: "serial_n",
+          label: "серйный номер",
+        },
+        {
+          key: "category",
+          label: "категория",
+        },
+        {
+          key: "type",
+          label: "тип",
+        }, {
+          key: "view",
+          label: "вид",
+        }, {
+          key: "location",
+          label: "Местонахождение",
+        },
+      ],
+      itemFields: [
+        'index',
+        {
+          key: "name",
+          label: "Наименование",
           sortable: true,
+        },
+        'Компоненты',
+        {
+          key: "response",
+          label: "Ответсвенный сотрудник",
+          sortable: true
         },
         {
           key: "inventory_n",
+          label: "Инвентрный номер",
           sortable: true,
         },
         {
           key: "otss_category",
+          label: "Категория ОТСС",
           sortable: true,
         },
         {
           key: "condition",
+          label: "состояние",
           sortable: true,
-        },{
+        }, {
           key: "unit_from",
+          label: "подразделение, откуда поступила мат. ценность",
           sortable: true,
-        },{
+        }, {
           key: "in_operation",
+          label: "Используется?",
           sortable: true,
-        },{
+        }, {
           key: "fault_document_requisites",
+          label: "документы о неисправности",
           sortable: true,
-        },{
+        }, {
           key: "date_of_receipt",
+          label: "Дата передачи во времнное пользование",
           sortable: true,
-        },{
+        }, {
           key: "number_of_receipt",
+          label: "номер требования о поступлении на учет",
           sortable: true,
-        },{
+        }, {
           key: "requisites",
+          label: "реквизиты книги учета мат. ценностей",
           sortable: true,
-        },{
+        }, {
           key: "transfer_date",
+          label: "дата передачи во временное пользование",
           sortable: true,
-        },{
+        }, {
           key: "otss_requisites",
+          label: "реквизиты документа о категории ОТСС",
           sortable: true,
-        },{
+        }, {
           key: "spsi_requisites",
+          label: "реквизиты документа о прохождении СПСИ",
           sortable: true,
-        },{
+        }, {
           key: "trnasfer_requisites",
+          label: "реквизиты о передаче во временное пользование",
           sortable: true,
-        },{
+        }, {
           key: "last_check",
+          label: "дата последней проверки",
           sortable: true,
-        },{
+        }, {
           key: "comment",
+          label: "примечания",
           sortable: true,
         },
+        {
+          key: "user",
+          label: "сотрудник, которому передали мат. ценность в пользование",
+          sortable: true
+        },
       ],
-      wealth: [],
-      createdWealth: {},
+      items: [],
+      createdItem: {},
+      selectMode: 'range',
+      selected: []
     };
   },
   methods: {
-    async fetchWealth() {
+    async fetchItems() {
       const response = await fetch('http://localhost:8000/api/v1/wealth/')
-      this.wealth = await response.json()
+      this.items = await response.json()
     },
-    async createWealth() {
+    async createItems() {
       const response = await fetch('http://localhost:8000/api/v1/wealth/', {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
           'Content-type': 'application/json'
         },
-        body: JSON.stringify(this.createdWealth)
+        body: JSON.stringify(this.createdItem)
       });
 
       if (response.status !== 201) {
         alert(JSON.stringify(await response.json(), null, 2));
       }
-      await this.fetchWealth()
+      await this.fetchItems()
     },
     /* eslint-disable */
-    async removeWealth(wealth) {
-      const {id} = wealth;
+    async removeItem(item) {
+      const {id} = item;
       const response = await fetch(`http://localhost:8000/api/v1/wealth/${id}/`, {
         method: 'DELETE',
         headers: {
@@ -165,10 +201,10 @@ export default {
       if (response.status !== 204) {
         alert(JSON.stringify(await response.json(), null, 2));
       }
-      await this.fetchWealth()
+      await this.fetchItems()
     },
-    async editWealth(wealth) {
-      const {id} = wealth;
+    async editItem(item) {
+      const {id} = item;
       const response = await fetch(`http://localhost:8000/api/v1/wealth/${id}/`, {
         method: 'PUT',
         body: JSON.stringify(data),
@@ -182,15 +218,26 @@ export default {
       if (response.status !== 201) {
         alert(JSON.stringify(await response.json(), null, 2));
       }
-      await this.fetchWealth()
+      await this.fetchItems()
+    },
+    onRowSelected(items) {
+      this.selected = items
+    },
+    selectAllRows() {
+      this.$refs.selectableTable.selectAllRows()
+    },
+    clearSelected() {
+      this.$refs.selectableTable.clearSelected()
     },
   },
   async created() {
-    await this.fetchWealth()
+    await this.fetchItems()
   },
 };
 </script>
 
-<style scoped>
-
+<style>
+.myTable {
+  margin-left: ;
+}
 </style>

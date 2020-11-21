@@ -50,9 +50,5 @@ export default {
 </script>
 
 <style>
-.nbar{
-  position: absolute;
 
-  background: #4a76a8;
-}
 </style>
