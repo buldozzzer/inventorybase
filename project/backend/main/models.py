@@ -52,7 +52,6 @@ class Employee(models.Model):
 
 
 class Wealth(models.Model):
-
     OTSS_CATEGORIES_CHOICE = [
         ('1', '1'),
         ('2', '2'),
@@ -109,7 +108,6 @@ class Wealth(models.Model):
 
     def __str__(self):
         return self.name
-
 
     class Meta:
         verbose_name = 'материальная ценность'

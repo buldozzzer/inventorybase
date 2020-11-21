@@ -14,6 +14,7 @@ class EmployeeViewSet(ModelViewSet):
     serializer_class = EmployeeSerializer
 
 
+
 # class ComponentViewSet(ModelViewSet):
 #     queryset = Component.objects.all()
 #     serializer_class = ComponentSerializer

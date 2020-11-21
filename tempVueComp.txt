@@ -1,0 +1,95 @@
+<template>
+  <div>
+    <employee-row v-for="employee in employees"
+                  :key="employee.id"
+                  :employee="employee"
+                  :delete="deleteMessage"
+                  :employees="employees"/>
+    <b-table striped hover :fields="fields" :employees="employees"></b-table>
+  </div>
+</template>
+
+<script>
+/* eslint-disable */
+import axios from "axios";
+import EmployeeRow from "./EmployeeRow";
+import {HTTP} from "../api/common";
+
+export default {
+  name: 'EmployeesList',
+  components: {
+    EmployeeRow
+  },
+  data() {
+    return {
+      /* eslint-disable */
+      fields: [
+        {
+          key: 'sirname',
+          sortable: true
+        },
+        {
+          key: 'name',
+          sortable: false
+        },
+        {
+          key: 'secname',
+          sortable: true,
+        },
+        {
+          key: 'position',
+          sortable: true,
+        },
+        {
+          key: 'rank',
+          sortable: true,
+        },
+        {
+          key: 'gender',
+          sortable: true,
+        },
+      ],
+      employees: []
+    };
+  },
+  methods: {
+    getEmployees() {
+      const path = 'http://localhost:8000/api/v1/employee/';
+      axios.get(path)
+        .then((res) => {
+          this.employees = res.data;
+        })
+        .catch((error) => {
+          /* eslint-disable */
+          console.error(error);
+        });
+    },
+    deleteEmployee(employee, id) {
+      const path = 'http://localhost:8000/api/v1/employee/';
+      id = employee.id
+      axios.delete(path + employee.id + '/')
+        .then(response => {
+          this.employees.splice(id, 1)
+          console.log(this.employees);
+        })
+        .catch((error) => {
+          /* eslint-disable */
+          console.error(error);
+        });
+    },
+    delet(employee) {
+      return HTTP.delete(`/employee/${employee.id}/`)
+    },
+    deleteMessage(employee) {
+                this.$resource('/employee{/id}').remove({id: employee.id}).then(result => {
+                    if (result.ok) {
+                        this.employees.splice(this.employees.indexOf(message), 1)
+                    }
+                })
+            }
+  },
+  created() {
+    this.getEmployees();
+  },
+};
+</script>

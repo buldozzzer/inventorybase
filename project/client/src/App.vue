@@ -2,7 +2,7 @@
   <div id="app">
     <div>
       <b-navbar toggleable="lg" type="dark" variant="info">
-        <b-navbar-brand href="#">База материальных ценностей</b-navbar-brand>
+        <b-navbar-brand href="#"><b>База материальных ценностей</b></b-navbar-brand>
 
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -38,6 +38,7 @@
         </b-collapse>
       </b-navbar>
     </div>
+
     <router-view/>
   </div>
 </template>
