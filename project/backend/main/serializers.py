@@ -1,7 +1,7 @@
 from rest_framework import serializers
 from rest_framework_mongoengine.fields import ObjectIdField
 
-from .models import Employee, Location, Component, Wealth
+from .models import Employee, Location, Component, Item, ItemForm, EmployeeForm, ComponentForm
 
 
 class LocationSerializer(serializers.Serializer):
@@ -56,29 +56,10 @@ class EmployeeSerializer(serializers.ModelSerializer):
     #     return Employee.objects.create(**validated_data)
 
 
-class WealthSerializer(serializers.ModelSerializer):
+class ItemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Wealth
+        model = Item
         fields = "__all__"
         depth = 2
     components = ComponentSerializer(many=True, allow_null=True)
-    # id = serializers.ReadOnlyField()
-    # name = serializers.CharField(max_length=50)
-    # user = EmployeeSerializer()
-    # responsible = EmployeeSerializer()
-    # components = ComponentSerializer(many=True)
-    # inventory_n = serializers.CharField(max_length=50)
-    # otss_category = serializers.CharField(max_length=50)
-    # condition = serializers.CharField(max_length=50)
-    # unit_from = serializers.CharField(max_length=50)
-    # in_operation = serializers.CharField(max_length=50)
-    # fault_document_requisites = serializers.CharField(max_length=50)
-    # date_of_receipt = serializers.DateField()
-    # number_of_receipt = serializers.CharField(max_length=50)
-    # requisites = serializers.CharField(max_length=50)
-    # transfer_date = serializers.DateField()
-    # otss_requisites = serializers.CharField(max_length=50)
-    # spsi_requisites = serializers.CharField(max_length=50)
-    # trnasfer_requisites = serializers.CharField(max_length=50)
-    # comment = serializers.CharField()
-    # last_check = serializers.DateField()
+

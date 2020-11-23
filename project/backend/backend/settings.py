@@ -56,7 +56,7 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'NAME': 'WealthDB',
+        'NAME': 'ItemsDB',
         'HOST': 'localhost',
         'PORT': 27017
     }

@@ -1,7 +1,8 @@
 import datetime
-from djongo import models
 
-DEFAULT_RESP_P_ID = 1
+from django import forms
+from djongo import models
+from django.utils.translation import gettext_lazy as _
 
 
 class Location(models.Model):
@@ -12,6 +13,7 @@ class Location(models.Model):
 
     class Meta:
         abstract = True
+        verbose_name = 'местонахождение'
 
 
 class Component(models.Model):
@@ -27,8 +29,8 @@ class Component(models.Model):
 
     class Meta:
         abstract = True
-        # verbose_name = 'компонент'
-        # verbose_name_plural = 'компоненты'
+        verbose_name = 'компонент'
+        verbose_name_plural = 'компоненты'
 
 
 class Employee(models.Model):
@@ -51,43 +53,44 @@ class Employee(models.Model):
         verbose_name_plural = 'сотрудники'
 
 
-class Wealth(models.Model):
-    OTSS_CATEGORIES_CHOICE = [
-        ('1', '1'),
-        ('2', '2'),
-        ('3', '3'),
-        ('не секретно', 'не секретно')
-    ]
-    CONDITIONS_CHOICE = [
-        ('исправно', 'исправно'),
-        ('неисправно', 'неисправно')
-    ]
-    IN_OPERATION_CHOICE = [
-        ('да', 'да'),
-        ('нет', 'нет')
-    ]
+class Item(models.Model):
+    class otssCategoriesChoice(models.IntegerChoices):
+        first = 1, _('1')
+        second = 2, _('2')
+        third = 3, _('3'),
+        notSecret = 4, _('не секретно')
+
+    class conditionsChoice(models.IntegerChoices):
+        ok = 1, _('исправно'),
+        not_ok = 2, _('неисправно')
+
+    class inOperationChoice(models.IntegerChoices):
+        used = 1, _('да'),
+        not_used = 2, _('нет'),
+
     id = models.AutoField('_id', primary_key=True)
     user = models.ForeignKey(
         Employee,
         verbose_name='сотрудник, которому передали мат. ценность в пользование',
         related_name='employee',
         on_delete=models.DO_NOTHING)
+
     responsible = models.ForeignKey(
         Employee,
         verbose_name='сотрудник, ответственный за мат. ценность',
-        related_name='wealth',
-        on_delete=models.DO_NOTHING,
-        default=DEFAULT_RESP_P_ID)
+        related_name='item',
+        on_delete=models.DO_NOTHING)
+
     components = models.ArrayField(model_container=Component, null=True)
-    name = models.CharField('Наименование', max_length=100, default='')
+    name = models.CharField('наименование', max_length=100, default='')
     inventory_n = models.CharField('инвентарный номер', max_length=100, default='', unique=True)
     otss_category = models.CharField('категория ОТСС', max_length=100,
-                                     choices=OTSS_CATEGORIES_CHOICE, default='1')
+                                     choices=otssCategoriesChoice.choices, default='1')
     condition = models.CharField('состояние', max_length=20,
-                                 default='исправно', choices=CONDITIONS_CHOICE)
+                                 default='исправно', choices=conditionsChoice.choices)
     unit_from = models.CharField('подразделение, откуда поступила мат. ценность',
                                  max_length=50, default='')
-    in_operation = models.CharField('ипользуется', choices=IN_OPERATION_CHOICE, max_length=5, default='да')
+    in_operation = models.CharField('ипользуется', choices=inOperationChoice.choices, max_length=5, default='да')
     fault_document_requisites = models.CharField('документы о неисправности', max_length=100, null=True)
     date_of_receipt = models.DateField('дата поступления на учет', default=datetime.date.today)
     number_of_receipt = models.CharField('номер требования о поступлении на учет',
@@ -112,3 +115,39 @@ class Wealth(models.Model):
     class Meta:
         verbose_name = 'материальная ценность'
         verbose_name_plural = 'материальные ценности'
+
+
+class ItemForm(forms.Form):
+    class Meta:
+        model = Item
+        fields = '__all__'
+
+    def __init__(self, *args, **kwargs):
+        super(ItemForm, self).__init__(*args, **kwargs)
+        self.fields['user'] = forms.ChoiceField(
+            choices=[(o.id, str(o)) for o in Employee.objects.all()]
+        )
+
+
+class LocationForm(forms.Form):
+    class Meta:
+        model = Location
+        fields = '__all__'
+
+
+class ComponentForm(forms.Form):
+    def __init__(self, *args, **kwargs):
+        super(ComponentForm, self).__init__(*args, **kwargs)
+        self.fields['location'] = forms.ChoiceField(
+            choices=[(o.id, str(o)) for o in Location.objects.all()]
+        )
+
+    class Meta:
+        model = Component
+        fields = '__all__'
+
+
+class EmployeeForm(forms.Form):
+    class Meta:
+        model = Employee
+        fields = '__all__'

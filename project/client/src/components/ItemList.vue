@@ -9,7 +9,8 @@
     <b-table striped hover
              ref="selectableTable"
              selectable
-             sticky-header="500px"
+             :sort-by.sync="sortBy"
+             v-bind:sticky-header="stickyHeaderHeight"
              :items="items"
              :fields="itemFields"
              @row-selected="onRowSelected">
@@ -84,8 +85,9 @@ export default {
     return {
       /* eslint-disable */
       modes: ['multi', 'range'],
-      stickyHeader: false,
+      stickyHeaderHeight: "500px",
       noCollapse: false,
+      sortBy: 'name',
       componentFields: [
         'index',
         {
@@ -232,7 +234,7 @@ export default {
     /* eslint-disable */
     async removeItem(item) {
       const {id} = item;
-      const response = await fetch(`http://localhost:8000/api/v1/wealth/${id}/`, {
+      const response = await fetch(`http://localhost:8000/api/v1/item/${id}/`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -247,7 +249,7 @@ export default {
     async removeItems(selectedItems) {
       for (let element of selectedItems) {
         const {id} = element;
-        const response = await fetch(`http://localhost:8000/api/v1/wealth/${id}/`, {
+        const response = await fetch(`http://localhost:8000/api/v1/item/${id}/`, {
           method: 'DELETE',
           headers: {
             'Accept': 'application/json',
@@ -262,7 +264,7 @@ export default {
     },
     async editItem(item) {
       const {id} = item;
-      const response = await fetch(`http://localhost:8000/api/v1/wealth/${id}/`, {
+      const response = await fetch(`http://localhost:8000/api/v1/item/${id}/`, {
         method: 'PUT',
         body: JSON.stringify(data),
         headers: {

@@ -1,6 +1,6 @@
 from django.contrib import admin
-from .models import Employee, Wealth, Component
+from .models import Employee, Item
 
-admin.site.register(Wealth)
+admin.site.register(Item)
 admin.site.register(Employee)
-#admin.site.register(Component)
+

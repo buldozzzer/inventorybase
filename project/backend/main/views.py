@@ -1,12 +1,12 @@
 from rest_framework.viewsets import ModelViewSet
 
-from .models import Wealth, Employee
-from .serializers import EmployeeSerializer, WealthSerializer
+from .models import Item, Employee
+from .serializers import EmployeeSerializer, ItemSerializer
 
 
 class WealthViewSet(ModelViewSet):
-    queryset = Wealth.objects.all()
-    serializer_class = WealthSerializer
+    queryset = Item.objects.all()
+    serializer_class = ItemSerializer
 
 
 class EmployeeViewSet(ModelViewSet):
