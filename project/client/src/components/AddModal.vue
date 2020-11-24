@@ -11,7 +11,6 @@
     <b-form @submit="onSubmit" @reset="onReset" class="w-100">
       <b-container>
         <b-row>
-
           <b-col cols="8">
             <b-form-group id="form-name-group"
                           label="Наименование:"
@@ -142,7 +141,7 @@
               <b-input-group>
                 <b-form-datepicker
                   v-model="itemForm.date_of_receipt"
-                  :state="isIntroduced(itemForm.date_of_receipt, '')"
+                  :state="isIntroduced(itemForm.date_of_receipt, null)"
                   aria-controls="date_of_receipt-input"
                   required
                   placeholder="Выберите дату"

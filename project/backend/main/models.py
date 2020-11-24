@@ -22,6 +22,7 @@ class Component(models.Model):
     category = models.CharField('категория', max_length=50, default='')
     type = models.CharField('тип техники', max_length=50, default='')
     view = models.CharField('вид техники', max_length=50, default='')
+    year = models.CharField('год выпуска', max_length=5, default='')
     location = models.EmbeddedField(model_container=Location)
 
     def __str__(self):
