@@ -318,16 +318,16 @@ export default {
         condition: '',//=
         unit_from: '',//=
         in_operation: '',//=
-        date_of_receipt: '',//=
+        date_of_receipt: null,//=
         number_of_receipt: '',//=
         requisites: '',//=
-        transfer_date: '',//=
+        transfer_date: null,//=
         otss_requisites: '', //=
         fault_document_requisites: '',//=
         spsi_requisites: '',
         transfer_requisites: '',
         comment: '',
-        last_check: '' //=
+        last_check: null //=
       },
       ComponentForm: {
         name: '',
@@ -374,15 +374,15 @@ export default {
       this.itemForm.unit_from = '';
       this.itemForm.in_operation = '';
       this.itemForm.fault_document_requisites = '';
-      this.itemForm.date_of_receipt = '';
+      this.itemForm.date_of_receipt = null;
       this.itemForm.number_of_receipt = '';
       this.itemForm.requisites = '';
-      this.itemForm.transfer_date = '';
+      this.itemForm.transfer_date = null;
       this.itemForm.otss_requisites = '';
       this.itemForm.spsi_requisites = '';
       this.itemForm.transfer_requisites = '';
       this.itemForm.comment = '';
-      this.itemForm.last_check = '';
+      this.itemForm.last_check = null;
     },
     onReset(evt) {
       evt.preventDefault();
@@ -392,7 +392,6 @@ export default {
     onSubmit(evt) {
       evt.preventDefault();
       this.$refs.addItemModal.hide();
-      debugger;
       const payload = {
         name: this.itemForm.name,
         user: this.itemForm.user,

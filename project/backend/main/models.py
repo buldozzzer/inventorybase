@@ -82,17 +82,17 @@ class Item(models.Model):
     date_of_receipt = models.DateField('дата поступления на учет', default=datetime.date.today)
     number_of_receipt = models.CharField('номер требования о поступлении на учет',
                                          max_length=100, default='')
-    requisites = models.CharField('реквизиты книги учета мат. ценностей',
-                                  default='', max_length=100)
-    transfer_date = models.DateField('дата передачи во временное пользование', blank=True, null=True)
-    otss_requisites = models.CharField('реквизиты документа о категории ОТСС',
-                                       max_length=100, blank=True)
-    spsi_requisites = models.CharField('реквизиты документа о прохождении СПСИ',
-                                       max_length=100, blank=True)
-    transfer_requisites = models.CharField('реквизиты о передаче во временное пользование',
-                                           max_length=100, blank=True)
+    requisites = models.TextField('реквизиты книги учета мат. ценностей',
+                                  default='', max_length=4000)
+    transfer_date = models.DateField('дата передачи во временное пользование', null=True, blank=True)
+    otss_requisites = models.TextField('реквизиты документа о категории ОТСС',
+                                       max_length=4000, blank=True)
+    spsi_requisites = models.TextField('реквизиты документа о прохождении СПСИ',
+                                       max_length=4000, blank=True)
+    transfer_requisites = models.TextField('реквизиты о передаче во временное пользование',
+                                           max_length=4000, blank=True)
     comment = models.TextField('примечание', max_length=4000, blank=True)
-    last_check = models.DateField('дата последней проверки', default=datetime.date.today, blank=True)
+    last_check = models.DateField('дата последней проверки', null=True, blank=True)
 
     objects = models.DjongoManager()
 
