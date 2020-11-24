@@ -4,7 +4,7 @@ from .models import Item, Employee
 from .serializers import EmployeeSerializer, ItemSerializer
 
 
-class WealthViewSet(ModelViewSet):
+class ItemViewSet(ModelViewSet):
     queryset = Item.objects.all()
     serializer_class = ItemSerializer
 

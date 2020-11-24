@@ -4,13 +4,19 @@
     <b-form-group>
       <b-button variant="danger" class="mt-3" @click="removeItems(selected)">Удалить выбранные</b-button>
       <b-button variant="danger" class="mt-3" @click="selectAllRows">Выбрать все записи</b-button>
+      <vue-range-slider ref="slider"
+                        v-model="sliderValue"
+                        @change="stickyHeaderHeightToString"
+                        min="300"
+                        max="1000"
+      ></vue-range-slider>
     </b-form-group>
     <!--    sticky-header="850px"-->
     <b-table striped hover
              ref="selectableTable"
              selectable
              :sort-by.sync="sortBy"
-             v-bind:sticky-header="stickyHeaderHeight"
+             v-bind:sticky-header="sliderValue+'px'"
              :items="items"
              :fields="itemFields"
              @row-selected="onRowSelected">
@@ -77,15 +83,19 @@
 
 
 <script>
+import VueRangeSlider from "vue-range-slider";
+import 'vue-range-slider/dist/vue-range-slider.css'
+
 export default {
   /* eslint-disable */
   name: "ItemList",
-  props:['SliderValue', 'SliderValueString'],
+  components: {
+    VueRangeSlider
+  },
   data() {
     return {
       /* eslint-disable */
       modes: ['multi', 'range'],
-      stickyHeaderHeight: "300px",
       noCollapse: false,
       sortBy: 'name',
       componentFields: [
@@ -187,7 +197,7 @@ export default {
           label: "реквизиты документа о прохождении СПСИ",
           sortable: true,
         }, {
-          key: "trnasfer_requisites",
+          key: "transfer_requisites",
           label: "реквизиты о передаче во временное пользование",
           sortable: true,
         }, {
@@ -208,12 +218,17 @@ export default {
       items: [],
       createdItem: {},
       selectMode: 'range',
-      selected: []
+      selected: [],
+      sliderValue: 700,
     };
   },
   methods: {
+
+    stickyHeaderHeightToString() {
+      return this.sliderValue.toString() + 'px'
+    },
     async fetchItems() {
-      const response = await fetch('http://localhost:8000/api/v1/wealth/')
+      const response = await fetch('http://localhost:8000/api/v1/item/')
       this.items = await response.json()
     },
     /* eslint-disable */

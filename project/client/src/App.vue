@@ -15,15 +15,6 @@
 
           <!-- Right aligned nav items -->
           <b-navbar-nav class="ml-auto">
-            <b-nav-form>
-              <vue-range-slider ref="slider"
-                                v-model="sliderValue"
-                                @change="stickyHeaderHeightToString"
-                                min="300"
-                                max="1000"
-              ></vue-range-slider>
-            </b-nav-form>
-
             <b-nav-item-dropdown right>
               <!-- Using 'button-content' slot -->
               <template #button-content>
@@ -43,27 +34,16 @@
 
 <script>
 /* eslint-disable */
-import ItemList from "./components/ItemList";
 import AddModal from "./components/AddModal";
-import VueRangeSlider from 'vue-range-slider'
-import 'vue-range-slider/dist/vue-range-slider.css'
 
 export default {
   name: 'App',
+
   components: {
     AddModal,
-    VueRangeSlider
-  },
-  data() {
-    return {
-      sliderValue: 700
-    }
   },
   methods: {
-    stickyHeaderHeightToString() {
-      this.stickyHeaderHeight = this.sliderValue.toString() + 'px'
-      return this.stickyHeaderHeight
-    },
+
   }
 };
 
