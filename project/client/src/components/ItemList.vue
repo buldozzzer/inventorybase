@@ -281,7 +281,4 @@ export default {
 </script>
 
 <style>
-.myTable {
-  margin-left: ;
-}
 </style>

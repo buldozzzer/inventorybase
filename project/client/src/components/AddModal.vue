@@ -4,7 +4,10 @@
            id="add-item-modal"
            title="Добавить запись в базу мат. ценностей"
            size="xl"
+           no-close-on-backdrop
+           hide-header-close
            hide-footer>
+    <!--no-close-on-backdrop или настроить очистку формы при нажатии на задний фон-->
     <b-form @submit="onSubmit" @reset="onReset" class="w-100">
       <b-container>
         <b-row>
@@ -17,7 +20,7 @@
                             type="text"
                             v-model="itemForm.name"
                             required
-                            :state="false"
+                            :state="isIntroduced(itemForm.name, '')"
                             placeholder="Введите наименование мат. ценности">
               </b-form-input>
             </b-form-group>
@@ -34,7 +37,7 @@
                             type="text"
                             v-model="itemForm.inventory_n"
                             required
-                            :state="false"
+                            :state="isIntroduced(itemForm.inventory_n, '')"
                             placeholder="Введите инвентарный номер">
               </b-form-input>
             </b-form-group>
@@ -42,14 +45,14 @@
 
           <b-col cols="4">
             <b-form-group id="form-responsible-group"
-                          label="Ответственный сотрудник:"
+                          label="Ответственное лицо:"
                           label-for="form-responsible-input">
               <b-form-input id="form-responsible-input"
                             v-model="itemForm.responsible"
                             required
-                            :state="false"
+                            :state="isIntroduced(itemForm.responsible, '')"
                             list="employee-list"
-                            placeholder="Введите/Выберете ФИО сотрудника">
+                            placeholder="Иванов И.И.">
               </b-form-input>
               <datalist id="employee-list">
                 <option>---------</option>
@@ -68,7 +71,7 @@
                              type="radio"
                              v-model="itemForm.condition"
                              :options="conditions"
-                             :state="false"
+                             :state="isIntroduced(itemForm.condition, '')"
                              required>
               </b-form-select>
             </b-form-group>
@@ -82,7 +85,7 @@
                              type="radio"
                              v-model="itemForm.otss_category"
                              :options="otssCategories"
-                             :state="false"
+                             :state="isIntroduced(itemForm.otss_category, '')"
                              required>
               </b-form-select>
             </b-form-group>
@@ -117,10 +120,49 @@
             </b-form-group>
           </b-col>
         </b-row>
+
+        <b-row>
+          <b-col cols="4">
+            <b-form-group id="form-user-group"
+                          label="Лицо,которому передано в пользование:"
+                          label-for="form-user-input">
+              <b-form-input id="form-user-input"
+                            v-model="itemForm.user"
+                            required
+                            :state="isIntroduced(itemForm.user, '')"
+                            list="employee-list"
+                            placeholder="Иванов И.И.">
+              </b-form-input>
+            </b-form-group>
+          </b-col>
+
+          <b-col cols="4">
+            <b-form-group id="form-date_of_receipt-group"
+                          label="Дата поступления на учёт:"
+                          label-for="form-date_of_receipt-input">
+              <b-form-input
+                id="date_of_receipt-input"
+                v-model="itemForm.date_of_receipt"
+                type="text"
+                :state="isIntroduced(itemForm.date_of_receipt, '')"
+                autocomplete="off"
+              ></b-form-input>
+              <b-input-group-append>
+                <b-form-datepicker
+                  v-model="itemForm.date_of_receipt"
+                  button-only
+                  right
+                  aria-controls="date_of_receipt-input"
+                  @context="onContext"
+                ></b-form-datepicker>
+              </b-input-group-append>
+            </b-form-group>
+          </b-col>
+        </b-row>
         <b-form-group id="form-component-group" v-model="itemForm.components">
         </b-form-group>
         <b-button type="submit" variant="primary">Добавить запись</b-button>
-        <b-button type="reset" variant="danger">Отмена</b-button>
+        <b-button type="reset" variant="danger" @click="initForm">Отмена</b-button>
       </b-container>
     </b-form>
   </b-modal>
@@ -142,12 +184,12 @@ export default {
         responsible: '',
         components: [],
         inventory_n: '',
-        otss_category: null,
+        otss_category: '',
         condition: '',
         unit_from: '',
-        in_operation: null,
+        in_operation: '',
         fault_document_requisites: '',
-        date_of_receipt: null,
+        date_of_receipt: '',
         number_of_receipt: '',
         requisites: '',
         transfer_date: '',
@@ -191,25 +233,25 @@ export default {
       await this.fetchItems()
     },
     initForm() {
-      this.ItemForm.name = '';
-      this.ItemForm.user = {};
-      this.ItemForm.responsible = {};
-      this.ItemForm.components = [];
-      this.ItemForm.inventory_n = '';
-      this.ItemForm.otss_category = '';
-      this.ItemForm.condition = '';
-      this.ItemForm.unit_from = '';
-      this.ItemForm.in_operation = '';
-      this.ItemForm.fault_document_requisites = '';
-      this.ItemForm.date_of_receipt = '';
-      this.ItemForm.number_of_receipt = '';
-      this.ItemForm.requisites = '';
-      this.ItemForm.transfer_date = '';
-      this.ItemForm.otss_requisites = '';
-      this.ItemForm.spsi_requisites = '';
-      this.ItemForm.trnasfer_requisites = '';
-      this.ItemForm.comment = '';
-      this.ItemForm.last_check = '';
+      this.itemForm.name = '';
+      this.itemForm.user = '';
+      this.itemForm.responsible = '';
+      this.itemForm.components = [];
+      this.itemForm.inventory_n = '';
+      this.itemForm.otss_category = '';
+      this.itemForm.condition = '';
+      this.itemForm.unit_from = '';
+      this.itemForm.in_operation = '';
+      this.itemForm.fault_document_requisites = '';
+      this.itemForm.date_of_receipt = '';
+      this.itemForm.number_of_receipt = '';
+      this.itemForm.requisites = '';
+      this.itemForm.transfer_date = '';
+      this.itemForm.otss_requisites = '';
+      this.itemForm.spsi_requisites = '';
+      this.itemForm.trnasfer_requisites = '';
+      this.itemForm.comment = '';
+      this.itemForm.last_check = '';
     },
     onReset(evt) {
       evt.preventDefault();
@@ -230,11 +272,18 @@ export default {
     employeeToString() {
       for (let i = 0; i < this.employeeList.length; i++) {
         this.employeeInitials.push(
-          this.employeeList[i].sirname + ' ' +
+          this.employeeList[i].surname + ' ' +
           this.employeeList[i].name[0] + '.' +
           this.employeeList[i].secname[0] + '.');
       }
     },
+    isIntroduced(left, right) {
+      return left !== right
+    },
+    onContext(ctx) {
+      this.formatted = ctx.selectedFormatted
+      this.selected = ctx.selectedYMD
+    }
   },
   async created() {
     await this.fetchEmployees()

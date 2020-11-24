@@ -34,19 +34,13 @@ class Component(models.Model):
 
 
 class Employee(models.Model):
-    GENDER_CHOICES = [
-        ('М', 'М'),
-        ('Ж', 'Ж')
-    ]
-    sirname = models.CharField('фамлия', max_length=50)
+
+    surname = models.CharField('фамлия', max_length=50)
     name = models.CharField('имя', max_length=50)
     secname = models.CharField('отчество', max_length=50)
-    position = models.CharField('должность', max_length=50)
-    rank = models.CharField('звание', default='', max_length=50)
-    gender = models.CharField('пол', max_length=10, choices=GENDER_CHOICES)
 
     def __str__(self):
-        return self.sirname + ' ' + self.name[0] + '.' + self.secname[0] + '.'
+        return self.surname + ' ' + self.name[0] + '.' + self.secname[0] + '.'
 
     class Meta:
         verbose_name = 'сотрудник'
@@ -54,33 +48,23 @@ class Employee(models.Model):
 
 
 class Item(models.Model):
-    class otssCategoriesChoice(models.IntegerChoices):
-        first = 1, _('1')
-        second = 2, _('2')
-        third = 3, _('3'),
-        notSecret = 4, _('не секретно')
+    class otssCategoriesChoice(models.TextChoices):
+        first = '1', _('1')
+        second = '2', _('2')
+        third = '3', _('3'),
+        notSecret = '4', _('не секретно')
 
-    class conditionsChoice(models.IntegerChoices):
-        ok = 1, _('исправно'),
-        not_ok = 2, _('неисправно')
+    class conditionsChoice(models.TextChoices):
+        ok = '1', _('исправно'),
+        not_ok = '2', _('неисправно')
 
-    class inOperationChoice(models.IntegerChoices):
-        used = 1, _('да'),
-        not_used = 2, _('нет'),
+    class inOperationChoice(models.TextChoices):
+        used = '1', _('да'),
+        not_used = '2', _('нет'),
 
     id = models.AutoField('_id', primary_key=True)
-    user = models.ForeignKey(
-        Employee,
-        verbose_name='сотрудник, которому передали мат. ценность в пользование',
-        related_name='employee',
-        on_delete=models.DO_NOTHING)
-
-    responsible = models.ForeignKey(
-        Employee,
-        verbose_name='сотрудник, ответственный за мат. ценность',
-        related_name='item',
-        on_delete=models.DO_NOTHING)
-
+    user = models.CharField('сотрудник, которому передали мат. ценность в пользование', max_length=100, default='')
+    responsible = models.CharField( 'сотрудник, ответственный за мат. ценность', max_length=100, default='')
     components = models.ArrayField(model_container=Component, null=True)
     name = models.CharField('наименование', max_length=100, default='')
     inventory_n = models.CharField('инвентарный номер', max_length=100, default='', unique=True)
