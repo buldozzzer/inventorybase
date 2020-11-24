@@ -79,13 +79,13 @@
 <script>
 export default {
   /* eslint-disable */
-  name: "WealthList",
-
+  name: "ItemList",
+  props:['SliderValue', 'SliderValueString'],
   data() {
     return {
       /* eslint-disable */
       modes: ['multi', 'range'],
-      stickyHeaderHeight: "500px",
+      stickyHeaderHeight: "300px",
       noCollapse: false,
       sortBy: 'name',
       componentFields: [
@@ -215,21 +215,6 @@ export default {
     async fetchItems() {
       const response = await fetch('http://localhost:8000/api/v1/wealth/')
       this.items = await response.json()
-    },
-    async createItems() {
-      const response = await fetch('http://localhost:8000/api/v1/wealth/', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-type': 'application/json'
-        },
-        body: JSON.stringify(this.createdItem)
-      });
-
-      if (response.status !== 201) {
-        alert(JSON.stringify(await response.json(), null, 2));
-      }
-      await this.fetchItems()
     },
     /* eslint-disable */
     async removeItem(item) {

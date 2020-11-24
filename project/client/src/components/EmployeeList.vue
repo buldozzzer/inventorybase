@@ -69,7 +69,7 @@
 
 <script>
 export default {
-  name: 'EmployeesList',
+  name: 'EmployeeList',
 
   data() {
     return {

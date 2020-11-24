@@ -15,7 +15,7 @@ export default new Router({
     },
     {
       path: '/employees',
-      name: 'EmployeesList',
+      name: 'EmployeeList',
       component: EmployeeList,
     },
   ],
