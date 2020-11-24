@@ -34,7 +34,6 @@ class Component(models.Model):
 
 
 class Employee(models.Model):
-
     surname = models.CharField('фамлия', max_length=50)
     name = models.CharField('имя', max_length=50)
     secname = models.CharField('отчество', max_length=50)
@@ -48,34 +47,38 @@ class Employee(models.Model):
 
 
 class Item(models.Model):
-    class otssCategoriesChoice(models.TextChoices):
-        first = '1', _('1')
-        second = '2', _('2')
-        third = '3', _('3'),
-        notSecret = '4', _('не секретно')
+    otssCategoriesChoice = [
+        ('1', '1'),
+        ('2', '2'),
+        ('3', '3'),
+        ('Не секретно', 'Не секретно')
+    ]
 
-    class conditionsChoice(models.TextChoices):
-        ok = '1', _('исправно'),
-        not_ok = '2', _('неисправно')
+    conditionsChoice = [
+        ('Исправно', 'Исправно'),
+        ('Неисправно', 'Неисправно')
+    ]
 
-    class inOperationChoice(models.TextChoices):
-        used = '1', _('да'),
-        not_used = '2', _('нет'),
+    inOperationChoice = [
+        ('Используется', 'Используется'),
+        ('Не используется', 'Не используется')
+    ]
 
     id = models.AutoField('_id', primary_key=True)
-    user = models.CharField('сотрудник, которому передали мат. ценность в пользование', max_length=100, default='')
-    responsible = models.CharField( 'сотрудник, ответственный за мат. ценность', max_length=100, default='')
+    user = models.CharField('сотрудник, которому передали мат. ценность в пользование', max_length=100, default='',
+                            blank=True)
+    responsible = models.CharField('сотрудник, ответственный за мат. ценность', max_length=100, default='')
     components = models.ArrayField(model_container=Component, null=True)
     name = models.CharField('наименование', max_length=100, default='')
     inventory_n = models.CharField('инвентарный номер', max_length=100, default='', unique=True)
     otss_category = models.CharField('категория ОТСС', max_length=100,
-                                     choices=otssCategoriesChoice.choices, default='1')
+                                     choices=otssCategoriesChoice, default='Не секретно')
     condition = models.CharField('состояние', max_length=20,
-                                 default='исправно', choices=conditionsChoice.choices)
+                                 default='Исправно', choices=conditionsChoice)
     unit_from = models.CharField('подразделение, откуда поступила мат. ценность',
                                  max_length=50, default='')
-    in_operation = models.CharField('ипользуется', choices=inOperationChoice.choices, max_length=5, default='да')
-    fault_document_requisites = models.CharField('документы о неисправности', max_length=100, null=True)
+    in_operation = models.CharField('ипользуется', choices=inOperationChoice, max_length=20, default='да')
+    fault_document_requisites = models.CharField('документы о неисправности', max_length=100, null=True, blank=True)
     date_of_receipt = models.DateField('дата поступления на учет', default=datetime.date.today)
     number_of_receipt = models.CharField('номер требования о поступлении на учет',
                                          max_length=100, default='')
@@ -86,10 +89,10 @@ class Item(models.Model):
                                        max_length=100, blank=True)
     spsi_requisites = models.CharField('реквизиты документа о прохождении СПСИ',
                                        max_length=100, blank=True)
-    trnasfer_requisites = models.CharField('реквизиты о передаче во временное пользование',
+    transfer_requisites = models.CharField('реквизиты о передаче во временное пользование',
                                            max_length=100, blank=True)
     comment = models.TextField('примечание', max_length=4000, blank=True)
-    last_check = models.DateField('дата последней проверки', default=datetime.date.today)
+    last_check = models.DateField('дата последней проверки', default=datetime.date.today, blank=True)
 
     objects = models.DjongoManager()
 

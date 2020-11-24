@@ -17,7 +17,7 @@
           <b-navbar-nav class="ml-auto">
             <b-nav-form>
               <vue-range-slider ref="slider"
-                                v-model="SliderValue"
+                                v-model="sliderValue"
                                 @change="stickyHeaderHeightToString"
                                 min="300"
                                 max="1000"
@@ -54,9 +54,14 @@ export default {
     AddModal,
     VueRangeSlider
   },
+  data() {
+    return {
+      sliderValue: 700
+    }
+  },
   methods: {
     stickyHeaderHeightToString() {
-      this.stickyHeaderHeight = this.SliderValue.toString() + 'px'
+      this.stickyHeaderHeight = this.sliderValue.toString() + 'px'
       return this.stickyHeaderHeight
     },
   }
