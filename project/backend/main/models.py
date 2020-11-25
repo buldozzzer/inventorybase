@@ -5,10 +5,10 @@ from djongo import models
 
 
 class Location(models.Model):
-    object = models.CharField('объект', max_length=50)
-    corpus = models.CharField('корпус', max_length=50)
-    cabinet = models.CharField('кабинет', max_length=50)
-    unit = models.CharField('подразделение', max_length=50)
+    object = models.CharField('объект', max_length=50, blank=True)
+    corpus = models.CharField('корпус', max_length=50, blank=True)
+    cabinet = models.CharField('кабинет', max_length=50, blank=True)
+    unit = models.CharField('подразделение', max_length=50, blank=True)
 
     class Meta:
         abstract = True
@@ -16,13 +16,13 @@ class Location(models.Model):
 
 
 class Component(models.Model):
-    name = models.CharField('название', max_length=50, default='')
-    serial_n = models.CharField('заводской номер', max_length=100, default='', unique=True)
-    category = models.CharField('категория', max_length=50, default='')
-    type = models.CharField('тип техники', max_length=50, default='')
-    view = models.CharField('вид техники', max_length=50, default='')
-    year = models.CharField('год выпуска', max_length=5, default='')
-    location = models.EmbeddedField(model_container=Location)
+    name = models.CharField('название', max_length=50, default='', blank=True)
+    serial_n = models.CharField('заводской номер', max_length=100, default='', unique=True, blank=True)
+    category = models.CharField('категория', max_length=50, default='', blank=True)
+    type = models.CharField('тип техники', max_length=50, default='', blank=True)
+    view = models.CharField('вид техники', max_length=50, default='', blank=True)
+    year = models.CharField('год выпуска', max_length=5, default='', blank=True)
+    location = models.EmbeddedField(model_container=Location, blank=True)
 
     def __str__(self):
         return self.name

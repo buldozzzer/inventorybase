@@ -87,6 +87,8 @@
 import VueRangeSlider from "vue-range-slider";
 // eslint-disable-next-line
 import 'vue-range-slider/dist/vue-range-slider.css'
+// eslint-disable-next-line
+import { bus } from '../main'
 
 export default {
   /* eslint-disable */
@@ -293,6 +295,7 @@ export default {
   },
   async created() {
     await this.fetchItems()
+    await bus.$on('update', (data) => this.fetchItems())
   },
 };
 </script>

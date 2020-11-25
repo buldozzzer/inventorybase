@@ -5,6 +5,7 @@
            title="Добавить запись в базу мат. ценностей"
            size="xl"
            no-close-on-backdrop
+           hide-footer
            hide-header-close>
     <!--no-close-on-backdrop или настроить очистку формы при нажатии на задний фон-->
 
@@ -110,10 +111,10 @@
                 </b-col>
 
                 <b-col cols="6">
-                  <b-form-group id="form--group"
+                  <b-form-group id="form-in_operation-group"
                                 label="Находится в использовании:"
-                                label-for="form-otss_category-input">
-                    <b-form-select id="form-otss_category-input"
+                                label-for="form-in_operation-input">
+                    <b-form-select id="form-in_operation-input"
                                    type="radio"
                                    v-model="itemForm.in_operation"
                                    :options="operation"
@@ -294,201 +295,36 @@
             </b-container>
           </div>
           <div class="col">
-            <b-container id="component-container">
-
-              <b-row>
-                <label class="mt-4"><h5>Составляющие материальной ценности:</h5></label>
-              </b-row>
-
-              <b-row class="mt-4">
-                <b-col cols="10">
-                  <b-form-group id="form-component_name-group"
-                                label="Название составляющей:"
-                                label-for="form-component_name-input">
-                    <b-form-input id="form-component_name-input"
-                                  type="text"
-                                  required
-                                  :state="isIntroduced(componentForm.name, '')"
-                                  v-model="componentForm.name"
-                                  placeholder="Введите название составляющей">
-                    </b-form-input>
-                  </b-form-group>
-                </b-col>
-              </b-row>
-
-              <b-row>
-                <b-col cols="10">
-                  <b-form-group id="form-component_serial_n-group"
-                                label="Заводской номер составляющей:"
-                                label-for="form-component_serial_n-input">
-                    <b-form-input id="form-component_serial_n-input"
-                                  type="text"
-                                  v-model="componentForm.serial_n"
-                                  required
-                                  :state="isIntroduced(componentForm.serial_n, '')"
-                                  placeholder="Введите заводской номер">
-                    </b-form-input>
-                  </b-form-group>
-                </b-col>
-              </b-row>
-
-              <b-row>
-                <b-col cols="5">
-                  <b-form-group id="form-component_type-group"
-                                label="Тип составляющей:"
-                                label-for="form-component_type-input">
-                    <b-form-input id="form-component_type-input"
-                                  type="text"
-                                  v-model="componentForm.type"
-                                  required
-                                  :state="isIntroduced(componentForm.type, '')"
-                    >
-                    </b-form-input>
-                  </b-form-group>
-                </b-col>
-
-                <b-col cols="5">
-                  <b-form-group id="form-component_view-group"
-                                label="Вид составляющей:"
-                                label-for="form-component_view-input">
-                    <b-form-input id="form-component_view-input"
-                                  type="text"
-                                  v-model="componentForm.view"
-                                  required
-                                  :state="isIntroduced(componentForm.view, '')"
-                    >
-                    </b-form-input>
-                  </b-form-group>
-                </b-col>
-              </b-row>
-
-              <b-row>
-                <b-col cols="5">
-                  <b-form-group id="form-category-group"
-                                label="Категория:"
-                                label-for="form-category-input">
-                    <b-form-input id="form-category-input"
-                                  type="text"
-                                  v-model="componentForm.category"
-                                  required
-                                  :state="isIntroduced(componentForm.category, '')"
-                    >
-                    </b-form-input>
-                  </b-form-group>
-                </b-col>
-
-                <b-col cols="5">
-                  <b-form-group id="form-year-group"
-                                label="Год выпуска:"
-                                label-for="form-year-input">
-                    <b-form-input id="form-year-input"
-                                  type="text"
-                                  v-model="componentForm.year"
-                                  required
-                                  :state="isIntroduced(componentForm.year, '')"
-                    >
-                    </b-form-input>
-                  </b-form-group>
-                </b-col>
-              </b-row>
-
-              <b-row>
-                <b-col cols="5">
-                  <b-form-group id="form-object-group"
-                                label="Объект:"
-                                label-for="form-object-input">
-                    <b-form-input id="form-object-input"
-                                  type="text"
-                                  v-model="componentForm.location.object"
-                                  required
-                                  :state="isIntroduced(componentForm.location.object, '')"
-                    >
-                    </b-form-input>
-                  </b-form-group>
-                </b-col>
-
-                <b-col cols="5">
-                  <b-form-group id="form-corpus-group"
-                                label="Корпус:"
-                                label-for="form-corpus-input">
-                    <b-form-input id="form-corpus-input"
-                                  type="text"
-                                  v-model="componentForm.location.corpus"
-                                  required
-                                  :state="isIntroduced(componentForm.location.corpus, '')"
-                    >
-                    </b-form-input>
-                  </b-form-group>
-                </b-col>
-              </b-row>
-
-              <b-row>
-                <b-col cols="5">
-                  <b-form-group id="form-unit-group"
-                                label="Подразделение:"
-                                label-for="form-unit-input">
-                    <b-form-input id="form-unit-input"
-                                  type="text"
-                                  v-model="componentForm.location.unit"
-                                  required
-                                  :state="isIntroduced(componentForm.location.unit, '')"
-                    >
-                    </b-form-input>
-                  </b-form-group>
-                </b-col>
-
-                <b-col cols="5">
-                  <b-form-group id="form-cabinet-group"
-                                label="Кабинет:"
-                                label-for="form-cabinet-input">
-                    <b-form-input id="form-cabinet-input"
-                                  type="text"
-                                  v-model="componentForm.location.cabinet"
-                                  required
-                                  :state="isIntroduced(componentForm.location.cabinet, '')"
-                    >
-                    </b-form-input>
-                  </b-form-group>
-                </b-col>
-              </b-row>
-
-            </b-container>
+            <component-scrollable-list ref="componentScrollableList"/>
           </div>
         </div>
       </div>
+      <div class="submit-reset-buttons">
+        <b-button type="submit" variant="primary">Добавить запись</b-button>
+        <b-button type="reset" variant="danger" @click="initForm">Отмена</b-button>
+      </div>
     </b-form>
-    <template #modal-footer="">
-      <b-button type="submit" variant="primary">Добавить запись</b-button>
-      <b-button type="reset" variant="danger" @click="initForm">Отмена</b-button>
-    </template>
   </b-modal>
 </template>
 
 <script>
+// eslint-disable-next-line
+import ComponentScrollableList from "./ComponentScrollableList";
+// eslint-disable-next-line
+import { bus } from '../main'
 
 export default {
   /* eslint-disable */
   name: "AddModal",
+  components: {
+    ComponentScrollableList
+  },
   data() {
     return {
       otssCategories: [1, 2, 3, 'Не секретно'],
       conditions: ['Исправно', 'Неисправно'],
       operation: ['Используется', 'Не используется'],
       employeeList: [],
-      componentForm: {
-        name: '',
-        serial_n: '',
-        category: '',
-        type: '',
-        view: '',
-        year: '',
-        location: {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }
-      },
       itemForm: {
         name: '',//=
         user: '',//=
@@ -511,7 +347,6 @@ export default {
         last_check: null //=
       },
       employeeInitials: [],
-      formatted: '',
     }
 
   },
@@ -534,7 +369,7 @@ export default {
       if (response.status !== 201) {
         alert(JSON.stringify(await response.json(), null, 2));
       }
-      await this.fetchItems()
+      bus.$emit('update')
     },
     initForm() {
       this.itemForm.name = '';
@@ -557,20 +392,9 @@ export default {
       this.itemForm.comment = '';
       this.itemForm.last_check = null;
 
-      this.initComponentForm()
+      this.$refs.componentScrollableList.initComponentForm()
     },
 
-    initComponentForm() {
-      let tempObject;
-      for (const key in this.componentForm.location) {
-        this.componentForm.location[key] = ''
-      }
-      tempObject = this.componentForm.location
-      for (const key in this.componentForm) {
-        this.componentForm[key] = ''
-      }
-      this.componentForm.location = tempObject
-    },
     onReset(evt) {
       evt.preventDefault();
       this.$refs.addItemModal.hide();
@@ -578,7 +402,9 @@ export default {
     },
     onSubmit(evt) {
       evt.preventDefault();
+      debugger;
       this.$refs.addItemModal.hide();
+      this.itemForm.components = this.$refs.componentScrollableList.createComponentList()
       const payload = {
         name: this.itemForm.name,
         user: this.itemForm.user,
@@ -611,12 +437,9 @@ export default {
           this.employeeList[i].secname[0] + '.');
       }
     },
-    isIntroduced(left, right) {
+    isIntroduced: function (left, right) {
       return left !== right
     },
-    onContext(ctx) {
-      this.formatted = ctx.selectedFormatted
-    }
   },
   async created() {
     await this.fetchEmployees()
@@ -626,13 +449,4 @@ export default {
 </script>
 
 <style scoped>
-.btn_close {
-  color: white;
-  background: red;
-}
-
-.btn_edit {
-  color: white;
-  background: #26ae68;
-}
 </style>

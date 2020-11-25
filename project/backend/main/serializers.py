@@ -23,6 +23,7 @@ class ComponentSerializer(serializers.Serializer):
     category = serializers.CharField(max_length=50)
     type = serializers.CharField(max_length=50)
     view = serializers.CharField(max_length=50)
+    year = serializers.CharField(max_length=50)
     location = LocationSerializer()
 
 
