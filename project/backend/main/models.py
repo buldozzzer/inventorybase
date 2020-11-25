@@ -2,7 +2,6 @@ import datetime
 
 from django import forms
 from djongo import models
-from django.utils.translation import gettext_lazy as _
 
 
 class Location(models.Model):

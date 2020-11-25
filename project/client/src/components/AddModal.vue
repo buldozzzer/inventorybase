@@ -5,294 +5,462 @@
            title="Добавить запись в базу мат. ценностей"
            size="xl"
            no-close-on-backdrop
-           hide-header-close
-           hide-footer>
+           hide-header-close>
     <!--no-close-on-backdrop или настроить очистку формы при нажатии на задний фон-->
+
     <b-form @submit="onSubmit" @reset="onReset" class="w-100">
-      <b-container>
-        <b-row>
-          <b-col cols="8">
-            <b-form-group id="form-name-group"
-                          label="Наименование:"
-                          label-for="form-name-input">
-              <b-form-input id="form-name-input"
-                            type="text"
-                            v-model="itemForm.name"
-                            required
-                            :state="isIntroduced(itemForm.name, '')"
-                            placeholder="Введите наименование мат. ценности">
-              </b-form-input>
-            </b-form-group>
-          </b-col>
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <b-container id="item-container">
+              <b-row>
+                <b-col cols="12">
+                  <b-form-group id="form-name-group"
+                                label="Наименование:"
+                                label-for="form-name-input">
+                    <b-form-input id="form-name-input"
+                                  type="text"
+                                  v-model="itemForm.name"
+                                  required
+                                  :state="isIntroduced(itemForm.name, '')"
+                                  placeholder="Введите наименование мат. ценности">
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
 
-        </b-row>
+              </b-row>
 
-        <b-row>
-          <b-col cols="4">
-            <b-form-group id="form-inventory_n-group"
-                          label="Инвентарный номер:"
-                          label-for="form-inventory_n-input">
-              <b-form-input id="form-inventory_n-input"
-                            type="text"
-                            v-model="itemForm.inventory_n"
-                            required
-                            :state="isIntroduced(itemForm.inventory_n, '')"
-                            placeholder="Введите инвентарный номер">
-              </b-form-input>
-            </b-form-group>
-          </b-col>
+              <b-row>
+                <b-col cols="6">
+                  <b-form-group id="form-inventory_n-group"
+                                label="Инвентарный номер:"
+                                label-for="form-inventory_n-input">
+                    <b-form-input id="form-inventory_n-input"
+                                  type="text"
+                                  v-model="itemForm.inventory_n"
+                                  required
+                                  :state="isIntroduced(itemForm.inventory_n, '')"
+                                  placeholder="Введите инвентарный номер">
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
 
-          <b-col cols="4">
-            <b-form-group id="form-responsible-group"
-                          label="Ответственное лицо:"
-                          label-for="form-responsible-input">
-              <b-form-input id="form-responsible-input"
-                            v-model="itemForm.responsible"
-                            required
-                            :state="isIntroduced(itemForm.responsible, '')"
-                            list="employee-list"
-                            placeholder="Иванов И.И.">
-              </b-form-input>
-              <datalist id="employee-list">
-                <option>---------</option>
-                <option v-for="employee in employeeInitials">{{ employee }}</option>
-              </datalist>
-            </b-form-group>
-          </b-col>
-        </b-row>
+                <b-col cols="6">
+                  <b-form-group id="form-responsible-group"
+                                label="Ответственное лицо:"
+                                label-for="form-responsible-input">
+                    <b-form-input id="form-responsible-input"
+                                  v-model="itemForm.responsible"
+                                  required
+                                  :state="isIntroduced(itemForm.responsible, '')"
+                                  list="employee-list"
+                                  placeholder="Иванов И.И.">
+                    </b-form-input>
+                    <datalist id="employee-list">
+                      <option>---------</option>
+                      <option v-for="employee in employeeInitials">{{ employee }}</option>
+                    </datalist>
+                  </b-form-group>
+                </b-col>
 
-        <b-row>
-          <b-col cols="4">
-            <b-form-group id="form-condition-group"
-                          label="Состояние:"
-                          label-for="form-condition-input">
-              <b-form-select id="form-condition-input"
-                             type="radio"
-                             v-model="itemForm.condition"
-                             :options="conditions"
-                             :state="isIntroduced(itemForm.condition, '')"
-                             required>
-              </b-form-select>
-            </b-form-group>
-          </b-col>
+              </b-row>
 
-          <b-col cols="4">
-            <b-form-group id="form-otss_category-group"
-                          label="Категория ОТСС:"
-                          label-for="form-otss_category-input">
-              <b-form-select id="form-otss_category-input"
-                             type="radio"
-                             v-model="itemForm.otss_category"
-                             :options="otssCategories"
-                             :state="isIntroduced(itemForm.otss_category, '')"
-                             required>
-              </b-form-select>
-            </b-form-group>
-          </b-col>
-        </b-row>
+              <b-row>
+                <b-col cols="6">
+                  <b-form-group id="form-condition-group"
+                                label="Состояние:"
+                                label-for="form-condition-input">
+                    <b-form-select id="form-condition-input"
+                                   type="radio"
+                                   v-model="itemForm.condition"
+                                   :options="conditions"
+                                   :state="isIntroduced(itemForm.condition, '')"
+                                   required>
+                    </b-form-select>
+                  </b-form-group>
+                </b-col>
 
-        <b-row>
-          <b-col cols="4">
-            <b-form-group id="form-unit_from-group"
-                          label="Подразделение, откуда поступило:"
-                          label-for="form-unit_from-input">
-              <b-form-input id="form-unit_from-input"
-                            type="text"
-                            v-model="itemForm.unit_from"
-                            :state="isIntroduced(itemForm.unit_from, '')"
-                            required>
-              </b-form-input>
-            </b-form-group>
-          </b-col>
+                <b-col cols="6">
+                  <b-form-group id="form-otss_category-group"
+                                label="Категория ОТСС:"
+                                label-for="form-otss_category-input">
+                    <b-form-select id="form-otss_category-input"
+                                   type="radio"
+                                   v-model="itemForm.otss_category"
+                                   :options="otssCategories"
+                                   :state="isIntroduced(itemForm.otss_category, '')"
+                                   required>
+                    </b-form-select>
+                  </b-form-group>
+                </b-col>
+              </b-row>
 
-          <b-col cols="4">
-            <b-form-group id="form--group"
-                          label="Находится в использовании:"
-                          label-for="form-otss_category-input">
-              <b-form-select id="form-otss_category-input"
-                             type="radio"
-                             v-model="itemForm.in_operation"
-                             :options="operation"
-                             :state="isIntroduced(itemForm.in_operation, '')"
-                             required>
-              </b-form-select>
-            </b-form-group>
-          </b-col>
-        </b-row>
+              <b-row>
+                <b-col cols="6">
+                  <b-form-group id="form-unit_from-group"
+                                label="Подразделение, откуда поступило:"
+                                label-for="form-unit_from-input">
+                    <b-form-input id="form-unit_from-input"
+                                  type="text"
+                                  v-model="itemForm.unit_from"
+                                  :state="isIntroduced(itemForm.unit_from, '')"
+                                  required>
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
 
-        <b-row>
-          <b-col cols="4">
-            <b-form-group id="form-number_of_receipt-group"
-                          label="Номер требования о поступлении на учёт:"
-                          label-for="form-number_of_receipt-input">
-              <b-form-input id="form-number_of_receipt-input"
-                            v-model="itemForm.number_of_receipt"
-                            required
-                            :state="isIntroduced(itemForm.number_of_receipt, '')"
-                            placeholder="Введите номер требования">
-              </b-form-input>
-            </b-form-group>
-          </b-col>
+                <b-col cols="6">
+                  <b-form-group id="form--group"
+                                label="Находится в использовании:"
+                                label-for="form-otss_category-input">
+                    <b-form-select id="form-otss_category-input"
+                                   type="radio"
+                                   v-model="itemForm.in_operation"
+                                   :options="operation"
+                                   :state="isIntroduced(itemForm.in_operation, '')"
+                                   required>
+                    </b-form-select>
+                  </b-form-group>
+                </b-col>
+              </b-row>
 
-          <b-col cols="4">
-            <b-form-group id="form-date_of_receipt-group"
-                          label="Дата поступления на учёт:"
-                          label-for="form-date_of_receipt-input">
-              <b-input-group>
-                <b-form-datepicker
-                  v-model="itemForm.date_of_receipt"
-                  :state="isIntroduced(itemForm.date_of_receipt, null)"
-                  aria-controls="date_of_receipt-input"
-                  required
-                  placeholder="Выберите дату"
-                  :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
-                  @context="onContext"
-                ></b-form-datepicker>
-              </b-input-group>
-            </b-form-group>
-          </b-col>
-        </b-row>
+              <b-row>
+                <b-col cols="6">
+                  <b-form-group id="form-number_of_receipt-group"
+                                label="Номер требования о поступлении на учёт:"
+                                label-for="form-number_of_receipt-input">
+                    <b-form-input id="form-number_of_receipt-input"
+                                  v-model="itemForm.number_of_receipt"
+                                  required
+                                  :state="isIntroduced(itemForm.number_of_receipt, '')"
+                                  placeholder="Введите номер требования">
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
 
-        <b-row>
-          <b-col cols="4">
-            <b-form-group id="form-requisites-group"
-                          label="Реквизиты книги учёта:"
-                          label-for="form-requisites-input">
-              <b-input-group>
-                <b-form-input
-                  required
-                  v-model="itemForm.requisites"
-                  :state="isIntroduced(itemForm.requisites, '')"
-                  placeholder="Введите реквизиты документов">
-                </b-form-input>
-              </b-input-group>
-            </b-form-group>
-          </b-col>
+                <b-col cols="6">
+                  <b-form-group id="form-date_of_receipt-group"
+                                label="Дата поступления на учёт:"
+                                label-for="form-date_of_receipt-input">
+                    <b-input-group>
+                      <b-form-datepicker
+                        v-model="itemForm.date_of_receipt"
+                        :state="isIntroduced(itemForm.date_of_receipt, null)"
+                        aria-controls="date_of_receipt-input"
+                        required
+                        placeholder="Выберите дату"
+                        :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
+                        @context="onContext"
+                      ></b-form-datepicker>
+                    </b-input-group>
+                  </b-form-group>
+                </b-col>
+              </b-row>
 
-          <b-col cols="4">
-            <b-form-group id="form-last_check-group"
-                          label="Дата последней проверки:"
-                          label-for="form-last_check-input">
-              <b-input-group>
-                <!--                :state="isIntroduced(itemForm.last_check, '')"-->
-                <b-form-datepicker
-                  v-model="itemForm.last_check"
-                  aria-controls="last_check-input"
-                  placeholder="Выберите дату"
-                  :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
-                  @context="onContext"
-                ></b-form-datepicker>
-              </b-input-group>
-            </b-form-group>
-          </b-col>
-        </b-row>
+              <b-row>
+                <b-col cols="6">
+                  <b-form-group id="form-requisites-group"
+                                label="Реквизиты книги учёта:"
+                                label-for="form-requisites-input">
+                    <b-input-group>
+                      <b-form-input
+                        required
+                        v-model="itemForm.requisites"
+                        :state="isIntroduced(itemForm.requisites, '')"
+                        placeholder="Введите реквизиты документов">
+                      </b-form-input>
+                    </b-input-group>
+                  </b-form-group>
+                </b-col>
 
-        <b-row>
-          <b-col cols="4">
-            <b-form-group id="form-user-group"
-                          label="Лицо,которому передано в пользование:"
-                          label-for="form-user-input">
-              <!--              :state="isIntroduced(itemForm.user, '')"-->
-              <b-form-input id="form-user-input"
-                            v-model="itemForm.user"
-                            list="employee-list"
-                            placeholder="Иванов И.И.">
-              </b-form-input>
-            </b-form-group>
-          </b-col>
+                <b-col cols="6">
+                  <b-form-group id="form-last_check-group"
+                                label="Дата последней проверки:"
+                                label-for="form-last_check-input">
+                    <b-input-group>
+                      <!--                :state="isIntroduced(itemForm.last_check, '')"-->
+                      <b-form-datepicker
+                        v-model="itemForm.last_check"
+                        aria-controls="last_check-input"
+                        placeholder="Выберите дату"
+                        :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
+                        @context="onContext"
+                      ></b-form-datepicker>
+                    </b-input-group>
+                  </b-form-group>
+                </b-col>
+              </b-row>
 
-          <b-col cols="4">
-            <b-form-group id="form-date_of_transfer-group"
-                          label="Дата передачи во временное пользование:"
-                          label-for="form-date_of_transfer-input">
-              <b-input-group>
-                <!--                :state="isIntroduced(itemForm.transfer_date, '')"-->
-                <b-form-datepicker
-                  v-model="itemForm.transfer_date"
-                  aria-controls="date_of_transfer-input"
-                  placeholder="Выберите дату"
-                  :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
-                  @context="onContext"
-                ></b-form-datepicker>
-              </b-input-group>
-            </b-form-group>
-          </b-col>
-        </b-row>
+              <b-row>
+                <b-col cols="6">
+                  <b-form-group id="form-user-group"
+                                label="Лицо,которому передано в пользование:"
+                                label-for="form-user-input">
+                    <!--              :state="isIntroduced(itemForm.user, '')"-->
+                    <b-form-input id="form-user-input"
+                                  v-model="itemForm.user"
+                                  list="employee-list"
+                                  placeholder="Иванов И.И.">
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
 
-        <b-row>
-          <b-col cols="4">
-            <b-form-group id="form-otss_requisites-group"
-                          label="Реквизиты документов о категории:"
-                          label-for="form-otss_requisites-input">
-              <b-form-textarea id="form-otss_requisites-input"
-                               required
-                               :state="isIntroduced(itemForm.otss_requisites, '')"
-                               v-model="itemForm.otss_requisites"
-                               placeholder="Введите реквизиты документов">
-              </b-form-textarea>
-            </b-form-group>
-          </b-col>
+                <b-col cols="6">
+                  <b-form-group id="form-date_of_transfer-group"
+                                label="Дата передачи во временное пользование:"
+                                label-for="form-date_of_transfer-input">
+                    <b-input-group>
+                      <!--                :state="isIntroduced(itemForm.transfer_date, '')"-->
+                      <b-form-datepicker
+                        v-model="itemForm.transfer_date"
+                        aria-controls="date_of_transfer-input"
+                        placeholder="Выберите дату"
+                        :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
+                        @context="onContext"
+                      ></b-form-datepicker>
+                    </b-input-group>
+                  </b-form-group>
+                </b-col>
+              </b-row>
 
-          <b-col cols="4">
-            <b-form-group id="form-spsi_requisites-group"
-                          label="Реквизиты документов об СПСИ:"
-                          label-for="form-spsi_requisites-input">
-              <b-form-textarea id="form-spsi_requisites-input"
-                               required
-                               :state="isIntroduced(itemForm.spsi_requisites, '')"
-                               v-model="itemForm.spsi_requisites"
-                               placeholder="Введите реквизиты документов">
-              </b-form-textarea>
-            </b-form-group>
-          </b-col>
-        </b-row>
+              <b-row>
+                <b-col cols="6">
+                  <b-form-group id="form-otss_requisites-group"
+                                label="Реквизиты документов о категории:"
+                                label-for="form-otss_requisites-input">
+                    <b-form-textarea id="form-otss_requisites-input"
+                                     required
+                                     :state="isIntroduced(itemForm.otss_requisites, '')"
+                                     v-model="itemForm.otss_requisites"
+                                     placeholder="Введите реквизиты документов">
+                    </b-form-textarea>
+                  </b-form-group>
+                </b-col>
 
-        <b-row>
-          <b-col cols="4">
-            <b-form-group id="form-fault_document_requisites-group"
-                          label="Реквизиты документов о неисправности:"
-                          label-for="form-fault_document_requisites-input">
-              <!--              :state="isIntroduced(itemForm.fault_document_requisites, '')"-->
-              <b-form-textarea id="form-fault_document_requisites-input"
-                               v-model="itemForm.fault_document_requisites"
-                               placeholder="Введите реквизиты документов">
-              </b-form-textarea>
-            </b-form-group>
-          </b-col>
+                <b-col cols="6">
+                  <b-form-group id="form-spsi_requisites-group"
+                                label="Реквизиты документов об СПСИ:"
+                                label-for="form-spsi_requisites-input">
+                    <b-form-textarea id="form-spsi_requisites-input"
+                                     required
+                                     :state="isIntroduced(itemForm.spsi_requisites, '')"
+                                     v-model="itemForm.spsi_requisites"
+                                     placeholder="Введите реквизиты документов">
+                    </b-form-textarea>
+                  </b-form-group>
+                </b-col>
+              </b-row>
 
-          <b-col cols="4">
-            <b-form-group id="form-transfer_requisites-group"
-                          label="Реквизиты документов о передаче:"
-                          label-for="form-transfer_requisites-input">
-              <!--                               :state="isIntroduced(itemForm.transfer_requisites, '')"-->
-              <b-form-textarea id="form-transfer_requisites-input"
-                               v-model="itemForm.transfer_requisites"
-                               placeholder="Введите реквизиты документов">
-              </b-form-textarea>
-            </b-form-group>
-          </b-col>
-        </b-row>
+              <b-row>
+                <b-col cols="6">
+                  <b-form-group id="form-fault_document_requisites-group"
+                                label="Реквизиты документов о неисправности:"
+                                label-for="form-fault_document_requisites-input">
+                    <!--              :state="isIntroduced(itemForm.fault_document_requisites, '')"-->
+                    <b-form-textarea id="form-fault_document_requisites-input"
+                                     v-model="itemForm.fault_document_requisites"
+                                     placeholder="Введите реквизиты документов">
+                    </b-form-textarea>
+                  </b-form-group>
+                </b-col>
 
-        <b-row>
-          <b-col cols="8">
-            <b-form-group id="form-comment-group"
-                          label="Примечание:"
-                          label-for="form-comment-input">
-              <!--              :state="isIntroduced(itemForm.comment, '')"-->
-              <b-form-textarea id="form-comment-input"
+                <b-col cols="6">
+                  <b-form-group id="form-transfer_requisites-group"
+                                label="Реквизиты документов о передаче:"
+                                label-for="form-transfer_requisites-input">
+                    <!--                               :state="isIntroduced(itemForm.transfer_requisites, '')"-->
+                    <b-form-textarea id="form-transfer_requisites-input"
+                                     v-model="itemForm.transfer_requisites"
+                                     placeholder="Введите реквизиты документов">
+                    </b-form-textarea>
+                  </b-form-group>
+                </b-col>
+              </b-row>
 
-                               v-model="itemForm.comment"
-                               placeholder="Примечание">
-              </b-form-textarea>
-            </b-form-group>
-          </b-col>
-        </b-row>
-        <b-form-group id="form-component-group" v-model="itemForm.components">
-        </b-form-group>
-        <b-button type="submit" variant="primary">Добавить запись</b-button>
-        <b-button type="reset" variant="danger" @click="initForm">Отмена</b-button>
-      </b-container>
+              <b-row>
+                <b-col cols="12">
+                  <b-form-group id="form-comment-group"
+                                label="Примечание:"
+                                label-for="form-comment-input">
+                    <!--              :state="isIntroduced(itemForm.comment, '')"-->
+                    <b-form-textarea id="form-comment-input"
+
+                                     v-model="itemForm.comment"
+                                     placeholder="Примечание">
+                    </b-form-textarea>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+            </b-container>
+          </div>
+          <div class="col">
+            <b-container id="component-container">
+
+              <b-row>
+                <label class="mt-4"><h5>Составляющие материальной ценности:</h5></label>
+              </b-row>
+
+              <b-row class="mt-4">
+                <b-col cols="10">
+                  <b-form-group id="form-component_name-group"
+                                label="Название составляющей:"
+                                label-for="form-component_name-input">
+                    <b-form-input id="form-component_name-input"
+                                  type="text"
+                                  required
+                                  :state="isIntroduced(componentForm.name, '')"
+                                  v-model="componentForm.name"
+                                  placeholder="Введите название составляющей">
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+
+              <b-row>
+                <b-col cols="10">
+                  <b-form-group id="form-component_serial_n-group"
+                                label="Заводской номер составляющей:"
+                                label-for="form-component_serial_n-input">
+                    <b-form-input id="form-component_serial_n-input"
+                                  type="text"
+                                  v-model="componentForm.serial_n"
+                                  required
+                                  :state="isIntroduced(componentForm.serial_n, '')"
+                                  placeholder="Введите заводской номер">
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+
+              <b-row>
+                <b-col cols="5">
+                  <b-form-group id="form-component_type-group"
+                                label="Тип составляющей:"
+                                label-for="form-component_type-input">
+                    <b-form-input id="form-component_type-input"
+                                  type="text"
+                                  v-model="componentForm.type"
+                                  required
+                                  :state="isIntroduced(componentForm.type, '')"
+                    >
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
+
+                <b-col cols="5">
+                  <b-form-group id="form-component_view-group"
+                                label="Вид составляющей:"
+                                label-for="form-component_view-input">
+                    <b-form-input id="form-component_view-input"
+                                  type="text"
+                                  v-model="componentForm.view"
+                                  required
+                                  :state="isIntroduced(componentForm.view, '')"
+                    >
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+
+              <b-row>
+                <b-col cols="5">
+                  <b-form-group id="form-category-group"
+                                label="Категория:"
+                                label-for="form-category-input">
+                    <b-form-input id="form-category-input"
+                                  type="text"
+                                  v-model="componentForm.category"
+                                  required
+                                  :state="isIntroduced(componentForm.category, '')"
+                    >
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
+
+                <b-col cols="5">
+                  <b-form-group id="form-year-group"
+                                label="Год выпуска:"
+                                label-for="form-year-input">
+                    <b-form-input id="form-year-input"
+                                  type="text"
+                                  v-model="componentForm.year"
+                                  required
+                                  :state="isIntroduced(componentForm.year, '')"
+                    >
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+
+              <b-row>
+                <b-col cols="5">
+                  <b-form-group id="form-object-group"
+                                label="Объект:"
+                                label-for="form-object-input">
+                    <b-form-input id="form-object-input"
+                                  type="text"
+                                  v-model="componentForm.location.object"
+                                  required
+                                  :state="isIntroduced(componentForm.location.object, '')"
+                    >
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
+
+                <b-col cols="5">
+                  <b-form-group id="form-corpus-group"
+                                label="Корпус:"
+                                label-for="form-corpus-input">
+                    <b-form-input id="form-corpus-input"
+                                  type="text"
+                                  v-model="componentForm.location.corpus"
+                                  required
+                                  :state="isIntroduced(componentForm.location.corpus, '')"
+                    >
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+
+              <b-row>
+                <b-col cols="5">
+                  <b-form-group id="form-unit-group"
+                                label="Подразделение:"
+                                label-for="form-unit-input">
+                    <b-form-input id="form-unit-input"
+                                  type="text"
+                                  v-model="componentForm.location.unit"
+                                  required
+                                  :state="isIntroduced(componentForm.location.unit, '')"
+                    >
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
+
+                <b-col cols="5">
+                  <b-form-group id="form-cabinet-group"
+                                label="Кабинет:"
+                                label-for="form-cabinet-input">
+                    <b-form-input id="form-cabinet-input"
+                                  type="text"
+                                  v-model="componentForm.location.cabinet"
+                                  required
+                                  :state="isIntroduced(componentForm.location.cabinet, '')"
+                    >
+                    </b-form-input>
+                  </b-form-group>
+                </b-col>
+              </b-row>
+
+            </b-container>
+          </div>
+        </div>
+      </div>
     </b-form>
+    <template #modal-footer="">
+      <b-button type="submit" variant="primary">Добавить запись</b-button>
+      <b-button type="reset" variant="danger" @click="initForm">Отмена</b-button>
+    </template>
   </b-modal>
 </template>
 
@@ -307,6 +475,20 @@ export default {
       conditions: ['Исправно', 'Неисправно'],
       operation: ['Используется', 'Не используется'],
       employeeList: [],
+      componentForm: {
+        name: '',
+        serial_n: '',
+        category: '',
+        type: '',
+        view: '',
+        year: '',
+        location: {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }
+      },
       itemForm: {
         name: '',//=
         user: '',//=
@@ -327,14 +509,6 @@ export default {
         transfer_requisites: '',
         comment: '',
         last_check: null //=
-      },
-      ComponentForm: {
-        name: '',
-        serial_n: '',
-        category: null,
-        type: null,
-        view: null,
-        location: null
       },
       employeeInitials: [],
       formatted: '',
@@ -382,6 +556,20 @@ export default {
       this.itemForm.transfer_requisites = '';
       this.itemForm.comment = '';
       this.itemForm.last_check = null;
+
+      this.initComponentForm()
+    },
+
+    initComponentForm() {
+      let tempObject;
+      for (const key in this.componentForm.location) {
+        this.componentForm.location[key] = ''
+      }
+      tempObject = this.componentForm.location
+      for (const key in this.componentForm) {
+        this.componentForm[key] = ''
+      }
+      this.componentForm.location = tempObject
     },
     onReset(evt) {
       evt.preventDefault();

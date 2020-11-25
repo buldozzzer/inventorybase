@@ -83,7 +83,9 @@
 
 
 <script>
+// eslint-disable-next-line
 import VueRangeSlider from "vue-range-slider";
+// eslint-disable-next-line
 import 'vue-range-slider/dist/vue-range-slider.css'
 
 export default {
