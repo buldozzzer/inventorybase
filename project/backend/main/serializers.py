@@ -1,10 +1,10 @@
 from rest_framework import serializers
-from rest_framework_mongoengine.fields import ObjectIdField
 
-from .models import Employee, Location, Component, Item, ItemForm, EmployeeForm, ComponentForm
+from .models import Employee, Location, Component, Item
 
 
 class LocationSerializer(serializers.Serializer):
+
     class Meta:
         model = Location
         fields = "__all__"

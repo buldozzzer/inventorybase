@@ -1,6 +1,5 @@
 import datetime
 
-from django import forms
 from djongo import models
 
 
@@ -10,6 +9,9 @@ class Location(models.Model):
     cabinet = models.CharField('кабинет', max_length=50, blank=True)
     unit = models.CharField('подразделение', max_length=50, blank=True)
 
+    def __str__(self):
+        return self.object + ' ' + self.corpus + ' ' + self.cabinet
+
     class Meta:
         abstract = True
         verbose_name = 'местонахождение'
@@ -17,7 +19,8 @@ class Location(models.Model):
 
 class Component(models.Model):
     name = models.CharField('название', max_length=50, default='', blank=True)
-    serial_n = models.CharField('заводской номер', max_length=100, default='', unique=True, blank=True)
+    serial_n = models.CharField('заводской номер', max_length=100, default='', unique=True,
+                                blank=True)
     category = models.CharField('категория', max_length=50, default='', blank=True)
     type = models.CharField('тип техники', max_length=50, default='', blank=True)
     view = models.CharField('вид техники', max_length=50, default='', blank=True)
@@ -25,7 +28,7 @@ class Component(models.Model):
     location = models.EmbeddedField(model_container=Location, blank=True)
 
     def __str__(self):
-        return self.name
+        return self.name + ' ' + self.serial_n
 
     class Meta:
         abstract = True
@@ -65,26 +68,33 @@ class Item(models.Model):
     ]
 
     id = models.AutoField('_id', primary_key=True)
-    user = models.CharField('сотрудник, которому передали мат. ценность в пользование', max_length=100, default='',
+    user = models.CharField('сотрудник, которому передали мат. ценность в пользование',
+                            max_length=100, default='',
                             blank=True)
-    responsible = models.CharField('сотрудник, ответственный за мат. ценность', max_length=100, default='')
+    responsible = models.CharField('сотрудник, ответственный за мат. ценность',
+                                   max_length=100, default='')
     components = models.ArrayField(model_container=Component, null=True)
     name = models.CharField('наименование', max_length=100, default='')
-    inventory_n = models.CharField('инвентарный номер', max_length=100, default='', unique=True)
+    inventory_n = models.CharField('инвентарный номер', max_length=100,
+                                   default='', unique=True)
     otss_category = models.CharField('категория ОТСС', max_length=100,
                                      choices=otssCategoriesChoice, default='Не секретно')
     condition = models.CharField('состояние', max_length=20,
                                  default='Исправно', choices=conditionsChoice)
     unit_from = models.CharField('подразделение, откуда поступила мат. ценность',
                                  max_length=50, default='')
-    in_operation = models.CharField('ипользуется', choices=inOperationChoice, max_length=20, default='да')
-    fault_document_requisites = models.CharField('документы о неисправности', max_length=100, null=True, blank=True)
-    date_of_receipt = models.DateField('дата поступления на учет', default=datetime.date.today)
+    in_operation = models.CharField('ипользуется', choices=inOperationChoice,
+                                    max_length=20, default='да')
+    fault_document_requisites = models.CharField('документы о неисправности',
+                                                 max_length=100, null=True, blank=True)
+    date_of_receipt = models.DateField('дата поступления на учет',
+                                       default=datetime.date.today)
     number_of_receipt = models.CharField('номер требования о поступлении на учет',
                                          max_length=100, default='')
     requisites = models.TextField('реквизиты книги учета мат. ценностей',
                                   default='', max_length=4000)
-    transfer_date = models.DateField('дата передачи во временное пользование', null=True, blank=True)
+    transfer_date = models.DateField('дата передачи во временное пользование',
+                                     null=True, blank=True)
     otss_requisites = models.TextField('реквизиты документа о категории ОТСС',
                                        max_length=4000, blank=True)
     spsi_requisites = models.TextField('реквизиты документа о прохождении СПСИ',
@@ -97,44 +107,9 @@ class Item(models.Model):
     objects = models.DjongoManager()
 
     def __str__(self):
-        return self.name
+        return self.name.__str__()
 
     class Meta:
         verbose_name = 'материальная ценность'
         verbose_name_plural = 'материальные ценности'
 
-
-class ItemForm(forms.Form):
-    class Meta:
-        model = Item
-        fields = '__all__'
-
-    def __init__(self, *args, **kwargs):
-        super(ItemForm, self).__init__(*args, **kwargs)
-        self.fields['user'] = forms.ChoiceField(
-            choices=[(o.id, str(o)) for o in Employee.objects.all()]
-        )
-
-
-class LocationForm(forms.Form):
-    class Meta:
-        model = Location
-        fields = '__all__'
-
-
-class ComponentForm(forms.Form):
-    def __init__(self, *args, **kwargs):
-        super(ComponentForm, self).__init__(*args, **kwargs)
-        self.fields['location'] = forms.ChoiceField(
-            choices=[(o.id, str(o)) for o in Location.objects.all()]
-        )
-
-    class Meta:
-        model = Component
-        fields = '__all__'
-
-
-class EmployeeForm(forms.Form):
-    class Meta:
-        model = Employee
-        fields = '__all__'
