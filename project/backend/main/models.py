@@ -42,7 +42,7 @@ class Employee(models.Model):
     secname = models.CharField('отчество', max_length=50)
 
     def __str__(self):
-        return self.surname + ' ' + self.name[0] + '.' + self.secname[0] + '.'
+        return self.surname + ' ' + self.name + ' ' + self.secname
 
     class Meta:
         verbose_name = 'сотрудник'
