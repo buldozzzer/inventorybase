@@ -1,0 +1,27 @@
+version: '3'
+
+services:
+
+  mongo:
+    image: mongo:latest
+    container_name: mongo
+    restart: unless-stopped
+    environment:
+      - MONGO_INITDB_DATABASE=ItemsDB
+    networks:
+      - backend-net
+
+  backend:
+    build: .
+    container_name: backend
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:8000:8000"
+    depends_on:
+      - mongo
+    networks:
+      - backend-net
+
+networks:
+  backend-net:
+    driver: bridge
