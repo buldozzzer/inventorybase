@@ -12,13 +12,24 @@ services:
       - backend-net
 
   backend:
-    build: .
+    build: ./backend
     container_name: backend
     restart: unless-stopped
     ports:
       - "0.0.0.0:8000:8000"
     depends_on:
       - mongo
+    networks:
+      - backend-net
+
+  client:
+    build: ./client
+    container_name: client
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:8080:80"
+    depends_on:
+      - backend
     networks:
       - backend-net
 
