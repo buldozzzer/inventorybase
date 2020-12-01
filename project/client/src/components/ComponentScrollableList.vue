@@ -17,6 +17,7 @@ export default {
         type: '',
         view: '',
         year: '',
+        cost: '',
         location: {
           object: '',
           corpus: '',
@@ -31,6 +32,7 @@ export default {
         type: '',
         view: '',
         year: '',
+        cost: '',
         location: {
           object: '',
           corpus: '',
@@ -45,6 +47,7 @@ export default {
         type: '',
         view: '',
         year: '',
+        cost: '',
         location: {
           object: '',
           corpus: '',
@@ -59,6 +62,7 @@ export default {
         type: '',
         view: '',
         year: '',
+        cost: '',
         location: {
           object: '',
           corpus: '',
@@ -73,6 +77,7 @@ export default {
         type: '',
         view: '',
         year: '',
+        cost: '',
         location: {
           object: '',
           corpus: '',
@@ -143,7 +148,7 @@ export default {
           check = false
         }
       }
-      if(check){
+      if (check) {
         components.push(this.component1)
       }
       for (let key in this.component2) {
@@ -156,7 +161,7 @@ export default {
           check = false
         }
       }
-      if(check){
+      if (check) {
         components.push(this.component2)
       }
       for (let key in this.component3) {
@@ -169,7 +174,7 @@ export default {
           check = false
         }
       }
-      if(check){
+      if (check) {
         components.push(this.component3)
       }
       for (let key in this.component4) {
@@ -182,7 +187,7 @@ export default {
           check = false
         }
       }
-      if(check){
+      if (check) {
         components.push(this.component4)
       }
       for (let key in this.component5) {
@@ -195,7 +200,7 @@ export default {
           check = false
         }
       }
-      if(check){
+      if (check) {
         components.push(this.component5)
       }
       return components
@@ -220,9 +225,9 @@ export default {
       </b-nav>
 
       <b-card-body
-          id="nav-scroller"
-          ref="content"
-          style="position:relative; height:650px; overflow-y:scroll;">
+        id="nav-scroller"
+        ref="content"
+        style="position:relative; height:650px; overflow-y:scroll;">
         <div>
           <h4 id="component-1">1 компонент</h4>
           <b-container id="comp-1">
@@ -317,6 +322,23 @@ export default {
 
                                 required
                                 :state="check(component1.year, '')"
+                  >
+                  </b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-row>
+
+            <b-row>
+              <b-col cols="6">
+                <b-form-group id="form-comp-1_cost-group"
+                              label="Цена:"
+                              label-for="form-comp-1_cost-input">
+                  <b-form-input id="form-comp-1_cost-input"
+                                type="text"
+                                v-model="component1.cost"
+
+                                required
+                                :state="check(component1.cost, '')"
                   >
                   </b-form-input>
                 </b-form-group>
@@ -490,6 +512,23 @@ export default {
 
             <b-row>
               <b-col cols="6">
+                <b-form-group id="form-comp-2_cost-group"
+                              label="Цена:"
+                              label-for="form-comp-2_cost-input">
+                  <b-form-input id="form-comp-2_cost-input"
+                                type="text"
+                                v-model="component2.cost"
+
+                                required
+                                :state="check(component2.cost, '')"
+                  >
+                  </b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-row>
+
+            <b-row>
+              <b-col cols="6">
                 <b-form-group id="form-comp-2_object-group"
                               label="Объект:"
                               label-for="form-comp-2_object-input">
@@ -643,6 +682,23 @@ export default {
                                 v-model="component3.year"
                                 required
                                 :state="check(component3.year, '')"
+                  >
+                  </b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-row>
+
+            <b-row>
+              <b-col cols="6">
+                <b-form-group id="form-comp-3_cost-group"
+                              label="Цена:"
+                              label-for="form-comp-3_cost-input">
+                  <b-form-input id="form-comp-3_cost-input"
+                                type="text"
+                                v-model="component3.cost"
+
+                                required
+                                :state="check(component3.cost, '')"
                   >
                   </b-form-input>
                 </b-form-group>
@@ -813,6 +869,23 @@ export default {
 
             <b-row>
               <b-col cols="6">
+                <b-form-group id="form-comp-4_cost-group"
+                              label="Цена:"
+                              label-for="form-comp-4_cost-input">
+                  <b-form-input id="form-comp-4_cost-input"
+                                type="text"
+                                v-model="component4.cost"
+
+                                required
+                                :state="check(component4.cost, '')"
+                  >
+                  </b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-row>
+
+            <b-row>
+              <b-col cols="6">
                 <b-form-group id="form-comp-4_object-group"
                               label="Объект:"
                               label-for="form-comp-4_object-input">
@@ -967,6 +1040,23 @@ export default {
                                 v-model="component5.year"
                                 required
                                 :state="check(component5.year, '')"
+                  >
+                  </b-form-input>
+                </b-form-group>
+              </b-col>
+            </b-row>
+
+            <b-row>
+              <b-col cols="6">
+                <b-form-group id="form-comp-5_cost-group"
+                              label="Цена:"
+                              label-for="form-comp-5_cost-input">
+                  <b-form-input id="form-comp-5_cost-input"
+                                type="text"
+                                v-model="component5.cost"
+
+                                required
+                                :state="check(component5.cost, '')"
                   >
                   </b-form-input>
                 </b-form-group>
