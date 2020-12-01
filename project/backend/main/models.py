@@ -26,6 +26,7 @@ class Component(models.Model):
     view = models.CharField('вид техники', max_length=50, default='', blank=True)
     year = models.CharField('год выпуска', max_length=5, default='', blank=True)
     location = models.EmbeddedField(model_container=Location, blank=True)
+    cost = models.CharField('цена', max_length=10, default='', blank=True)
 
     def __str__(self):
         return self.name + ' ' + self.serial_n
