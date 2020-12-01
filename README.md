@@ -29,7 +29,7 @@
   ```
 
 - ```
-  docker-compose up
+  docker-compose up -d
   ```
 
 0.0.0.0:8000 — сервер
