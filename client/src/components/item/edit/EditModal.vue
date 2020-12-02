@@ -314,9 +314,12 @@ import { bus } from '../../../main'
 
 export default {
   name: 'editModal',
-  props: ['employeeInitials', ],
+  props: ['employeeInitials', 'selectedItem'],
   data(){
     return {
+      otssCategories: [1, 2, 3, 'Не секретно'],
+      conditions: ['Исправно', 'Неисправно'],
+      operation: ['Используется', 'Не используется'],
       itemForm: {
         name: '',
         user: '',

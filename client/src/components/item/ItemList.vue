@@ -13,6 +13,7 @@
       ></vue-range-slider>
     </b-form-group>
     <!--    sticky-header="850px"-->
+    <!--    striped hover-->
     <b-table striped hover
              ref="selectableTable"
              selectable
@@ -39,7 +40,7 @@
       </template>
       <template #cell(edit_remove)="row">
         <div class="text-nowrap">
-          <b-button variant="warning" @click="editItem(row.item)">Редактировать</b-button>
+          <b-button variant="warning" v-b-modal.edit-item-modal>Редактировать</b-button>
           <br>
           <b-button variant="danger" class="mt-3" @click="removeItem(row.item)">Удалить</b-button>
         </div>
@@ -80,7 +81,8 @@
 
     </b-table>
     <add-modal :employee-initials="employeeInitials"/>
-    <edit-modal :employee-initials="employeeInitials"/>
+    <edit-modal :employee-initials="employeeInitials"
+                :selected-item="selectedItem"/>
   </div>
 
 </template>
@@ -97,6 +99,7 @@ import {bus} from '../../main'
 // eslint-disable-next-line no-unused-vars
 import AddModal from './add/AddModal';
 import EditModal from './edit/EditModal';
+
 export default {
   /* eslint-disable */
   name: "ItemList",
@@ -301,7 +304,7 @@ export default {
     },
     onRowSelected(items) {
       this.selected = items
-
+      this.selectedItem = this.selected[0]
     },
     selectAllRows() {
       this.$refs.selectableTable.selectAllRows()
