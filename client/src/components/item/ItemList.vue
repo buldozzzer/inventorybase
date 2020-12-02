@@ -4,8 +4,8 @@
     <b-form-group>
       <b-button variant="danger" class="mt-3" @click="removeItems(selected)">Удалить выбранные</b-button>
       <b-button variant="danger" class="mt-3" @click="selectAllRows">Выбрать все записи</b-button>
-      <b-button variant="success" class="my-3" v-b-modal.add-item-modal>Добавить запись</b-button>
-      <vue-range-slider ref="slider"
+      <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>Добавить запись</b-button>
+      <vue-range-slider class="mt-3" ref="slider"
                         v-model="sliderValue"
                         @change="stickyHeaderHeightToString"
                         min="300"

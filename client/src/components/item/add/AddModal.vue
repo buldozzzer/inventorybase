@@ -151,7 +151,6 @@
                         required
                         placeholder="Выберите дату"
                         :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
-                        @context="onContext"
                       ></b-form-datepicker>
                     </b-input-group>
                   </b-form-group>
@@ -185,7 +184,6 @@
                         aria-controls="last_check-input"
                         placeholder="Выберите дату"
                         :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
-                        @context="onContext"
                       ></b-form-datepicker>
                     </b-input-group>
                   </b-form-group>
@@ -217,7 +215,6 @@
                         aria-controls="date_of_transfer-input"
                         placeholder="Выберите дату"
                         :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
-                        @context="onContext"
                       ></b-form-datepicker>
                     </b-input-group>
                   </b-form-group>

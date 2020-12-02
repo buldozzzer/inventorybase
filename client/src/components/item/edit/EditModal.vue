@@ -320,27 +320,7 @@ export default {
       otssCategories: [1, 2, 3, 'Не секретно'],
       conditions: ['Исправно', 'Неисправно'],
       operation: ['Используется', 'Не используется'],
-      itemForm: {
-        name: '',
-        user: '',
-        responsible: '',
-        components: [],
-        inventory_n: '',
-        otss_category: '',
-        condition: '',
-        unit_from: '',
-        in_operation: '',
-        date_of_receipt: null,
-        number_of_receipt: '',
-        requisites: '',
-        transfer_date: null,
-        otss_requisites: '',
-        fault_document_requisites: '',
-        spsi_requisites: '',
-        transfer_requisites: '',
-        comment: '',
-        last_check: null
-      },
+      initForm: null,
     }
   },
   methods: {
@@ -387,6 +367,7 @@ export default {
     },
   },
   async created() {
+    this.initForm = this.selectedItem
   }
 };
 </script>
