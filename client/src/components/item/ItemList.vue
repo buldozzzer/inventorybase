@@ -4,6 +4,7 @@
     <b-form-group>
       <b-button variant="danger" class="mt-3" @click="removeItems(selected)">Удалить выбранные</b-button>
       <b-button variant="danger" class="mt-3" @click="selectAllRows">Выбрать все записи</b-button>
+      <b-button variant="success" class="my-3" v-b-modal.add-item-modal>Добавить запись</b-button>
       <vue-range-slider ref="slider"
                         v-model="sliderValue"
                         @change="stickyHeaderHeightToString"
@@ -75,10 +76,13 @@
           <span aria-hidden="true">&nbsp;</span>
           <span class="sr-only">Not selected</span>
         </template>
-
       </template>
+
     </b-table>
+    <add-modal :employee-initials="employeeInitials"/>
+    <edit-modal :employee-initials="employeeInitials"/>
   </div>
+
 </template>
 
 
@@ -88,13 +92,18 @@ import VueRangeSlider from "vue-range-slider";
 // eslint-disable-next-line
 import 'vue-range-slider/dist/vue-range-slider.css'
 // eslint-disable-next-line
-import { bus } from '../main'
+import {bus} from '../../main'
 
+// eslint-disable-next-line no-unused-vars
+import AddModal from './add/AddModal';
+import EditModal from './edit/EditModal';
 export default {
   /* eslint-disable */
   name: "ItemList",
   components: {
-    VueRangeSlider
+    VueRangeSlider,
+    AddModal,
+    EditModal
   },
   data() {
     return {
@@ -220,16 +229,23 @@ export default {
         },
       ],
       items: [],
-      createdItem: {},
+      selectedItem: {},
       selectMode: 'range',
       selected: [],
       sliderValue: 700,
+      employeeList: [],
+      employeeInitials: [],
     };
   },
   methods: {
 
     stickyHeaderHeightToString() {
       return this.sliderValue.toString() + 'px'
+    },
+    async fetchEmployees() {
+      const response = await fetch('http://localhost:8000/api/v1/employee/')
+      this.employeeList = await response.json()
+      this.employeeToString()
     },
     async fetchItems() {
       const response = await fetch('http://localhost:8000/api/v1/item/')
@@ -285,6 +301,7 @@ export default {
     },
     onRowSelected(items) {
       this.selected = items
+
     },
     selectAllRows() {
       this.$refs.selectableTable.selectAllRows()
@@ -292,10 +309,21 @@ export default {
     clearSelected() {
       this.$refs.selectableTable.clearSelected()
     },
+    employeeToString() {
+      for (let i = 0; i < this.employeeList.length; i++) {
+        this.employeeInitials.push(
+          this.employeeList[i].surname + ' ' +
+          this.employeeList[i].name[0] + '.' +
+          this.employeeList[i].secname[0] + '.');
+      }
+    },
   },
+
   async created() {
     await this.fetchItems()
-    await bus.$on('update', (data) => this.fetchItems())
+    await this.fetchEmployees()
+    //обновление списка после добавления элемента
+    await bus.$on('updateList', (data) => this.fetchItems())
   },
 };
 </script>

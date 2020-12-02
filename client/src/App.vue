@@ -28,23 +28,13 @@
       </b-navbar>
     </div>
     <router-view/>
-    <add-modal></add-modal>
   </div>
 </template>
 
 <script>
-/* eslint-disable */
-import AddModal from "./components/AddModal";
 
 export default {
   name: 'App',
-
-  components: {
-    AddModal,
-  },
-  methods: {
-
-  }
 };
 
 </script>

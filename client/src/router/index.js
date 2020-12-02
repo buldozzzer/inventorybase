@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 /* eslint-disable */
-import EmployeeList from "@/components/EmployeeList";
-import ItemList from "@/components/ItemList";
+import EmployeeList from "@/components/employee/EmployeeList";
+import ItemList from "@/components/item/ItemList";
 
 Vue.use(Router);
 

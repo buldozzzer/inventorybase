@@ -311,11 +311,14 @@
 // eslint-disable-next-line
 import ComponentScrollableList from "./ComponentScrollableList";
 // eslint-disable-next-line
-import { bus } from '../main'
+import {bus} from '../../../main'
 
 export default {
   /* eslint-disable */
   name: "AddModal",
+  props:{
+    employeeInitials: Array,
+  },
   components: {
     ComponentScrollableList
   },
@@ -326,25 +329,25 @@ export default {
       operation: ['Используется', 'Не используется'],
       employeeList: [],
       itemForm: {
-        name: '',//=
-        user: '',//=
-        responsible: '',//=
+        name: '',
+        user: '',
+        responsible: '',
         components: [],
-        inventory_n: '',//=
-        otss_category: '',//=
-        condition: '',//=
-        unit_from: '',//=
-        in_operation: '',//=
-        date_of_receipt: null,//=
-        number_of_receipt: '',//=
-        requisites: '',//=
-        transfer_date: null,//=
-        otss_requisites: '', //=
-        fault_document_requisites: '',//=
+        inventory_n: '',
+        otss_category: '',
+        condition: '',
+        unit_from: '',
+        in_operation: '',
+        date_of_receipt: null,
+        number_of_receipt: '',
+        requisites: '',
+        transfer_date: null,
+        otss_requisites: '',
+        fault_document_requisites: '',
         spsi_requisites: '',
         transfer_requisites: '',
         comment: '',
-        last_check: null //=
+        last_check: null
       },
       employeeInitials: [],
     }
@@ -352,10 +355,6 @@ export default {
   },
   methods: {
     /* eslint-disable */
-    async fetchEmployees() {
-      const response = await fetch('http://localhost:8000/api/v1/employee/')
-      this.employeeList = await response.json()
-    },
     async createItem(payload) {
       const response = await fetch('http://localhost:8000/api/v1/item/', {
         method: 'POST',
@@ -369,7 +368,7 @@ export default {
       if (response.status !== 201) {
         alert(JSON.stringify(await response.json(), null, 2));
       }
-      bus.$emit('update')
+      bus.$emit('updateList')
     },
     initForm() {
       this.itemForm.name = '';
@@ -429,21 +428,11 @@ export default {
       this.createItem(payload);
       this.initForm();
     },
-    employeeToString() {
-      for (let i = 0; i < this.employeeList.length; i++) {
-        this.employeeInitials.push(
-          this.employeeList[i].surname + ' ' +
-          this.employeeList[i].name[0] + '.' +
-          this.employeeList[i].secname[0] + '.');
-      }
-    },
     isIntroduced: function (left, right) {
       return left !== right
     },
   },
   async created() {
-    await this.fetchEmployees()
-    this.employeeToString()
   }
 }
 </script>
