@@ -40,7 +40,7 @@
       </template>
       <template #cell(edit_remove)="row">
         <div class="text-nowrap">
-          <b-button variant="warning" v-b-modal.edit-item-modal>Редактировать</b-button>
+          <b-button variant="warning" v-b-modal.edit-item-modal @click="selectToEditItem(row.item)">Редактировать</b-button>
           <br>
           <b-button variant="danger" class="mt-3" @click="removeItem(row.item)">Удалить</b-button>
         </div>
@@ -320,6 +320,10 @@ export default {
           this.employeeList[i].secname[0] + '.');
       }
     },
+    selectToEditItem(item){
+      this.selectedItem = []
+      this.selectedItem = item
+    }
   },
 
   async created() {

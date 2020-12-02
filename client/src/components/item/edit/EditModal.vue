@@ -320,7 +320,7 @@ export default {
       otssCategories: [1, 2, 3, 'Не секретно'],
       conditions: ['Исправно', 'Неисправно'],
       operation: ['Используется', 'Не используется'],
-      initForm: null,
+      itemForm: null,
     }
   },
   methods: {
@@ -367,7 +367,7 @@ export default {
     },
   },
   async created() {
-    this.initForm = this.selectedItem
+    this.itemForm = this.selectedItem
   }
 };
 </script>

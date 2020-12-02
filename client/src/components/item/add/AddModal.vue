@@ -313,9 +313,7 @@ import {bus} from '../../../main'
 export default {
   /* eslint-disable */
   name: "AddModal",
-  props:{
-    employeeInitials: Array,
-  },
+  props:['employeeInitials'],
   components: {
     ComponentScrollableList
   },
@@ -346,7 +344,6 @@ export default {
         comment: '',
         last_check: null
       },
-      employeeInitials: [],
     }
 
   },
@@ -429,7 +426,7 @@ export default {
       return left !== right
     },
   },
-  async created() {
+  created() {
   }
 }
 </script>
