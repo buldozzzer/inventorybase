@@ -1,7 +1,7 @@
 <!-- eslint-disable -->
 <template>
-  <b-modal ref="editItemModal"
-           id="edit-item-modal"
+  <b-modal id="edit-item-modal"
+           ref="editItemModal"
            title="Добавить запись в базу мат. ценностей"
            size="xl"
            no-close-on-backdrop
@@ -22,6 +22,7 @@
                     <b-form-input id="form-name-input"
                                   type="text"
                                   v-model="itemForm.name"
+                                  :value="itemForm.name"
                                   required
                                   :state="isIntroduced(itemForm.name, '')"
                                   placeholder="Введите наименование мат. ценности">
@@ -151,7 +152,6 @@
                         required
                         placeholder="Выберите дату"
                         :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
-                        @context="onContext"
                       ></b-form-datepicker>
                     </b-input-group>
                   </b-form-group>
@@ -185,7 +185,6 @@
                         aria-controls="last_check-input"
                         placeholder="Выберите дату"
                         :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
-                        @context="onContext"
                       ></b-form-datepicker>
                     </b-input-group>
                   </b-form-group>
@@ -217,7 +216,6 @@
                         aria-controls="date_of_transfer-input"
                         placeholder="Выберите дату"
                         :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
-                        @context="onContext"
                       ></b-form-datepicker>
                     </b-input-group>
                   </b-form-group>
@@ -294,14 +292,14 @@
               </b-row>
             </b-container>
           </div>
-<!--          <div class="col">-->
-<!--            <component-scrollable-list ref="componentScrollableList"/>-->
-<!--          </div>-->
+          <!--          <div class="col">-->
+          <!--            <component-scrollable-list ref="componentScrollableList"/>-->
+          <!--          </div>-->
         </div>
       </div>
       <div class="submit-reset-buttons">
         <b-button type="submit" variant="primary">Добавить запись</b-button>
-<!--        @click="initForm"-->
+        <!--        @click="initForm"-->
         <b-button type="reset" variant="danger">Отмена</b-button>
       </div>
     </b-form>
@@ -310,17 +308,15 @@
 
 <script>
 /* eslint-disable */
-import { bus } from '../../../main'
-
 export default {
   name: 'editModal',
-  props: ['employeeInitials', 'selectedItem'],
-  data(){
+  props: ['employeeInitials', 'selectedItem', 'editItem'],
+  data() {
     return {
       otssCategories: [1, 2, 3, 'Не секретно'],
       conditions: ['Исправно', 'Неисправно'],
       operation: ['Используется', 'Не используется'],
-      itemForm: null,
+      itemForm: {}
     }
   },
   methods: {
@@ -330,45 +326,24 @@ export default {
     },
     onReset(evt) {
       evt.preventDefault();
-      this.$refs.addItemModal.hide();
+      this.$refs.editItemModal.hide();
       this.initForm();
     },
     onSubmit(evt) {
       evt.preventDefault();
+      this.$refs.editItemModal.hide();
+      // this.itemForm.components = this.$refs.componentScrollableList.createComponentList()
       debugger;
-      this.$refs.addItemModal.hide();
-      this.itemForm.components = this.$refs.componentScrollableList.createComponentList()
-      const payload = {
-        name: this.itemForm.name,
-        user: this.itemForm.user,
-        responsible: this.itemForm.responsible,
-        components: this.itemForm.components,
-        inventory_n: this.itemForm.inventory_n,
-        otss_category: this.itemForm.otss_category,
-        condition: this.itemForm.condition,
-        unit_from: this.itemForm.unit_from,
-        in_operation: this.itemForm.in_operation,
-        fault_document_requisites: this.itemForm.fault_document_requisites,
-        date_of_receipt: this.itemForm.date_of_receipt,
-        number_of_receipt: this.itemForm.number_of_receipt,
-        requisites: this.itemForm.requisites,
-        transfer_date: this.itemForm.transfer_date,
-        otss_requisites: this.itemForm.otss_requisites,
-        spsi_requisites: this.itemForm.spsi_requisites,
-        transfer_requisites: this.itemForm.transfer_requisites,
-        comment: this.itemForm.comment,
-        last_check: this.itemForm.last_check,
-      };
-      this.createItem(payload);
-      this.initForm();
+      const payload = this.selectedItem
+      this.editItem(payload)
     },
     isIntroduced: function (left, right) {
       return left !== right
     },
   },
-  async created() {
-    this.itemForm = this.selectedItem
-  }
+  created() {
+
+  },
 };
 </script>
 

@@ -40,7 +40,8 @@
       </template>
       <template #cell(edit_remove)="row">
         <div class="text-nowrap">
-          <b-button variant="warning" v-b-modal.edit-item-modal @click="selectToEditItem(row.item)">Редактировать</b-button>
+          <b-button variant="warning" v-b-modal.edit-item-modal @click="selectToEditItem(row.item)">Редактировать
+          </b-button>
           <br>
           <b-button variant="danger" class="mt-3" @click="removeItem(row.item)">Удалить</b-button>
         </div>
@@ -81,8 +82,10 @@
 
     </b-table>
     <add-modal :employee-initials="employeeInitials"/>
-    <edit-modal :employee-initials="employeeInitials"
-                :selected-item="selectedItem"/>
+    <edit-modal ref="editItemModal"
+                :employee-initials="employeeInitials"
+                :selected-item="selectedItem"
+                :edit-item="editItem"/>
   </div>
 
 </template>
@@ -320,9 +323,8 @@ export default {
           this.employeeList[i].secname[0] + '.');
       }
     },
-    selectToEditItem(item){
-      this.selectedItem = []
-      this.selectedItem = item
+    selectToEditItem(item) {
+      this.$refs.editItemModal.itemForm = item
     }
   },
 
