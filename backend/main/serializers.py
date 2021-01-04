@@ -40,6 +40,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
         )
         fields = "__all__"
 
+
 class ItemSerializer(serializers.ModelSerializer):
 
     class Meta:
