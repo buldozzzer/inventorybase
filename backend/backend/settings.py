@@ -1,5 +1,7 @@
 import os
 
+from pymongo import MongoClient
+
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'e(y)qn@-nzwoe&%skg)7+=3wbt5c*$-^-(^hjq@ov1pz&^p86o'
@@ -61,6 +63,10 @@ DATABASES = {
         'PORT': 27017
     }
 }
+
+# client = MongoClient('127.0.0.1', 27017)
+# db = client.ItemsDB
+
 
 AUTH_PASSWORD_VALIDATORS = [
     {
