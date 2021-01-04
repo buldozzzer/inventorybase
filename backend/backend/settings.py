@@ -1,5 +1,4 @@
 import os
-from pymongo import MongoClient
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
@@ -55,15 +54,13 @@ TEMPLATES = [
 WSGI_APPLICATION = 'backend.wsgi.application'
 
 DATABASES = {
-    # 'default': {
-    #     'ENGINE': 'djongo',
-    #     'NAME': 'ItemsDB',
-    #     'HOST': 'localhost',
-    #     'PORT': 27017
-    # }
+    'default': {
+        'ENGINE': 'djongo',
+        'NAME': 'ItemsDB',
+        'HOST': 'localhost',
+        'PORT': 27017
+    }
 }
-
-client = MongoClient('127.0.0.1', 27017)
 
 AUTH_PASSWORD_VALIDATORS = [
     {
