@@ -333,7 +333,6 @@ export default {
       evt.preventDefault();
       this.$refs.editItemModal.hide();
       // this.itemForm.components = this.$refs.componentScrollableList.createComponentList()
-      debugger;
       const payload = this.selectedItem
       this.editItem(payload)
     },

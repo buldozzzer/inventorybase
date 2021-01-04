@@ -5,14 +5,20 @@ from .models import Employee, Location, Component, Item
 
 class LocationSerializer(serializers.Serializer):
 
-    class Meta:
-        model = Location
-        fields = "__all__"
-
     object = serializers.CharField(max_length=50)
     corpus = serializers.CharField(max_length=50)
     cabinet = serializers.CharField(max_length=50)
     unit = serializers.CharField(max_length=50)
+
+    def create(self, validated_data):
+        return Location.objects.create()
+
+    def update(self, instance, validated_data):
+        pass
+
+    class Meta:
+        model = Location
+        fields = "__all__"
 
 
 class ComponentSerializer(serializers.Serializer):
@@ -39,6 +45,7 @@ class EmployeeSerializer(serializers.ModelSerializer):
             'id',
         )
         fields = "__all__"
+
 
 class ItemSerializer(serializers.ModelSerializer):
 
