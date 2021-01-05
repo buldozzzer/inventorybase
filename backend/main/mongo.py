@@ -2,7 +2,6 @@ import pymongo
 import datetime
 from bson import ObjectId
 
-
 __db_conn: pymongo.database.Database = None
 
 
@@ -15,7 +14,7 @@ def get_conn() -> pymongo.database.Database:
     global __db_conn
     if not __db_conn:
         set_conn(
-            host='localhost',
+            host='localhost',  # mongo
             port=27017,
             db_name='ItemsDB')
     return __db_conn

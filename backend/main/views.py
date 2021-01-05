@@ -36,6 +36,12 @@ class ItemView(APIView):
             'items': result, 'count': number_of_items
         })
 
+    def post(self, request):
+        collection = mongo.get_conn()['main_item']
+        item = request.data
+        item_id = collection.insert_one(item).inserted_id
+        return Response({"success": "Item '{}' created successfully"
+                        .format(item_id)})
     # def post(self, request):
     #     item = request.data.get('item')
     #     serializer = ItemSerializer(data=item)
