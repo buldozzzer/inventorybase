@@ -67,8 +67,6 @@ class Item(models.Model):
         ('Используется', 'Используется'),
         ('Не используется', 'Не используется')
     ]
-
-    id = models.AutoField('_id', primary_key=True)
     user = models.CharField('сотрудник, которому передали мат. ценность в пользование',
                             max_length=100, default='',
                             blank=True)
