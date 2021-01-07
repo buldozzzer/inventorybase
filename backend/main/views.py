@@ -83,3 +83,20 @@ class EmployeeView(APIView):
         return Response({
             'employees': result, 'count': number_of_items
         })
+
+    def post(self, request):
+        collection = mongo.get_conn()['main_employee']
+        employee = request.data
+        employee_id = collection.insert_one(employee).inserted_id
+        return Response({"message": "Employee with _id '{}' created successfully"
+                        .format(employee_id)})
+
+    def delete(self, request, pk):
+        collection = mongo.get_conn()['main_employee']
+        if collection:
+            collection.delete_one({"_id": ObjectId(pk)})
+            return Response({"message": "Employee with id `{}` has been deleted."
+                            .format(pk)}, status=204)
+        else:
+            Response({"message": "Employee with _id `{}` not found.".format(pk)}, status=404)
+
