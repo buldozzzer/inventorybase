@@ -41,7 +41,7 @@ class ItemView(APIView):
         collection = mongo.get_conn()['main_item']
         item = request.data
         item_id = collection.insert_one(item).inserted_id
-        return Response({"message": "Item '{}' created successfully"
+        return Response({"message": "Item '{}' created successfully."
                         .format(item_id)})
 
     def delete(self, request, pk):
@@ -88,7 +88,7 @@ class EmployeeView(APIView):
         collection = mongo.get_conn()['main_employee']
         employee = request.data
         employee_id = collection.insert_one(employee).inserted_id
-        return Response({"message": "Employee with _id '{}' created successfully"
+        return Response({"message": "Employee with _id '{}' created successfully."
                         .format(employee_id)})
 
     def delete(self, request, pk):
@@ -100,3 +100,16 @@ class EmployeeView(APIView):
         else:
             Response({"message": "Employee with _id `{}` not found.".format(pk)}, status=404)
 
+    def put(self, request, pk):
+        updated_fields = request.data
+        collection = mongo.get_conn()['main_employee']
+        if collection:
+            collection.update_one({
+                '_id': ObjectId(pk)
+            }, {
+                '$set': updated_fields
+            }, upsert=False)
+            return Response({"message": "Employee with id `{}` has been updated."
+                            .format(pk)})
+        else:
+            Response({"message": "Employee with _id `{}` not found.".format(pk)}, status=404)
