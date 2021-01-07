@@ -39,16 +39,16 @@ class ItemView(APIView):
     def post(self, request):
         collection = mongo.get_conn()['main_item']
         item = request.data
-        item['id'] = collection.count()
         item_id = collection.insert_one(item).inserted_id
-        return Response({"success": "Item '{}' created successfully"
+        return Response({"message": "Item '{}' created successfully"
                         .format(item_id)})
 
     def delete(self, request, pk):
         collection = mongo.get_conn()['main_item']
         if collection:
             collection.delete_one({"_id": ObjectId(pk)})
-            return Response({"message": "Item with id `{}` has been deleted.".format(pk)}, status=204)
+            return Response({"message": "Item with id `{}` has been deleted."
+                            .format(pk)}, status=204)
         else:
             Response({"message": "Item with _id `{}` not found.".format(pk)}, status=404)
 
