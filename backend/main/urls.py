@@ -19,4 +19,6 @@ app_name = 'main'
 urlpatterns = [
     path('items/', views.ItemView.as_view(), name='get_items'),
     path('items/<pk>', views.ItemView.as_view(), name='edit_item'),
+    path('employees/', views.EmployeeView.as_view(), name='get_employees'),
+    path('employees/<pk>', views.EmployeeView.as_view(), name='edit_employees'),
 ]
