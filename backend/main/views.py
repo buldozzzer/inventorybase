@@ -12,7 +12,7 @@
 # class EmployeeViewSet(ModelViewSet):
 #     queryset = Employee.objects.all()
 #     serializer_class = EmployeeSerializer
-
+from bson import ObjectId
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -43,6 +43,15 @@ class ItemView(APIView):
         item_id = collection.insert_one(item).inserted_id
         return Response({"success": "Item '{}' created successfully"
                         .format(item_id)})
+
+    def delete(self, request, pk):
+        collection = mongo.get_conn()['main_item']
+        if collection:
+            collection.delete_one({"_id": ObjectId(pk)})
+            return Response({"message": "Item with id `{}` has been deleted.".format(pk)}, status=204)
+        else:
+            Response({"message": "Item with _id `{}` not found.".format(pk)}, status=404)
+
     # def post(self, request):
     #     item = request.data.get('item')
     #     serializer = ItemSerializer(data=item)
