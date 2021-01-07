@@ -52,6 +52,19 @@ class ItemView(APIView):
         else:
             Response({"message": "Item with _id `{}` not found.".format(pk)}, status=404)
 
+    def put(self, request, pk):
+        updated_fields = request.data
+        collection = mongo.get_conn()['main_item']
+        if collection:
+            collection.update_one({
+                '_id': ObjectId(pk)
+            }, {
+                '$set': updated_fields
+            }, upsert=False)
+            return Response({"message": "Item with id `{}` has been updated."
+                            .format(pk)})
+        else:
+            Response({"message": "Item with _id `{}` not found.".format(pk)}, status=404)
     # def post(self, request):
     #     item = request.data.get('item')
     #     serializer = ItemSerializer(data=item)
