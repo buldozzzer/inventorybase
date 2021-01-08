@@ -56,10 +56,11 @@ class ItemView(APIView):
         updated_fields = request.data
         collection = mongo.get_conn()['main_item']
         if collection:
+            updated_fields.pop("_id")
             collection.update_one({
-                '_id': ObjectId(pk)
+                "_id": ObjectId(pk)
             }, {
-                '$set': updated_fields
+                "$set": updated_fields
             }, upsert=False)
             return Response({"message": "Item with id `{}` has been updated."
                             .format(pk)})

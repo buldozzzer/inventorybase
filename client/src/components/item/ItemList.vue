@@ -291,10 +291,11 @@ export default {
       await this.fetchItems()
     },
     async editItem(item) {
+      debugger;
       const _id = item['_id']
       const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
         method: 'PUT',
-        body: JSON.stringify(data),
+        body: JSON.stringify(item),
         headers: {
           'Accept': 'application/json',
           'Content-type': 'application/json'

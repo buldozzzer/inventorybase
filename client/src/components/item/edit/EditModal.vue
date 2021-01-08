@@ -333,7 +333,7 @@ export default {
       evt.preventDefault();
       this.$refs.editItemModal.hide();
       // this.itemForm.components = this.$refs.componentScrollableList.createComponentList()
-      const payload = this.selectedItem
+      const payload = this.itemForm
       this.editItem(payload)
     },
     isIntroduced: function (left, right) {
