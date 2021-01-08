@@ -1,7 +1,7 @@
 <script>
 /* eslint-disable */
 export default {
-  name: "ComponentScrollableList",
+  name: "ComponentList",
   data() {
     return {
 

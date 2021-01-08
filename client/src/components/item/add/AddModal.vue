@@ -292,7 +292,7 @@
             </b-container>
           </div>
           <div class="col">
-            <component-scrollable-list ref="componentScrollableList"/>
+            <component-list ref="componentList"/>
           </div>
         </div>
       </div>
@@ -306,16 +306,16 @@
 
 <script>
 // eslint-disable-next-line
-import ComponentScrollableList from "./ComponentScrollableList";
+import ComponentList from "./ComponentList";
 // eslint-disable-next-line
-import {bus} from '../../../main'
+import { bus } from '../../../main'
 
 export default {
   /* eslint-disable */
   name: "AddModal",
   props:['employeeInitials'],
   components: {
-    ComponentScrollableList
+    ComponentList
   },
   data() {
     return {
@@ -350,7 +350,7 @@ export default {
   methods: {
     /* eslint-disable */
     async createItem(payload) {
-      const response = await fetch('http://localhost:8000/api/v1/item/', {
+      const response = await fetch(`http://localhost:8000/api/v1/item/`, {
         method: 'POST',
         headers: {
           'Accept': 'application/json',
@@ -395,9 +395,8 @@ export default {
     },
     onSubmit(evt) {
       evt.preventDefault();
-      debugger;
       this.$refs.addItemModal.hide();
-      this.itemForm.components = this.$refs.componentScrollableList.createComponentList()
+      this.itemForm.components = this.$refs.componentList.createComponentList()
       const payload = {
         name: this.itemForm.name,
         user: this.itemForm.user,
