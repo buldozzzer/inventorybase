@@ -161,7 +161,7 @@ export default {
         },
         'Компоненты',
         {
-          key: "response",
+          key: "responsible",
           label: "Ответсвенный сотрудник",
           sortable: true
         },
@@ -251,16 +251,18 @@ export default {
     async fetchEmployees() {
       const response = await fetch('http://localhost:8000/api/v1/employee/')
       this.employeeList = await response.json()
+      this.employeeList = this.employeeList['employees']
       this.employeeToString()
     },
     async fetchItems() {
       const response = await fetch('http://localhost:8000/api/v1/item/')
       this.items = await response.json()
+      this.items = this.items['items']
     },
     /* eslint-disable */
     async removeItem(item) {
-      const {id} = item;
-      const response = await fetch(`http://localhost:8000/api/v1/item/${id}/`, {
+      const _id = item['_id']
+      const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
         method: 'DELETE',
         headers: {
           'Accept': 'application/json',
@@ -273,9 +275,9 @@ export default {
       await this.fetchItems()
     },
     async removeItems(selectedItems) {
-      for (let element of selectedItems) {
-        const {id} = element;
-        const response = await fetch(`http://localhost:8000/api/v1/item/${id}/`, {
+      for (let item of selectedItems) {
+        const _id = item['_id']
+        const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
           method: 'DELETE',
           headers: {
             'Accept': 'application/json',
@@ -289,8 +291,8 @@ export default {
       await this.fetchItems()
     },
     async editItem(item) {
-      const {id} = item;
-      const response = await fetch(`http://localhost:8000/api/v1/item/${id}/`, {
+      const _id = item['_id']
+      const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
         method: 'PUT',
         body: JSON.stringify(data),
         headers: {

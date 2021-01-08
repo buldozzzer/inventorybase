@@ -28,13 +28,12 @@ class ItemView(APIView):
         collection = mongo.get_conn()['main_item']
         items = collection.find()
         if collection:
-            number_of_items = collection.count()
             for document in items:
                 document['_id'] = str(document['_id'])
                 result.append(document)
         # serializer = ItemSerializer(items, many=True)
         return Response({
-            'items': result, 'count': number_of_items
+            'items': result
         })
 
     def post(self, request):
@@ -75,13 +74,12 @@ class EmployeeView(APIView):
         collection = mongo.get_conn()['main_employee']
         employees = collection.find()
         if collection:
-            number_of_items = collection.count()
             for document in employees:
                 document['_id'] = str(document['_id'])
                 result.append(document)
         # serializer = ItemSerializer(employees, many=True)
         return Response({
-            'employees': result, 'count': number_of_items
+            'employees': result
         })
 
     def post(self, request):
