@@ -3,7 +3,7 @@
   <div>
     <b-form-group>
       <b-button variant="danger" class="mt-3" @click="removeItems(selected)">Удалить выбранные</b-button>
-      <b-button variant="danger" class="mt-3" @click="selectAllRows">Выбрать все записи</b-button>
+      <b-button variant="danger" class="mt-3" @click="selectAllRows">{{ selected.length === 0 ? 'Выбрать все записи' : 'Снять отметку' }}</b-button>
       <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>Добавить запись</b-button>
       <vue-range-slider class="mt-3" ref="slider"
                         v-model="sliderValue"
@@ -13,7 +13,6 @@
       ></vue-range-slider>
     </b-form-group>
     <!--    sticky-header="850px"-->
-    <!--    striped hover-->
     <b-table striped hover
              ref="selectableTable"
              selectable
@@ -313,10 +312,12 @@ export default {
       this.selectedItem = this.selected[0]
     },
     selectAllRows() {
-      this.$refs.selectableTable.selectAllRows()
-    },
-    clearSelected() {
-      this.$refs.selectableTable.clearSelected()
+      if (this.selected.length === 0) {
+        this.$refs.selectableTable.selectAllRows()
+      }
+      else {
+        this.$refs.selectableTable.clearSelected()
+      }
     },
     employeeToString() {
       for (let i = 0; i < this.employeeList.length; i++) {
