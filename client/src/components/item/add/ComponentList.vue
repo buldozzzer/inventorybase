@@ -1,214 +1,3 @@
-<script>
-/* eslint-disable */
-export default {
-  name: "ComponentList",
-  data() {
-    return {
-
-      show2: false,
-      show3: false,
-      show4: false,
-      show5: false,
-
-      component1: {
-        name: '',
-        serial_n: '',
-        category: '',
-        type: '',
-        view: '',
-        year: '',
-        cost: '',
-        location: {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }
-      },
-      component2: {
-        name: '',
-        serial_n: '',
-        category: '',
-        type: '',
-        view: '',
-        year: '',
-        cost: '',
-        location: {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }
-      },
-      component3: {
-        name: '',
-        serial_n: '',
-        category: '',
-        type: '',
-        view: '',
-        year: '',
-        cost: '',
-        location: {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }
-      },
-      component4: {
-        name: '',
-        serial_n: '',
-        category: '',
-        type: '',
-        view: '',
-        year: '',
-        cost: '',
-        location: {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }
-      },
-      component5: {
-        name: '',
-        serial_n: '',
-        category: '',
-        type: '',
-        view: '',
-        year: '',
-        cost: '',
-        location: {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }
-      },
-    }
-  },
-  methods: {
-    scrollIntoView(evt) {
-      evt.preventDefault()
-      const href = evt.target.getAttribute('href')
-      const el = href ? document.querySelector(href) : null
-      if (el) {
-        this.$refs.content.scrollTop = el.offsetTop
-      }
-    },
-    check(left, right) {
-      return left !== right
-    },
-    initComponentForm() {
-      let emptyComponent = {
-        name: '',
-        serial_n: '',
-        category: '',
-        type: '',
-        view: '',
-        year: '',
-        location: {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }
-      }
-      this.component1 = emptyComponent
-      this.component2 = emptyComponent
-      this.component3 = emptyComponent
-      this.component4 = emptyComponent
-      this.component5 = emptyComponent
-    },
-    addComponent(component) {
-      let show = true
-      for (let key in component) {
-        if (component[key] === '' || component[key] === {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }) {
-          show = false
-          break
-        }
-        return show
-      }
-    },
-    createComponentList() {
-      let components = []
-      let check = true
-      for (let key in this.component1) {
-        if (this.component1[key] === '' || this.component1[key] === {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }) {
-          check = false
-        }
-      }
-      if (check) {
-        components.push(this.component1)
-      }
-      for (let key in this.component2) {
-        if (this.component2[key] === '' || this.component2[key] === {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }) {
-          check = false
-        }
-      }
-      if (check) {
-        components.push(this.component2)
-      }
-      for (let key in this.component3) {
-        if (this.component3[key] === '' || this.component3[key] === {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }) {
-          check = false
-        }
-      }
-      if (check) {
-        components.push(this.component3)
-      }
-      for (let key in this.component4) {
-        if (this.component4[key] === '' || this.component4[key] === {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }) {
-          check = false
-        }
-      }
-      if (check) {
-        components.push(this.component4)
-      }
-      for (let key in this.component5) {
-        if (this.component5[key] === '' || this.component5[key] === {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }) {
-          check = false
-        }
-      }
-      if (check) {
-        components.push(this.component5)
-      }
-      return components
-    }
-  },
-}
-</script>
-
 <template>
   <b-card no-body>
     <b-card no-body>
@@ -1128,6 +917,217 @@ export default {
     </b-card>
   </b-card>
 </template>
+
+<script>
+/* eslint-disable */
+export default {
+  name: "ComponentList",
+  data() {
+    return {
+
+      show2: false,
+      show3: false,
+      show4: false,
+      show5: false,
+
+      component1: {
+        name: '',
+        serial_n: '',
+        category: '',
+        type: '',
+        view: '',
+        year: '',
+        cost: '',
+        location: {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }
+      },
+      component2: {
+        name: '',
+        serial_n: '',
+        category: '',
+        type: '',
+        view: '',
+        year: '',
+        cost: '',
+        location: {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }
+      },
+      component3: {
+        name: '',
+        serial_n: '',
+        category: '',
+        type: '',
+        view: '',
+        year: '',
+        cost: '',
+        location: {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }
+      },
+      component4: {
+        name: '',
+        serial_n: '',
+        category: '',
+        type: '',
+        view: '',
+        year: '',
+        cost: '',
+        location: {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }
+      },
+      component5: {
+        name: '',
+        serial_n: '',
+        category: '',
+        type: '',
+        view: '',
+        year: '',
+        cost: '',
+        location: {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }
+      },
+    }
+  },
+  methods: {
+    scrollIntoView(evt) {
+      evt.preventDefault()
+      const href = evt.target.getAttribute('href')
+      const el = href ? document.querySelector(href) : null
+      if (el) {
+        this.$refs.content.scrollTop = el.offsetTop
+      }
+    },
+    check(left, right) {
+      return left !== right
+    },
+    initComponentForm() {
+      let emptyComponent = {
+        name: '',
+        serial_n: '',
+        category: '',
+        type: '',
+        view: '',
+        year: '',
+        location: {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }
+      }
+      this.component1 = emptyComponent
+      this.component2 = emptyComponent
+      this.component3 = emptyComponent
+      this.component4 = emptyComponent
+      this.component5 = emptyComponent
+    },
+    addComponent(component) {
+      let show = true
+      for (let key in component) {
+        if (component[key] === '' || component[key] === {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }) {
+          show = false
+          break
+        }
+        return show
+      }
+    },
+    createComponentList() {
+      let components = []
+      let check = true
+      for (let key in this.component1) {
+        if (this.component1[key] === '' || this.component1[key] === {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }) {
+          check = false
+        }
+      }
+      if (check) {
+        components.push(this.component1)
+      }
+      for (let key in this.component2) {
+        if (this.component2[key] === '' || this.component2[key] === {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }) {
+          check = false
+        }
+      }
+      if (check) {
+        components.push(this.component2)
+      }
+      for (let key in this.component3) {
+        if (this.component3[key] === '' || this.component3[key] === {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }) {
+          check = false
+        }
+      }
+      if (check) {
+        components.push(this.component3)
+      }
+      for (let key in this.component4) {
+        if (this.component4[key] === '' || this.component4[key] === {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }) {
+          check = false
+        }
+      }
+      if (check) {
+        components.push(this.component4)
+      }
+      for (let key in this.component5) {
+        if (this.component5[key] === '' || this.component5[key] === {
+          object: '',
+          corpus: '',
+          cabinet: '',
+          unit: ''
+        }) {
+          check = false
+        }
+      }
+      if (check) {
+        components.push(this.component5)
+      }
+      return components
+    }
+  },
+}
+</script>
 
 <style scoped>
 

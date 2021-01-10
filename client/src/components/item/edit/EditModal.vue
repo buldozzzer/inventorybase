@@ -292,9 +292,33 @@
               </b-row>
             </b-container>
           </div>
-          <!--          <div class="col">-->
-          <!--            <component-scrollable-list ref="componentScrollableList"/>-->
-          <!--          </div>-->
+          <div class="col">
+            <b-card no-body>
+              <b-nav pills card-header slot="header" v-b-scrollspy:nav-scroller>
+                <b-nav-item href="#" @click="scrollIntoView">1 компонент</b-nav-item>
+                <!--        eslint-disable-next-line-->
+                <b-nav-item href="#" @click="scrollIntoView">2 компонент</b-nav-item>
+                <!--        eslint-disable-next-line-->
+                <b-nav-item href="#" @click="scrollIntoView">3 компонент</b-nav-item>
+                <!--        eslint-disable-next-line-->
+                <b-nav-item href="#" @click="scrollIntoView">4 компонент</b-nav-item>
+                <!--        eslint-disable-next-line-->
+                <b-nav-item href="#" @click="scrollIntoView">5 компонент</b-nav-item>
+              </b-nav>
+              <b-card-body
+                id="nav-scroller"
+                ref="content"
+                style="position:relative; height:650px; overflow-y:scroll;">
+                <component-card ref="componentCard"
+                                v-for="component in itemForm['components']"
+                                :key="component.name"
+                                :components="itemForm['components']"
+                                :component="component"
+                                :check="isIntroduced"
+                />
+              </b-card-body>
+            </b-card>
+          </div>
         </div>
       </div>
       <div class="submit-reset-buttons">
@@ -308,42 +332,56 @@
 
 <script>
 /* eslint-disable */
-export default {
-  name: 'editModal',
-  props: ['employeeInitials', 'selectedItem', 'editItem'],
-  data() {
-    return {
-      otssCategories: [1, 2, 3, 'Не секретно'],
-      conditions: ['Исправно', 'Неисправно'],
-      operation: ['Используется', 'Не используется'],
-      itemForm: {}
-    }
-  },
-  methods: {
-    async fetchEmployees() {
-      const response = await fetch('http://localhost:8000/api/v1/employee/')
-      this.employeeList = await response.json()
-    },
-    onReset(evt) {
-      evt.preventDefault();
-      this.$refs.editItemModal.hide();
-      this.initForm();
-    },
-    onSubmit(evt) {
-      evt.preventDefault();
-      this.$refs.editItemModal.hide();
-      // this.itemForm.components = this.$refs.componentScrollableList.createComponentList()
-      const payload = this.itemForm
-      this.editItem(payload)
-    },
-    isIntroduced: function (left, right) {
-      return left !== right
-    },
-  },
-  created() {
+  import ComponentCard from "./ComponentCard";
 
-  },
-};
+  export default {
+    name: 'editModal',
+    props: ['employeeInitials', 'editItem'],
+    components: {
+      ComponentCard
+    },
+    data() {
+      return {
+        otssCategories: [1, 2, 3, 'Не секретно'],
+        conditions: ['Исправно', 'Неисправно'],
+        operation: ['Используется', 'Не используется'],
+        component: null,
+        itemForm: {}
+      }
+    },
+    methods: {
+      async fetchEmployees() {
+        const response = await fetch('http://localhost:8000/api/v1/employee/')
+        this.employeeList = await response.json()
+      },
+      onReset(evt) {
+        evt.preventDefault();
+        this.$refs.editItemModal.hide();
+        this.initForm();
+      },
+      onSubmit(evt) {
+        evt.preventDefault();
+        this.$refs.editItemModal.hide();
+        // this.itemForm.components = this.$refs.componentScrollableList.createComponentList()
+        const payload = this.itemForm
+        this.editItem(payload)
+      },
+      isIntroduced(left, right) {
+        return left !== right
+      },
+      scrollIntoView(evt) {
+      evt.preventDefault()
+      const href = evt.target.getAttribute('href')
+      const el = href ? document.querySelector(href) : null
+      if (el) {
+        this.$refs.content.scrollTop = el.offsetTop
+      }
+    },
+    },
+    created() {
+
+    },
+  };
 </script>
 
 <style scoped>

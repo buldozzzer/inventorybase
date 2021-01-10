@@ -2,7 +2,7 @@
   <!--    eslint-disable-->
   <div>
     <b-form-group>
-      <b-button variant="danger" class="mt-3" @click="removeItems(selected)">Удалить выбранные</b-button>
+      <b-button variant="danger" class="mt-3" v-if="selected.length !== 0" @click="removeItems(selected)">Удалить выбранные</b-button>
       <b-button variant="danger" class="mt-3" @click="selectAllRows">{{ selected.length === 0 ? 'Выбрать все записи' : 'Снять отметку' }}</b-button>
       <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>Добавить запись</b-button>
       <vue-range-slider class="mt-3" ref="slider"
@@ -83,7 +83,6 @@
     <add-modal :employee-initials="employeeInitials"/>
     <edit-modal ref="editItemModal"
                 :employee-initials="employeeInitials"
-                :selected-item="selectedItem"
                 :edit-item="editItem"/>
   </div>
 
