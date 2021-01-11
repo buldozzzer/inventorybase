@@ -150,6 +150,9 @@
                         :state="isIntroduced(itemForm.date_of_receipt, null)"
                         aria-controls="date_of_receipt-input"
                         required
+                        today-button
+                        reset-button
+                        close-button
                         placeholder="Выберите дату"
                         :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
                       ></b-form-datepicker>
@@ -184,6 +187,9 @@
                         v-model="itemForm.last_check"
                         aria-controls="last_check-input"
                         placeholder="Выберите дату"
+                        today-button
+                        reset-button
+                        close-button
                         :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
                       ></b-form-datepicker>
                     </b-input-group>
@@ -215,6 +221,9 @@
                         v-model="itemForm.transfer_date"
                         aria-controls="date_of_transfer-input"
                         placeholder="Выберите дату"
+                        today-button
+                        reset-button
+                        close-button
                         :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
                       ></b-form-datepicker>
                     </b-input-group>
@@ -328,7 +337,7 @@
 </template>
 
 <script>
-/* eslint-disable */
+  /* eslint-disable */
   import ComponentCard from "./ComponentCard";
 
   export default {

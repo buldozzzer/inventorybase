@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h4 :id="'component'+component.id">Компонент</h4>
+    <h4 :id="'component'+component.id">Компонент {{ component.id }}</h4>
     <b-container>
       <b-row>
         <b-col cols="12">

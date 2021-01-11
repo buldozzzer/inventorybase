@@ -149,6 +149,9 @@
                         :state="isIntroduced(itemForm.date_of_receipt, null)"
                         aria-controls="date_of_receipt-input"
                         required
+                        today-button
+                        reset-button
+                        close-button
                         placeholder="Выберите дату"
                         :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
                       ></b-form-datepicker>
@@ -183,6 +186,9 @@
                         v-model="itemForm.last_check"
                         aria-controls="last_check-input"
                         placeholder="Выберите дату"
+                        today-button
+                        reset-button
+                        close-button
                         :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
                       ></b-form-datepicker>
                     </b-input-group>
@@ -214,6 +220,9 @@
                         v-model="itemForm.transfer_date"
                         aria-controls="date_of_transfer-input"
                         placeholder="Выберите дату"
+                        today-button
+                        reset-button
+                        close-button
                         :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
                       ></b-form-datepicker>
                     </b-input-group>
@@ -305,129 +314,129 @@
 </template>
 
 <script>
-// eslint-disable-next-line
-import ComponentList from "./ComponentList";
-// eslint-disable-next-line
-import { bus } from '../../../main'
+  // eslint-disable-next-line
+  import ComponentList from "./ComponentList";
+  // eslint-disable-next-line
+  import {bus} from '../../../main'
 
-export default {
-  /* eslint-disable */
-  name: "AddModal",
-  props:['employeeInitials'],
-  components: {
-    ComponentList
-  },
-  data() {
-    return {
-      otssCategories: [1, 2, 3, 'Не секретно'],
-      conditions: ['Исправно', 'Неисправно'],
-      operation: ['Используется', 'Не используется'],
-      employeeList: [],
-      itemForm: {
-        name: '',
-        user: '',
-        responsible: '',
-        components: [],
-        inventory_n: '',
-        otss_category: '',
-        condition: '',
-        unit_from: '',
-        in_operation: '',
-        date_of_receipt: null,
-        number_of_receipt: '',
-        requisites: '',
-        transfer_date: null,
-        otss_requisites: '',
-        fault_document_requisites: '',
-        spsi_requisites: '',
-        transfer_requisites: '',
-        comment: '',
-        last_check: null
-      },
-    }
-
-  },
-  methods: {
+  export default {
     /* eslint-disable */
-    async createItem(payload) {
-      const response = await fetch(`http://localhost:8000/api/v1/item/`, {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-type': 'application/json'
+    name: "AddModal",
+    props: ['employeeInitials'],
+    components: {
+      ComponentList
+    },
+    data() {
+      return {
+        otssCategories: [1, 2, 3, 'Не секретно'],
+        conditions: ['Исправно', 'Неисправно'],
+        operation: ['Используется', 'Не используется'],
+        employeeList: [],
+        itemForm: {
+          name: '',
+          user: '',
+          responsible: '',
+          components: [],
+          inventory_n: '',
+          otss_category: '',
+          condition: '',
+          unit_from: '',
+          in_operation: '',
+          date_of_receipt: null,
+          number_of_receipt: '',
+          requisites: '',
+          transfer_date: null,
+          otss_requisites: '',
+          fault_document_requisites: '',
+          spsi_requisites: '',
+          transfer_requisites: '',
+          comment: '',
+          last_check: null
         },
-        body: JSON.stringify(payload)
-      });
-      /* eslint-disable */
-      if (response.status !== 201) {
-        alert(JSON.stringify(await response.json(), null, 2));
       }
-      bus.$emit('updateList')
-    },
-    initForm() {
-      this.itemForm.name = '';
-      this.itemForm.user = '';
-      this.itemForm.responsible = '';
-      this.itemForm.components = [];
-      this.itemForm.inventory_n = '';
-      this.itemForm.otss_category = '';
-      this.itemForm.condition = '';
-      this.itemForm.unit_from = '';
-      this.itemForm.in_operation = '';
-      this.itemForm.fault_document_requisites = '';
-      this.itemForm.date_of_receipt = null;
-      this.itemForm.number_of_receipt = '';
-      this.itemForm.requisites = '';
-      this.itemForm.transfer_date = null;
-      this.itemForm.otss_requisites = '';
-      this.itemForm.spsi_requisites = '';
-      this.itemForm.transfer_requisites = '';
-      this.itemForm.comment = '';
-      this.itemForm.last_check = null;
 
-      this.$refs.componentScrollableList.initComponentForm()
     },
+    methods: {
+      /* eslint-disable */
+      async createItem(payload) {
+        const response = await fetch(`http://localhost:8000/api/v1/item/`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        /* eslint-disable */
+        if (response.status !== 201) {
+          alert(JSON.stringify(await response.json(), null, 2));
+        }
+        bus.$emit('updateList')
+      },
+      initForm() {
+        this.itemForm.name = '';
+        this.itemForm.user = '';
+        this.itemForm.responsible = '';
+        this.itemForm.components = [];
+        this.itemForm.inventory_n = '';
+        this.itemForm.otss_category = '';
+        this.itemForm.condition = '';
+        this.itemForm.unit_from = '';
+        this.itemForm.in_operation = '';
+        this.itemForm.fault_document_requisites = '';
+        this.itemForm.date_of_receipt = null;
+        this.itemForm.number_of_receipt = '';
+        this.itemForm.requisites = '';
+        this.itemForm.transfer_date = null;
+        this.itemForm.otss_requisites = '';
+        this.itemForm.spsi_requisites = '';
+        this.itemForm.transfer_requisites = '';
+        this.itemForm.comment = '';
+        this.itemForm.last_check = null;
 
-    onReset(evt) {
-      evt.preventDefault();
-      this.$refs.addItemModal.hide();
-      this.initForm();
+        this.$refs.componentScrollableList.initComponentForm()
+      },
+
+      onReset(evt) {
+        evt.preventDefault();
+        this.$refs.addItemModal.hide();
+        this.initForm();
+      },
+      onSubmit(evt) {
+        evt.preventDefault();
+        this.$refs.addItemModal.hide();
+        this.itemForm.components = this.$refs.componentList.createComponentList()
+        const payload = {
+          name: this.itemForm.name,
+          user: this.itemForm.user,
+          responsible: this.itemForm.responsible,
+          components: this.itemForm.components,
+          inventory_n: this.itemForm.inventory_n,
+          otss_category: this.itemForm.otss_category,
+          condition: this.itemForm.condition,
+          unit_from: this.itemForm.unit_from,
+          in_operation: this.itemForm.in_operation,
+          fault_document_requisites: this.itemForm.fault_document_requisites,
+          date_of_receipt: this.itemForm.date_of_receipt,
+          number_of_receipt: this.itemForm.number_of_receipt,
+          requisites: this.itemForm.requisites,
+          transfer_date: this.itemForm.transfer_date,
+          otss_requisites: this.itemForm.otss_requisites,
+          spsi_requisites: this.itemForm.spsi_requisites,
+          transfer_requisites: this.itemForm.transfer_requisites,
+          comment: this.itemForm.comment,
+          last_check: this.itemForm.last_check,
+        };
+        this.createItem(payload);
+        this.initForm();
+      },
+      isIntroduced: function (left, right) {
+        return left !== right
+      },
     },
-    onSubmit(evt) {
-      evt.preventDefault();
-      this.$refs.addItemModal.hide();
-      this.itemForm.components = this.$refs.componentList.createComponentList()
-      const payload = {
-        name: this.itemForm.name,
-        user: this.itemForm.user,
-        responsible: this.itemForm.responsible,
-        components: this.itemForm.components,
-        inventory_n: this.itemForm.inventory_n,
-        otss_category: this.itemForm.otss_category,
-        condition: this.itemForm.condition,
-        unit_from: this.itemForm.unit_from,
-        in_operation: this.itemForm.in_operation,
-        fault_document_requisites: this.itemForm.fault_document_requisites,
-        date_of_receipt: this.itemForm.date_of_receipt,
-        number_of_receipt: this.itemForm.number_of_receipt,
-        requisites: this.itemForm.requisites,
-        transfer_date: this.itemForm.transfer_date,
-        otss_requisites: this.itemForm.otss_requisites,
-        spsi_requisites: this.itemForm.spsi_requisites,
-        transfer_requisites: this.itemForm.transfer_requisites,
-        comment: this.itemForm.comment,
-        last_check: this.itemForm.last_check,
-      };
-      this.createItem(payload);
-      this.initForm();
-    },
-    isIntroduced: function (left, right) {
-      return left !== right
-    },
-  },
-  created() {
+    created() {
+    }
   }
-}
 </script>
 
 <style scoped>
