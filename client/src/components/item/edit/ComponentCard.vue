@@ -1,7 +1,7 @@
 <template>
   <div>
-    <h4>компонент</h4>
-    <b-container id="component">
+    <h4 :id="'component'+component.id">Компонент</h4>
+    <b-container>
       <b-row>
         <b-col cols="12">
           <b-form-group id="form-comp_name-group"
@@ -170,11 +170,11 @@
         </b-col>
       </b-row>
 
-      <b-row v-if="!show2">
-        <b-col cols="4">
-          <b-button @click="show2=addComponent(component)">Добавить компонент</b-button>
-        </b-col>
-      </b-row>
+<!--      <b-row v-if="!show2">-->
+<!--        <b-col cols="4">-->
+<!--          <b-button @click="show2=addComponent(component)">Добавить компонент</b-button>-->
+<!--        </b-col>-->
+<!--      </b-row>-->
     </b-container>
   </div>
 </template>
@@ -186,13 +186,14 @@
     props:['components', 'component'],
     data(){
       return{
+        id: null
       }
     },
     methods:{
       check(left, right){
         return left !== right
       }
-    }
+    },
   }
 </script>
 

@@ -295,15 +295,13 @@
           <div class="col">
             <b-card no-body>
               <b-nav pills card-header slot="header" v-b-scrollspy:nav-scroller>
-                <b-nav-item href="#" @click="scrollIntoView">1 компонент</b-nav-item>
-                <!--        eslint-disable-next-line-->
-                <b-nav-item href="#" @click="scrollIntoView">2 компонент</b-nav-item>
-                <!--        eslint-disable-next-line-->
-                <b-nav-item href="#" @click="scrollIntoView">3 компонент</b-nav-item>
-                <!--        eslint-disable-next-line-->
-                <b-nav-item href="#" @click="scrollIntoView">4 компонент</b-nav-item>
-                <!--        eslint-disable-next-line-->
-                <b-nav-item href="#" @click="scrollIntoView">5 компонент</b-nav-item>
+                <b-nav-item @click="scrollIntoView"
+                            v-for="component in itemForm['components']"
+                            :key="component.id"
+                            :href="'#component'+component.id">
+                  Компонент {{ component.id }}
+                </b-nav-item>
+
               </b-nav>
               <b-card-body
                 id="nav-scroller"
@@ -311,10 +309,9 @@
                 style="position:relative; height:650px; overflow-y:scroll;">
                 <component-card ref="componentCard"
                                 v-for="component in itemForm['components']"
-                                :key="component.name"
+                                :key="component.id"
                                 :components="itemForm['components']"
                                 :component="component"
-                                :check="isIntroduced"
                 />
               </b-card-body>
             </b-card>
@@ -345,7 +342,7 @@
         otssCategories: [1, 2, 3, 'Не секретно'],
         conditions: ['Исправно', 'Неисправно'],
         operation: ['Используется', 'Не используется'],
-        component: null,
+        componentNames: [],
         itemForm: {}
       }
     },
@@ -370,16 +367,13 @@
         return left !== right
       },
       scrollIntoView(evt) {
-      evt.preventDefault()
-      const href = evt.target.getAttribute('href')
-      const el = href ? document.querySelector(href) : null
-      if (el) {
-        this.$refs.content.scrollTop = el.offsetTop
-      }
-    },
-    },
-    created() {
-
+        evt.preventDefault()
+        const href = evt.target.getAttribute('href')
+        const el = href ? document.querySelector(href) : null
+        if (el) {
+          this.$refs.content.scrollTop = el.offsetTop
+        }
+      },
     },
   };
 </script>

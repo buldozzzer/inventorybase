@@ -39,6 +39,10 @@ class ItemView(APIView):
     def post(self, request):
         collection = mongo.get_conn()['main_item']
         item = request.data
+        index = 1
+        for component in item['components']:
+            component['id'] = index
+            index += 1
         item_id = collection.insert_one(item).inserted_id
         return Response({"message": "Item '{}' created successfully."
                         .format(item_id)})
@@ -57,6 +61,11 @@ class ItemView(APIView):
         collection = mongo.get_conn()['main_item']
         if collection:
             updated_fields.pop("_id")
+            if updated_fields['components']:
+                index = 1
+                for component in updated_fields['components']:
+                    component['id'] = index
+                    index += 1
             collection.update_one({
                 "_id": ObjectId(pk)
             }, {
