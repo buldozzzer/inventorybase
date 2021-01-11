@@ -34,7 +34,7 @@ class ItemView(APIView):
         # serializer = ItemSerializer(items, many=True)
         return Response({
             'items': result
-        })
+        }, status=200)
 
     def post(self, request):
         collection = mongo.get_conn()['main_item']
@@ -45,7 +45,7 @@ class ItemView(APIView):
             index += 1
         item_id = collection.insert_one(item).inserted_id
         return Response({"message": "Item '{}' created successfully."
-                        .format(item_id)})
+                        .format(item_id)}, status=201)
 
     def delete(self, request, pk):
         collection = mongo.get_conn()['main_item']
@@ -72,7 +72,7 @@ class ItemView(APIView):
                 "$set": updated_fields
             }, upsert=False)
             return Response({"message": "Item with id `{}` has been updated."
-                            .format(pk)})
+                            .format(pk)}, status=202)
         else:
             Response({"message": "Item with _id `{}` not found.".format(pk)}, status=404)
 

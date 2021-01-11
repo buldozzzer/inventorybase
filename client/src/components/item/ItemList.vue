@@ -299,8 +299,8 @@ export default {
         },
       });
       const json = await response.json();
-      console.log('Успех:', JSON.stringify(json));
-      if (response.status !== 201) {
+      console.log(JSON.stringify(json));
+      if (response.status !== 202) {
         alert(JSON.stringify(await response.json(), null, 2));
       }
       await this.fetchItems()
