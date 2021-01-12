@@ -1,25 +1,50 @@
 <template>
   <!--    eslint-disable-->
   <div>
-    <b-form-group>
-      <b-button variant="danger" class="mt-3" v-if="selected.length !== 0" @click="removeItems(selected)">Удалить выбранные</b-button>
-      <b-button variant="danger" class="mt-3" @click="selectAllRows">{{ selected.length === 0 ? 'Выбрать все записи' : 'Снять отметку' }}</b-button>
-      <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>Добавить запись</b-button>
-      <vue-range-slider class="mt-3" ref="slider"
-                        v-model="sliderValue"
-                        @change="stickyHeaderHeightToString"
-                        min="300"
-                        max="1000"
-      ></vue-range-slider>
-    </b-form-group>
+    <b-container>
+      <b-row>
+        <b-col>
+          <b-button class="mt-3"
+                    v-if="selected.length !== 0" @click="removeItems(selected)">
+            Удалить выбранные
+          </b-button>
+        </b-col>
+        <b-col>
+<!--          variant="danger"-->
+          <b-button class="mt-3" @click="selectAllRows">
+            {{ selected.length === 0 ? 'Выбрать все записи' : 'Снять отметку' }}
+          </b-button>
+        </b-col>
+        <b-col>
+          <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>
+            Добавить запись
+          </b-button>
+        </b-col>
+        <b-col>
+          <vue-range-slider class="mt-3" ref="slider"
+                            v-model="sliderValue"
+                            @change="stickyHeaderHeightToString"
+                            min="300"
+                            max="1000"
+          ></vue-range-slider>
+        </b-col>
+      </b-row>
+    </b-container>
+    <filters class="mt-3"
+             ref="filtersForList"
+             :employee-initials="employeeInitials">
+    </filters>
     <!--    sticky-header="850px"-->
-    <b-table striped hover
+    <b-table class="mt-3"
+             striped hover
              ref="selectableTable"
              selectable
              :sort-by.sync="sortBy"
              v-bind:sticky-header="sliderValue+'px'"
              :items="items"
              :fields="itemFields"
+             :filter-function="filterFunction"
+             :filter="filters"
              @row-selected="onRowSelected">
       <template #head()="scope">
         <div class="text-nowrap">
@@ -39,7 +64,8 @@
       </template>
       <template #cell(edit_remove)="row">
         <div class="text-nowrap">
-          <b-button variant="warning" v-b-modal.edit-item-modal @click="selectToEditItem(row.item)">Редактировать
+          <b-button variant="warning" v-b-modal.edit-item-modal @click="selectToEditItem(row.item)">
+            Редактировать
           </b-button>
           <br>
           <b-button variant="danger" class="mt-3" @click="removeItem(row.item)">Удалить</b-button>
@@ -90,190 +116,173 @@
 
 
 <script>
-// eslint-disable-next-line
-import VueRangeSlider from "vue-range-slider";
-// eslint-disable-next-line
-import 'vue-range-slider/dist/vue-range-slider.css'
-// eslint-disable-next-line
-import {bus} from '../../main'
+/* eslint-disable */
+  import VueRangeSlider from "vue-range-slider";
+  import 'vue-range-slider/dist/vue-range-slider.css'
+  import {bus} from '../../main'
+  import Filters from "./Filters";
+  import AddModal from './add/AddModal';
+  import EditModal from './edit/EditModal';
 
-// eslint-disable-next-line no-unused-vars
-import AddModal from './add/AddModal';
-import EditModal from './edit/EditModal';
+  export default {
+    name: "ItemList",
+    components: {
+      VueRangeSlider,
+      AddModal,
+      EditModal,
+      Filters
+    },
+    data() {
+      return {
+        /* eslint-disable */
+        noCollapse: false,
+        sortBy: 'name',
+        componentFields: [
+          'index',
+          {
+            key: 'name',
+            label: "Наименование",
+          },
+          {
+            key: "serial_n",
+            label: "Серйный номер",
+          },
+          {
+            key: "category",
+            label: "Категория",
+          },
+          {
+            key: "type",
+            label: "Тип",
+          }, {
+            key: "view",
+            label: "Вид",
+          }, {
+            key: "location",
+            label: "Местонахождение",
+          },
+        ],
+        itemFields: [
+          {
+            key: "selected",
+            class: 'text-center'
+          }, {
+            key: "edit_remove",
+            stickyColumn: true,
+            isRowHeader: true,
+            class: 'text-center'
+          },
+          'index',
+          {
+            key: "name",
+            label: "Наименование",
+            sortable: true,
 
-export default {
-  /* eslint-disable */
-  name: "ItemList",
-  components: {
-    VueRangeSlider,
-    AddModal,
-    EditModal
-  },
-  data() {
-    return {
+          },
+          'Компоненты',
+          {
+            key: "responsible",
+            label: "Ответсвенный сотрудник",
+            sortable: true
+          },
+          {
+            key: "inventory_n",
+            label: "Инвентрный номер",
+            sortable: true,
+          },
+          {
+            key: "otss_category",
+            label: "Категория ОТСС",
+            sortable: true,
+          },
+          {
+            key: "condition",
+            label: "состояние",
+            sortable: true,
+          }, {
+            key: "unit_from",
+            label: "подразделение, откуда поступила мат. ценность",
+            sortable: true,
+          }, {
+            key: "in_operation",
+            label: "Используется?",
+            sortable: true,
+          }, {
+            key: "fault_document_requisites",
+            label: "документы о неисправности",
+            sortable: true,
+          }, {
+            key: "date_of_receipt",
+            label: "Дата передачи во времнное пользование",
+            sortable: true,
+          }, {
+            key: "number_of_receipt",
+            label: "номер требования о поступлении на учет",
+            sortable: true,
+          }, {
+            key: "requisites",
+            label: "реквизиты книги учета мат. ценностей",
+            sortable: true,
+          }, {
+            key: "transfer_date",
+            label: "дата передачи во временное пользование",
+            sortable: true,
+          }, {
+            key: "otss_requisites",
+            label: "реквизиты документа о категории ОТСС",
+            sortable: true,
+          }, {
+            key: "spsi_requisites",
+            label: "реквизиты документа о прохождении СПСИ",
+            sortable: true,
+          }, {
+            key: "transfer_requisites",
+            label: "реквизиты о передаче во временное пользование",
+            sortable: true,
+          }, {
+            key: "last_check",
+            label: "дата последней проверки",
+            sortable: true,
+          }, {
+            key: "comment",
+            label: "примечания",
+            sortable: true,
+          },
+          {
+            key: "user",
+            label: "сотрудник, которому передали мат. ценность в пользование",
+            sortable: true
+          },
+        ],
+        items: [],
+        selectedItem: {},
+        selected: [],
+        sliderValue: 700,
+        employeeList: [],
+        employeeInitials: [],
+        filters: {
+          responsible: null
+        }
+      };
+    },
+    methods: {
+
+      stickyHeaderHeightToString() {
+        return this.sliderValue.toString() + 'px'
+      },
+      async fetchEmployees() {
+        const response = await fetch('http://localhost:8000/api/v1/employee/')
+        this.employeeList = await response.json()
+        this.employeeList = this.employeeList['employees']
+        this.employeeToString()
+      },
+      async fetchItems() {
+        const response = await fetch('http://localhost:8000/api/v1/item/')
+        this.items = await response.json()
+        this.items = this.items['items']
+      },
       /* eslint-disable */
-      modes: ['multi', 'range'],
-      noCollapse: false,
-      sortBy: 'name',
-      componentFields: [
-        'index',
-        {
-          key: 'name',
-          label: "Наименование",
-        },
-        {
-          key: "serial_n",
-          label: "Серйный номер",
-        },
-        {
-          key: "category",
-          label: "Категория",
-        },
-        {
-          key: "type",
-          label: "Тип",
-        }, {
-          key: "view",
-          label: "Вид",
-        }, {
-          key: "location",
-          label: "Местонахождение",
-        },
-      ],
-      itemFields: [
-        {
-          key: "selected",
-          class: 'text-center'
-        }, {
-          key: "edit_remove",
-          stickyColumn: true,
-          isRowHeader: true,
-          class: 'text-center'
-        },
-        'index',
-        {
-          key: "name",
-          label: "Наименование",
-          sortable: true,
-
-        },
-        'Компоненты',
-        {
-          key: "responsible",
-          label: "Ответсвенный сотрудник",
-          sortable: true
-        },
-        {
-          key: "inventory_n",
-          label: "Инвентрный номер",
-          sortable: true,
-        },
-        {
-          key: "otss_category",
-          label: "Категория ОТСС",
-          sortable: true,
-        },
-        {
-          key: "condition",
-          label: "состояние",
-          sortable: true,
-        }, {
-          key: "unit_from",
-          label: "подразделение, откуда поступила мат. ценность",
-          sortable: true,
-        }, {
-          key: "in_operation",
-          label: "Используется?",
-          sortable: true,
-        }, {
-          key: "fault_document_requisites",
-          label: "документы о неисправности",
-          sortable: true,
-        }, {
-          key: "date_of_receipt",
-          label: "Дата передачи во времнное пользование",
-          sortable: true,
-        }, {
-          key: "number_of_receipt",
-          label: "номер требования о поступлении на учет",
-          sortable: true,
-        }, {
-          key: "requisites",
-          label: "реквизиты книги учета мат. ценностей",
-          sortable: true,
-        }, {
-          key: "transfer_date",
-          label: "дата передачи во временное пользование",
-          sortable: true,
-        }, {
-          key: "otss_requisites",
-          label: "реквизиты документа о категории ОТСС",
-          sortable: true,
-        }, {
-          key: "spsi_requisites",
-          label: "реквизиты документа о прохождении СПСИ",
-          sortable: true,
-        }, {
-          key: "transfer_requisites",
-          label: "реквизиты о передаче во временное пользование",
-          sortable: true,
-        }, {
-          key: "last_check",
-          label: "дата последней проверки",
-          sortable: true,
-        }, {
-          key: "comment",
-          label: "примечания",
-          sortable: true,
-        },
-        {
-          key: "user",
-          label: "сотрудник, которому передали мат. ценность в пользование",
-          sortable: true
-        },
-      ],
-      items: [],
-      selectedItem: {},
-      selectMode: 'range',
-      selected: [],
-      sliderValue: 700,
-      employeeList: [],
-      employeeInitials: [],
-    };
-  },
-  methods: {
-
-    stickyHeaderHeightToString() {
-      return this.sliderValue.toString() + 'px'
-    },
-    async fetchEmployees() {
-      const response = await fetch('http://localhost:8000/api/v1/employee/')
-      this.employeeList = await response.json()
-      this.employeeList = this.employeeList['employees']
-      this.employeeToString()
-    },
-    async fetchItems() {
-      const response = await fetch('http://localhost:8000/api/v1/item/')
-      this.items = await response.json()
-      this.items = this.items['items']
-    },
-    /* eslint-disable */
-    async removeItem(item) {
-      const _id = item['_id']
-      const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
-        method: 'DELETE',
-        headers: {
-          'Accept': 'application/json',
-          'Content-type': 'application/json'
-        },
-      });
-      if (response.status !== 204) {
-        alert(JSON.stringify(await response.json(), null, 2));
-      }
-      await this.fetchItems()
-    },
-    async removeItems(selectedItems) {
-      for (let item of selectedItems) {
+      async removeItem(item) {
         const _id = item['_id']
         const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
           method: 'DELETE',
@@ -281,62 +290,86 @@ export default {
             'Accept': 'application/json',
             'Content-type': 'application/json'
           },
-        })
+        });
         if (response.status !== 204) {
           alert(JSON.stringify(await response.json(), null, 2));
         }
-      }
-      await this.fetchItems()
+        await this.fetchItems()
+      },
+      async removeItems(selectedItems) {
+        for (let item of selectedItems) {
+          const _id = item['_id']
+          const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
+            method: 'DELETE',
+            headers: {
+              'Accept': 'application/json',
+              'Content-type': 'application/json'
+            },
+          })
+          if (response.status !== 204) {
+            alert(JSON.stringify(await response.json(), null, 2));
+          }
+        }
+        await this.fetchItems()
+      },
+      async editItem(item) {
+        const _id = item['_id']
+        const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
+          method: 'PUT',
+          body: JSON.stringify(item),
+          headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+          },
+        });
+        const json = await response.json();
+        console.log(JSON.stringify(json));
+        if (response.status !== 202) {
+          alert(JSON.stringify(await response.json(), null, 2));
+        }
+        await this.fetchItems()
+      },
+      onRowSelected(items) {
+        this.selected = items
+        this.selectedItem = this.selected[0]
+      },
+      selectAllRows() {
+        if (this.selected.length === 0) {
+          this.$refs.selectableTable.selectAllRows()
+        } else {
+          this.$refs.selectableTable.clearSelected()
+        }
+      },
+      employeeToString() {
+        for (let i = 0; i < this.employeeList.length; i++) {
+          this.employeeInitials.push(
+            this.employeeList[i].surname + ' ' +
+            this.employeeList[i].name[0] + '.' +
+            this.employeeList[i].secname[0] + '.');
+        }
+      },
+      selectToEditItem(item) {
+        this.$refs.editItemModal.itemForm = item
+      },
+      setFilters(){
+        this.filters = this.$refs.filtersForList.filters
+      },
+      filterFunction(row, val) {
+        const {responsible: e} = val;
+        return [
+          !e || e === row.responsible,
+        ].every(Boolean);
+      },
     },
-    async editItem(item) {
-      const _id = item['_id']
-      const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
-        method: 'PUT',
-        body: JSON.stringify(item),
-        headers: {
-          'Accept': 'application/json',
-          'Content-type': 'application/json'
-        },
-      });
-      const json = await response.json();
-      console.log(JSON.stringify(json));
-      if (response.status !== 202) {
-        alert(JSON.stringify(await response.json(), null, 2));
-      }
-      await this.fetchItems()
-    },
-    onRowSelected(items) {
-      this.selected = items
-      this.selectedItem = this.selected[0]
-    },
-    selectAllRows() {
-      if (this.selected.length === 0) {
-        this.$refs.selectableTable.selectAllRows()
-      }
-      else {
-        this.$refs.selectableTable.clearSelected()
-      }
-    },
-    employeeToString() {
-      for (let i = 0; i < this.employeeList.length; i++) {
-        this.employeeInitials.push(
-          this.employeeList[i].surname + ' ' +
-          this.employeeList[i].name[0] + '.' +
-          this.employeeList[i].secname[0] + '.');
-      }
-    },
-    selectToEditItem(item) {
-      this.$refs.editItemModal.itemForm = item
-    }
-  },
 
-  async created() {
-    await this.fetchItems()
-    await this.fetchEmployees()
-    //обновление списка после добавления элемента
-    await bus.$on('updateList', (data) => this.fetchItems())
-  },
-};
+    async created() {
+      await this.fetchItems()
+      await this.fetchEmployees()
+      await this.setFilters()
+      //обновление списка после добавления элемента
+      await bus.$on('updateList', (data) => this.fetchItems())
+    },
+  };
 </script>
 
 <style>

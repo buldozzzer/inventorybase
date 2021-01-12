@@ -5,7 +5,7 @@ import Vue from 'vue';
 import App from './App';
 import router from './router';
 import { BootstrapVue, IconsPlugin } from 'bootstrap-vue'
-
+// import './assets/scss/app.scss'
 
 Vue.use(BootstrapVue)
 
