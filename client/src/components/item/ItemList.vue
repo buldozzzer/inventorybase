@@ -10,7 +10,7 @@
           </b-button>
         </b-col>
         <b-col>
-<!--          variant="danger"-->
+          <!--          variant="danger"-->
           <b-button class="mt-3" @click="selectAllRows">
             {{ selected.length === 0 ? 'Выбрать все записи' : 'Снять отметку' }}
           </b-button>
@@ -261,7 +261,10 @@
         employeeList: [],
         employeeInitials: [],
         filters: {
-          responsible: null
+          responsible: null,
+          otss_category: null,
+          condition: null,
+          in_operation: null
         }
       };
     },
@@ -281,7 +284,6 @@
         this.items = await response.json()
         this.items = this.items['items']
       },
-      /* eslint-disable */
       async removeItem(item) {
         const _id = item['_id']
         const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
@@ -351,13 +353,21 @@
       selectToEditItem(item) {
         this.$refs.editItemModal.itemForm = item
       },
-      setFilters(){
+      setFilters() {
         this.filters = this.$refs.filtersForList.filters
       },
       filterFunction(row, val) {
-        const {responsible: e} = val;
+        const {
+          responsible: r,
+          otss_category: o,
+          condition: c,
+          in_operation: op
+        } = val;
         return [
-          !e || e === row.responsible,
+          !r || r === row.responsible,
+          !o || o === row.otss_category,
+          !c || c === row.condition,
+          !op || op === row.in_operation
         ].every(Boolean);
       },
     },
@@ -368,6 +378,7 @@
       await this.setFilters()
       //обновление списка после добавления элемента
       await bus.$on('updateList', (data) => this.fetchItems())
+      await bus.$on('resetFilters', (data) => this.filters = data)
     },
   };
 </script>
