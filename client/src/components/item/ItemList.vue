@@ -64,11 +64,17 @@
       </template>
       <template #cell(edit_remove)="row">
         <div class="text-nowrap">
-          <b-button variant="warning" v-b-modal.edit-item-modal @click="selectToEditItem(row.item)">
+          <b-button variant="warning"
+                    v-b-modal.edit-item-modal
+                    @click="selectToEditItem(row.item)">
             Редактировать
           </b-button>
           <br>
-          <b-button variant="danger" class="mt-3" @click="removeItem(row.item)">Удалить</b-button>
+          <b-button variant="danger"
+                    class="mt-3"
+                    @click="removeItem(row.item)">
+            Удалить
+          </b-button>
         </div>
       </template>
 
@@ -286,7 +292,8 @@
       },
       async removeItem(item) {
         const _id = item['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
+        const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
+          {
           method: 'DELETE',
           headers: {
             'Accept': 'application/json',
@@ -301,12 +308,13 @@
       async removeItems(selectedItems) {
         for (let item of selectedItems) {
           const _id = item['_id']
-          const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
-            method: 'DELETE',
-            headers: {
-              'Accept': 'application/json',
-              'Content-type': 'application/json'
-            },
+          const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
+            {
+              method: 'DELETE',
+              headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+              },
           })
           if (response.status !== 204) {
             alert(JSON.stringify(await response.json(), null, 2));
@@ -316,7 +324,8 @@
       },
       async editItem(item) {
         const _id = item['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`, {
+        const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
+          {
           method: 'PUT',
           body: JSON.stringify(item),
           headers: {
@@ -376,7 +385,6 @@
       await this.fetchItems()
       await this.fetchEmployees()
       await this.setFilters()
-      //обновление списка после добавления элемента
       await bus.$on('updateList', (data) => this.fetchItems())
       await bus.$on('resetFilters', (data) => this.filters = data)
     },
