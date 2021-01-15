@@ -2,15 +2,25 @@
   <b-card no-body>
     <b-card no-body>
       <b-nav pills card-header slot="header" v-b-scrollspy:nav-scroller>
-        <b-nav-item href="#component-1" @click="scrollIntoView">1 компонент</b-nav-item>
+        <b-nav-item href="#component-1" @click="scrollIntoView">
+          {{ component1.name !== '' ? component1.name : "компонент 1" }}
+        </b-nav-item>
         <!--        eslint-disable-next-line-->
-        <b-nav-item href="#component-2" @click="scrollIntoView" v-if="show2">2 компонент</b-nav-item>
+        <b-nav-item href="#component-2" @click="scrollIntoView" v-if="show2">
+          {{ component2.name !== '' ? component2.name : "компонент 2" }}
+        </b-nav-item>
         <!--        eslint-disable-next-line-->
-        <b-nav-item href="#component-3" @click="scrollIntoView" v-if="show3">3 компонент</b-nav-item>
+        <b-nav-item href="#component-3" @click="scrollIntoView" v-if="show3">
+          {{ component3.name !== '' ? component3.name : "компонент 3" }}
+        </b-nav-item>
         <!--        eslint-disable-next-line-->
-        <b-nav-item href="#component-4" @click="scrollIntoView" v-if="show4">4 компонент</b-nav-item>
+        <b-nav-item href="#component-4" @click="scrollIntoView" v-if="show4">
+          {{ component4.name !== '' ? component4.name : "компонент 4" }}
+        </b-nav-item>
         <!--        eslint-disable-next-line-->
-        <b-nav-item href="#component-5" @click="scrollIntoView" v-if="show5">5 компонент</b-nav-item>
+        <b-nav-item href="#component-5" @click="scrollIntoView" v-if="show5">
+          {{ component5.name !== '' ? component5.name : "компонент 5" }}
+        </b-nav-item>
       </b-nav>
 
       <b-card-body
@@ -18,7 +28,7 @@
         ref="content"
         style="position:relative; height:650px; overflow-y:scroll;">
         <div>
-          <h4 id="component-1">1 компонент</h4>
+          <h4 id="component-1">{{ component1.name !== '' ? component1.name : "компонент 1" }}</h4>
           <b-container id="comp-1">
             <b-row>
               <b-col cols="12">
@@ -198,14 +208,15 @@
             </b-row>
 
             <b-row v-if="!show2">
-              <b-col cols="4">
+              <b-col cols="6">
                 <b-button @click="show2=addComponent(component1)">Добавить компонент</b-button>
               </b-col>
             </b-row>
           </b-container>
         </div>
-        <div v-if="show2">
-          <h4 id="component-2">2 компонент</h4>
+
+        <div v-if="show2" class="mt-3">
+          <h4 id="component-2">{{ component2.name !== '' ? component2.name : "компонент 2" }}</h4>
           <b-container id="comp-2">
             <b-row>
               <b-col cols="12">
@@ -375,15 +386,24 @@
                 </b-form-group>
               </b-col>
             </b-row>
-            <b-row v-if="!show3">
-              <b-col cols="4">
-                <b-button @click="show3 = addComponent(component2)">Добавить компонент</b-button>
+
+            <b-row >
+              <b-col cols="6">
+                <b-button v-if="!show3" @click="show3 = addComponent(component2)">
+                  Добавить компонент
+                </b-button>
+              </b-col>
+
+              <b-col cols="6">
+                <b-button variant="danger" @click="show2 = clearComponent(component2)">
+                  Удалить компонент {{ component2.name }}
+                </b-button>
               </b-col>
             </b-row>
           </b-container>
         </div>
-        <div v-if="show3">
-          <h4 id="component-3">3 компонент</h4>
+        <div v-if="show3" class="mt-3">
+          <h4 id="component-3">{{ component3.name !== '' ? component3.name : "компонент 3" }}</h4>
           <b-container id="comp-3">
             <b-row>
               <b-col cols="12">
@@ -554,15 +574,24 @@
               </b-col>
             </b-row>
 
-            <b-row v-if="!show4">
-              <b-col cols="4">
-                <b-button @click="show4 = addComponent(component3)">Добавить компонент</b-button>
+            <b-row>
+              <b-col cols="6">
+                <b-button v-if="!show4" @click="show4 = addComponent(component3)">
+                  Добавить компонент
+                </b-button>
+              </b-col>
+
+              <b-col cols="6">
+                <b-button variant="danger" @click="show3 = clearComponent(component3)">
+                  Удалить компонент {{ component3.name }}
+                </b-button>
               </b-col>
             </b-row>
           </b-container>
         </div>
-        <div v-if="show4">
-          <h4 id="component-4">4 компонент</h4>
+
+        <div v-if="show4" class="mt-3">
+          <h4 id="component-4">{{ component4.name !== '' ? component4.name : "компонент 4" }}</h4>
           <b-container id="comp-4">
             <b-row>
               <b-col cols="12">
@@ -733,15 +762,23 @@
               </b-col>
             </b-row>
 
-            <b-row v-if="!show5">
-              <b-col cols="4">
-                <b-button @click="show5 = addComponent(component4)">Добавить компонент</b-button>
+            <b-row>
+              <b-col cols="6">
+                <b-button v-if="!show5" @click="show5 = addComponent(component4)">
+                  Добавить компонент
+                </b-button>
+              </b-col>
+
+              <b-col cols="6">
+                <b-button variant="danger" @click="show4 = clearComponent(component4)">
+                  Удалить компонент {{ component4.name }}
+                </b-button>
               </b-col>
             </b-row>
           </b-container>
         </div>
-        <div v-if="show5">
-          <h4 id="component-5">5 компонент</h4>
+        <div v-if="show5" class="mt-3">
+          <h4 id="component-5">{{ component5.name !== '' ? component5.name : "компонент 5" }}</h4>
           <b-container id="comp-5">
             <b-row>
               <b-col cols="12">
@@ -911,6 +948,15 @@
                 </b-form-group>
               </b-col>
             </b-row>
+            <b-row>
+              <b-col cols="6">
+              </b-col>
+              <b-col cols="6">
+                <b-button variant="danger" @click="show5 = clearComponent(component5)">
+                  Удалить компонент {{ component5.name }}
+                </b-button>
+              </b-col>
+            </b-row>
           </b-container>
         </div>
       </b-card-body>
@@ -1019,26 +1065,24 @@ export default {
     check(left, right) {
       return left !== right
     },
-    initComponentForm() {
-      let emptyComponent = {
-        name: '',
-        serial_n: '',
-        category: '',
-        type: '',
-        view: '',
-        year: '',
-        location: {
+    clearComponent(component){
+      for (let key in component) {
+        component[key] = ''
+      }
+      component['location'] = {
           object: '',
           corpus: '',
           cabinet: '',
           unit: ''
         }
-      }
-      this.component1 = emptyComponent
-      this.component2 = emptyComponent
-      this.component3 = emptyComponent
-      this.component4 = emptyComponent
-      this.component5 = emptyComponent
+      return false
+    },
+    initComponentForm(){
+      this.clearComponent(this.component1)
+      this.clearComponent(this.component2)
+      this.clearComponent(this.component3)
+      this.clearComponent(this.component4)
+      this.clearComponent(this.component5)
     },
     addComponent(component) {
       let show = true
