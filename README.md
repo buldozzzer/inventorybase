@@ -32,4 +32,4 @@
   docker-compose up -d
   ```
 
-0.0.0.0:8080 — клиент
+http://localhost:8080/#/items — клиент
