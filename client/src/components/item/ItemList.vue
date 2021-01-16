@@ -271,7 +271,8 @@
           otss_category: null,
           condition: null,
           in_operation: null
-        }
+        },
+        fuseString: ""
       };
     },
     methods: {
@@ -362,6 +363,7 @@
       selectToEditItem(item) {
         this.$refs.editItemModal.itemForm = item
       },
+
       setFilters() {
         this.filters = this.$refs.filtersForList.filters
       },
@@ -378,15 +380,40 @@
           !c || c === row.condition,
           !op || op === row.in_operation
         ].every(Boolean);
-      },
-    },
 
+      },
+      fuseSearch() {
+        this.$search(this.fuseString, this.items,
+          {
+            tokenize: true,
+            matchAllTokens: true,
+            defaultAll: false,
+            keys: [
+              "name", "responsible"
+            ]
+          }).then(results => {
+          this.items = results
+        })
+        if(this.fuseString == ""){
+          this.fetchItems()
+        }
+      }
+    },
+    watch:{
+      fuseString: function () {
+        this.fuseSearch()
+      }
+    },
     async created() {
       await this.fetchItems()
       await this.fetchEmployees()
       await this.setFilters()
-      await bus.$on('updateList', (data) => this.fetchItems())
-      await bus.$on('resetFilters', (data) => this.filters = data)
+      await bus.$on('updateList', () => this.fetchItems())
+      await bus.$on('resetFilters', (data) => {
+        this.filters = data;
+        this.fuseString = null
+      })
+
     },
   };
 </script>

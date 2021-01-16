@@ -5,7 +5,7 @@
         <b-col>
           <b-form-select
             v-model="filters.responsible"
-            :options="employeeInitials"
+            :options="employees"
           ></b-form-select>
         </b-col>
         <b-col>
@@ -27,7 +27,19 @@
           ></b-form-select>
         </b-col>
         <b-col>
-          <b-button variant="dark" @click="resetFilters">Сбросить фильтры</b-button>
+          <b-form-input
+            v-model="fuseString"
+          ></b-form-input>
+        </b-col>
+<!--        <b-col>-->
+<!--          <b-button variant="dark" @click="changeString">-->
+<!--            Применить фильтры-->
+<!--          </b-button>-->
+<!--        </b-col>-->
+        <b-col>
+          <b-button variant="dark" @click="resetFilters">
+            Сбросить фильтры
+          </b-button>
         </b-col>
       </b-row>
     </b-container>
@@ -50,13 +62,14 @@
           responsible: null,
           otss_category: null,
           condition: null,
-          in_operation: null
+          in_operation: null,
         },
-        employees: []
+        employees: [],
+        fuseString: null
       }
     },
     methods:{
-      setEmployees(){
+      employeeList() {
         this.employees = this.employeeInitials
         this.employees.push({text: '-', value: null})
       },
@@ -68,10 +81,17 @@
           in_operation: null
         }
         bus.$emit('resetFilters', this.filters)
+      },
+
+    },
+    watch:{
+      fuseString: function (){
+        this.$parent.$data.fuseString = this.fuseString
+        bus.$emit('changeFuseString', this.fuseString)
       }
     },
     async created(){
-      await this.setEmployees()
+      await this.employeeList()
     }
   }
 </script>
