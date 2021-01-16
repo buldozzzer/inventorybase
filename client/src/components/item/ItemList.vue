@@ -276,7 +276,6 @@
       };
     },
     methods: {
-
       stickyHeaderHeightToString() {
         return this.sliderValue.toString() + 'px'
       },

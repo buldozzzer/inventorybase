@@ -49,7 +49,27 @@
         conditions: ['Исправно', 'Неисправно'],
         operation: ['Используется', 'Не используется'],
         employeeList: [],
-        itemForm: {},
+        itemForm: {
+          name: '',
+        user: '',
+        responsible : '',
+        components : [],
+        inventory_n : '',
+        otss_category : '',
+        condition : '',
+        unit_from : '',
+        in_operation : '',
+        fault_document_requisites : '',
+        date_of_receipt : null,
+        number_of_receipt : '',
+        requisites : '',
+        transfer_date : null,
+        otss_requisites : '',
+        spsi_requisites : '',
+        transfer_requisites : '',
+        comment :'',
+        last_check : null,
+        },
       }
 
     },
@@ -127,7 +147,7 @@
         this.createItem(payload);
         this.initForm();
       },
-      isIntroduced: function (left, right) {
+      isIntroduced(left, right) {
         return left !== right
       },
     },

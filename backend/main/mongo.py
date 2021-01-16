@@ -12,7 +12,8 @@ def get_conn() -> pymongo.database.Database:
     global __db_conn
     if not __db_conn:
         set_conn(
-            host='mongo',  # mongo
+            # host='mongo',
+            host='localhost',
             port=27017,
             db_name='ItemsDB')
     return __db_conn
