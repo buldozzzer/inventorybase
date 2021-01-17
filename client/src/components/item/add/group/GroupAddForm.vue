@@ -32,6 +32,7 @@
       FormTemplate,
       ComponentList
     },
+    props:['employeeInitials'],
     data(){
       return{
         itemForm: {
@@ -58,8 +59,6 @@
         show: false,
         listOfNewItems: [],
         shows: [],
-        employeeList: [],
-        employeeInitials: []
       }
     },
     methods:{
@@ -106,20 +105,6 @@
         }
         bus.$emit('updateList')
       },
-      employeeToString() {
-        for (let i = 0; i < this.employeeList.length; i++) {
-          this.employeeInitials.push(
-            this.employeeList[i].surname + ' ' +
-            this.employeeList[i].name[0] + '.' +
-            this.employeeList[i].secname[0] + '.');
-        }
-      },
-      async fetchEmployees() {
-        const response = await fetch('http://localhost:8000/api/v1/employee/')
-        this.employeeList = await response.json()
-        this.employeeList = this.employeeList['employees']
-        this.employeeToString()
-      },
       onReset(evt) {
         evt.preventDefault();
         this.initForms();
@@ -155,7 +140,6 @@
     },
     async created() {
       this.init()
-      await this.fetchEmployees()
     }
   }
 </script>

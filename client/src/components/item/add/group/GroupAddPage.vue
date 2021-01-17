@@ -19,19 +19,26 @@
              style="position:relative; height:600px; overflow-y:scroll"
              ref="content">
           <h5 id="item-1" style="">Item 1</h5>
-          <group-add-form></group-add-form>
+          <group-add-form :employee-initials="employeeInitials">
+          </group-add-form>
           <h5 id="item-2" style="">Item 2</h5>
-          <group-add-form></group-add-form>
+          <group-add-form :employee-initials="employeeInitials">
+          </group-add-form>
           <h5 id="item-3" style="">Item 3</h5>
-          <group-add-form></group-add-form>
+          <group-add-form :employee-initials="employeeInitials">
+          </group-add-form>
           <h5 id="item-4" style="">Item 4</h5>
-          <group-add-form></group-add-form>
+          <group-add-form :employee-initials="employeeInitials">
+          </group-add-form>
           <h5 id="item-5" style="">Item 5</h5>
-          <group-add-form></group-add-form>
+          <group-add-form :employee-initials="employeeInitials">
+          </group-add-form>
           <h5 id="item-6" style="">Item 6</h5>
-          <group-add-form></group-add-form>
+          <group-add-form :employee-initials="employeeInitials">
+          </group-add-form>
           <h5 id="item-7" style="">Item 7</h5>
-          <group-add-form></group-add-form>
+          <group-add-form :employee-initials="employeeInitials">
+          </group-add-form>
         </div>
       </b-col>
     </b-row>
@@ -47,6 +54,12 @@
     components: {
       GroupAddForm
     },
+    data(){
+      return {
+        employeeList: [],
+        employeeInitials: []
+      }
+    },
     methods:{
       scrollIntoView(evt) {
         evt.preventDefault()
@@ -56,6 +69,23 @@
           this.$refs.content.scrollTop = el.offsetTop
         }
       },
+      employeeToString() {
+        for (let i = 0; i < this.employeeList.length; i++) {
+          this.employeeInitials.push(
+            this.employeeList[i].surname + ' ' +
+            this.employeeList[i].name[0] + '.' +
+            this.employeeList[i].secname[0] + '.');
+        }
+      },
+      async fetchEmployees() {
+        const response = await fetch('http://localhost:8000/api/v1/employee/')
+        this.employeeList = await response.json()
+        this.employeeList = this.employeeList['employees']
+        this.employeeToString()
+      },
+    },
+    async created() {
+      await this.fetchEmployees()
     }
   }
 </script>
