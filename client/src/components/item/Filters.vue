@@ -80,6 +80,7 @@
           condition: null,
           in_operation: null
         }
+        this.$parent.$data.fuseString = null
         bus.$emit('resetFilters', this.filters)
       },
 

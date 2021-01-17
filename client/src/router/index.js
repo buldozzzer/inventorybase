@@ -3,7 +3,7 @@ import Router from 'vue-router';
 /* eslint-disable */
 import EmployeeList from "@/components/employee/EmployeeList";
 import ItemList from "@/components/item/ItemList";
-import GroupAddForm from "../components/item/add/GroupAddForm";
+import GroupAddPage from "@/components/item/add/group/GroupAddPage";
 
 Vue.use(Router);
 
@@ -20,9 +20,9 @@ export default new Router({
       component: EmployeeList,
     },
     {
-      path: '/items/groupadd',
-      name: 'GroupAddForm',
-      component: GroupAddForm,
+        path: '/items/groupadd',
+      name: 'GroupAddPage',
+      component: GroupAddPage,
     },
   ],
 });

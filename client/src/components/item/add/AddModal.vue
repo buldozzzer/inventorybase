@@ -14,7 +14,9 @@
         <div class="row">
           <div class="col">
             <form-template :itemForm="itemForm"
-                           :employeeInitials="employeeInitials"></form-template>
+                           :employeeInitials="employeeInitials">
+
+            </form-template>
           </div>
           <div class="col">
             <component-list ref="componentList"/>
@@ -23,6 +25,7 @@
       </div>
       <div class="submit-reset-buttons">
         <b-button type="submit" variant="primary">Добавить запись</b-button>
+        <b-button href="#/items/groupadd" variant="primary">Добавить несколько записей</b-button>
         <b-button type="reset" variant="danger" @click="initForm">Отмена</b-button>
       </div>
     </b-form>
