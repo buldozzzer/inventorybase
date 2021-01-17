@@ -24,9 +24,15 @@
         </div>
       </div>
       <div class="submit-reset-buttons">
-        <b-button type="submit" variant="primary">Добавить запись</b-button>
-        <b-button href="#/items/groupadd" variant="primary">Добавить несколько записей</b-button>
-        <b-button type="reset" variant="danger" @click="initForm">Отмена</b-button>
+        <b-button type="submit" variant="primary">
+          Добавить запись
+        </b-button>
+        <b-button href="#/items/groupadd" variant="primary" @click="sendForm">
+          Добавить несколько записей
+        </b-button>
+        <b-button type="reset" variant="danger" @click="initForm">
+          Отмена
+        </b-button>
       </div>
     </b-form>
   </b-modal>
@@ -153,6 +159,9 @@
       isIntroduced(left, right) {
         return left !== right
       },
+      sendForm(){
+        bus.$emit('sendForm', this.itemForm)
+      }
     },
     created() {
     }

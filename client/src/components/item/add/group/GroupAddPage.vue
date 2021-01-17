@@ -4,13 +4,41 @@
       <b-col cols="2">
         <b-navbar v-b-scrollspy:scrollspy-nested class="flex-column">
           <b-nav pills vertical>
-            <b-nav-item href="#item-1" @click="scrollIntoView">Item 1</b-nav-item>
-            <b-nav-item href="#item-2" @click="scrollIntoView">Item 2</b-nav-item>
-            <b-nav-item href="#item-3" @click="scrollIntoView">Item 3</b-nav-item>
-            <b-nav-item href="#item-4" @click="scrollIntoView">Item 4</b-nav-item>
-            <b-nav-item href="#item-5" @click="scrollIntoView">Item 5</b-nav-item>
-            <b-nav-item href="#item-6" @click="scrollIntoView">Item 6</b-nav-item>
-            <b-nav-item href="#item-7" @click="scrollIntoView">Item 7</b-nav-item>
+            <b-nav-item href="#item-1" @click="scrollIntoView">
+              {{listOfNewItems[0].name ? listOfNewItems[0].name : 'Item 1' }}
+            </b-nav-item>
+            <b-nav-item href="#item-2"
+                        v-if="listOfNewItems[1]"
+                        @click="scrollIntoView">
+              {{listOfNewItems[1].name ? listOfNewItems[1].name : 'Item 2' }}
+            </b-nav-item>
+            <b-nav-item href="#item-3"
+                        v-if="listOfNewItems[2]"
+                        @click="scrollIntoView">
+              {{listOfNewItems[2].name ? listOfNewItems[2].name : 'Item 3' }}
+            </b-nav-item>
+            <b-nav-item href="#item-4"
+                        v-if="listOfNewItems[3]"
+                        @click="scrollIntoView">
+              {{listOfNewItems[3].name ? listOfNewItems[3].name : 'Item 4' }}
+            </b-nav-item>
+            <b-nav-item href="#item-5"
+                        v-if="listOfNewItems[4]"
+                        @click="scrollIntoView">
+              {{listOfNewItems[4].name ? listOfNewItems[4].name : 'Item 5' }}
+            </b-nav-item>
+            <b-nav-item href="#item-6"
+                        v-if="listOfNewItems[5]"
+                        @click="scrollIntoView">
+              {{listOfNewItems[6].name ? listOfNewItems[6].name : 'Item 6' }}
+            </b-nav-item>
+            <b-nav-item href="#item-7"
+                        v-if="listOfNewItems[6]"
+                        @click="scrollIntoView">
+              {{listOfNewItems[6].name ? 'listOfNewItems[6].name' : 'Item 7' }}
+            </b-nav-item>
+
+            <b-button variant="dark" @click="addForm">+</b-button>
           </b-nav>
         </b-navbar>
       </b-col>
@@ -18,26 +46,10 @@
         <div id="scrollspy-nested"
              style="position:relative; height:600px; overflow-y:scroll"
              ref="content">
-          <h5 id="item-1" style="">Item 1</h5>
-          <group-add-form :employee-initials="employeeInitials">
-          </group-add-form>
-          <h5 id="item-2" style="">Item 2</h5>
-          <group-add-form :employee-initials="employeeInitials">
-          </group-add-form>
-          <h5 id="item-3" style="">Item 3</h5>
-          <group-add-form :employee-initials="employeeInitials">
-          </group-add-form>
-          <h5 id="item-4" style="">Item 4</h5>
-          <group-add-form :employee-initials="employeeInitials">
-          </group-add-form>
-          <h5 id="item-5" style="">Item 5</h5>
-          <group-add-form :employee-initials="employeeInitials">
-          </group-add-form>
-          <h5 id="item-6" style="">Item 6</h5>
-          <group-add-form :employee-initials="employeeInitials">
-          </group-add-form>
-          <h5 id="item-7" style="">Item 7</h5>
-          <group-add-form :employee-initials="employeeInitials">
+          <group-add-form v-for="item in listOfNewItems"
+                          :key="item.index"
+                          :item-form="item"
+                          :employee-initials="employeeInitials">
           </group-add-form>
         </div>
       </b-col>
@@ -48,19 +60,80 @@
 <script>
 /* eslint-disable */
   import GroupAddForm from "./GroupAddForm";
+  import {bus} from "../../../../main";
 
   export default {
     name: "GroupAddPage",
     components: {
       GroupAddForm
     },
-    data(){
+    data() {
       return {
         employeeList: [],
-        employeeInitials: []
+        employeeInitials: [],
+        show: false,
+        listOfNewItems: [],
+        shows: [],
       }
     },
-    methods:{
+    methods: {
+      init() {
+        let itemForm = {
+          index: null,
+          name: '',
+          user: '',
+          responsible: '',
+          components: [],
+          inventory_n: '',
+          otss_category: '',
+          condition: '',
+          unit_from: '',
+          in_operation: '',
+          fault_document_requisites: '',
+          date_of_receipt: null,
+          number_of_receipt: '',
+          requisites: '',
+          transfer_date: null,
+          otss_requisites: '',
+          spsi_requisites: '',
+          transfer_requisites: '',
+          comment: '',
+          last_check: null,
+        }
+        let list = []
+        for (let i = 0; i < 1; i++) {
+          itemForm.index = i
+          list.push(itemForm)
+          itemForm.index = null
+        }
+        this.listOfNewItems = list
+      },
+      addForm(){
+        let itemForm = {
+          index: null,
+          name: '',
+          user: '',
+          responsible: '',
+          components: [],
+          inventory_n: '',
+          otss_category: '',
+          condition: '',
+          unit_from: '',
+          in_operation: '',
+          fault_document_requisites: '',
+          date_of_receipt: null,
+          number_of_receipt: '',
+          requisites: '',
+          transfer_date: null,
+          otss_requisites: '',
+          spsi_requisites: '',
+          transfer_requisites: '',
+          comment: '',
+          last_check: null,
+        }
+        itemForm.index = this.listOfNewItems.length
+        this.listOfNewItems.push(itemForm)
+      },
       scrollIntoView(evt) {
         evt.preventDefault()
         const href = evt.target.getAttribute('href')
@@ -86,7 +159,8 @@
     },
     async created() {
       await this.fetchEmployees()
-    }
+      this.init()
+    },
   }
 </script>
 
