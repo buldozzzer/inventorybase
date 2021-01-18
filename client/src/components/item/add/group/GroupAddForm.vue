@@ -1,21 +1,23 @@
 <template>
-  <div >
+  <div>
     <h5>
       {{itemForm.name ? itemForm.name : 'Материальная ценность ' + (itemForm.index + 1) }}
     </h5>
-    <b-form @submit="onSubmit" @reset="onReset" class="w-100">
+    <b-form>
       <b-container>
         <b-row>
           <b-col>
             <form-template :itemForm="itemForm"
                            :employeeInitials="employeeInitials">
-
             </form-template>
           </b-col>
           <b-col>
             <component-list v-if="itemForm">
             </component-list>
           </b-col>
+        </b-row>
+        <b-row>
+
         </b-row>
       </b-container>
     </b-form>
@@ -41,44 +43,6 @@
       }
     },
     methods:{
-      initForms() {
-          // item = {
-          //   name: '',
-          //   user: '',
-          //   responsible: '',
-          //   components: [],
-          //   inventory_n: '',
-          //   otss_category: '',
-          //   condition: '',
-          //   unit_from: '',
-          //   in_operation: '',
-          //   fault_document_requisites: '',
-          //   date_of_receipt: null,
-          //   number_of_receipt: '',
-          //   requisites: '',
-          //   transfer_date: null,
-          //   otss_requisites: '',
-          //   spsi_requisites: '',
-          //   transfer_requisites: '',
-          //   comment: '',
-          //   last_check: null,
-          // }
-      },
-      async createItem(payload) {
-        const response = await fetch(`http://localhost:8000/api/v1/item/`, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-        /* eslint-disable */
-        if (response.status !== 201) {
-          alert(JSON.stringify(await response.json(), null, 2));
-        }
-        bus.$emit('updateList')
-      },
       onReset(evt) {
         evt.preventDefault();
         this.initForms();

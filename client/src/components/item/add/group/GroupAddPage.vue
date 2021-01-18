@@ -11,6 +11,9 @@
               {{ item.name ? item.name : 'Материальная ценность ' + (item.index + 1) }}
             </b-nav-item>
             <b-button variant="dark" @click="addForm">+</b-button>
+            <b-button variant="danger"
+                      v-if="listOfNewItems.length > 1"
+                      @click="deleteLastForm">-</b-button>
           </b-nav>
         </b-navbar>
       </b-col>
@@ -42,6 +45,7 @@
     },
     data() {
       return {
+        index: 0,
         employeeList: [],
         employeeInitials: [],
         show: false,
@@ -73,13 +77,8 @@
           comment: '',
           last_check: null,
         }
-        let list = []
-        for (let i = 0; i < 1; i++) {
-          itemForm.index = i
-          list.push(itemForm)
-          itemForm.index = null
-        }
-        this.listOfNewItems = list
+        this.listOfNewItems.push(itemForm)
+        this.index += 1
       },
       addForm(){
         let itemForm = {
@@ -104,8 +103,13 @@
           comment: '',
           last_check: null,
         }
-        itemForm.index = this.listOfNewItems.length
+        itemForm.index = this.index
         this.listOfNewItems.push(itemForm)
+        this.index += 1
+      },
+      deleteLastForm(){
+        this.listOfNewItems.splice( this.listOfNewItems.length-1, 1)
+        this.index -= 1
       },
       scrollIntoView(evt) {
         evt.preventDefault()
@@ -129,6 +133,21 @@
         this.employeeList = this.employeeList['employees']
         this.employeeToString()
       },
+      async createItem(payload) {
+        const response = await fetch(`http://localhost:8000/api/v1/item/`, {
+          method: 'POST',
+          headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        /* eslint-disable */
+        if (response.status !== 201) {
+          alert(JSON.stringify(await response.json(), null, 2));
+        }
+        bus.$emit('updateList')
+      },
     },
     async created() {
       await this.fetchEmployees()
@@ -137,6 +156,5 @@
   }
 </script>
 
-<style  >
-
+<style>
 </style>
