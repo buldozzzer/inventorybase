@@ -4,40 +4,12 @@
       <b-col cols="2">
         <b-navbar v-b-scrollspy:scrollspy-nested class="flex-column">
           <b-nav pills vertical>
-            <b-nav-item href="#item-1" @click="scrollIntoView">
-              {{listOfNewItems[0].name ? listOfNewItems[0].name : 'Item 1' }}
-            </b-nav-item>
-            <b-nav-item href="#item-2"
-                        v-if="listOfNewItems[1]"
+            <b-nav-item v-for="item in listOfNewItems"
+                        :key="item.index"
+                        :href="'#item-' + item.index"
                         @click="scrollIntoView">
-              {{listOfNewItems[1].name ? listOfNewItems[1].name : 'Item 2' }}
+              {{ item.name ? item.name : 'Материальная ценность ' + (item.index + 1) }}
             </b-nav-item>
-            <b-nav-item href="#item-3"
-                        v-if="listOfNewItems[2]"
-                        @click="scrollIntoView">
-              {{listOfNewItems[2].name ? listOfNewItems[2].name : 'Item 3' }}
-            </b-nav-item>
-            <b-nav-item href="#item-4"
-                        v-if="listOfNewItems[3]"
-                        @click="scrollIntoView">
-              {{listOfNewItems[3].name ? listOfNewItems[3].name : 'Item 4' }}
-            </b-nav-item>
-            <b-nav-item href="#item-5"
-                        v-if="listOfNewItems[4]"
-                        @click="scrollIntoView">
-              {{listOfNewItems[4].name ? listOfNewItems[4].name : 'Item 5' }}
-            </b-nav-item>
-            <b-nav-item href="#item-6"
-                        v-if="listOfNewItems[5]"
-                        @click="scrollIntoView">
-              {{listOfNewItems[6].name ? listOfNewItems[6].name : 'Item 6' }}
-            </b-nav-item>
-            <b-nav-item href="#item-7"
-                        v-if="listOfNewItems[6]"
-                        @click="scrollIntoView">
-              {{listOfNewItems[6].name ? 'listOfNewItems[6].name' : 'Item 7' }}
-            </b-nav-item>
-
             <b-button variant="dark" @click="addForm">+</b-button>
           </b-nav>
         </b-navbar>
@@ -49,7 +21,8 @@
           <group-add-form v-for="item in listOfNewItems"
                           :key="item.index"
                           :item-form="item"
-                          :employee-initials="employeeInitials">
+                          :employee-initials="employeeInitials"
+                          :id="'item-' + item.index">
           </group-add-form>
         </div>
       </b-col>
@@ -79,7 +52,7 @@
     methods: {
       init() {
         let itemForm = {
-          index: null,
+          index: 0,
           name: '',
           user: '',
           responsible: '',
@@ -164,6 +137,6 @@
   }
 </script>
 
-<style scoped>
+<style  >
 
 </style>

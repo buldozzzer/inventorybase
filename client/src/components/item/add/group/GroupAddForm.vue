@@ -1,7 +1,7 @@
 <template>
-  <div>
+  <div >
     <h5>
-      {{itemForm.name ? itemForm.name : itemForm.index}}
+      {{itemForm.name ? itemForm.name : 'Материальная ценность ' + (itemForm.index + 1) }}
     </h5>
     <b-form @submit="onSubmit" @reset="onReset" class="w-100">
       <b-container>
