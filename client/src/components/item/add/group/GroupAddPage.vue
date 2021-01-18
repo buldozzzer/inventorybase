@@ -1,5 +1,5 @@
 <template>
-  <b-container class="mt-3">
+  <b-container class="mt-3 mb-3">
     <b-row>
       <b-col cols="2">
         <b-navbar v-b-scrollspy:scrollspy-nested class="flex-column">
@@ -14,6 +14,7 @@
             <b-button variant="danger"
                       v-if="listOfNewItems.length > 1"
                       @click="deleteLastForm">-</b-button>
+            <b-button variant="primary" @click="createItems">Добавить записи</b-button>
           </b-nav>
         </b-navbar>
       </b-col>
@@ -50,38 +51,11 @@
         employeeInitials: [],
         show: false,
         listOfNewItems: [],
-        shows: [],
       }
     },
     methods: {
       init() {
-        let itemForm = {
-          index: 0,
-          name: '',
-          user: '',
-          responsible: '',
-          components: [],
-          inventory_n: '',
-          otss_category: '',
-          condition: '',
-          unit_from: '',
-          in_operation: '',
-          fault_document_requisites: '',
-          date_of_receipt: null,
-          number_of_receipt: '',
-          requisites: '',
-          transfer_date: null,
-          otss_requisites: '',
-          spsi_requisites: '',
-          transfer_requisites: '',
-          comment: '',
-          last_check: null,
-        }
-        this.listOfNewItems.push(itemForm)
-        this.index += 1
-      },
-      addForm(){
-        let itemForm = {
+        let item = {
           index: null,
           name: '',
           user: '',
@@ -103,8 +77,34 @@
           comment: '',
           last_check: null,
         }
-        itemForm.index = this.index
-        this.listOfNewItems.push(itemForm)
+        this.listOfNewItems.push(item)
+        this.index += 1
+      },
+      addForm(){
+        let item = {
+          index: null,
+          name: '',
+          user: '',
+          responsible: '',
+          components: [],
+          inventory_n: '',
+          otss_category: '',
+          condition: '',
+          unit_from: '',
+          in_operation: '',
+          fault_document_requisites: '',
+          date_of_receipt: null,
+          number_of_receipt: '',
+          requisites: '',
+          transfer_date: null,
+          otss_requisites: '',
+          spsi_requisites: '',
+          transfer_requisites: '',
+          comment: '',
+          last_check: null,
+        }
+        item.index = this.index
+        this.listOfNewItems.push(item)
         this.index += 1
       },
       deleteLastForm(){
@@ -133,18 +133,43 @@
         this.employeeList = this.employeeList['employees']
         this.employeeToString()
       },
-      async createItem(payload) {
-        const response = await fetch(`http://localhost:8000/api/v1/item/`, {
-          method: 'POST',
-          headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-        /* eslint-disable */
-        if (response.status !== 201) {
-          alert(JSON.stringify(await response.json(), null, 2));
+      async createItems(payload) {
+        bus.$emit('fetchComponents')
+        for (let i =0; i<this.listOfNewItems.length; i++) {
+          debugger;
+          const payload = {
+            name: this.listOfNewItems[i].name,
+            user: this.listOfNewItems[i].user,
+            responsible: this.listOfNewItems[i].responsible,
+            components: this.listOfNewItems[i].components,
+            inventory_n: this.listOfNewItems[i].inventory_n,
+            otss_category: this.listOfNewItems[i].otss_category,
+            condition: this.listOfNewItems[i].condition,
+            unit_from: this.listOfNewItems[i].unit_from,
+            in_operation: this.listOfNewItems[i].in_operation,
+            fault_document_requisites: this.listOfNewItems[i].fault_document_requisites,
+            date_of_receipt: this.listOfNewItems[i].date_of_receipt,
+            number_of_receipt: this.listOfNewItems[i].number_of_receipt,
+            requisites: this.listOfNewItems[i].requisites,
+            transfer_date: this.listOfNewItems[i].transfer_date,
+            otss_requisites: this.listOfNewItems[i].otss_requisites,
+            spsi_requisites: this.listOfNewItems[i].spsi_requisites,
+            transfer_requisites: this.listOfNewItems[i].transfer_requisites,
+            comment: this.listOfNewItems[i].comment,
+            last_check: this.listOfNewItems[i].last_check,
+          };
+          const response = await fetch(`http://localhost:8000/api/v1/item/`, {
+            method: 'POST',
+            headers: {
+              'Accept': 'application/json',
+              'Content-type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+          });
+          /* eslint-disable */
+          if (response.status !== 201) {
+            alert(JSON.stringify(await response.json(), null, 2));
+          }
         }
         bus.$emit('updateList')
       },
