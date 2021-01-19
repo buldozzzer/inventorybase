@@ -11,7 +11,9 @@
         </b-col>
         <b-col>
           <b-button class="mt-3"
-                    v-if="selected.length !== 0" @click="sendToEditItems">
+                    href="#/items/groupedit"
+                    v-if="selected.length !== 0"
+                    @click="sendToEditItems">
             Редактровать выбранные
           </b-button>
         </b-col>
@@ -404,7 +406,7 @@
         }
       },
       sendToEditItems(){
-        bus.$emit('toEditItems', this.selected)
+        this.$parent.$data.dataForChildren = this.selected
       }
     },
     watch:{

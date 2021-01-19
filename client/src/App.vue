@@ -3,7 +3,7 @@
   <div id="app">
     <div>
       <b-navbar toggleable="lg" type="dark" variant="dark">
-        <b-navbar-brand href=""><b>База материальных ценностей</b></b-navbar-brand>
+        <b-navbar-brand href="#/items/"><b>База материальных ценностей</b></b-navbar-brand>
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
@@ -33,8 +33,17 @@
 
 <script>
 /* eslint-disable */
+  import { bus } from "@/main";
   export default {
     name: 'App',
+    data() {
+      return {
+        dataForChildren: null
+      }
+    },
+    async mounted() {
+      await bus.$on('clearDataForChildren', () => {this.dataForChildren = null})
+    }
   };
 </script>
 

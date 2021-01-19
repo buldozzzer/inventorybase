@@ -169,12 +169,6 @@
           </b-form-group>
         </b-col>
       </b-row>
-
-<!--      <b-row v-if="!show2">-->
-<!--        <b-col cols="4">-->
-<!--          <b-button @click="show2=addComponent(component)">Добавить компонент</b-button>-->
-<!--        </b-col>-->
-<!--      </b-row>-->
     </b-container>
   </div>
 </template>

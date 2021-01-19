@@ -13,6 +13,7 @@
             <b-button variant="light"
                       @click="addForm">+</b-button>
             <b-button variant="danger"
+                      class="mt-3"
                       v-if="listOfNewItems.length > 1"
                       @click="deleteLastForm">-</b-button>
             <b-button variant="primary"
