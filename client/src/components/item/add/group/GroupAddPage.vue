@@ -179,6 +179,7 @@
         this.index = 0
         this.init()
         bus.$emit('updateList')
+        bus.$emit('clearComponentForm')
       },
     },
     async created() {

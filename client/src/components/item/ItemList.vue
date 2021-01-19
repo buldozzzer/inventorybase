@@ -10,6 +10,12 @@
           </b-button>
         </b-col>
         <b-col>
+          <b-button class="mt-3"
+                    v-if="selected.length !== 0" @click="sendToEditItems">
+            Редактровать выбранные
+          </b-button>
+        </b-col>
+        <b-col>
           <!--          variant="danger"-->
           <b-button class="mt-3" @click="selectAllRows">
             {{ selected.length === 0 ? 'Выбрать все записи' : 'Снять отметку' }}
@@ -396,6 +402,9 @@
         if(this.fuseString == ""){
           this.fetchItems()
         }
+      },
+      sendToEditItems(){
+        bus.$emit('toEditItems', this.selected)
       }
     },
     watch:{

@@ -966,6 +966,8 @@
 
 <script>
 /* eslint-disable */
+import {bus} from '../../../main'
+
 export default {
   name: "ComponentList",
   data() {
@@ -1083,6 +1085,10 @@ export default {
       this.clearComponent(this.component3)
       this.clearComponent(this.component4)
       this.clearComponent(this.component5)
+      this.show2 = false
+      this.show3 = false
+      this.show4 = false
+      this.show5 = false
     },
     addComponent(component) {
       let show = true
@@ -1170,6 +1176,9 @@ export default {
       return components
     }
   },
+  async created(){
+    await bus.$on('clearComponentForm', () => this.initComponentForm())
+  }
 }
 </script>
 
