@@ -1,5 +1,5 @@
 <template>
-  <b-container class="mt-3 mb-3">
+  <b-container class="mt-3">
     <b-row>
       <b-col cols="2">
         <b-navbar v-b-scrollspy:scrollspy-nested class="flex-column">
@@ -10,17 +10,21 @@
                         @click="scrollIntoView">
               {{ item.name ? item.name : 'Материальная ценность ' + (item.index + 1) }}
             </b-nav-item>
-            <b-button variant="dark" @click="addForm">+</b-button>
+            <b-button variant="light"
+                      @click="addForm">+</b-button>
             <b-button variant="danger"
                       v-if="listOfNewItems.length > 1"
                       @click="deleteLastForm">-</b-button>
-            <b-button variant="primary" @click="createItems">Добавить записи</b-button>
+            <b-button variant="primary"
+                      @click="createItems">
+              {{ listOfNewItems.length === 1 ? 'Добавить запись' : 'Добавить записи' }}
+            </b-button>
           </b-nav>
         </b-navbar>
       </b-col>
       <b-col cols="10">
         <div id="scrollspy-nested"
-             style="position:relative; height:600px; overflow-y:scroll"
+             style="position:relative; height:550px; overflow-y:scroll"
              ref="content">
           <group-add-form v-for="item in listOfNewItems"
                           :key="item.index"
@@ -47,9 +51,9 @@
     data() {
       return {
         index: 0,
+        show: false,
         employeeList: [],
         employeeInitials: [],
-        show: false,
         listOfNewItems: [],
       }
     },
@@ -133,9 +137,9 @@
         this.employeeList = this.employeeList['employees']
         this.employeeToString()
       },
-      async createItems(payload) {
+      async createItems() {
         bus.$emit('fetchComponents')
-        for (let i =0; i<this.listOfNewItems.length; i++) {
+        for (let i = 0; i<this.listOfNewItems.length; i++) {
           debugger;
           const payload = {
             name: this.listOfNewItems[i].name,
@@ -171,6 +175,9 @@
             alert(JSON.stringify(await response.json(), null, 2));
           }
         }
+        this.listOfNewItems = []
+        this.index = 0
+        this.init()
         bus.$emit('updateList')
       },
     },
