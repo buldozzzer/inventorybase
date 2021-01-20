@@ -3,6 +3,10 @@
     <b-container class="mt-3">
       <b-row>
         <b-col cols="2">
+          <b-button variant="primary"
+                      @click="editItems">
+              Внести изменения
+            </b-button>
           <b-navbar v-b-scrollspy:scrollspy-nested class="flex-column">
             <b-nav pills vertical>
               <b-nav-item v-for="item in itemsForEdit"
@@ -43,7 +47,6 @@
     },
     data() {
       return {
-        itemForm: {},
         employeeInitials: [],
         employeeList: [],
         itemsForEdit: []
@@ -70,6 +73,25 @@
         const el = href ? document.querySelector(href) : null
         if (el) {
           this.$refs.items.scrollTop = el.offsetTop
+        }
+      },
+      async editItems() {
+        for (let i = 0; i < this.itemsForEdit.length; i++) {
+          const _id = this.itemsForEdit[i]['_id']
+          const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
+            {
+              method: 'PUT',
+              body: JSON.stringify(this.itemsForEdit[i]),
+              headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+              },
+            });
+          const json = await response.json();
+          console.log(JSON.stringify(json));
+          if (response.status !== 202) {
+            alert(JSON.stringify(await response.json(), null, 2));
+          }
         }
       },
     },
