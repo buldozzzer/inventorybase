@@ -23,7 +23,7 @@
                             v-for="component in itemForm['components']"
                             :key="component.id"
                             :href="'#component'+component.id">
-                  Компонент {{ component.id }}
+                  {{ component.name }}
                 </b-nav-item>
 
               </b-nav>

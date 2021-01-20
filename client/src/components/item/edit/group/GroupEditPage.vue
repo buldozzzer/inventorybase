@@ -1,16 +1,40 @@
 <template>
   <div>
-    <h3>Здарова</h3>
-    <group-edit-form :itemForm="itemForm"
-                     :employeeInitials="employeeInitials">
-    </group-edit-form>
+    <b-container class="mt-3">
+      <b-row>
+        <b-col cols="2">
+          <b-navbar v-b-scrollspy:scrollspy-nested class="flex-column">
+            <b-nav pills vertical>
+              <b-nav-item v-for="item in itemsForEdit"
+                          :key="item['_id']"
+                          :href="'#item-' + item['_id']"
+                          @click="scrollIntoView">
+                {{ item.name ? item.name : 'Материальная ценность ' + (item.index + 1) }}
+              </b-nav-item>
+            </b-nav>
+          </b-navbar>
+        </b-col>
+        <b-col cols="10">
+          <div id="scrollspy-nested"
+               style="position:relative; height:550px; overflow-y:scroll"
+               ref="items">
+            <group-edit-form v-for="item in itemsForEdit"
+                             :key="item['_id']"
+                             :itemForm="item"
+                             :id="'item-' + item['_id']"
+                             :employeeInitials="employeeInitials">
+            </group-edit-form>
+          </div>
+        </b-col>
+      </b-row>
+    </b-container>
   </div>
 </template>
 
 <script>
 /* eslint-disable */
   import GroupEditForm from "./GroupEditForm";
-  import { bus } from "../../../../main";
+  import {bus} from "../../../../main";
 
   export default {
     name: "GroupEditPage",
@@ -40,10 +64,14 @@
         this.employeeList = this.employeeList['employees']
         this.employeeToString()
       },
-      fetchItemsForEdit(data){
-        debugger;
-        this.itemsForEdit = data
-      }
+      scrollIntoView(evt) {
+        evt.preventDefault()
+        const href = evt.target.getAttribute('href')
+        const el = href ? document.querySelector(href) : null
+        if (el) {
+          this.$refs.items.scrollTop = el.offsetTop
+        }
+      },
     },
     async created() {
       await this.fetchEmployees()
