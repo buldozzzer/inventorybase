@@ -51,12 +51,11 @@
                 <b-form-group id="form-comp-1_serial_n-group"
                               label="Заводской номер составляющей:"
                               label-for="form-comp-1_serial_n-input">
+<!--                  required-->
+<!--                  :state="check(component1.serial_n, '')"-->
                   <b-form-input id="form-comp-1_serial_n-input"
                                 type="text"
                                 v-model="component1.serial_n"
-
-                                required
-                                :state="check(component1.serial_n, '')"
                                 placeholder="Введите заводской номер">
                   </b-form-input>
                 </b-form-group>
@@ -68,13 +67,11 @@
                 <b-form-group id="form-comp-1_type-group"
                               label="Тип составляющей:"
                               label-for="form-comp-1_type-input">
+<!--                  required-->
+<!--                  :state="check(component1.type, '')">-->
                   <b-form-input id="form-comp-1_type-input"
                                 type="text"
-                                v-model="component1.type"
-
-                                required
-                                :state="check(component1.type, '')"
-                  >
+                                v-model="component1.type">
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -83,13 +80,11 @@
                 <b-form-group id="form-comp-1_view-group"
                               label="Вид составляющей:"
                               label-for="form-comp-1_view-input">
+<!--                  required-->
+<!--                  :state="check(component1.view, '')"-->
                   <b-form-input id="form-comp-1_view-input"
                                 type="text"
-                                v-model="component1.view"
-
-                                required
-                                :state="check(component1.view, '')"
-                  >
+                                v-model="component1.view">
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -102,11 +97,9 @@
                               label-for="form-comp-1_category-input">
                   <b-form-input id="form-comp-1_category-input"
                                 type="text"
-                                v-model="component1.category"
-
-                                required
-                                :state="check(component1.category, '')"
-                  >
+                                v-model="component1.category">
+<!--                                required-->
+<!--                                :state="check(component1.category, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -117,11 +110,9 @@
                               label-for="form-comp-1_year-input">
                   <b-form-input id="form-comp-1_year-input"
                                 type="text"
-                                v-model="component1.year"
-
-                                required
-                                :state="check(component1.year, '')"
-                  >
+                                v-model="component1.year">
+<!--                                required-->
+<!--                                :state="check(component1.year, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -134,11 +125,10 @@
                               label-for="form-comp-1_cost-input">
                   <b-form-input id="form-comp-1_cost-input"
                                 type="text"
-                                v-model="component1.cost"
+                                v-model="component1.cost">
 
-                                required
-                                :state="check(component1.cost, '')"
-                  >
+<!--                                required-->
+<!--                                :state="check(component1.cost, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -151,11 +141,9 @@
                               label-for="form-comp-1_object-input">
                   <b-form-input id="form-comp-1_object-input"
                                 type="text"
-                                v-model="component1.location.object"
-
-                                required
-                                :state="check(component1.location.object, '')"
-                  >
+                                v-model="component1.location.object">
+<!--                                required-->
+<!--                                :state="check(component1.location.object, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -166,11 +154,9 @@
                               label-for="form-comp-1_corpus-input">
                   <b-form-input id="form-comp-1_corpus-input"
                                 type="text"
-                                v-model="component1.location.corpus"
-
-                                required
-                                :state="check(component1.location.corpus, '')"
-                  >
+                                v-model="component1.location.corpus">
+<!--                                required-->
+<!--                                :state="check(component1.location.corpus, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -183,10 +169,9 @@
                               label-for="form-comp-1_unit-input">
                   <b-form-input id="form-comp-1_unit-input"
                                 type="text"
-                                v-model="component1.location.unit"
-                                required
-                                :state="check(component1.location.unit, '')"
-                  >
+                                v-model="component1.location.unit">
+<!--                                required-->
+<!--                                :state="check(component1.location.unit, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -197,11 +182,9 @@
                               label-for="form-comp-1_cabinet-input">
                   <b-form-input id="form-comp-1_cabinet-input"
                                 type="text"
-                                v-model="component1.location.cabinet"
-
-                                required
-                                :state="check(component1.location.cabinet, '')"
-                  >
+                                v-model="component1.location.cabinet">
+<!--                                required-->
+<!--                                :state="check(component1.location.cabinet, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -242,9 +225,9 @@
                   <b-form-input id="form-comp-2_serial_n-input"
                                 type="text"
                                 v-model="component2.serial_n"
-                                required
-                                :state="check(component2.serial_n, '')"
                                 placeholder="Введите заводской номер">
+<!--                    required-->
+<!--                    :state="check(component2.serial_n, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -257,10 +240,9 @@
                               label-for="form-item_type-input">
                   <b-form-input id="form-item_type-input"
                                 type="text"
-                                v-model="component2.type"
-                                required
-                                :state="check(component2.type, '')"
-                  >
+                                v-model="component2.type">
+<!--                                required-->
+<!--                                :state="check(component2.type, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -271,10 +253,9 @@
                               label-for="form-comp-2_view-input">
                   <b-form-input id="form-comp-2_view-input"
                                 type="text"
-                                v-model="component2.view"
-                                required
-                                :state="check(component2.view, '')"
-                  >
+                                v-model="component2.view">
+<!--                                required-->
+<!--                                :state="check(component2.view, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -287,10 +268,9 @@
                               label-for="form-comp-2_category-input">
                   <b-form-input id="form-comp-2_category-input"
                                 type="text"
-                                v-model="component2.category"
-                                required
-                                :state="check(component2.category, '')"
-                  >
+                                v-model="component2.category">
+<!--                                required-->
+<!--                                :state="check(component2.category, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -301,10 +281,9 @@
                               label-for="form-comp-2_year-input">
                   <b-form-input id="form-comp-2_year-input"
                                 type="text"
-                                v-model="component2.year"
-                                required
-                                :state="check(component2.year, '')"
-                  >
+                                v-model="component2.year">
+<!--                                required-->
+<!--                                :state="check(component2.year, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -317,11 +296,10 @@
                               label-for="form-comp-2_cost-input">
                   <b-form-input id="form-comp-2_cost-input"
                                 type="text"
-                                v-model="component2.cost"
+                                v-model="component2.cost">
 
-                                required
-                                :state="check(component2.cost, '')"
-                  >
+<!--                                required-->
+<!--                                :state="check(component2.cost, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -334,10 +312,9 @@
                               label-for="form-comp-2_object-input">
                   <b-form-input id="form-comp-2_object-input"
                                 type="text"
-                                v-model="component2.location.object"
-                                required
-                                :state="check(component2.location.object, '')"
-                  >
+                                v-model="component2.location.object">
+<!--                                required-->
+<!--                                :state="check(component2.location.object, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -348,10 +325,9 @@
                               label-for="form-comp-2_corpus-input">
                   <b-form-input id="form-comp-2_corpus-input"
                                 type="text"
-                                v-model="component2.location.corpus"
-                                required
-                                :state="check(component2.location.corpus, '')"
-                  >
+                                v-model="component2.location.corpus">
+<!--                                required-->
+<!--                                :state="check(component2.location.corpus, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -364,10 +340,9 @@
                               label-for="form-comp-2_unit-input">
                   <b-form-input id="form-comp-2_unit-input"
                                 type="text"
-                                v-model="component2.location.unit"
-                                required
-                                :state="check(component2.location.unit, '')"
-                  >
+                                v-model="component2.location.unit">
+<!--                                required-->
+<!--                                :state="check(component2.location.unit, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -378,10 +353,9 @@
                               label-for="form-comp-2_cabinet-input">
                   <b-form-input id="form-comp-2_cabinet-input"
                                 type="text"
-                                v-model="component2.location.cabinet"
-                                required
-                                :state="check(component2.location.cabinet, '')"
-                  >
+                                v-model="component2.location.cabinet">
+<!--                                required-->
+<!--                                :state="check(component2.location.cabinet, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -429,9 +403,9 @@
                   <b-form-input id="form-comp-3_serial_n-input"
                                 type="text"
                                 v-model="component3.serial_n"
-                                required
-                                :state="check(component3.serial_n, '')"
                                 placeholder="Введите заводской номер">
+<!--                    required-->
+<!--                    :state="check(component3.serial_n, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -444,10 +418,9 @@
                               label-for="form-comp-3_type-input">
                   <b-form-input id="form-comp-3_type-input"
                                 type="text"
-                                v-model="component3.type"
-                                required
-                                :state="check(component3.type, '')"
-                  >
+                                v-model="component3.type">
+<!--                                required-->
+<!--                                :state="check(component3.type, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -458,10 +431,9 @@
                               label-for="form-comp-3_view-input">
                   <b-form-input id="form-comp-3_view-input"
                                 type="text"
-                                v-model="component3.view"
-                                required
-                                :state="check(component3.view, '')"
-                  >
+                                v-model="component3.view">
+<!--                                required-->
+<!--                                :state="check(component3.view, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -474,10 +446,9 @@
                               label-for="form-comp-3_category-input">
                   <b-form-input id="form-comp-3_category-input"
                                 type="text"
-                                v-model="component3.category"
-                                required
-                                :state="check(component3.category, '')"
-                  >
+                                v-model="component3.category">
+<!--                                required-->
+<!--                                :state="check(component3.category, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -488,10 +459,9 @@
                               label-for="form-comp-3_year-input">
                   <b-form-input id="form-comp-3_year-input"
                                 type="text"
-                                v-model="component3.year"
-                                required
-                                :state="check(component3.year, '')"
-                  >
+                                v-model="component3.year">
+<!--                                required-->
+<!--                                :state="check(component3.year, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -504,11 +474,9 @@
                               label-for="form-comp-3_cost-input">
                   <b-form-input id="form-comp-3_cost-input"
                                 type="text"
-                                v-model="component3.cost"
-
-                                required
-                                :state="check(component3.cost, '')"
-                  >
+                                v-model="component3.cost">
+<!--                                required-->
+<!--                                :state="check(component3.cost, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -521,10 +489,9 @@
                               label-for="form-comp-3_object-input">
                   <b-form-input id="form-comp-3_object-input"
                                 type="text"
-                                v-model="component3.location.object"
-                                required
-                                :state="check(component3.location.object, '')"
-                  >
+                                v-model="component3.location.object">
+<!--                                required-->
+<!--                                :state="check(component3.location.object, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -535,10 +502,9 @@
                               label-for="form-comp-3_corpus-input">
                   <b-form-input id="form-comp-3_corpus-input"
                                 type="text"
-                                v-model="component3.location.corpus"
-                                required
-                                :state="check(component3.location.corpus, '')"
-                  >
+                                v-model="component3.location.corpus">
+<!--                                required-->
+<!--                                :state="check(component3.location.corpus, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -551,10 +517,9 @@
                               label-for="form-comp-3_unit-input">
                   <b-form-input id="form-comp-3_unit-input"
                                 type="text"
-                                v-model="component3.location.unit"
-                                required
-                                :state="check(component3.location.unit, '')"
-                  >
+                                v-model="component3.location.unit">
+<!--                                required-->
+<!--                                :state="check(component3.location.unit, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -565,10 +530,9 @@
                               label-for="form-comp-3_cabinet-input">
                   <b-form-input id="form-comp-3_cabinet-input"
                                 type="text"
-                                v-model="component3.location.cabinet"
-                                required
-                                :state="check(component3.location.cabinet, '')"
-                  >
+                                v-model="component3.location.cabinet">
+<!--                                required-->
+<!--                                :state="check(component3.location.cabinet, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -617,9 +581,9 @@
                   <b-form-input id="form-comp-4_serial_n-input"
                                 type="text"
                                 v-model="component4.serial_n"
-                                required
-                                :state="check(component4.serial_n, '')"
                                 placeholder="Введите заводской номер">
+<!--                    required-->
+<!--                    :state="check(component4.serial_n, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -632,10 +596,9 @@
                               label-for="form-comp-4_type-input">
                   <b-form-input id="form-comp-4_type-input"
                                 type="text"
-                                v-model="component4.type"
-                                required
-                                :state="check(component4.type, '')"
-                  >
+                                v-model="component4.type">
+<!--                                required-->
+<!--                                :state="check(component4.type, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -646,10 +609,9 @@
                               label-for="form-comp-4_view-input">
                   <b-form-input id="form-comp-4_view-input"
                                 type="text"
-                                v-model="component4.view"
-                                required
-                                :state="check(component4.view, '')"
-                  >
+                                v-model="component4.view">
+<!--                                required-->
+<!--                                :state="check(component4.view, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -662,10 +624,9 @@
                               label-for="form-comp-4_category-input">
                   <b-form-input id="form-comp-4_category-input"
                                 type="text"
-                                v-model="component4.category"
-                                required
-                                :state="check(component4.category, '')"
-                  >
+                                v-model="component4.category">
+<!--                                required-->
+<!--                                :state="check(component4.category, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -676,10 +637,9 @@
                               label-for="form-comp-4_year-input">
                   <b-form-input id="form-comp-4_year-input"
                                 type="text"
-                                v-model="component4.year"
-                                required
-                                :state="check(component4.year, '')"
-                  >
+                                v-model="component4.year">
+<!--                                required-->
+<!--                                :state="check(component4.year, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -692,11 +652,9 @@
                               label-for="form-comp-4_cost-input">
                   <b-form-input id="form-comp-4_cost-input"
                                 type="text"
-                                v-model="component4.cost"
-
-                                required
-                                :state="check(component4.cost, '')"
-                  >
+                                v-model="component4.cost">
+<!--                                required-->
+<!--                                :state="check(component4.cost, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -709,10 +667,9 @@
                               label-for="form-comp-4_object-input">
                   <b-form-input id="form-comp-4_object-input"
                                 type="text"
-                                v-model="component4.location.object"
-                                required
-                                :state="check(component4.location.object, '')"
-                  >
+                                v-model="component4.location.object">
+<!--                                required-->
+<!--                                :state="check(component4.location.object, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -723,10 +680,9 @@
                               label-for="form-comp-4_corpus-input">
                   <b-form-input id="form-comp-4_corpus-input"
                                 type="text"
-                                v-model="component4.location.corpus"
-                                required
-                                :state="check(component4.location.corpus, '')"
-                  >
+                                v-model="component4.location.corpus">
+<!--                                required-->
+<!--                                :state="check(component4.location.corpus, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -739,10 +695,9 @@
                               label-for="form-comp-4_unit-input">
                   <b-form-input id="form-comp-4_unit-input"
                                 type="text"
-                                v-model="component4.location.unit"
-                                required
-                                :state="check(component4.location.unit, '')"
-                  >
+                                v-model="component4.location.unit">
+<!--                                required-->
+<!--                                :state="check(component4.location.unit, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -753,10 +708,9 @@
                               label-for="form-comp-4_cabinet-input">
                   <b-form-input id="form-comp-4_cabinet-input"
                                 type="text"
-                                v-model="component4.location.cabinet"
-                                required
-                                :state="check(component4.location.cabinet, '')"
-                  >
+                                v-model="component4.location.cabinet">
+<!--                                required-->
+<!--                                :state="check(component4.location.cabinet, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -804,9 +758,9 @@
                   <b-form-input id="form-comp-5_serial_n-input"
                                 type="text"
                                 v-model="component5.serial_n"
-                                required
-                                :state="check(component5.serial_n, '')"
                                 placeholder="Введите заводской номер">
+<!--                    required-->
+<!--                    :state="check(component5.serial_n, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -819,10 +773,9 @@
                               label-for="form-comp-5_type-input">
                   <b-form-input id="form-comp-5_type-input"
                                 type="text"
-                                v-model="component5.type"
-                                required
-                                :state="check(component5.type, '')"
-                  >
+                                v-model="component5.type">
+<!--                                required-->
+<!--                                :state="check(component5.type, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -833,10 +786,9 @@
                               label-for="form-comp-5_view-input">
                   <b-form-input id="form-comp-5_view-input"
                                 type="text"
-                                v-model="component5.view"
-                                required
-                                :state="check(component5.view, '')"
-                  >
+                                v-model="component5.view">
+<!--                                required-->
+<!--                                :state="check(component5.view, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -849,10 +801,9 @@
                               label-for="form-comp-5_category-input">
                   <b-form-input id="form-comp-5_category-input"
                                 type="text"
-                                v-model="component5.category"
-                                required
-                                :state="check(component5.category, '')"
-                  >
+                                v-model="component5.category">
+<!--                                required-->
+<!--                                :state="check(component5.category, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -863,10 +814,9 @@
                               label-for="form-comp-5_year-input">
                   <b-form-input id="form-comp-5_year-input"
                                 type="text"
-                                v-model="component5.year"
-                                required
-                                :state="check(component5.year, '')"
-                  >
+                                v-model="component5.year">
+<!--                                required-->
+<!--                                :state="check(component5.year, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -879,11 +829,10 @@
                               label-for="form-comp-5_cost-input">
                   <b-form-input id="form-comp-5_cost-input"
                                 type="text"
-                                v-model="component5.cost"
+                                v-model="component5.cost">
 
-                                required
-                                :state="check(component5.cost, '')"
-                  >
+<!--                                required-->
+<!--                                :state="check(component5.cost, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -896,10 +845,9 @@
                               label-for="form-comp-5_object-input">
                   <b-form-input id="form-comp-5_object-input"
                                 type="text"
-                                v-model="component5.location.object"
-                                required
-                                :state="check(component5.location.object, '')"
-                  >
+                                v-model="component5.location.object">
+<!--                                required-->
+<!--                                :state="check(component5.location.object, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -910,10 +858,9 @@
                               label-for="form-comp-5_corpus-input">
                   <b-form-input id="form-comp-5_corpus-input"
                                 type="text"
-                                v-model="component5.location.corpus"
-                                required
-                                :state="check(component5.location.corpus, '')"
-                  >
+                                v-model="component5.location.corpus">
+<!--                                required-->
+<!--                                :state="check(component5.location.corpus, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -926,10 +873,9 @@
                               label-for="form-comp-5_unit-input">
                   <b-form-input id="form-comp-5_unit-input"
                                 type="text"
-                                v-model="component5.location.unit"
-                                required
-                                :state="check(component5.location.unit, '')"
-                  >
+                                v-model="component5.location.unit">
+<!--                                required-->
+<!--                                :state="check(component5.location.unit, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -940,10 +886,9 @@
                               label-for="form-comp-5_cabinet-input">
                   <b-form-input id="form-comp-5_cabinet-input"
                                 type="text"
-                                v-model="component5.location.cabinet"
-                                required
-                                :state="check(component5.location.cabinet, '')"
-                  >
+                                v-model="component5.location.cabinet">
+<!--                                required-->
+<!--                                :state="check(component5.location.cabinet, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>

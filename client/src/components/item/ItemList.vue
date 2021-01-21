@@ -125,7 +125,6 @@
                 :employee-initials="employeeInitials"
                 :edit-item="editItem"/>
   </div>
-
 </template>
 
 
