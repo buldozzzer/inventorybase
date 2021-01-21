@@ -3,10 +3,10 @@
     <b-container class="mt-3">
       <b-row>
         <b-col cols="2">
-          <b-button variant="primary"
-                      @click="editItems">
-              Внести изменения
-            </b-button>
+          <b-button variant="dark"
+                    v-b-modal.confirm-modal>
+            Внести изменения
+          </b-button>
           <b-navbar v-b-scrollspy:scrollspy-nested class="flex-column">
             <b-nav pills vertical>
               <b-nav-item v-for="item in itemsForEdit"
@@ -26,12 +26,14 @@
                              :key="item['_id']"
                              :itemForm="item"
                              :id="'item-' + item['_id']"
-                             :employeeInitials="employeeInitials">
-            </group-edit-form>
+                             :employeeInitials="employeeInitials"/>
           </div>
         </b-col>
       </b-row>
     </b-container>
+    <confirm-form :title="title"
+                  :message="message"
+                  :op="editItems"/>
   </div>
 </template>
 
@@ -39,17 +41,21 @@
 /* eslint-disable */
   import GroupEditForm from "./GroupEditForm";
   import {bus} from "../../../../main";
+  import ConfirmForm from "../../ConfirmForm";
 
   export default {
     name: "GroupEditPage",
     components: {
-      GroupEditForm
+      GroupEditForm,
+      ConfirmForm
     },
     data() {
       return {
         employeeInitials: [],
         employeeList: [],
-        itemsForEdit: []
+        itemsForEdit: [],
+        title: 'Подтвердите операцию',
+        m: ''
       }
     },
     methods: {
@@ -94,6 +100,18 @@
           }
         }
       },
+    },
+    computed:{
+      message: function () {
+        if(this.itemsForEdit) {
+          if (this.itemsForEdit.length === 1) {
+            this.m = 'Вы уверены, что хотите внести изменения в запись?'
+          } else {
+            this.m = 'Вы уверены, что хотите внести изменения в записи?'
+          }
+        }
+        return this.m
+      }
     },
     async created() {
       await this.fetchEmployees()
