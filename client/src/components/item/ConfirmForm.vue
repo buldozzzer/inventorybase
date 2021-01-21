@@ -23,6 +23,11 @@
   export default {
     name: "ConfirmForm",
     props:['title', 'op', 'message'],
+    data(){
+      return {
+        title: 'Подтвердите операцию',
+      }
+    },
     methods:{
       reset(evt) {
         evt.preventDefault();

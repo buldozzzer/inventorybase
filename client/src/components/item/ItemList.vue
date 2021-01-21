@@ -50,6 +50,7 @@
              :sort-by.sync="sortBy"
              v-bind:sticky-header="sliderValue+'px'"
              :items="items"
+             small
              :fields="itemFields"
              :filter-function="filterFunction"
              :filter="filters"
@@ -94,9 +95,6 @@
         <b-button size="sm" @click="row.toggleDetails" class="mr-2">
           {{ row.detailsShowing ? 'Скрыть' : 'Показать' }} Компоненты
         </b-button>
-        <b-form-checkbox v-model="row.detailsShowing" @change="row.toggleDetails">
-          Отобржать компоненты
-        </b-form-checkbox>
       </template>
 
       <template #row-details="row">
@@ -104,7 +102,12 @@
           <template #cell(index)="data">
             {{ data.index + 1 }}
           </template>
-          <b-button size="sm" @click="row.toggleDetails">Скрыть компоненты</b-button>
+          <template #cell(location)="data">
+            Объект: {{ data.item.location.object }}<br>
+            Корпус: {{ data.item.location.corpus }}<br>
+            Кабинет: {{ data.item.location.cabinet }}<br>
+            Подразделение: {{ data.item.location.unit }}
+          </template>
         </b-table>
       </template>
 
@@ -136,6 +139,7 @@
   import Filters from "./Filters";
   import AddModal from './add/AddModal';
   import EditModal from './edit/EditModal';
+  import ConfirmForm from "./ConfirmForm";
 
   export default {
     name: "ItemList",
@@ -143,11 +147,12 @@
       VueRangeSlider,
       AddModal,
       EditModal,
-      Filters
+      Filters,
+      ConfirmForm
     },
     data() {
       return {
-        /* eslint-disable */
+        m: '',
         noCollapse: false,
         sortBy: 'name',
         componentFields: [
@@ -158,7 +163,7 @@
           },
           {
             key: "serial_n",
-            label: "Серйный номер",
+            label: "Серийный номер",
           },
           {
             key: "category",
@@ -282,6 +287,18 @@
         fuseString: ""
       };
     },
+    computed:{
+      message: function () {
+        if(this.itemsForEdit) {
+          if (this.itemsForEdit.length === 1) {
+            this.m = 'Вы уверены, что хотите удалить запись?'
+          } else {
+            this.m = 'Вы уверены, что хотите удалить выбранные записи?'
+          }
+        }
+        return this.m
+      }
+    },
     methods: {
       stickyHeaderHeightToString() {
         return this.sliderValue.toString() + 'px'
@@ -314,20 +331,8 @@
       },
       async removeItems(selectedItems) {
         for (let item of selectedItems) {
-          const _id = item['_id']
-          const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
-            {
-              method: 'DELETE',
-              headers: {
-                'Accept': 'application/json',
-                'Content-type': 'application/json'
-              },
-          })
-          if (response.status !== 204) {
-            alert(JSON.stringify(await response.json(), null, 2));
-          }
+          await this.removeItem(item)
         }
-        await this.fetchItems()
       },
       async editItem(item) {
         const _id = item['_id']

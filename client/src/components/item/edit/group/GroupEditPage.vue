@@ -31,8 +31,7 @@
         </b-col>
       </b-row>
     </b-container>
-    <confirm-form :title="title"
-                  :message="message"
+    <confirm-form :message="message"
                   :op="editItems"/>
   </div>
 </template>
@@ -54,7 +53,6 @@
         employeeInitials: [],
         employeeList: [],
         itemsForEdit: [],
-        title: 'Подтвердите операцию',
         m: ''
       }
     },
