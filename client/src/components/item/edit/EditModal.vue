@@ -10,7 +10,12 @@
     <!--no-close-on-backdrop или настроить очистку формы при нажатии на задний фон-->
 
     <b-form @submit="onSubmit" @reset="onReset" class="w-100">
-      <div class="container">
+      <div class="submit-reset-buttons mt-3">
+        <b-button type="submit" variant="primary">Добавить запись</b-button>
+        <!--        @click="initForm"-->
+        <b-button type="reset" variant="danger">Отмена</b-button>
+      </div>
+      <div class="container mt-3">
         <div class="row">
           <div class="col">
             <form-template :itemForm="itemForm"
@@ -41,11 +46,6 @@
             </b-card>
           </div>
         </div>
-      </div>
-      <div class="submit-reset-buttons">
-        <b-button type="submit" variant="primary">Добавить запись</b-button>
-        <!--        @click="initForm"-->
-        <b-button type="reset" variant="danger">Отмена</b-button>
       </div>
     </b-form>
   </b-modal>
