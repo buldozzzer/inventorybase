@@ -19,7 +19,6 @@
                             :href="'#component'+component.id">
                   {{ component.name ? component.name : 'Компонент ' + component.id}}
                 </b-nav-item>
-
               </b-nav>
               <b-card-body
                 id="nav-scroller"

@@ -2,7 +2,7 @@
 <template>
   <b-modal id="edit-item-modal"
            ref="editItemModal"
-           title="Добавить запись в базу мат. ценностей"
+           title="Изменить запись в базе мат. ценностей"
            size="xl"
            no-close-on-backdrop
            hide-footer
@@ -28,10 +28,10 @@
                             v-for="component in itemForm['components']"
                             :key="component.id"
                             :href="'#component'+component.id">
-                  {{ component.name }}
+                  {{ component.name ? component.name : 'Компонент ' + (component.id + 1) }}
                 </b-nav-item>
-
               </b-nav>
+
               <b-card-body
                 id="nav-scroller"
                 ref="content"
@@ -40,8 +40,23 @@
                                 v-for="component in itemForm['components']"
                                 :key="component.id"
                                 :components="itemForm['components']"
-                                :component="component"
-                />
+                                :component="component"/>
+                <b-row>
+                  <b-col cols="6">
+                    <b-button @click="addComponent"
+                              variant="primary">
+                      Добавить компонент
+                    </b-button>
+                  </b-col>
+                  <b-col cols="6">
+                    <b-button v-if="itemForm['components'].length > 0"
+                              variant="danger"
+                              @click="deleteLastComponent">
+                      Удалить компонент
+                    </b-button>
+                  </b-col>
+                </b-row>
+
               </b-card-body>
             </b-card>
           </div>
@@ -68,7 +83,10 @@
         otssCategories: [1, 2, 3, 'Не секретно'],
         conditions: ['Исправно', 'Неисправно'],
         operation: ['Используется', 'Не используется'],
-        itemForm: {}
+        itemForm: {
+          components: []
+        },
+        index: 0
       }
     },
     methods: {
@@ -79,7 +97,6 @@
       onReset(evt) {
         evt.preventDefault();
         this.$refs.editItemModal.hide();
-        this.initForm();
       },
       onSubmit(evt) {
         evt.preventDefault();
@@ -96,13 +113,36 @@
           this.$refs.content.scrollTop = el.offsetTop
         }
       },
-      initForm() {
-        this.itemForm = {}
+      addComponent(){
+        let componentForm = {
+          id: this.index,
+          name: '',
+          serial_n: '',
+          category: '',
+          type: '',
+          view: '',
+          year: '',
+          cost: '',
+          location: {
+            object: '',
+            corpus: '',
+            cabinet: '',
+            unit: ''
+          }
+        }
+        this.itemForm['components'].push(componentForm)
+        this.index += 1
+      },
+      deleteLastComponent(){
+        this.itemForm['components'].splice( this.itemForm['components'].length-1, 1)
+        this.index -= 1
       },
     },
   };
 </script>
 
-<style scoped>
-
+<style>
+.add-component {
+  display: flow;
+}
 </style>

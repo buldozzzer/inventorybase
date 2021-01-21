@@ -322,7 +322,6 @@
         this.items = this.items['items']
       },
       async selectToRemoveItem(item) {
-        debugger
         this.selected.push(item)
       },
       async removeItems(selectedItems) {
