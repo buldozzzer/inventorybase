@@ -20,23 +20,26 @@
 
 <script>
 /* eslint-disable */
+  import {bus} from '../../main'
   export default {
     name: "ConfirmForm",
-    props:['title', 'op', 'message'],
+    props:['op', 'message', 'payload'],
     data(){
       return {
-        title: 'Подтвердите операцию',
+        title: 'Подтвердите операцию'
       }
     },
     methods:{
       reset(evt) {
         evt.preventDefault();
         this.$refs.confirmModal.hide();
+        bus.$emit('cancel')
       },
-      operation(evt){
-        this.op()
+      operation(evt) {
+        this.op(this.payload)
         evt.preventDefault();
         this.$refs.confirmModal.hide();
+        bus.$emit('cancel')
       }
     }
   }

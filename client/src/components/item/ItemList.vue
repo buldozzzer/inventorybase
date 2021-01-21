@@ -4,8 +4,9 @@
     <b-container>
       <b-row>
         <b-col>
-          <b-button class="mt-3"
-                    v-if="selected.length !== 0" @click="removeItems(selected)">
+          <b-button variant="danger"
+                    class="mt-3"
+                    v-if="selected.length !== 0" v-b-modal.confirm-modal>
             Удалить выбранные
           </b-button>
         </b-col>
@@ -81,7 +82,8 @@
           <br>
           <b-button variant="danger"
                     class="mt-3"
-                    @click="removeItem(row.item)">
+                    v-b-modal.confirm-modal
+                    @click="selectToRemoveItem(row.item)">
             Удалить
           </b-button>
         </div>
@@ -127,6 +129,11 @@
     <edit-modal ref="editItemModal"
                 :employee-initials="employeeInitials"
                 :edit-item="editItem"/>
+    <confirm-form ref="confirmModal"
+                  :payload="selected"
+                  :message="message"
+                  :op="removeItems"
+    ></confirm-form>
   </div>
 </template>
 
@@ -289,8 +296,8 @@
     },
     computed:{
       message: function () {
-        if(this.itemsForEdit) {
-          if (this.itemsForEdit.length === 1) {
+        if(this.selected) {
+          if (this.selected.length === 1) {
             this.m = 'Вы уверены, что хотите удалить запись?'
           } else {
             this.m = 'Вы уверены, что хотите удалить выбранные записи?'
@@ -314,25 +321,27 @@
         this.items = await response.json()
         this.items = this.items['items']
       },
-      async removeItem(item) {
-        const _id = item['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
-          {
-          method: 'DELETE',
-          headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json'
-          },
-        });
-        if (response.status !== 204) {
-          alert(JSON.stringify(await response.json(), null, 2));
-        }
-        await this.fetchItems()
+      async selectToRemoveItem(item) {
+        debugger
+        this.selected.push(item)
       },
       async removeItems(selectedItems) {
         for (let item of selectedItems) {
-          await this.removeItem(item)
+          const _id = item['_id']
+          const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
+            {
+              method: 'DELETE',
+              headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+              },
+            });
+          if (response.status !== 204) {
+            alert(JSON.stringify(await response.json(), null, 2));
+          }
+          await this.fetchItems()
         }
+        this.selected = []
       },
       async editItem(item) {
         const _id = item['_id']
@@ -360,6 +369,7 @@
         if (this.selected.length === 0) {
           this.$refs.selectableTable.selectAllRows()
         } else {
+          this.selected = []
           this.$refs.selectableTable.clearSelected()
         }
       },
@@ -423,6 +433,7 @@
       await this.fetchEmployees()
       await this.setFilters()
       await bus.$on('updateList', () => this.fetchItems())
+      await bus.$on('cancel', () => {this.selected = []})
       await bus.$on('resetFilters', (data) => {
         this.filters = data;
         this.fuseString = null
