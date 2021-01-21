@@ -270,7 +270,7 @@
         items: [],
         selectedItem: {},
         selected: [],
-        sliderValue: 700,
+        sliderValue: 405,
         employeeList: [],
         employeeInitials: [],
         filters: {

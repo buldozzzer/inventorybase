@@ -10,7 +10,18 @@
     <!--no-close-on-backdrop или настроить очистку формы при нажатии на задний фон-->
 
     <b-form @submit="onSubmit" @reset="onReset" class="w-100">
-      <div class="container">
+      <div class="submit-reset-buttons mt-3 my">
+        <b-button type="submit" variant="success">
+          Добавить запись
+        </b-button>
+        <b-button href="#/items/groupadd" variant="light" @click="sendForm">
+          Добавить несколько записей
+        </b-button>
+        <b-button type="reset" variant="danger" @click="initForm">
+          Отмена
+        </b-button>
+      </div>
+      <div class="container mt-3">
         <div class="row">
           <div class="col">
             <form-template :itemForm="itemForm"
@@ -22,17 +33,6 @@
             <component-list ref="componentList"/>
           </div>
         </div>
-      </div>
-      <div class="submit-reset-buttons">
-        <b-button type="submit" variant="primary">
-          Добавить запись
-        </b-button>
-        <b-button href="#/items/groupadd" variant="primary" @click="sendForm">
-          Добавить несколько записей
-        </b-button>
-        <b-button type="reset" variant="danger" @click="initForm">
-          Отмена
-        </b-button>
       </div>
     </b-form>
   </b-modal>
@@ -168,5 +168,8 @@
   }
 </script>
 
-<style scoped>
+<style>
+  .submit-reset-buttons{
+    display: -o-flex;
+  }
 </style>
