@@ -132,7 +132,8 @@
         return left !== right
       },
       sendForm(){
-        bus.$emit('sendForm', this.itemForm)
+        this.itemForm['components'] = this.$refs.componentList.createComponentList()
+        this.$parent.$parent.$data.dataForChildren = this.itemForm
       }
     },
   }

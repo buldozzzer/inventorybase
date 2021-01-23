@@ -16,7 +16,7 @@
                       class="mt-3"
                       v-if="listOfNewItems.length > 1"
                       @click="deleteLastForm">-</b-button>
-            <b-button variant="primary"
+            <b-button variant="success"
                       @click="createItems">
               {{ listOfNewItems.length === 1 ? 'Добавить запись' : 'Добавить записи' }}
             </b-button>
@@ -60,30 +60,37 @@
     },
     methods: {
       init() {
-        let item = {
-          index: null,
-          name: '',
-          user: '',
-          responsible: '',
-          components: [],
-          inventory_n: '',
-          otss_category: '',
-          condition: '',
-          unit_from: '',
-          in_operation: '',
-          fault_document_requisites: '',
-          date_of_receipt: null,
-          number_of_receipt: '',
-          requisites: '',
-          transfer_date: null,
-          otss_requisites: '',
-          spsi_requisites: '',
-          transfer_requisites: '',
-          comment: '',
-          last_check: null,
+        if(this.$parent.$data.dataForChildren == null) {
+          let item = {
+            index: null,
+            name: '',
+            user: '',
+            responsible: '',
+            components: [],
+            inventory_n: '',
+            otss_category: '',
+            condition: '',
+            unit_from: '',
+            in_operation: '',
+            fault_document_requisites: '',
+            date_of_receipt: null,
+            number_of_receipt: '',
+            requisites: '',
+            transfer_date: null,
+            otss_requisites: '',
+            spsi_requisites: '',
+            transfer_requisites: '',
+            comment: '',
+            last_check: null,
+          }
+          this.listOfNewItems.push(item)
+          this.index += 1
+        } else {
+          this.listOfNewItems.push(this.$parent.$data.dataForChildren)
+          this.listOfNewItems[0]['index'] = this.index
+          this.index += 1
+          this.$parent.$data.dataForChildren = null
         }
-        this.listOfNewItems.push(item)
-        this.index += 1
       },
       addForm(){
         let item = {

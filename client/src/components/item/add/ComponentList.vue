@@ -39,6 +39,7 @@
 
   export default {
     name: "ComponentList",
+    props: ['payload'],
     components: {
       ComponentForm
     },
@@ -58,22 +59,32 @@
           this.$refs.content.scrollTop = el.offsetTop
         }
       },
-      clearComponent(component) {
-        for (let key in component) {
-          component[key] = ''
-        }
-        component['location'] = {
-          object: '',
-          corpus: '',
-          cabinet: '',
-          unit: ''
-        }
-      },
       initComponentForm() {
-        if (this.components.length > 0) {
-          for (let component in this.components) {
-            this.clearComponent(component)
+        this.components = []
+      },
+      init(){
+        if(this.payload == null) {
+          let componentForm = {
+            id: this.index,
+            name: '',
+            serial_n: '',
+            type: '',
+            view: '',
+            category: '',
+            year: '',
+            cost: '',
+            location: {
+              object: '',
+              corpus: '',
+              unit: '',
+              cabinet: ''
+            }
           }
+          this.components.push(componentForm)
+          this.index += 1
+        } else {
+          this.components = this.payload
+          this.index = this.components.length
         }
       },
       addComponent() {
@@ -101,21 +112,11 @@
         this.index -= 1
       },
       createComponentList() {
-        let check = true
-        for (let component in this.components) {
-          if (component['name'] === '') {
-            check = false
-          }
-        }
-        if (check) {
-          return this.components
-        } else {
-          return 0
-        }
+        return this.components
       }
     },
     async created() {
-      this.addComponent()
+      this.init()
       await bus.$on('clearComponentForm', () => this.initComponentForm())
     }
   }

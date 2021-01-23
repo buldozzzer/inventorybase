@@ -13,7 +13,7 @@
           </b-col>
           <b-col>
             <component-list ref="componentList"
-                            v-if="itemForm">
+                            :payload="itemForm['components']">
             </component-list>
           </b-col>
         </b-row>
