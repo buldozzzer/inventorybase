@@ -7,17 +7,15 @@
            no-close-on-backdrop
            hide-footer
            hide-header-close>
-    <!--no-close-on-backdrop или настроить очистку формы при нажатии на задний фон-->
-
-    <b-form @submit="onSubmit" @reset="onReset" class="w-100">
+    <b-form class="w-100">
       <div class="submit-reset-buttons mt-3 my">
-        <b-button type="submit" variant="success">
+        <b-button type="submit" variant="success" @click="onSubmit">
           Добавить запись
         </b-button>
         <b-button href="#/items/groupadd" variant="light" @click="sendForm">
           Добавить несколько записей
         </b-button>
-        <b-button type="reset" variant="danger" @click="initForm">
+        <b-button type="reset" variant="danger" @click="onReset">
           Отмена
         </b-button>
       </div>
@@ -26,7 +24,6 @@
           <div class="col">
             <form-template :itemForm="itemForm"
                            :employeeInitials="employeeInitials">
-
             </form-template>
           </div>
           <div class="col">
@@ -60,24 +57,24 @@
         employeeList: [],
         itemForm: {
           name: '',
-        user: '',
-        responsible : '',
-        components : [],
-        inventory_n : '',
-        otss_category : '',
-        condition : '',
-        unit_from : '',
-        in_operation : '',
-        fault_document_requisites : '',
-        date_of_receipt : null,
-        number_of_receipt : '',
-        requisites : '',
-        transfer_date : null,
-        otss_requisites : '',
-        spsi_requisites : '',
-        transfer_requisites : '',
-        comment :'',
-        last_check : null,
+          user: '',
+          responsible: '',
+          components: [],
+          inventory_n: '',
+          otss_category: '',
+          condition: '',
+          unit_from: '',
+          in_operation: '',
+          fault_document_requisites: '',
+          date_of_receipt: null,
+          number_of_receipt: '',
+          requisites: '',
+          transfer_date: null,
+          otss_requisites: '',
+          spsi_requisites: '',
+          transfer_requisites: '',
+          comment: '',
+          last_check: null,
         },
       }
 
@@ -99,34 +96,10 @@
         }
         bus.$emit('updateList')
       },
-      initForm() {
-        this.itemForm.name = '';
-        this.itemForm.user = '';
-        this.itemForm.responsible = '';
-        this.itemForm.components = [];
-        this.itemForm.inventory_n = '';
-        this.itemForm.otss_category = '';
-        this.itemForm.condition = '';
-        this.itemForm.unit_from = '';
-        this.itemForm.in_operation = '';
-        this.itemForm.fault_document_requisites = '';
-        this.itemForm.date_of_receipt = null;
-        this.itemForm.number_of_receipt = '';
-        this.itemForm.requisites = '';
-        this.itemForm.transfer_date = null;
-        this.itemForm.otss_requisites = '';
-        this.itemForm.spsi_requisites = '';
-        this.itemForm.transfer_requisites = '';
-        this.itemForm.comment = '';
-        this.itemForm.last_check = null;
-
-        this.$refs.componentList.initComponentForm()
-      },
 
       onReset(evt) {
-        evt.preventDefault();
-        this.$refs.addItemModal.hide();
-        this.initForm();
+        evt.preventDefault()
+        this.$refs.addItemModal.hide()
       },
       onSubmit(evt) {
         evt.preventDefault();
@@ -154,7 +127,6 @@
           last_check: this.itemForm.last_check,
         };
         this.createItem(payload);
-        this.initForm();
       },
       isIntroduced(left, right) {
         return left !== right
@@ -163,8 +135,6 @@
         bus.$emit('sendForm', this.itemForm)
       }
     },
-    created() {
-    }
   }
 </script>
 

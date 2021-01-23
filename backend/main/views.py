@@ -39,10 +39,6 @@ class ItemView(APIView):
     def post(self, request):
         collection = mongo.get_conn()['main_item']
         item = request.data
-        index = 1
-        for component in item['components']:
-            component['id'] = index
-            index += 1
         item_id = collection.insert_one(item).inserted_id
         return Response({"message": "Item '{}' created successfully."
                         .format(item_id)}, status=201)
