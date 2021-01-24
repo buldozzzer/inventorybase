@@ -4,7 +4,7 @@
 # from .views import *
 #
 # router = routers.SimpleRouter()
-# # router.register(r'employee', EmployeeViewSet)
+# # router.register(r'metadata', EmployeeViewSet)
 # router.register(r'item', ItemView)
 #
 # app_name = "main"

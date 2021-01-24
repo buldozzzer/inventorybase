@@ -73,9 +73,20 @@
       }
     },
     methods:{
-      employeeList() {
-        this.employees = this.employeeInitials
-        this.employees.push({text: '-', value: null})
+      async createEmployeeList() {
+        const response = await fetch('http://localhost:8000/api/v1/employee/')
+        let payload = await response.json()
+        payload = payload['employees']
+        this.employeeToString(payload)
+        this.employees.push({value: null, text: '-'})
+      },
+      employeeToString(payload) {
+        for (let i = 0; i < payload.length; i++) {
+          this.employees.push(
+            payload[i].surname + ' ' +
+            payload[i].name[0] + '.' +
+            payload[i].secname[0] + '.');
+        }
       },
       resetFilters(){
         this.filters = {
@@ -96,7 +107,7 @@
       }
     },
     async created(){
-      await this.employeeList()
+      await this.createEmployeeList()
     }
   }
 </script>

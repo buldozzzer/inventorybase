@@ -148,7 +148,6 @@
       async createItems() {
         bus.$emit('fetchComponents')
         for (let i = 0; i<this.listOfNewItems.length; i++) {
-          debugger;
           const payload = {
             name: this.listOfNewItems[i].name,
             user: this.listOfNewItems[i].user,

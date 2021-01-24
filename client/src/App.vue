@@ -7,9 +7,9 @@
         <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
         <b-collapse id="nav-collapse" is-nav>
           <b-navbar-nav>
-            <b-nav-item-dropdown text="Добавить">
-              <b-dropdown-item v-b-modal.add-item-modal>Добавить запись в базу мат. ценностей</b-dropdown-item>
-              <b-dropdown-item href="#">Добавить запись в базу сотрудиков</b-dropdown-item>
+            <b-nav-item-dropdown text="Таблицы">
+              <b-dropdown-item >Мат. ценности</b-dropdown-item>
+              <b-dropdown-item href="#/metadata">Метаданные</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
 
