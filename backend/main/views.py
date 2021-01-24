@@ -108,12 +108,13 @@ class EmployeeView(APIView):
         updated_fields = request.data
         collection = mongo.get_conn()['main_employee']
         if collection:
+            updated_fields.pop("_id")
             collection.update_one({
                 '_id': ObjectId(pk)
             }, {
                 '$set': updated_fields
             }, upsert=False)
             return Response({"message": "Employee with id `{}` has been updated."
-                            .format(pk)})
+                            .format(pk)}, status=202)
         else:
             Response({"message": "Employee with _id `{}` not found.".format(pk)}, status=404)

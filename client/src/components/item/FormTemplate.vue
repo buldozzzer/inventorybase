@@ -86,7 +86,7 @@
                       label-for="form-unit_from-input">
           <b-form-input id="form-unit_from-input"
                         type="text"
-                        v-model="itemForm.unit_from"
+                        v-model="itemForm.unit_from">
 <!--                        :state="isIntroduced(itemForm.unit_from, '')"-->
 <!--                        required>-->
           </b-form-input>
@@ -100,7 +100,7 @@
           <b-form-select id="form-in_operation-input"
                          type="radio"
                          v-model="itemForm.in_operation"
-                         :options="operation"
+                         :options="operation">
 <!--                         :state="isIntroduced(itemForm.in_operation, '')"-->
 <!--                         required>-->
           </b-form-select>
