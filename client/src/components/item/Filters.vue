@@ -3,28 +3,32 @@
     <b-container>
       <b-row>
         <b-col>
-          <b-form-select
-            v-model="filters.responsible"
-            :options="employees"
-          ></b-form-select>
+          <b-form-group label="Ответственный сотрудник:">
+            <b-form-select
+              v-model="filters.responsible"
+              :options="employees"/>
+          </b-form-group>
         </b-col>
         <b-col>
-          <b-form-select
-            v-model="filters.otss_category"
-            :options="otssCategories"
-          ></b-form-select>
+          <b-form-group label="Категория ОТСС:">
+            <b-form-select
+              v-model="filters.otss_category"
+              :options="otssCategories"/>
+          </b-form-group>
         </b-col>
         <b-col>
-          <b-form-select
-            v-model="filters.condition"
-            :options="conditions"
-          ></b-form-select>
+          <b-form-group label="Состояние:">
+            <b-form-select
+              v-model="filters.condition"
+              :options="conditions"/>
+          </b-form-group>
         </b-col>
         <b-col>
-          <b-form-select
-            v-model="filters.in_operation"
-            :options="operation"
-          ></b-form-select>
+          <b-form-group label="Использование:">
+            <b-form-select
+              v-model="filters.in_operation"
+              :options="operation"/>
+          </b-form-group>
         </b-col>
         <b-col>
           <b-form-input

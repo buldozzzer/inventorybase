@@ -403,6 +403,7 @@
 
       },
       fuseSearch() {
+        this.fetchItems()
         this.$search(this.fuseString, this.items,
           {
             tokenize: true,
@@ -414,9 +415,6 @@
           }).then(results => {
           this.items = results
         })
-        if(this.fuseString == ""){
-          this.fetchItems()
-        }
       },
       sendToEditItems(){
         this.$parent.$data.dataForChildren = this.selected

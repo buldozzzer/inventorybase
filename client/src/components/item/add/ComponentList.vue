@@ -24,6 +24,7 @@
           </b-col>
           <b-col cols="6">
             <b-button variant="danger"
+                      v-if="components.length > 0"
                       @click="deleteComponent">Удалить компонент</b-button>
           </b-col>
         </b-row>
