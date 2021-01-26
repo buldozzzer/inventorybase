@@ -1,8 +1,8 @@
 <template>
   <div>
-    <b-modal ref="otssAddModal"
-           id="o-t-s-s-category-add-modal"
-           title="Добавить ОТСС категорию в базу"
+    <b-modal ref="unitAddModal"
+           id="unit-add-modal"
+           title="Добавить подразделние, откуда поступила мат. ценность в базу"
            no-close-on-backdrop
            hide-footer
            hide-header-close>
@@ -18,17 +18,17 @@
         <div class="container mt-3">
           <div class="row">
             <div class="col">
-              <b-form-group id="form-category-group"
-                            label="ОТСС категория:"
-                            label-for="form-category-input">
-                <b-form-input id="form-category-input"
+              <b-form-group id="form-unit-group"
+                            label="Подразделение, откуда поступила мат. ценность:"
+                            label-for="form-unit-input">
+                <b-form-input id="form-unit-input"
                               type="text"
                               class="mt-3"
-                              v-model="form.category"
-                              :value="form.category"
+                              v-model="form.unit"
+                              :value="form.unit"
                               required
-                              placeholder="Введите название категории"
-                              :state="check(form.category, '')">
+                              placeholder="Введите название подразделния"
+                              :state="check(form.unit, '')">
                 </b-form-input>
               </b-form-group>
             </div>
@@ -44,17 +44,17 @@
   import {bus} from "../../../main";
 
   export default {
-    name: "OTSSCategoryAddModal",
+    name: "UnitAddModal",
     data() {
       return {
         form:{
-          category: ''
+          unit: ''
         }
       }
     },
     methods: {
-      async createOTSSCategory() {
-        const response = await fetch('http://localhost:8000/api/v1/otss/', {
+      async createUnit() {
+        const response = await fetch('http://localhost:8000/api/v1/unit/', {
           method: 'POST',
           headers: {
             'Accept': 'application/json',
@@ -70,12 +70,12 @@
       onReset(evt) {
         evt.preventDefault()
         this.initForm()
-        this.$refs.otssAddModal.hide()
+        this.$refs.unitAddModal.hide()
       },
       onSubmit(evt) {
         evt.preventDefault();
-        this.$refs.otssAddModal.hide();
-        this.createOTSSCategory();
+        this.$refs.unitAddModal.hide();
+        this.createUnit();
         this.initForm()
       },
       check(left, right){

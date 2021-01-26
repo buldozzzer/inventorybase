@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-modal ref="otssEditModal"
-             id="otss-edit-modal"
+    <b-modal ref="unitEditModal"
+             id="unit-edit-modal"
              title="Редактировать запись"
              no-close-on-backdrop
              hide-footer
@@ -18,17 +18,17 @@
         <div class="container mt-3">
           <div class="row">
             <div class="col">
-              <b-form-group id="form-category-group"
-                            label="ОТСС категория:"
-                            label-for="form-category-input">
-                <b-form-input id="form-category-input"
+              <b-form-group id="form-unit-group"
+                            label="Подразделние, откуда поступила мат. ценность:"
+                            label-for="form-unit-input">
+                <b-form-input id="form-unit-input"
                               type="text"
                               class="mt-3"
-                              v-model="form.category"
-                              :value="form.category"
+                              v-model="form.unit"
+                              :value="form.unit"
                               required
-                              placeholder="Введите название категории"
-                              :state="check(form.category, '')">
+                              placeholder="Введите название подразделния"
+                              :state="check(form.unit, '')">
                 </b-form-input>
               </b-form-group>
             </div>
@@ -44,18 +44,18 @@
   import {bus} from "../../../main";
 
   export default {
-    name: "OTSSCategoryEditModal",
+    name: "UnitEditModal",
     data() {
       return {
         form:{
-          category: ''
+          unit: ''
         }
       }
     },
     methods:{
-      async editOTSS(payload) {
+      async editUnit(payload) {
         const _id = payload['_id'];
-        const response = await fetch(`http://localhost:8000/api/v1/otss/${_id}/`, {
+        const response = await fetch(`http://localhost:8000/api/v1/unit/${_id}/`, {
           method: 'PUT',
           body: JSON.stringify(payload),
           headers: {
@@ -72,13 +72,13 @@
       },
       onReset(evt) {
         evt.preventDefault()
-        this.$refs.otssEditModal.hide()
+        this.$refs.unitEditModal.hide()
       },
       onSubmit(evt) {
         evt.preventDefault();
-        this.$refs.otssEditModal.hide();
+        this.$refs.unitEditModal.hide();
         const payload = this.form
-        this.editOTSS(payload)
+        this.editUnit(payload)
       },
       check(left, right){
         return left !== right

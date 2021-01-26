@@ -23,4 +23,6 @@ urlpatterns = [
     path('employee/<pk>/', views.EmployeeView.as_view(), name='edit_employees'),
     path('otss/', views.OTSSView.as_view(), name='get_otss'),
     path('otss/<pk>/', views.OTSSView.as_view(), name='edit_otss'),
+    path('unit/', views.UnitView.as_view(), name='get_unit'),
+    path('unit/<pk>/', views.UnitView.as_view(), name='edit_unit'),
 ]
