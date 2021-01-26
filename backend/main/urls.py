@@ -25,4 +25,6 @@ urlpatterns = [
     path('otss/<pk>/', views.OTSSView.as_view(), name='edit_otss'),
     path('unit/', views.UnitView.as_view(), name='get_unit'),
     path('unit/<pk>/', views.UnitView.as_view(), name='edit_unit'),
+    path('type/', views.TypeView.as_view(), name='get_type'),
+    path('type/<pk>/', views.TypeView.as_view(), name='edit_type'),
 ]

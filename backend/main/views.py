@@ -210,3 +210,48 @@ class UnitView(APIView):
                             .format(pk)}, status=202)
         else:
             Response({"message": "Unit with _id `{}` not found.".format(pk)}, status=404)
+
+class TypeView(APIView):
+
+    def get(self, _):
+        result = []
+        collection = mongo.get_conn()['main_type']
+        types = collection.find()
+        if collection:
+            for document in types:
+                document['_id'] = str(document['_id'])
+                result.append(document)
+        return Response({
+            'types': result
+        })
+
+    def post(self, request):
+        collection = mongo.get_conn()['main_type']
+        type = request.data
+        type_id = collection.insert_one(type).inserted_id
+        return Response({"message": "Type with _id '{}' created successfully."
+                        .format(type_id)})
+
+    def delete(self, request, pk):
+        collection = mongo.get_conn()['main_type']
+        if collection:
+            collection.delete_one({"_id": ObjectId(pk)})
+            return Response({"message": "Type with id `{}` has been deleted."
+                            .format(pk)}, status=204)
+        else:
+            Response({"message": "Type with _id `{}` not found.".format(pk)}, status=404)
+
+    def put(self, request, pk):
+        updated_fields = request.data
+        collection = mongo.get_conn()['main_type']
+        if collection:
+            updated_fields.pop("_id")
+            collection.update_one({
+                '_id': ObjectId(pk)
+            }, {
+                '$set': updated_fields
+            }, upsert=False)
+            return Response({"message": "Type with id `{}` has been updated."
+                            .format(pk)}, status=202)
+        else:
+            Response({"message": "Type with _id `{}` not found.".format(pk)}, status=404)
