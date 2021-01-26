@@ -129,8 +129,8 @@
     <edit-modal ref="editItemModal"
                 :employee-initials="employeeInitials"
                 :edit-item="editItem"/>
-    <confirm-form ref="confirmModal"
-                  :payload="selected"
+    <confirm-form :payload="selected"
+                  :dynamic-id="dynamicId"
                   :message="message"
                   :op="removeItems"
     ></confirm-form>
@@ -160,6 +160,7 @@
     data() {
       return {
         m: '',
+        dynamicId: "confirm-modal",
         noCollapse: false,
         sortBy: 'name',
         componentFields: [

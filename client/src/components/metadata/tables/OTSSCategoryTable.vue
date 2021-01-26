@@ -6,7 +6,7 @@
              fixed
              sort-by="surname"
              :items="otssCategories"
-             :fields="employeeFields"
+             :fields="otssFields"
              small>
       <template #head(edit_remove)="scope">
         <div class="text-nowrap">Изменить/Удалить</div>
@@ -21,7 +21,7 @@
           <br>
           <b-button variant="danger"
                     class="mt-3"
-                    v-b-modal.confirm-modal
+                    v-b-modal.otss-confirm
                     @click="remove(row.item)">
             Удалить
           </b-button>
@@ -32,14 +32,28 @@
 </template>
 
 <script>
+/* eslint-disable */
   export default {
     name: "OTSSCategoryTable",
+    props:['otssCategories', 'editOTSS', 'selectToRemoveRecord'],
+    data(){
+      return {
+        otssFields:[
+          {
+            key: "edit_remove", isRowHeader: true, class: 'text-center'
+          },
+          {
+            key: 'category', label: "ОТСС категория", sortable: true
+          },
+        ]
+      }
+    },
     methods:{
       edit(data){
-
+        this.editOTSS(data)
       },
       remove(data){
-
+        this.selectToRemoveRecord(data)
       }
     }
   }

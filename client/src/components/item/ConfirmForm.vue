@@ -1,7 +1,7 @@
 <template>
   <div>
     <b-modal ref="confirmModal"
-             id="confirm-modal"
+             :id="dynamicId"
              :title="title"
              hide-footer
              hide-header-close>
@@ -23,7 +23,7 @@
   import {bus} from '../../main'
   export default {
     name: "ConfirmForm",
-    props:['op', 'message', 'payload'],
+    props:['op', 'message', 'payload', 'dynamicId'],
     data(){
       return {
         title: 'Подтвердите операцию'

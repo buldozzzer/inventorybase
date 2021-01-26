@@ -21,7 +21,7 @@
           <br>
           <b-button variant="danger"
                     class="mt-3"
-                    v-b-modal.confirm-modal
+                    v-b-modal.employee-confirm
                     @click="remove(row.item)">
             Удалить
           </b-button>

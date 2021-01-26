@@ -21,4 +21,6 @@ urlpatterns = [
     path('item/<pk>/', views.ItemView.as_view(), name='edit_item'),
     path('employee/', views.EmployeeView.as_view(), name='get_employees'),
     path('employee/<pk>/', views.EmployeeView.as_view(), name='edit_employees'),
+    path('otss/', views.OTSSView.as_view(), name='get_otss'),
+    path('otss/<pk>/', views.OTSSView.as_view(), name='edit_otss'),
 ]
