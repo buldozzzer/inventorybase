@@ -4,9 +4,8 @@
              striped hover
              ref="selectableTable"
              fixed
-             sort-by="category"
-             :items="categories"
-             :fields="categoryFields"
+             :items="locations"
+             :fields="locationFields"
              small>
       <template #head(edit_remove)="scope">
         <div class="text-nowrap">Изменить/Удалить</div>
@@ -14,14 +13,14 @@
       <template #cell(edit_remove)="row">
         <div class="text-nowrap">
           <b-button variant="warning"
-                    v-b-modal.category-edit-modal
+                    v-b-modal.location-edit-modal
                     @click="edit(row.item)">
             Редактировать
           </b-button>
           <br>
           <b-button variant="danger"
                     class="mt-3"
-                    v-b-modal.category-confirm
+                    v-b-modal.location-confirm
                     @click="remove(row.item)">
             Удалить
           </b-button>
@@ -34,23 +33,32 @@
 <script>
 /* eslint-disable */
   export default {
-    name: "CategoryTable",
-    props:['categories', 'editCategory', 'selectToRemoveRecord'],
+    name: "LocationTable",
+    props:['locations', 'editLocation', 'selectToRemoveRecord'],
     data(){
       return {
-        categoryFields:[
+        locationFields:[
           {
             key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: 'category', label: "Категория", sortable: true
+            key: 'object', label: "Объект", sortable: true
+          },
+          {
+            key: 'corpus', label: "Корпус", sortable: true
+          },
+          {
+            key: 'cabinet', label: "Кабинет", sortable: true
+          },
+          {
+            key: 'unit', label: "Подразделение", sortable: true
           },
         ]
       }
     },
     methods:{
       edit(data){
-        this.editCategory(data)
+        this.editLocation(data)
       },
       remove(data){
         this.selectToRemoveRecord(data)
@@ -59,6 +67,6 @@
   }
 </script>
 
-<style>
+<style scoped>
 
 </style>

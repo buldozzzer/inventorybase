@@ -61,6 +61,17 @@
                       :edit-category="editCategories"
                       :select-to-remove-record="selectToRemoveRecord"/>
 
+      <b-col class="mt-3">
+        <h3>Местоположения</h3>
+      </b-col>
+      <b-col>
+        <b-button variant="success" class="mt-3" v-b-modal.location-add-modal>
+          Добавить местопложение
+        </b-button>
+      </b-col>
+      <location-table :locations="locations"
+                      :edit-location="editLocation"
+                      :select-to-remove-record="selectToRemoveRecord"/>
     </b-container>
     <employee-add-modal/>
     <confirm-form :payload="selected[0]"
@@ -96,8 +107,15 @@
     <confirm-form :payload="selected[0]"
                   :dynamic-id="categoryConfirm"
                   :message="categoryMessage"
-                  :op="removeCategories"/>
+                  :op="removeCategory"/>
     <category-edit-modal ref="categoryEdit"/>
+
+    <location-add-modal/>
+    <confirm-form :payload="selected[0]"
+                  :dynamic-id="locationConfirm"
+                  :message="locationMessage"
+                  :op="removeLocation"/>
+    <location-edit-modal ref="locationEdit"/>
   </div>
 </template>
 
@@ -120,6 +138,9 @@
   import CategoryTable from "./tables/CategoryTable";
   import CategoryAddModal from "./add/CategoryAddModal";
   import CategoryEditModal from "./edit/CategoryEditModal";
+  import LocationTable from "./tables/LocationTable";
+  import LocationAddModal from "./add/LocationAddModal";
+  import LocationEditModal from "./edit/LocationEditModal";
 
   export default {
     name: 'MetadataList',
@@ -139,7 +160,10 @@
       TypeEditModal,
       CategoryTable,
       CategoryAddModal,
-      CategoryEditModal
+      CategoryEditModal,
+      LocationTable,
+      LocationAddModal,
+      LocationEditModal
     },
     data() {
       return {
@@ -148,18 +172,21 @@
         otssCategoryMessage: 'Удалить категорию ОТСС из базы?',
         typeMessage: 'Удалить тип из базы?',
         categoryMessage: 'Удалить категорию из базы?',
+        locationMessage: 'Удалить местоположение из базы?',
 
         unitConfirm: 'unit-confirm',
         employeeConfirm: 'employee-confirm',
         otssConfirm: 'otss-confirm',
         typeConfirm: 'type-confirm',
         categoryConfirm: 'category-confirm',
+        locationConfirm: 'location-confirm',
 
         employeeList: [],
         otssCategories: [],
         units: [],
         types: [],
         categories: [],
+        locations: [],
 
         selected: []
       };
@@ -271,7 +298,7 @@
         this.categories = this.categories['categories']
         this.selected = []
       },
-      async removeCategories(unit) {
+      async removeCategory(unit) {
         const _id = unit['_id']
         const response = await fetch(`http://localhost:8000/api/v1/category/${_id}/`, {
           method: 'DELETE',
@@ -288,6 +315,30 @@
       editCategories(item) {
         this.$refs.categoryEdit.form = item
       },
+
+      async fetchLocations() {
+        const response = await fetch('http://localhost:8000/api/v1/location/')
+        this.locations = await response.json()
+        this.locations = this.locations['locations']
+        this.selected = []
+      },
+      async removeLocation(unit) {
+        const _id = unit['_id']
+        const response = await fetch(`http://localhost:8000/api/v1/location/${_id}/`, {
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+          },
+        });
+        if (response.status !== 204) {
+          alert(JSON.stringify(await response.json(), null, 2));
+        }
+        await this.fetchLocations()
+      },
+      editLocation(item) {
+        this.$refs.locationEdit.form = item
+      },
     },
     async created() {
       await this.fetchEmployees()
@@ -295,7 +346,7 @@
       await this.fetchUnits()
       await this.fetchTypes()
       await this.fetchCategories()
-
+      await this.fetchLocations()
 
       await bus.$on('newData', () => {
         this.fetchEmployees()
@@ -303,6 +354,7 @@
         this.fetchOTSS()
         this.fetchTypes()
         this.fetchCategories()
+        this.fetchLocations()
       })
     },
   };
