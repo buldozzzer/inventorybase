@@ -5,7 +5,7 @@
              ref="selectableTable"
              fixed
              sort-by="surname"
-             :items="employeeList"
+             :items="otssCategories"
              :fields="employeeFields"
              small>
       <template #head(edit_remove)="scope">
@@ -14,7 +14,7 @@
       <template #cell(edit_remove)="row">
         <div class="text-nowrap">
           <b-button variant="warning"
-                    v-b-modal.employee-edit-modal
+                    v-b-modal.otss-edit-modal
                     @click="edit(row.item)">
             Редактировать
           </b-button>
@@ -32,34 +32,14 @@
 </template>
 
 <script>
-/* eslint-disable */
   export default {
-    name: "EmployeeTable",
-    props: ['employeeList', 'editEmployee', 'selectToRemoveRecord'],
-    data() {
-      return {
-        employeeFields: [
-          {
-            key: "edit_remove", isRowHeader: true, class: 'text-center'
-          },
-          {
-            key: "surname", label: "Фамилия", sortable: true
-          },
-          {
-            key: "name", label: "Имя", sortable: true
-          },
-          {
-            key: "secname", label: "Отчество", sortable: true,
-          },
-        ],
-      }
-    },
-    methods: {
+    name: "OTSSCategoryTable",
+    methods:{
       edit(data){
-        this.editEmployee(data)
+
       },
       remove(data){
-        this.selectToRemoveRecord(data)
+
       }
     }
   }

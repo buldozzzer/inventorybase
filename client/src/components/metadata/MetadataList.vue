@@ -7,10 +7,15 @@
         </b-button>
       </b-col>
       <employee-table :employee-list="employeeList"
-                      :employee-fields="employeeFields"
                       :edit-employee="editEmployee"
                       :select-to-remove-record="selectToRemoveRecord"/>
-      <employee-add-modal/>
+      <b-col>
+        <b-button variant="success" class="mt-3" v-b-modal.employee-add-modal>
+          Добавить категорию ОТСС
+        </b-button>
+      </b-col>
+    </b-container>
+    <employee-add-modal/>
       <confirm-form ref="confirmModal"
                     :payload="selected[0]"
                     :message="employeeMessage"
@@ -18,7 +23,6 @@
       ></confirm-form>
       <employee-edit-modal ref="employeeEdit"
       ></employee-edit-modal>
-    </b-container>
   </div>
 </template>
 
@@ -36,21 +40,9 @@ export default {
   data() {
       return {
         employeeMessage: 'Удалить сотрудника из базы?',
-        employeeFields: [
-          {
-            key: "edit_remove", isRowHeader: true, class: 'text-center'
-          },
-          {
-            key: "surname", label: "Фамилия", sortable: true
-          },
-          {
-            key: "name", label: "Имя", sortable: true
-          },
-          {
-            key: "secname", label: "Отчество", sortable: true,
-          },
-        ],
+        otssCategoryMessage: 'Удалить категорию ОТСС из базы?',
         employeeList: [],
+        otssCategories: [],
         selected: []
       };
     },

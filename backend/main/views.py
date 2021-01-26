@@ -118,3 +118,49 @@ class EmployeeView(APIView):
                             .format(pk)}, status=202)
         else:
             Response({"message": "Employee with _id `{}` not found.".format(pk)}, status=404)
+
+
+class OTSSView(APIView):
+
+    def get(self, _):
+        result = []
+        collection = mongo.get_conn()['main_otss']
+        categories = collection.find()
+        if collection:
+            for document in categories:
+                document['_id'] = str(document['_id'])
+                result.append(document)
+        return Response({
+            'otss': result
+        })
+
+    def post(self, request):
+        collection = mongo.get_conn()['main_otss']
+        category = request.data
+        category_id = collection.insert_one(category).inserted_id
+        return Response({"message": "OTSS category with _id '{}' created successfully."
+                        .format(category_id)})
+
+    def delete(self, request, pk):
+        collection = mongo.get_conn()['main_otss']
+        if collection:
+            collection.delete_one({"_id": ObjectId(pk)})
+            return Response({"message": "OTSS category with id `{}` has been deleted."
+                            .format(pk)}, status=204)
+        else:
+            Response({"message": "OTSS category with _id `{}` not found.".format(pk)}, status=404)
+
+    def put(self, request, pk):
+        updated_fields = request.data
+        collection = mongo.get_conn()['main_otss']
+        if collection:
+            updated_fields.pop("_id")
+            collection.update_one({
+                '_id': ObjectId(pk)
+            }, {
+                '$set': updated_fields
+            }, upsert=False)
+            return Response({"message": "OTSS category with id `{}` has been updated."
+                            .format(pk)}, status=202)
+        else:
+            Response({"message": "OTSS category with _id `{}` not found.".format(pk)}, status=404)
