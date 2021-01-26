@@ -1,6 +1,9 @@
 <template>
   <div>
     <b-container>
+      <b-col class="mt-3" >
+        <h3>Сотрудники</h3>
+      </b-col>
       <b-col>
         <b-button variant="success" class="mt-3" v-b-modal.employee-add-modal>
           Добавить сотрудника
@@ -9,6 +12,9 @@
       <employee-table :employee-list="employeeList"
                       :edit-employee="editEmployee"
                       :select-to-remove-record="selectToRemoveRecord"/>
+      <b-col class="mt-3">
+        <h3>ОТСС категории</h3>
+      </b-col>
       <b-col>
         <b-button variant="success" class="mt-3" v-b-modal.o-t-s-s-category-add-modal>
           Добавить категорию ОТСС
@@ -17,6 +23,9 @@
       <o-t-s-s-category-table :otss-categories="otssCategories"
                               :edit-o-t-s-s="editOTSS"
                               :select-to-remove-record="selectToRemoveRecord"/>
+      <b-col class="mt-3">
+        <h3>Подразделение, откуда поступила мат. ценность</h3>
+      </b-col>
     </b-container>
     <employee-add-modal/>
     <confirm-form :payload="selected[0]"

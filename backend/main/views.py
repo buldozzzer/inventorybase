@@ -164,3 +164,49 @@ class OTSSView(APIView):
                             .format(pk)}, status=202)
         else:
             Response({"message": "OTSS category with _id `{}` not found.".format(pk)}, status=404)
+
+
+class UnitView(APIView):
+
+    def get(self, _):
+        result = []
+        collection = mongo.get_conn()['main_unit']
+        units = collection.find()
+        if collection:
+            for document in units:
+                document['_id'] = str(document['_id'])
+                result.append(document)
+        return Response({
+            'units': result
+        })
+
+    def post(self, request):
+        collection = mongo.get_conn()['main_unit']
+        unit = request.data
+        unit_id = collection.insert_one(unit).inserted_id
+        return Response({"message": "Unit with _id '{}' created successfully."
+                        .format(unit_id)})
+
+    def delete(self, request, pk):
+        collection = mongo.get_conn()['main_unit']
+        if collection:
+            collection.delete_one({"_id": ObjectId(pk)})
+            return Response({"message": "Unit with id `{}` has been deleted."
+                            .format(pk)}, status=204)
+        else:
+            Response({"message": "Unit with _id `{}` not found.".format(pk)}, status=404)
+
+    def put(self, request, pk):
+        updated_fields = request.data
+        collection = mongo.get_conn()['main_unit']
+        if collection:
+            updated_fields.pop("_id")
+            collection.update_one({
+                '_id': ObjectId(pk)
+            }, {
+                '$set': updated_fields
+            }, upsert=False)
+            return Response({"message": "Unit with id `{}` has been updated."
+                            .format(pk)}, status=202)
+        else:
+            Response({"message": "Unit with _id `{}` not found.".format(pk)}, status=404)
