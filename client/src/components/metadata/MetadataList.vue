@@ -49,6 +49,18 @@
                   :edit-type="editType"
                   :select-to-remove-record="selectToRemoveRecord"/>
 
+      <b-col class="mt-3">
+        <h3>Категории</h3>
+      </b-col>
+      <b-col>
+        <b-button variant="success" class="mt-3" v-b-modal.category-add-modal>
+          Добавить категорию
+        </b-button>
+      </b-col>
+      <category-table :categories="categories"
+                      :edit-category="editCategories"
+                      :select-to-remove-record="selectToRemoveRecord"/>
+
     </b-container>
     <employee-add-modal/>
     <confirm-form :payload="selected[0]"
@@ -80,6 +92,12 @@
                   :op="removeType"/>
     <type-edit-modal ref="typeEdit"/>
 
+    <category-add-modal/>
+    <confirm-form :payload="selected[0]"
+                  :dynamic-id="categoryConfirm"
+                  :message="categoryMessage"
+                  :op="removeCategories"/>
+    <category-edit-modal ref="categoryEdit"/>
   </div>
 </template>
 
@@ -99,7 +117,9 @@
   import TypeTable from "./tables/TypeTable";
   import TypeAddModal from "./add/TypeAddModal";
   import TypeEditModal from "./edit/TypeEditModal";
-  import
+  import CategoryTable from "./tables/CategoryTable";
+  import CategoryAddModal from "./add/CategoryAddModal";
+  import CategoryEditModal from "./edit/CategoryEditModal";
 
   export default {
     name: 'MetadataList',
@@ -117,6 +137,9 @@
       TypeTable,
       TypeAddModal,
       TypeEditModal,
+      CategoryTable,
+      CategoryAddModal,
+      CategoryEditModal
     },
     data() {
       return {
@@ -124,17 +147,19 @@
         employeeMessage: 'Удалить сотрудника из базы?',
         otssCategoryMessage: 'Удалить категорию ОТСС из базы?',
         typeMessage: 'Удалить тип из базы?',
+        categoryMessage: 'Удалить категорию из базы?',
 
         unitConfirm: 'unit-confirm',
         employeeConfirm: 'employee-confirm',
         otssConfirm: 'otss-confirm',
         typeConfirm: 'type-confirm',
-
+        categoryConfirm: 'category-confirm',
 
         employeeList: [],
         otssCategories: [],
         units: [],
         types: [],
+        categories: [],
 
         selected: []
       };
@@ -241,14 +266,14 @@
       },
 
       async fetchCategories() {
-        const response = await fetch('http://localhost:8000/api/v1/type/')
-        this.types = await response.json()
-        this.types = this.types['types']
+        const response = await fetch('http://localhost:8000/api/v1/category/')
+        this.categories = await response.json()
+        this.categories = this.categories['categories']
         this.selected = []
       },
       async removeCategories(unit) {
         const _id = unit['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/type/${_id}/`, {
+        const response = await fetch(`http://localhost:8000/api/v1/category/${_id}/`, {
           method: 'DELETE',
           headers: {
             'Accept': 'application/json',
@@ -261,7 +286,7 @@
         await this.fetchCategories()
       },
       editCategories(item) {
-        this.$refs.typeEdit.form = item
+        this.$refs.categoryEdit.form = item
       },
     },
     async created() {
