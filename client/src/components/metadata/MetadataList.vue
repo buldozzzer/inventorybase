@@ -13,6 +13,7 @@
                       :edit-employee="editEmployee"
                       :select-to-remove-record="selectToRemoveRecord"/>
       <b-col class="mt-3">
+
         <h3>ОТСС категории</h3>
       </b-col>
       <b-col>
@@ -23,6 +24,7 @@
       <o-t-s-s-category-table :otss-categories="otssCategories"
                               :edit-o-t-s-s="editOTSS"
                               :select-to-remove-record="selectToRemoveRecord"/>
+
       <b-col class="mt-3">
         <h3>Подразделение, откуда поступила мат. ценность</h3>
       </b-col>
@@ -34,6 +36,19 @@
       <unit-table :units="units"
                   :edit-unit="editUnit"
                   :select-to-remove-record="selectToRemoveRecord"/>
+
+      <b-col class="mt-3">
+        <h3>Типы состовляющих</h3>
+      </b-col>
+      <b-col>
+        <b-button variant="success" class="mt-3" v-b-modal.type-add-modal>
+          Добавить тип составляющей
+        </b-button>
+      </b-col>
+      <type-table :types="types"
+                  :edit-type="editType"
+                  :select-to-remove-record="selectToRemoveRecord"/>
+
     </b-container>
     <employee-add-modal/>
     <confirm-form :payload="selected[0]"
@@ -57,6 +72,14 @@
                   :message="unitMessage"
                   :op="removeUnit"/>
     <unit-edit-modal ref="unitEdit"/>
+
+    <type-add-modal/>
+    <confirm-form :payload="selected[0]"
+                  :dynamic-id="typeConfirm"
+                  :message="typeMessage"
+                  :op="removeType"/>
+    <type-edit-modal ref="typeEdit"/>
+
   </div>
 </template>
 
@@ -73,6 +96,9 @@
   import UnitTable from "./tables/UnitTable";
   import UnitAddModal from "./add/UnitAddModal";
   import UnitEditModal from "./edit/UnitEditModal";
+  import TypeTable from "./tables/TypeTable";
+  import TypeAddModal from "./add/TypeAddModal";
+  import TypeEditModal from "./edit/TypeEditModal";
 
   export default {
     name: 'MetadataList',
@@ -86,19 +112,29 @@
       OTSSCategoryEditModal,
       UnitTable,
       UnitAddModal,
-      UnitEditModal
+      UnitEditModal,
+      TypeTable,
+      TypeAddModal,
+      TypeEditModal,
     },
     data() {
       return {
         unitMessage: 'Удалить подразделение из базы?',
+        employeeMessage: 'Удалить сотрудника из базы?',
+        otssCategoryMessage: 'Удалить категорию ОТСС из базы?',
+        typeMessage: 'Удалить тип из базы?',
+
         unitConfirm: 'unit-confirm',
         employeeConfirm: 'employee-confirm',
         otssConfirm: 'otss-confirm',
-        employeeMessage: 'Удалить сотрудника из базы?',
-        otssCategoryMessage: 'Удалить категорию ОТСС из базы?',
+        typeConfirm: 'type-confirm',
+
+
         employeeList: [],
         otssCategories: [],
         units: [],
+        types: [],
+
         selected: []
       };
     },
@@ -179,7 +215,7 @@
         this.$refs.unitEdit.form = item
       },
 
-      async fetchTyps() {
+      async fetchTypes() {
         const response = await fetch('http://localhost:8000/api/v1/type/')
         this.types = await response.json()
         this.types = this.types['types']
@@ -197,7 +233,7 @@
         if (response.status !== 204) {
           alert(JSON.stringify(await response.json(), null, 2));
         }
-        await this.fetchUnits()
+        await this.fetchTypes()
       },
       editType(item) {
         this.$refs.typeEdit.form = item
@@ -207,10 +243,13 @@
       await this.fetchEmployees()
       await this.fetchOTSS()
       await this.fetchUnits()
+      await this.fetchTypes()
+
       await bus.$on('newData', () => {
         this.fetchEmployees()
         this.fetchUnits()
         this.fetchOTSS()
+        this.fetchTypes()
       })
     },
   };
