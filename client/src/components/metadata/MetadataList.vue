@@ -99,6 +99,7 @@
   import TypeTable from "./tables/TypeTable";
   import TypeAddModal from "./add/TypeAddModal";
   import TypeEditModal from "./edit/TypeEditModal";
+  import
 
   export default {
     name: 'MetadataList',
@@ -238,18 +239,45 @@
       editType(item) {
         this.$refs.typeEdit.form = item
       },
+
+      async fetchCategories() {
+        const response = await fetch('http://localhost:8000/api/v1/type/')
+        this.types = await response.json()
+        this.types = this.types['types']
+        this.selected = []
+      },
+      async removeCategories(unit) {
+        const _id = unit['_id']
+        const response = await fetch(`http://localhost:8000/api/v1/type/${_id}/`, {
+          method: 'DELETE',
+          headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+          },
+        });
+        if (response.status !== 204) {
+          alert(JSON.stringify(await response.json(), null, 2));
+        }
+        await this.fetchCategories()
+      },
+      editCategories(item) {
+        this.$refs.typeEdit.form = item
+      },
     },
     async created() {
       await this.fetchEmployees()
       await this.fetchOTSS()
       await this.fetchUnits()
       await this.fetchTypes()
+      await this.fetchCategories()
+
 
       await bus.$on('newData', () => {
         this.fetchEmployees()
         this.fetchUnits()
         this.fetchOTSS()
         this.fetchTypes()
+        this.fetchCategories()
       })
     },
   };

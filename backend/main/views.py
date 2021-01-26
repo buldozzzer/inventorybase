@@ -211,6 +211,7 @@ class UnitView(APIView):
         else:
             Response({"message": "Unit with _id `{}` not found.".format(pk)}, status=404)
 
+
 class TypeView(APIView):
 
     def get(self, _):
@@ -255,3 +256,50 @@ class TypeView(APIView):
                             .format(pk)}, status=202)
         else:
             Response({"message": "Type with _id `{}` not found.".format(pk)}, status=404)
+
+
+class CategoryView(APIView):
+
+    def get(self, _):
+        result = []
+        collection = mongo.get_conn()['main_category']
+        categories = collection.find()
+        if collection:
+            for document in categories:
+                document['_id'] = str(document['_id'])
+                result.append(document)
+        return Response({
+            'categories': result
+        })
+
+    def post(self, request):
+        collection = mongo.get_conn()['main_category']
+        category = request.data
+        category_id = collection.insert_one(category).inserted_id
+        return Response({"message": "Category with _id '{}' created successfully."
+                        .format(category_id)})
+
+    def delete(self, request, pk):
+        collection = mongo.get_conn()['main_category']
+        if collection:
+            collection.delete_one({"_id": ObjectId(pk)})
+            return Response({"message": "Category with id `{}` has been deleted."
+                            .format(pk)}, status=204)
+        else:
+            Response({"message": "Category with _id `{}` not found.".format(pk)}, status=404)
+
+    def put(self, request, pk):
+        updated_fields = request.data
+        collection = mongo.get_conn()['main_category']
+        if collection:
+            updated_fields.pop("_id")
+            collection.update_one({
+                '_id': ObjectId(pk)
+            }, {
+                '$set': updated_fields
+            }, upsert=False)
+            return Response({"message": "Category with id `{}` has been updated."
+                            .format(pk)}, status=202)
+        else:
+            Response({"message": "Category with _id `{}` not found.".format(pk)}, status=404)
+
