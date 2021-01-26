@@ -34,4 +34,7 @@ urlpatterns = [
 
     path('category/', views.CategoryView.as_view(), name='get_category'),
     path('category/<pk>/', views.CategoryView.as_view(), name='edit_category'),
+
+    path('location/', views.LocationView.as_view(), name='get_category'),
+    path('location/<pk>/', views.LocationView.as_view(), name='edit_category'),
 ]
