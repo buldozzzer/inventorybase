@@ -89,15 +89,23 @@
       },
       onReset(evt) {
         evt.preventDefault()
+        this.initForm()
         this.$refs.employeeAddModal.hide()
+
       },
       onSubmit(evt) {
         evt.preventDefault();
         this.$refs.employeeAddModal.hide();
         this.createEmployee();
+        this.initForm()
       },
       check(left, right){
         return left !== right
+      },
+      initForm(){
+        for(let key in this.employeeForm){
+          this.employeeForm[key] = ''
+        }
       }
     }
   }

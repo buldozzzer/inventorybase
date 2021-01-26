@@ -6,36 +6,11 @@
           Добавить сотрудника
         </b-button>
       </b-col>
-      <b-table class="mt-3"
-               striped hover
-               ref="selectableTable"
-               fixed
-               sort-by="surname"
-               :items="employeeList"
-               :fields="employeeFields"
-               small>
-        <template #head(edit_remove)="scope">
-          <div class="text-nowrap">Изменить/Удалить</div>
-        </template>
-        <template #cell(edit_remove)="row">
-          <div class="text-nowrap">
-            <b-button variant="warning"
-                      v-b-modal.employee-edit-modal
-                      @click="editEmployee(row.item)">
-              Редактировать
-            </b-button>
-            <br>
-            <b-button variant="danger"
-                      class="mt-3"
-                      v-b-modal.confirm-modal
-                      @click="selectToRemoveRecord(row.item)">
-              Удалить
-            </b-button>
-          </div>
-        </template>
-      </b-table>
-      <employee-add-modal>
-      </employee-add-modal>
+      <employee-table :employee-list="employeeList"
+                      :employee-fields="employeeFields"
+                      :edit-employee="editEmployee"
+                      :select-to-remove-record="selectToRemoveRecord"/>
+      <employee-add-modal/>
       <confirm-form ref="confirmModal"
                     :payload="selected[0]"
                     :message="employeeMessage"
@@ -49,37 +24,30 @@
 
 <script>
 /* eslint-disable */
-  import {bus} from "../../main";
+import {bus} from "../../main";
 import EmployeeAddModal from "./add/EmployeeAddModal";
 import ConfirmForm from "../item/ConfirmForm";
 import EmployeeEditModal from "./edit/EmployeeEditModal";
+import EmployeeTable from "./tables/EmployeeTable";
 
 export default {
     name: 'MetadataList',
-  components: {EmployeeAddModal, ConfirmForm, EmployeeEditModal},
+  components: {EmployeeAddModal, ConfirmForm, EmployeeEditModal, EmployeeTable},
   data() {
       return {
         employeeMessage: 'Удалить сотрудника из базы?',
         employeeFields: [
           {
-            key: "edit_remove",
-            isRowHeader: true,
-            class: 'text-center'
+            key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: "surname",
-            label: "Фамилия",
-            sortable: true
+            key: "surname", label: "Фамилия", sortable: true
           },
           {
-            key: "name",
-            label: "Имя",
-            sortable: true
+            key: "name", label: "Имя", sortable: true
           },
           {
-            key: "secname",
-            label: "Отчество",
-            sortable: true,
+            key: "secname", label: "Отчество", sortable: true,
           },
         ],
         employeeList: [],
@@ -91,6 +59,7 @@ export default {
         const response = await fetch('http://localhost:8000/api/v1/employee/')
         this.employeeList = await response.json()
         this.employeeList = this.employeeList['employees']
+        this.selected = []
       },
       async selectToRemoveRecord(employee) {
         this.selected.push(employee)
@@ -117,7 +86,6 @@ export default {
       await this.fetchEmployees()
       await bus.$on('newData', () => {
         this.fetchEmployees()
-        this.selected =[]
       })
     },
   };
