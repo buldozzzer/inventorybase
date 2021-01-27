@@ -3,8 +3,6 @@
 cd /usr/share/python3
 . /usr/share/python3/venv/bin/activate
 export DJANGO_SETTINGS_MODULE=backend.settings
-#python backend/manage.py makemigrations
-#python backend/manage.py migrate
 
 cd backend
 gunicorn backend.wsgi:application -b 0.0.0.0:8000

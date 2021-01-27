@@ -24,29 +24,29 @@
                 <b-form-input id="form-surname-input"
                               type="text"
                               class="mt-3"
-                              v-model="employeeForm.surname"
-                              :value="employeeForm.surname"
+                              v-model="form.surname"
+                              :value="form.surname"
                               required
                               placeholder="Введите фамилию"
-                              :state="check(employeeForm.surname, '')">
+                              :state="check(form.surname, '')">
                 </b-form-input>
                 <b-form-input id="form-name-input"
                               type="text"
                               class="mt-3"
-                              v-model="employeeForm.name"
-                              :value="employeeForm.name"
+                              v-model="form.name"
+                              :value="form.name"
                               required
                               placeholder="Введите имя"
-                              :state="check(employeeForm.name, '')">
+                              :state="check(form.name, '')">
                 </b-form-input>
                 <b-form-input id="form-secname-input"
                               type="text"
                               class="mt-3"
-                              v-model="employeeForm.secname"
-                              :value="employeeForm.secname"
+                              v-model="form.secname"
+                              :value="form.secname"
                               required
                               placeholder="Введите отчество"
-                              :state="check(employeeForm.secname, '')">
+                              :state="check(form.secname, '')">
                 </b-form-input>
               </b-form-group>
             </div>
@@ -65,7 +65,7 @@
     name: "EmployeeAddModal",
     data(){
       return{
-        employeeForm: {
+        form: {
           surname: '',
           name: '',
           secname: '',
@@ -80,7 +80,7 @@
             'Accept': 'application/json',
             'Content-type': 'application/json'
           },
-          body: JSON.stringify(this.employeeForm)
+          body: JSON.stringify(this.form)
         });
         if (response.status !== 201) {
           alert(JSON.stringify(await response.json(), null, 2));
@@ -103,14 +103,14 @@
         return left !== right
       },
       initForm(){
-        for(let key in this.employeeForm){
-          this.employeeForm[key] = ''
+        for(let key in this.form){
+          this.form[key] = ''
         }
       }
     }
   }
 </script>
 
-<style scoped>
+<style>
 
 </style>

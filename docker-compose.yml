@@ -15,6 +15,7 @@ services:
     build: ./backend
     container_name: backend
     restart: unless-stopped
+    command: 'gunicorn backend.wsgi:application -b 0.0.0.0:8000'
     ports:
       - "0.0.0.0:8000:8000"
     depends_on:
