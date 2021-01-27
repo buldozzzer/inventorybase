@@ -100,6 +100,7 @@
       onReset(evt) {
         evt.preventDefault()
         this.$refs.addItemModal.hide()
+        this.clearFrom()
       },
       onSubmit(evt) {
         evt.preventDefault();
@@ -127,6 +128,7 @@
           last_check: this.itemForm.last_check,
         };
         this.createItem(payload);
+        this.clearFrom()
       },
       isIntroduced(left, right) {
         return left !== right
@@ -134,6 +136,29 @@
       sendForm(){
         this.itemForm['components'] = this.$refs.componentList.createComponentList()
         this.$parent.$parent.$data.dataForChildren = this.itemForm
+      },
+      clearFrom(){
+        this.itemForm = {
+          name: '',
+          user: '',
+          responsible: '',
+          components: [],
+          inventory_n: '',
+          otss_category: '',
+          condition: '',
+          unit_from: '',
+          in_operation: '',
+          fault_document_requisites: '',
+          date_of_receipt: null,
+          number_of_receipt: '',
+          requisites: '',
+          transfer_date: null,
+          otss_requisites: '',
+          spsi_requisites: '',
+          transfer_requisites: '',
+          comment: '',
+          last_check: null,
+        }
       }
     },
   }
