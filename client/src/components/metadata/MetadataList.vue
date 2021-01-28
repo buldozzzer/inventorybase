@@ -81,8 +81,6 @@
     <employee-edit-modal ref="employeeEdit"/>
 
     <o-t-s-s-category-add-modal/>
-    <employee-edit-modal ref="employeeEdit"/>
-
     <confirm-form :payload="selected[0]"
                   :dynamic-id="otssConfirm"
                   :message="otssCategoryMessage"
