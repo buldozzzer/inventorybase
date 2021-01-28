@@ -159,3 +159,221 @@ class ItemTests(APITestCase):
                                    data=self.form)
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
         self.connection['main_item'].drop()
+
+
+class OtssTests(APITestCase):
+    def setUp(self):
+        self.functions = BasicFunctions()
+        self.connection = mongo.get_conn()
+        self.form = {
+            'category': self.functions.fake.name()
+        }
+
+    def test_get_otss_list(self):
+        response = self.client.get('/api/v1/otss/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.connection['main_otss'].drop()
+
+    def test_add_otss(self):
+        response = self.client.post('/api/v1/otss/',
+                                    format='json',
+                                    data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.connection['main_otss'].drop()
+
+    def test_delete_otss(self):
+        self.client.post('/api/v1/otss/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/otss/', format='json')
+        _id = data_for_ids.data['otss'][0]['_id']
+        response = self.client.delete('/api/v1/otss/' + _id + '/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.connection['main_otss'].drop()
+
+    def test_put_otss(self):
+        self.client.post('/api/v1/otss/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/otss/', format='json')
+        _id = data_for_ids.data['otss'][0]['_id']
+        self.form['category'] = 'blablabla'
+        self.form['_id'] = str(ObjectId(_id))
+        response = self.client.put('/api/v1/otss/' + _id + '/', format='json', data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
+        self.connection['main_otss'].drop()
+
+
+class CategoryTests(APITestCase):
+    def setUp(self):
+        self.functions = BasicFunctions()
+        self.connection = mongo.get_conn()
+        self.form = {
+            'category': self.functions.fake.name()
+        }
+
+    def test_get_category_list(self):
+        response = self.client.get('/api/v1/category/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.connection['main_category'].drop()
+
+    def test_add_category(self):
+        response = self.client.post('/api/v1/category/',
+                                    format='json',
+                                    data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.connection['main_category'].drop()
+
+    def test_delete_category(self):
+        self.client.post('/api/v1/category/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/category/', format='json')
+        _id = data_for_ids.data['categories'][0]['_id']
+        response = self.client.delete('/api/v1/category/' + _id + '/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.connection['main_category'].drop()
+
+    def test_put_category(self):
+        self.client.post('/api/v1/category/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/category/', format='json')
+        _id = data_for_ids.data['categories'][0]['_id']
+        self.form['category'] = 'blablabla'
+        self.form['_id'] = str(ObjectId(_id))
+        response = self.client.put('/api/v1/category/' + _id + '/', format='json', data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
+        self.connection['main_category'].drop()
+
+
+class UnitTests(APITestCase):
+    def setUp(self):
+        self.functions = BasicFunctions()
+        self.connection = mongo.get_conn()
+        self.form = {
+            'units': self.functions.fake.name()
+        }
+
+    def test_get_unit_list(self):
+        response = self.client.get('/api/v1/unit/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.connection['main_unit'].drop()
+
+    def test_add_unit(self):
+        response = self.client.post('/api/v1/unit/',
+                                    format='json',
+                                    data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.connection['main_unit'].drop()
+
+    def test_delete_unit(self):
+        self.client.post('/api/v1/unit/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/unit/', format='json')
+        _id = data_for_ids.data['units'][0]['_id']
+        response = self.client.delete('/api/v1/unit/' + _id + '/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.connection['main_unit'].drop()
+
+    def test_put_unit(self):
+        self.client.post('/api/v1/unit/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/unit/', format='json')
+        _id = data_for_ids.data['units'][0]['_id']
+        self.form['unit'] = 'blablabla'
+        self.form['_id'] = str(ObjectId(_id))
+        response = self.client.put('/api/v1/unit/' + _id + '/', format='json', data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
+        self.connection['main_unit'].drop()
+
+
+class TypeTests(APITestCase):
+    def setUp(self):
+        self.functions = BasicFunctions()
+        self.connection = mongo.get_conn()
+        self.form = {
+            'types': self.functions.fake.name()
+        }
+
+    def test_get_type_list(self):
+        response = self.client.get('/api/v1/type/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.connection['main_type'].drop()
+
+    def test_add_type(self):
+        response = self.client.post('/api/v1/type/',
+                                    format='json',
+                                    data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.connection['main_type'].drop()
+
+    def test_delete_type(self):
+        self.client.post('/api/v1/type/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/type/', format='json')
+        _id = data_for_ids.data['types'][0]['_id']
+        response = self.client.delete('/api/v1/type/' + _id + '/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.connection['main_type'].drop()
+
+    def test_put_type(self):
+        self.client.post('/api/v1/type/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/type/', format='json')
+        _id = data_for_ids.data['types'][0]['_id']
+        self.form['type'] = 'blablabla'
+        self.form['_id'] = str(ObjectId(_id))
+        response = self.client.put('/api/v1/type/' + _id + '/', format='json', data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
+        self.connection['main_type'].drop()
+
+
+class LocationsTests(APITestCase):
+    def setUp(self):
+        self.functions = BasicFunctions()
+        self.connection = mongo.get_conn()
+        self.form = {
+                        "object": self.functions.fake.name(),
+                        "corpus": self.functions.fake.name(),
+                        "unit": self.functions.fake.name(),
+                        "cabinet": self.functions.fake.name()
+                    }
+
+    def test_get_location_list(self):
+        response = self.client.get('/api/v1/location/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.connection['main_location'].drop()
+
+    def test_add_location(self):
+        response = self.client.post('/api/v1/location/',
+                                    format='json',
+                                    data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.connection['main_location'].drop()
+
+    def test_delete_location(self):
+        self.client.post('/api/v1/location/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/location/', format='json')
+        _id = data_for_ids.data['locations'][0]['_id']
+        response = self.client.delete('/api/v1/location/' + _id + '/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.connection['main_location'].drop()
+
+    def test_put_location(self):
+        self.client.post('/api/v1/location/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/location/', format='json')
+        _id = data_for_ids.data['locations'][0]['_id']
+        self.form['object'] = 'blablabla'
+        self.form['_id'] = str(ObjectId(_id))
+        response = self.client.put('/api/v1/location/' + _id + '/', format='json', data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
+        self.connection['main_location'].drop()
