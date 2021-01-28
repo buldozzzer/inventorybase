@@ -31,7 +31,6 @@ class ItemView(APIView):
             for document in items:
                 document['_id'] = str(document['_id'])
                 result.append(document)
-        # serializer = ItemSerializer(items, many=True)
         return Response({
             'items': result
         }, status=200)
@@ -83,17 +82,16 @@ class EmployeeView(APIView):
             for document in employees:
                 document['_id'] = str(document['_id'])
                 result.append(document)
-        # serializer = ItemSerializer(employees, many=True)
         return Response({
             'employees': result
-        })
+        }, status=200)
 
     def post(self, request):
         collection = mongo.get_conn()['main_employee']
         employee = request.data
         employee_id = collection.insert_one(employee).inserted_id
         return Response({"message": "Employee with _id '{}' created successfully."
-                        .format(employee_id)})
+                        .format(employee_id)}, status=201)
 
     def delete(self, request, pk):
         collection = mongo.get_conn()['main_employee']
@@ -132,14 +130,14 @@ class OTSSView(APIView):
                 result.append(document)
         return Response({
             'otss': result
-        })
+        }, status=200)
 
     def post(self, request):
         collection = mongo.get_conn()['main_otss']
         category = request.data
         category_id = collection.insert_one(category).inserted_id
         return Response({"message": "OTSS category with _id '{}' created successfully."
-                        .format(category_id)})
+                        .format(category_id)}, status=201)
 
     def delete(self, request, pk):
         collection = mongo.get_conn()['main_otss']
@@ -178,14 +176,14 @@ class UnitView(APIView):
                 result.append(document)
         return Response({
             'units': result
-        })
+        }, status=200)
 
     def post(self, request):
         collection = mongo.get_conn()['main_unit']
         unit = request.data
         unit_id = collection.insert_one(unit).inserted_id
         return Response({"message": "Unit with _id '{}' created successfully."
-                        .format(unit_id)})
+                        .format(unit_id)}, status=201)
 
     def delete(self, request, pk):
         collection = mongo.get_conn()['main_unit']
@@ -224,14 +222,14 @@ class TypeView(APIView):
                 result.append(document)
         return Response({
             'types': result
-        })
+        }, status=200)
 
     def post(self, request):
         collection = mongo.get_conn()['main_type']
         type = request.data
         type_id = collection.insert_one(type).inserted_id
         return Response({"message": "Type with _id '{}' created successfully."
-                        .format(type_id)})
+                        .format(type_id)}, status=201)
 
     def delete(self, request, pk):
         collection = mongo.get_conn()['main_type']
@@ -270,14 +268,14 @@ class CategoryView(APIView):
                 result.append(document)
         return Response({
             'categories': result
-        })
+        }, status=200)
 
     def post(self, request):
         collection = mongo.get_conn()['main_category']
         category = request.data
         category_id = collection.insert_one(category).inserted_id
         return Response({"message": "Category with _id '{}' created successfully."
-                        .format(category_id)})
+                        .format(category_id)}, status=201)
 
     def delete(self, request, pk):
         collection = mongo.get_conn()['main_category']
@@ -316,14 +314,14 @@ class LocationView(APIView):
                 result.append(document)
         return Response({
             'locations': result
-        })
+        }, status=200)
 
     def post(self, request):
         collection = mongo.get_conn()['main_location']
         category = request.data
         category_id = collection.insert_one(category).inserted_id
         return Response({"message": "Location with _id '{}' created successfully."
-                        .format(category_id)})
+                        .format(category_id)}, status=201)
 
     def delete(self, request, pk):
         collection = mongo.get_conn()['main_location']

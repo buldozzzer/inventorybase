@@ -3,14 +3,13 @@ version: '3'
 services:
 
   mongo:
-    image: mongo:4.4
+    image: mongo:latest
     container_name: mongo
-    command: mongod --serviceExecutor adaptive
-    restart: unless-stopped
+    restart: always
     environment:
       - MONGO_INITDB_DATABASE=ItemsDB
     volumes:
-      - ./load.js:/docker-entrypoint-initdb.d/load.js
+      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js:ro
     networks:
       - backend-net
 

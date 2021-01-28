@@ -1,3 +1,7 @@
+print('START #################################################################');
+
+db = db.getSiblingDB('ItemsDB')
+
 db.main_employee.insertMany(
     [
         {"surname": "Бульдяев", "name": "Сергей", "secname": "Александрович"},
@@ -136,3 +140,5 @@ db.main_location.insertMany(
 db.main_unit.insert(
     {"unit": "к732"}
 )
+
+print('END #################################################################');
