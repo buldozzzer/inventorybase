@@ -73,11 +73,63 @@
         {{ data.index + 1 }}
       </template>
 
-      <template #cell(name)="data" >
-        <div @dblclick.v-b-modal>{{ data.item.name }}</div>
-        <field-modal-form :item="data.item"
+      <template #cell(name)="row">
+        <div @dblclick="showFieldFromModal('name'), editableRow=row.item">{{ row.item.name }}</div>
+        <b-modal ref="name" centered
+                 title="Измените значение поля"
+                 size="sm" hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-input id="form-input"
+                            type="text"
+                            class="mt-3"
+                            v-model="editableRow.name"
+                            :value="editableRow.name">
+              </b-form-input>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('name', editableRow)">Изменить</b-button>
+                <b-button variant="danger" @click="onReset('name')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
 
-                          :item-field="data.item.name"/>
+      <template #cell(responsible)="row">
+        <div @dblclick="showFieldFromModal('responsible')"
+             class="text-nowrap">
+          {{ row.item.responsible }}
+        </div>
+        <b-modal ref="responsible"
+                 centered
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label="Измените значение поля"
+                            label-for="form-input">
+                <b-form-input id="form-input"
+                              type="text"
+                              class="mt-3"
+                              list="employee-list"
+                              v-model="row.item.responsible"
+                              :value="row.item.responsible">
+                </b-form-input>
+                <datalist id="employee-list">
+                  <option v-for="employee in employeeInitials">{{ employee }}</option>
+                </datalist>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('responsible', row.item)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('responsible')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
       </template>
 
       <template #head(edit_remove)="scope">
@@ -93,7 +145,6 @@
                   font-scale="2"
                   v-b-modal.edit-item-modal
                   @click="selectToEditItem(row.item)">
-            Редактировать
           </b-icon>
           <b-icon icon="trash"
                   variant="danger"
@@ -103,7 +154,6 @@
                   title="Удалить"
                   v-b-modal.confirm-modal
                   @click="selectToRemoveItem(row.item)">
-            Удалить
           </b-icon>
         </div>
       </template>
@@ -182,6 +232,7 @@
     data() {
       return {
         m: '',
+        editableRow: '',
         dynamicId: "confirm-modal",
         noCollapse: false,
         sortBy: 'name',
@@ -463,7 +514,38 @@
       },
       showFieldFromModal(id) {
         this.$refs[id].show()
-      }
+      },
+      onReset(id) {
+        this.$refs[id].hide()
+      },
+      onSubmit(id, form) {
+        this.$refs[id].hide();
+        debugger;
+        const payload = {
+          _id: form._id,
+          name: form.name,
+          user: form.user,
+          responsible: form.responsible,
+          components: form.components,
+          inventory_n: form.inventory_n,
+          otss_category: form.otss_category,
+          condition: form.condition,
+          unit_from: form.unit_from,
+          in_operation: form.in_operation,
+          fault_document_requisites: form.fault_document_requisites,
+          date_of_receipt: form.date_of_receipt,
+          number_of_receipt: form.number_of_receipt,
+          requisites: form.requisites,
+          transfer_date: form.transfer_date,
+          otss_requisites: form.otss_requisites,
+          spsi_requisites: form.spsi_requisites,
+          transfer_requisites: form.transfer_requisites,
+          comment: form.comment,
+          last_check: form.last_check,
+        }
+        this.editItem(payload)
+        this.fetchItems()
+      },
     },
     watch:{
       fuseString: function () {

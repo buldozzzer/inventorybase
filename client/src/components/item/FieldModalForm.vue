@@ -1,12 +1,24 @@
 <template>
   <div>
-    <b-modal id="field-modal"
+    <b-modal ref="name"
              centered
              size="sm"
-             :title="itemField"
              hide-footer
              hide-header-close>
-
+      <b-form class="w-100">
+        <div class="container mt-3">
+          <b-form-group id="form-category-group"
+                        label=""
+                        label-for="form-input">
+            <b-form-input id="form-input"
+                          type="text"
+                          class="mt-3"
+                          v-model="form[itemField]"
+                          :value="form[itemField]">
+            </b-form-input>
+          </b-form-group>
+        </div>
+      </b-form>
     </b-modal>
   </div>
 </template>
@@ -15,7 +27,7 @@
 /* eslint-disable */
   export default {
     name: "FieldModalForm",
-    props:['item', 'itemField'],
+    props:['item', 'itemField', 'id'],
     data(){
       return {
         form: {}
@@ -44,6 +56,22 @@
           alert(JSON.stringify(await response.json(), null, 2));
         }
         await this.fetchItems()
+      },
+      onReset(evt) {
+        evt.preventDefault()
+        this.$refs.fieldModalForm.hide()
+        for(let key in this.form){
+          this.form['key'] = ''
+        }
+      },
+      onSubmit(evt) {
+        evt.preventDefault();
+        this.$refs.fieldModalForm.hide();
+        const payload = this.form
+        this.editItem(payload)
+        for(let key in this.form){
+          this.form['key'] = ''
+        }
       },
     }
   }
