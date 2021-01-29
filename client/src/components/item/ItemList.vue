@@ -75,18 +75,19 @@
       </template>
       <template #cell(edit_remove)="row">
         <div class="text-nowrap">
-          <b-button variant="warning"
-                    v-b-modal.edit-item-modal
-                    @click="selectToEditItem(row.item)">
+          <b-icon icon="pencil-square"
+                  variant="warning"
+                  font-scale="2"
+                  v-b-modal.edit-item-modal
+                  @click="selectToEditItem(row.item)">
             Редактировать
-          </b-button>
-          <br>
-          <b-button variant="danger"
-                    class="mt-3"
-                    v-b-modal.confirm-modal
-                    @click="selectToRemoveItem(row.item)">
+          </b-icon>
+          <b-icon icon="trash" variant="danger"
+                  font-scale="2"
+                  v-b-modal.confirm-modal
+                  @click="selectToRemoveItem(row.item)">
             Удалить
-          </b-button>
+          </b-icon>
         </div>
       </template>
 
