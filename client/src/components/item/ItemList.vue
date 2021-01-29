@@ -161,7 +161,13 @@
       </template>
 
       <template #cell(components)="row">
-        <b-icon :icon="eye"
+        <b-icon v-if="row.detailsShowing"
+                icon="eye-slash"
+                font-scale="2"
+                @click="row.toggleDetails">
+        </b-icon>
+        <b-icon v-else
+                icon="eye"
                 font-scale="2"
                 @click="row.toggleDetails">
         </b-icon>
@@ -388,7 +394,6 @@
           in_operation: null
         },
         fuseString: "",
-        eye: 'eye'
       };
     },
     computed:{
