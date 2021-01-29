@@ -29,5 +29,20 @@
 - ```
   sudo docker-compose build && sudo docker-compose up -d
   ```
+  
+### Инициализация базы данных
+
+Открытие контейнера в интерактивном режиме:
+- ```
+  sudo docker-compose exec mongo bash
+  ```
+
+- ```
+  mongo 127.0.0.1/ItemsDB /docker-entrypoint-initdb.d/mongo-init.js
+  ```
+
+- ```
+  exit
+  ```
 
 http://localhost:8080/#/items — клиент
