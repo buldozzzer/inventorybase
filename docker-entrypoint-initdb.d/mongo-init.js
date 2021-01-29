@@ -3,11 +3,9 @@ db = db.getSiblingDB('ItemsDB')
 
 db.main_employee.insertMany(
     [
-        {"surname": "Бульдяев", "name": "Сергей", "secname": "Александрович"},
-        {"surname": "Ляховец", "name": "Дмитрий", "secname": "Сергеевич"},
-        {"surname": "Гудов", "name": "Алексей", "secname": "Владимирович"},
-        {"surname": "Черепанов", "name": "Сергей", "secname": "Александрович"},
-        {"surname": "Клейменов", "name": "Виктор", "secname": "Семенович"}
+        {"surname": "Тереньтев", "name": "Виталий", "secname": "Павлович"},
+        {"surname": "Пушкин", "name": "Александр", "secname": "Сергеевич"},
+        {"surname": "Мхитарян", "name": "Генрих", "secname": "Гогиевич"},
     ]);
 
 db.main_item.insertMany(
@@ -185,26 +183,26 @@ db.main_otss.insertMany(
 db.main_location.insertMany(
     [
         {
-            "object": "Академия",
+            "object": "Хогвартс",
             "corpus": "3",
             "cabinet": "113",
-            "unit": "к732"
+            "unit": "Грифиндор"
         },
         {
-            "object": "Академия",
+            "object": "Хогвартс",
             "corpus": "3",
             "cabinet": "136",
-            "unit": "к732"
+            "unit": "Слизерин"
         },
         {
-            "object": "Академия",
+            "object": "Минестерство",
             "corpus": "3",
             "cabinet": "103",
-            "unit": "к732"
+            "unit": "Пуфендуй"
         }
     ]
 );
 
 db.main_unit.insert(
-    {"unit": "к732"}
+    {"unit": "подразделение"}
 )

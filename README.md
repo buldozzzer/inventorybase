@@ -38,7 +38,7 @@
   ```
 
 - ```
-  mongo 127.0.0.1/ItemsDB /docker-entrypoint-initdb.d/mongo-init.js
+  mongo 127.0.0.1/ItemsDB /mongo-init.js
   ```
 
 - ```
