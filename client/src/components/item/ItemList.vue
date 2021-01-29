@@ -69,6 +69,16 @@
       <template #head(index)="scope">
         <div class="text-nowrap">Номер</div>
       </template>
+      <template #cell(index)="data">
+        {{ data.index + 1 }}
+      </template>
+
+      <template #cell(name)="data" >
+        <div @dblclick.v-b-modal>{{ data.item.name }}</div>
+        <field-modal-form :item="data.item"
+
+                          :item-field="data.item.name"/>
+      </template>
 
       <template #head(edit_remove)="scope">
         <div class="text-nowrap">Изменить/Удалить</div>
@@ -77,22 +87,25 @@
         <div class="text-nowrap">
           <b-icon icon="pencil-square"
                   variant="warning"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Редактировать"
                   font-scale="2"
                   v-b-modal.edit-item-modal
                   @click="selectToEditItem(row.item)">
             Редактировать
           </b-icon>
-          <b-icon icon="trash" variant="danger"
+          <b-icon icon="trash"
+                  variant="danger"
                   font-scale="2"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Удалить"
                   v-b-modal.confirm-modal
                   @click="selectToRemoveItem(row.item)">
             Удалить
           </b-icon>
         </div>
-      </template>
-
-      <template #cell(index)="data">
-        {{ data.index + 1 }}
       </template>
 
       <template #cell(Компоненты)="row">
@@ -117,7 +130,12 @@
 
       <template #cell(selected)="{ rowSelected }">
         <template v-if="rowSelected">
-          <span aria-hidden="true">&check;</span>
+          <b-icon icon="check2"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Редактировать"
+                  font-scale="1.5"
+                  aria-hidden="false"></b-icon>
           <span class="sr-only">Selected</span>
         </template>
         <template v-else>
@@ -127,7 +145,7 @@
       </template>
 
     </b-table>
-    <add-modal :employee-initials="employeeInitials"/>
+    <add-modal ref="addItemModal" :employee-initials="employeeInitials"/>
     <edit-modal ref="editItemModal"
                 :employee-initials="employeeInitials"
                 :edit-item="editItem"/>
@@ -149,6 +167,7 @@
   import AddModal from './add/AddModal';
   import EditModal from './edit/EditModal';
   import ConfirmForm from "./ConfirmForm";
+  import FieldModalForm from "./FieldModalForm";
 
   export default {
     name: "ItemList",
@@ -157,7 +176,8 @@
       AddModal,
       EditModal,
       Filters,
-      ConfirmForm
+      ConfirmForm,
+      FieldModalForm
     },
     data() {
       return {
@@ -440,6 +460,9 @@
       },
       sendToEditItems(){
         this.$parent.$data.dataForChildren = this.selected
+      },
+      showFieldFromModal(id) {
+        this.$refs[id].show()
       }
     },
     watch:{

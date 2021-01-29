@@ -27,14 +27,14 @@
   ```
 
 - ```
-  sudo docker-compose build && sudo docker-compose up -d
+  docker-compose up -d
   ```
   
 ### Инициализация базы данных
 
 Открытие контейнера в интерактивном режиме:
 - ```
-  sudo docker-compose exec mongo bash
+  docker-compose exec mongo bash
   ```
 
 - ```

@@ -3,7 +3,7 @@
     <b-container>
       <b-row>
         <b-col>
-          <b-form-group label="Ответственный сотрудник:">
+          <b-form-group label="Ответственный:">
             <b-form-select
               v-model="filters.responsible"
               :options="employees"/>
