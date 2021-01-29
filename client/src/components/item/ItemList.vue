@@ -44,12 +44,13 @@
              :employee-initials="employeeInitials">
     </filters>
     <!--    sticky-header="850px"-->
+<!--    v-bind:sticky-header="sliderValue+'px'"-->
     <b-table class="mt-3"
              striped hover
              ref="selectableTable"
              selectable
              :sort-by.sync="sortBy"
-             v-bind:sticky-header="sliderValue+'px'"
+             sticky-header="380px"
              :items="items"
              small
              :fields="itemFields"
