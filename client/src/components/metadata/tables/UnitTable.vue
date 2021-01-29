@@ -43,7 +43,7 @@
             key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: 'unit', label: "Подразделние, откуда поступила мат. ценность", sortable: true
+            key: 'unit', label: "Подразделние, откуда поступила мат. ценность", sortable: true, class: 'text-center'
           },
         ]
       }

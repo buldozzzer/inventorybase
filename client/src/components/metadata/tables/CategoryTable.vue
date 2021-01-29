@@ -43,7 +43,7 @@
             key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: 'category', label: "Категория", sortable: true
+            key: 'category', label: "Категория", sortable: true, class: 'text-center'
           },
         ]
       }

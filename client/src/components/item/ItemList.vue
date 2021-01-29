@@ -15,7 +15,7 @@
                     href="#/items/groupedit"
                     v-if="selected.length !== 0"
                     @click="sendToEditItems">
-            Редактровать выбранные
+            Редактровать
           </b-button>
         </b-col>
         <b-col>
@@ -203,81 +203,98 @@
             key: "name",
             label: "Наименование",
             sortable: true,
-
+            class: 'text-center'
           },
           'Компоненты',
           {
             key: "responsible",
             label: "Ответсвенный сотрудник",
-            sortable: true
+            sortable: true,
+            class: 'text-center'
           },
           {
             key: "inventory_n",
             label: "Инвентрный номер",
             sortable: true,
+            class: 'text-center'
           },
           {
             key: "otss_category",
             label: "Категория ОТСС",
             sortable: true,
+            class: 'text-center'
           },
           {
             key: "condition",
             label: "состояние",
             sortable: true,
+            class: 'text-center'
           }, {
             key: "unit_from",
             label: "подразделение, откуда поступила мат. ценность",
             sortable: true,
+            class: 'text-center'
           }, {
             key: "in_operation",
             label: "Используется?",
             sortable: true,
+            class: 'text-center'
           }, {
             key: "fault_document_requisites",
             label: "документы о неисправности",
             sortable: true,
+            class: 'text-center'
           }, {
             key: "date_of_receipt",
             label: "Дата передачи во времнное пользование",
             sortable: true,
+            class: 'text-center'
           }, {
             key: "number_of_receipt",
             label: "номер требования о поступлении на учет",
             sortable: true,
+            class: 'text-center'
           }, {
             key: "requisites",
             label: "реквизиты книги учета мат. ценностей",
             sortable: true,
+            class: 'text-center'
           }, {
             key: "transfer_date",
             label: "дата передачи во временное пользование",
             sortable: true,
+            class: 'text-center'
           }, {
             key: "otss_requisites",
             label: "реквизиты документа о категории ОТСС",
             sortable: true,
+            class: 'text-center'
           }, {
             key: "spsi_requisites",
             label: "реквизиты документа о прохождении СПСИ",
             sortable: true,
+            class: 'text-center'
           }, {
             key: "transfer_requisites",
             label: "реквизиты о передаче во временное пользование",
             sortable: true,
+            class: 'text-center'
           }, {
             key: "last_check",
             label: "дата последней проверки",
             sortable: true,
+            class: 'text-center'
           }, {
             key: "comment",
             label: "примечания",
             sortable: true,
+            class: 'text-center'
           },
           {
             key: "user",
             label: "сотрудник, которому передали мат. ценность в пользование",
-            sortable: true
+            sortable: true,
+            class: 'text-center'
           },
         ],
         items: [],

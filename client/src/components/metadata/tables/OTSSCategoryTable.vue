@@ -43,7 +43,7 @@
             key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: 'category', label: "ОТСС категория", sortable: true
+            key: 'category', label: "ОТСС категория", sortable: true, class: 'text-center'
           },
         ]
       }

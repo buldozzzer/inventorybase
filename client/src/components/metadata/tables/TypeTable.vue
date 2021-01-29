@@ -43,7 +43,7 @@
             key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: 'type', label: "Тип составляющей", sortable: true
+            key: 'type', label: "Тип составляющей", sortable: true, class: 'text-center'
           },
         ]
       }

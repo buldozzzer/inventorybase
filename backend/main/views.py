@@ -49,7 +49,7 @@ class ItemView(APIView):
             return Response({"message": "Item with id `{}` has been deleted."
                             .format(pk)}, status=204)
         else:
-            Response({"message": "Item with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "Item with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
         updated_fields = request.data
@@ -69,7 +69,7 @@ class ItemView(APIView):
             return Response({"message": "Item with id `{}` has been updated."
                             .format(pk)}, status=202)
         else:
-            Response({"message": "Item with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "Item with _id `{}` not found.".format(pk)}, status=404)
 
 
 class EmployeeView(APIView):
@@ -100,7 +100,7 @@ class EmployeeView(APIView):
             return Response({"message": "Employee with id `{}` has been deleted."
                             .format(pk)}, status=204)
         else:
-            Response({"message": "Employee with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "Employee with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
         updated_fields = request.data
@@ -115,7 +115,7 @@ class EmployeeView(APIView):
             return Response({"message": "Employee with id `{}` has been updated."
                             .format(pk)}, status=202)
         else:
-            Response({"message": "Employee with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "Employee with _id `{}` not found.".format(pk)}, status=404)
 
 
 class OTSSView(APIView):
@@ -146,7 +146,7 @@ class OTSSView(APIView):
             return Response({"message": "OTSS category with id `{}` has been deleted."
                             .format(pk)}, status=204)
         else:
-            Response({"message": "OTSS category with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "OTSS category with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
         updated_fields = request.data
@@ -161,7 +161,7 @@ class OTSSView(APIView):
             return Response({"message": "OTSS category with id `{}` has been updated."
                             .format(pk)}, status=202)
         else:
-            Response({"message": "OTSS category with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "OTSS category with _id `{}` not found.".format(pk)}, status=404)
 
 
 class UnitView(APIView):
@@ -192,7 +192,7 @@ class UnitView(APIView):
             return Response({"message": "Unit with id `{}` has been deleted."
                             .format(pk)}, status=204)
         else:
-            Response({"message": "Unit with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "Unit with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
         updated_fields = request.data
@@ -207,7 +207,7 @@ class UnitView(APIView):
             return Response({"message": "Unit with id `{}` has been updated."
                             .format(pk)}, status=202)
         else:
-            Response({"message": "Unit with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "Unit with _id `{}` not found.".format(pk)}, status=404)
 
 
 class TypeView(APIView):
@@ -238,7 +238,7 @@ class TypeView(APIView):
             return Response({"message": "Type with id `{}` has been deleted."
                             .format(pk)}, status=204)
         else:
-            Response({"message": "Type with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "Type with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
         updated_fields = request.data
@@ -253,7 +253,7 @@ class TypeView(APIView):
             return Response({"message": "Type with id `{}` has been updated."
                             .format(pk)}, status=202)
         else:
-            Response({"message": "Type with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "Type with _id `{}` not found.".format(pk)}, status=404)
 
 
 class CategoryView(APIView):
@@ -284,7 +284,7 @@ class CategoryView(APIView):
             return Response({"message": "Category with id `{}` has been deleted."
                             .format(pk)}, status=204)
         else:
-            Response({"message": "Category with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "Category with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
         updated_fields = request.data
@@ -299,7 +299,7 @@ class CategoryView(APIView):
             return Response({"message": "Category with id `{}` has been updated."
                             .format(pk)}, status=202)
         else:
-            Response({"message": "Category with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "Category with _id `{}` not found.".format(pk)}, status=404)
 
 
 class LocationView(APIView):
@@ -330,7 +330,7 @@ class LocationView(APIView):
             return Response({"message": "Location with id `{}` has been deleted."
                             .format(pk)}, status=204)
         else:
-            Response({"message": "Location with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "Location with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
         updated_fields = request.data
@@ -345,5 +345,4 @@ class LocationView(APIView):
             return Response({"message": "Location with id `{}` has been updated."
                             .format(pk)}, status=202)
         else:
-            Response({"message": "Location with _id `{}` not found.".format(pk)}, status=404)
-
+            return Response({"message": "Location with _id `{}` not found.".format(pk)}, status=404)

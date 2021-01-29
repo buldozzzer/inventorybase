@@ -43,13 +43,13 @@
             key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: "surname", label: "Фамилия", sortable: true
+            key: "surname", label: "Фамилия", sortable: true, class: 'text-center'
           },
           {
-            key: "name", label: "Имя", sortable: true
+            key: "name", label: "Имя", sortable: true, class: 'text-center'
           },
           {
-            key: "secname", label: "Отчество", sortable: true,
+            key: "secname", label: "Отчество", sortable: true, class: 'text-center'
           },
         ],
       }

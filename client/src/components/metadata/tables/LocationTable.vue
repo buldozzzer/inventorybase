@@ -42,16 +42,16 @@
             key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: 'object', label: "Объект", sortable: true
+            key: 'object', label: "Объект", sortable: true, class: 'text-center'
           },
           {
-            key: 'corpus', label: "Корпус", sortable: true
+            key: 'corpus', label: "Корпус", sortable: true, class: 'text-center'
           },
           {
-            key: 'cabinet', label: "Кабинет", sortable: true
+            key: 'cabinet', label: "Кабинет", sortable: true, class: 'text-center'
           },
           {
-            key: 'unit', label: "Подразделение", sortable: true
+            key: 'unit', label: "Подразделение", sortable: true, class: 'text-center'
           },
         ]
       }
