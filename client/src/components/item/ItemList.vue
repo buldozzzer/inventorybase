@@ -12,6 +12,7 @@
         </b-col>
         <b-col>
           <b-button class="mt-3"
+                    variant="primary"
                     href="#/items/groupedit"
                     v-if="selected.length !== 0"
                     @click="sendToEditItems">
@@ -21,7 +22,7 @@
         <b-col>
           <!--          variant="danger"-->
           <b-button class="mt-3" @click="selectAllRows">
-            {{ selected.length === 0 ? 'Выбрать все записи' : 'Снять отметку' }}
+            {{ selected.length === 0 ? 'Выбрать записи' : 'Снять отметку' }}
           </b-button>
         </b-col>
         <b-col>
@@ -29,14 +30,14 @@
             Добавить запись
           </b-button>
         </b-col>
-        <b-col>
-          <vue-range-slider class="mt-3" ref="slider"
-                            v-model="sliderValue"
-                            @change="stickyHeaderHeightToString"
-                            min="300"
-                            max="1000"
-          ></vue-range-slider>
-        </b-col>
+<!--        <b-col>-->
+<!--          <vue-range-slider class="mt-3" ref="slider"-->
+<!--                            v-model="sliderValue"-->
+<!--                            @change="stickyHeaderHeightToString"-->
+<!--                            min="300"-->
+<!--                            max="1000"-->
+<!--          ></vue-range-slider>-->
+<!--        </b-col>-->
       </b-row>
     </b-container>
     <filters class="mt-3"
@@ -52,7 +53,6 @@
              :sort-by.sync="sortBy"
              sticky-header="380px"
              :items="items"
-             small
              :fields="itemFields"
              :filter-function="filterFunction"
              :filter="filters"
@@ -64,7 +64,7 @@
       </template>
 
       <template #head(selected)="scope">
-        <div class="text-nowrap"></div>
+        <div>&nbsp;&nbsp;</div>
       </template>
       <template #head(index)="scope">
         <div class="text-nowrap">Номер</div>
@@ -74,7 +74,9 @@
       </template>
 
       <template #cell(name)="row">
-        <div @dblclick="showFieldFromModal('name'), editableRow=row.item">{{ row.item.name }}</div>
+        <div @dblclick="showFieldFromModal('name'), editableRow=row.item">
+          {{ row.item.name ? row.item.name : '&nbsp' }}
+        </div>
         <b-modal ref="name" centered
                  title="Измените значение поля"
                  size="sm" hide-footer
@@ -97,9 +99,9 @@
       </template>
 
       <template #cell(responsible)="row">
-        <div @dblclick="showFieldFromModal('responsible')"
+        <div @dblclick="showFieldFromModal('responsible'), editableRow=row.item"
              class="text-nowrap">
-          {{ row.item.responsible }}
+          {{ row.item.responsible ? row.item.responsible : '&nbsp' }}
         </div>
         <b-modal ref="responsible"
                  centered
@@ -114,15 +116,15 @@
                               type="text"
                               class="mt-3"
                               list="employee-list"
-                              v-model="row.item.responsible"
-                              :value="row.item.responsible">
+                              v-model="editableRow.responsible"
+                              :value="editableRow.responsible">
                 </b-form-input>
                 <datalist id="employee-list">
                   <option v-for="employee in employeeInitials">{{ employee }}</option>
                 </datalist>
               </b-form-group>
               <div class="mt-3">
-                <b-button variant="success" @click="onSubmit('responsible', row.item)">
+                <b-button variant="success" @click="onSubmit('responsible', editableRow)">
                   Изменить
                 </b-button>
                 <b-button variant="danger" @click="onReset('responsible')">Отмена</b-button>
@@ -158,10 +160,11 @@
         </div>
       </template>
 
-      <template #cell(Компоненты)="row">
-        <b-button size="sm" @click="row.toggleDetails" class="mr-2">
-          {{ row.detailsShowing ? 'Скрыть' : 'Показать' }} Компоненты
-        </b-button>
+      <template #cell(components)="row">
+        <b-icon :icon="eye"
+                font-scale="2"
+                @click="row.toggleDetails">
+        </b-icon>
       </template>
 
       <template #row-details="row">
@@ -184,7 +187,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Редактировать"
-                  font-scale="1.5"
+                  font-scale="0.5"
                   aria-hidden="false"></b-icon>
           <span class="sr-only">Selected</span>
         </template>
@@ -277,9 +280,11 @@
             label: "Наименование",
             sortable: true,
             class: 'text-center'
-          },
-          'Компоненты',
-          {
+          }, {
+            key: "components",
+            label: "Компоненты",
+            class: 'text-center'
+          }, {
             key: "responsible",
             label: "Ответсвенный сотрудник",
             sortable: true,
@@ -382,7 +387,8 @@
           condition: null,
           in_operation: null
         },
-        fuseString: ""
+        fuseString: "",
+        eye: 'eye'
       };
     },
     computed:{
@@ -398,6 +404,13 @@
       }
     },
     methods: {
+      isRowDetail(data){
+        if (data) {
+          this.eye = 'eye'
+        } else {
+          this.eye = 'eye-slash'
+        }
+      },
       stickyHeaderHeightToString() {
         return this.sliderValue.toString() + 'px'
       },

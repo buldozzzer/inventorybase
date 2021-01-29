@@ -31,9 +31,11 @@
           </b-form-group>
         </b-col>
         <b-col>
-          <b-form-input
-            v-model="fuseString"
-          ></b-form-input>
+          <b-form-group label="По контексту:">
+            <b-form-input
+              v-model="fuseString"
+            ></b-form-input>
+          </b-form-group>
         </b-col>
 <!--        <b-col>-->
 <!--          <b-button variant="dark" @click="changeString">-->
