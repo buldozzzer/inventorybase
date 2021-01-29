@@ -1,7 +1,6 @@
 import os
 
-from pymongo import MongoClient
-
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = 'e(y)qn@-nzwoe&%skg)7+=3wbt5c*$-^-(^hjq@ov1pz&^p86o'
@@ -9,6 +8,12 @@ SECRET_KEY = 'e(y)qn@-nzwoe&%skg)7+=3wbt5c*$-^-(^hjq@ov1pz&^p86o'
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.AllowAny'
+    ]
+}
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -63,10 +68,6 @@ DATABASES = {
         'PORT': 27017
     }
 }
-
-# client = MongoClient('127.0.0.1', 27017)
-# db = client.ItemsDB
-
 
 AUTH_PASSWORD_VALIDATORS = [
     {

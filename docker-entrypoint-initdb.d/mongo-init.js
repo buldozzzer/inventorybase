@@ -100,6 +100,75 @@ db.main_item.insertMany(
         "transfer_requisites": "",
         "comment": "",
         "last_check": null
+    },  {
+            "name": "Мат. ценность 3",
+            "user": "",
+            "responsible": "",
+            "components": [
+                {
+                    "id": 0,
+                    "name": "Компонент 1",
+                    "serial_n": "",
+                    "type": "",
+                    "view": "",
+                    "category": "",
+                    "year": "",
+                    "cost": "",
+                    "location": {
+                        "object": "",
+                        "corpus": "",
+                        "unit": "",
+                        "cabinet": ""
+                    }
+                },
+                {
+                    "id": 1,
+                    "name": "Компонент 2",
+                    "serial_n": "",
+                    "type": "",
+                    "view": "",
+                    "category": "",
+                    "year": "",
+                    "cost": "",
+                    "location": {
+                        "object": "",
+                        "corpus": "",
+                        "unit": "",
+                        "cabinet": ""
+                    }
+                },
+                {
+                    "id": 2,
+                    "name": "Компонент 3",
+                    "serial_n": "",
+                    "type": "",
+                    "view": "",
+                    "category": "",
+                    "year": "",
+                    "cost": "",
+                    "location": {
+                        "object": "",
+                        "corpus": "",
+                        "unit": "",
+                        "cabinet": ""
+                    }
+                }
+            ],
+            "inventory_n": "",
+            "otss_category": "",
+            "condition": "",
+        "unit_from": "",
+        "in_operation": "",
+        "fault_document_requisites": "",
+        "date_of_receipt": null,
+        "number_of_receipt": "",
+        "requisites": "",
+        "transfer_date": null,
+        "otss_requisites": "",
+        "spsi_requisites": "",
+        "transfer_requisites": "",
+        "comment": "",
+        "last_check": null
     }
     ]
 );
