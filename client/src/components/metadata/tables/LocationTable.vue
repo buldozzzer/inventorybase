@@ -12,18 +12,24 @@
       </template>
       <template #cell(edit_remove)="row">
         <div class="text-nowrap">
-          <b-button variant="warning"
-                    v-b-modal.location-edit-modal
-                    @click="edit(row.item)">
-            Редактировать
-          </b-button>
-          <br>
-          <b-button variant="danger"
-                    class="mt-3"
-                    v-b-modal.location-confirm
-                    @click="remove(row.item)">
-            Удалить
-          </b-button>
+          <b-icon icon="pencil-square"
+                  variant="warning"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Редактировать"
+                  font-scale="2"
+                  v-b-modal.edit-item-modal
+                  @click="edit(row.item)">
+          </b-icon>
+          <b-icon icon="trash"
+                  variant="danger"
+                  font-scale="2"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Удалить"
+                  v-b-modal.confirm-modal
+                  @click="remove(row.item)">
+          </b-icon>
         </div>
       </template>
     </b-table>
