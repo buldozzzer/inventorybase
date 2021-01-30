@@ -105,13 +105,13 @@
         </div>
         <b-modal ref="responsible"
                  centered
+                 title="Измените значение поля"
                  size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
-              <b-form-group label="Измените значение поля"
-                            label-for="form-input">
+              <b-form-group label-for="form-input">
                 <b-form-input id="form-input"
                               type="text"
                               class="mt-3"
@@ -128,6 +128,298 @@
                   Изменить
                 </b-button>
                 <b-button variant="danger" @click="onReset('responsible')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(user)="row">
+        <div @dblclick="showFieldFromModal('user'), editableRow=row.item"
+             class="text-nowrap">
+          {{ row.item.user ? row.item.user : '&nbsp' }}
+        </div>
+        <b-modal ref="user"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-input">
+                <b-form-input id="form-input"
+                              type="text"
+                              class="mt-3"
+                              list="user-list"
+                              v-model="editableRow.user"
+                              :value="editableRow.user">
+                </b-form-input>
+                <datalist id="user-list">
+                  <option v-for="employee in employeeInitials">{{ employee }}</option>
+                </datalist>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('user', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('user')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(inventory_n)="row">
+        <div @dblclick="showFieldFromModal('inventory_n'), editableRow=row.item"
+             class="text-nowrap">
+          {{ row.item.inventory_n ? row.item.inventory_n : '&nbsp' }}
+        </div>
+        <b-modal ref="inventory_n"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-input">
+                <b-form-input id="form-input"
+                              type="text"
+                              class="mt-3"
+                              v-model="editableRow.inventory_n"
+                              :value="editableRow.inventory_n">
+                </b-form-input>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('inventory_n', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('inventory_n')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(in_operation)="row">
+        <div @dblclick="showFieldFromModal('in_operation'), editableRow=row.item"
+             class="text-nowrap">
+          {{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}
+        </div>
+        <b-modal ref="in_operation"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-select">
+                <b-form-select id="form-select"
+                              type="text"
+                              class="mt-3"
+                              :options="operation"
+                              v-model="editableRow.in_operation"
+                              :value="editableRow.in_operation">
+                </b-form-select>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('in_operation', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('in_operation')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(in_operation)="row">
+        <div @dblclick="showFieldFromModal('in_operation'), editableRow=row.item"
+             class="text-nowrap">
+          {{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}
+        </div>
+        <b-modal ref="in_operation"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-select">
+                <b-form-select id="form-select"
+                              type="text"
+                              class="mt-3"
+                              :options="operation"
+                              v-model="editableRow.in_operation"
+                              :value="editableRow.in_operation">
+                </b-form-select>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('in_operation', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('in_operation')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(condition)="row">
+        <div @dblclick="showFieldFromModal('condition'), editableRow=row.item"
+             class="text-nowrap">
+          {{ row.item.condition ? row.item.condition : '&nbsp' }}
+        </div>
+        <b-modal ref="condition"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-select">
+                <b-form-select id="form-select"
+                              type="text"
+                              class="mt-3"
+                              :options="conditions"
+                              v-model="editableRow.condition"
+                              :value="editableRow.condition">
+                </b-form-select>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('condition', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('condition')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(unit_from)="row">
+        <div @dblclick="showFieldFromModal('unit_from'), editableRow=row.item">
+          {{ row.item.unit_from ? row.item.unit_from : '&nbsp' }}
+        </div>
+        <b-modal ref="unit_from" centered
+                 title="Измените значение поля"
+                 size="sm" hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-input id="form-input"
+                            type="text"
+                            class="mt-3"
+                            list="unit_from-list"
+                            v-model="editableRow.unit_from"
+                            :value="editableRow.unit_from">
+              </b-form-input>
+              <datalist id="unit_from-list">
+                  <option v-for="unit in units">{{ unit }}</option>
+                </datalist>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('unit_from', editableRow)">Изменить</b-button>
+                <b-button variant="danger" @click="onReset('unit_from')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(fault_document_requisites)="row">
+        <div @dblclick="showFieldFromModal('fault_document_requisites'), editableRow=row.item">
+          {{ row.item.fault_document_requisites ? row.item.fault_document_requisites : '&nbsp' }}
+        </div>
+        <b-modal ref="fault_document_requisites"
+                 centered
+                 title="Измените значение поля"
+                 size="sm" hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-input id="form-input"
+                            type="text"
+                            class="mt-3"
+                            v-model="editableRow.fault_document_requisites"
+                            :value="editableRow.fault_document_requisites">
+              </b-form-input>
+              <div class="mt-3">
+                <b-button variant="success"
+                          @click="onSubmit('fault_document_requisites', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger"
+                          @click="onReset('fault_document_requisites')">
+                  Отмена
+                </b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(number_of_receipt)="row">
+        <div @dblclick="showFieldFromModal('number_of_receipt'), editableRow=row.item">
+          {{ row.item.number_of_receipt ? row.item.number_of_receipt : '&nbsp' }}
+        </div>
+        <b-modal ref="number_of_receipt"
+                 centered
+                 title="Измените значение поля"
+                 size="sm" hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-input id="form-input"
+                            type="text"
+                            class="mt-3"
+                            v-model="editableRow.number_of_receipt"
+                            :value="editableRow.number_of_receipt">
+              </b-form-input>
+              <div class="mt-3">
+                <b-button variant="success"
+                          @click="onSubmit('number_of_receipt', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger"
+                          @click="onReset('number_of_receipt')">
+                  Отмена
+                </b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(requisites)="row">
+        <div @dblclick="showFieldFromModal('requisites'), editableRow=row.item">
+          {{ row.item.requisites ? row.item.requisites : '&nbsp' }}
+        </div>
+        <b-modal ref="requisites"
+                 centered
+                 title="Измените значение поля"
+                 size="sm" hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-textarea id="form-input"
+                            type="text"
+                            class="mt-3"
+                            v-model="editableRow.requisites"
+                            :value="editableRow.requisites">
+              </b-form-textarea>
+              <div class="mt-3">
+                <b-button variant="success"
+                          @click="onSubmit('requisites', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger"
+                          @click="onReset('requisites')">
+                  Отмена
+                </b-button>
               </div>
             </div>
           </b-form>
@@ -203,6 +495,242 @@
         </template>
       </template>
 
+      <template #cell(otss_requisites)="row">
+        <div @dblclick="showFieldFromModal('otss_requisites'), editableRow=row.item">
+          {{ row.item.otss_requisites ? row.item.otss_requisites : '&nbsp' }}
+        </div>
+        <b-modal ref="otss_requisites"
+                 centered
+                 title="Измените значение поля"
+                 size="sm" hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-textarea id="form-input"
+                            type="text"
+                            class="mt-3"
+                            v-model="editableRow.otss_requisites"
+                            :value="editableRow.otss_requisites">
+              </b-form-textarea>
+              <div class="mt-3">
+                <b-button variant="success"
+                          @click="onSubmit('otss_requisites', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger"
+                          @click="onReset('otss_requisites')">
+                  Отмена
+                </b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(spsi_requisites)="row">
+        <div @dblclick="showFieldFromModal('spsi_requisites'), editableRow=row.item">
+          {{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}
+        </div>
+        <b-modal ref="spsi_requisites"
+                 centered
+                 title="Измените значение поля"
+                 size="sm" hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-textarea id="form-input"
+                            type="text"
+                            class="mt-3"
+                            v-model="editableRow.spsi_requisites"
+                            :value="editableRow.spsi_requisites">
+              </b-form-textarea>
+              <div class="mt-3">
+                <b-button variant="success"
+                          @click="onSubmit('spsi_requisites', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger"
+                          @click="onReset('spsi_requisites')">
+                  Отмена
+                </b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(spsi_requisites)="row">
+        <div @dblclick="showFieldFromModal('spsi_requisites'), editableRow=row.item">
+          {{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}
+        </div>
+        <b-modal ref="spsi_requisites"
+                 centered
+                 title="Измените значение поля"
+                 size="sm" hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-textarea id="form-input"
+                            type=""
+                            class="mt-3"
+                            v-model="editableRow.spsi_requisites"
+                            :value="editableRow.spsi_requisites">
+              </b-form-textarea>
+              <div class="mt-3">
+                <b-button variant="success"
+                          @click="onSubmit('spsi_requisites', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger"
+                          @click="onReset('spsi_requisites')">
+                  Отмена
+                </b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(transfer_requisites)="row">
+        <div @dblclick="showFieldFromModal('transfer_requisites'), editableRow=row.item">
+          {{ row.item.transfer_requisites ? row.item.transfer_requisites : '&nbsp' }}
+        </div>
+        <b-modal ref="transfer_requisites"
+                 centered
+                 title="Измените значение поля"
+                 size="sm" hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-textarea id="form-input"
+                            type="text"
+                            class="mt-3"
+                            v-model="editableRow.transfer_requisites"
+                            :value="editableRow.transfer_requisites">
+              </b-form-textarea>
+              <div class="mt-3">
+                <b-button variant="success"
+                          @click="onSubmit('transfer_requisites', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger"
+                          @click="onReset('transfer_requisites')">
+                  Отмена
+                </b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(comment)="row">
+        <div @dblclick="showFieldFromModal('comment'), editableRow=row.item">
+          {{ row.item['comment'] ? row.item['comment'] : '&nbsp' }}
+        </div>
+        <b-modal ref="comment"
+                 centered
+                 title="Измените значение поля"
+                 size="sm" hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-textarea id="form-input"
+                            type="text"
+                            class="mt-3"
+                            v-model="editableRow['comment']"
+                            :value="editableRow['comment']">
+              </b-form-textarea>
+              <div class="mt-3">
+                <b-button variant="success"
+                          @click="onSubmit('comment', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger"
+                          @click="onReset('comment')">
+                  Отмена
+                </b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(date_of_receipt)="row">
+        <div @dblclick="showFieldFromModal('date_of_receipt'), editableRow=row.item">
+          {{ row.item.date_of_receipt ? row.item.date_of_receipt : '&nbsp' }}
+        </div>
+        <b-modal ref="date_of_receipt"
+                 centered
+                 title="Измените значение поля"
+                 size="sm" hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-datepicker
+              v-model="editableRow.date_of_receipt"
+              aria-controls="date_of_receipt-input"
+              today-button
+              reset-button
+              close-button
+              placeholder="Выберите дату"
+              :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
+            ></b-form-datepicker>
+              <div class="mt-3">
+                <b-button variant="success"
+                          @click="onSubmit('date_of_receipt', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger"
+                          @click="onReset('date_of_receipt')">
+                  Отмена
+                </b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(transfer_date)="row">
+        <div @dblclick="showFieldFromModal('transfer_date'), editableRow=row.item">
+          {{ row.item.transfer_date ? row.item.transfer_date : '&nbsp' }}
+        </div>
+        <b-modal ref="transfer_date"
+                 centered
+                 title="Измените значение поля"
+                 size="sm" hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-datepicker
+              v-model="editableRow.transfer_date"
+              aria-controls="transfer_date-input"
+              today-button
+              reset-button
+              close-button
+              placeholder="Выберите дату"
+              :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
+            ></b-form-datepicker>
+              <div class="mt-3">
+                <b-button variant="success"
+                          @click="onSubmit('transfer_date', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger"
+                          @click="onReset('transfer_date')">
+                  Отмена
+                </b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(last_check)="row">
+        <div @dblclick="editableRow=row.item, getCurrentDate(editableRow)">
+          {{ row.item.last_check ? row.item.last_check : '&nbsp' }}
+        </div>
+      </template>
+
     </b-table>
     <add-modal ref="addItemModal" :employee-initials="employeeInitials"/>
     <edit-modal ref="editItemModal"
@@ -240,6 +768,10 @@
     },
     data() {
       return {
+        otss: [1, 2, 3, 'Не секретно'],
+        units: [],
+        conditions: ['Исправно', 'Неисправно'],
+        operation: ['Используется', 'Не используется'],
         m: '',
         editableRow: '',
         dynamicId: "confirm-modal",
@@ -310,12 +842,12 @@
           },
           {
             key: "condition",
-            label: "состояние",
+            label: "Состояние",
             sortable: true,
             class: 'text-center'
           }, {
             key: "unit_from",
-            label: "подразделение, откуда поступила мат. ценность",
+            label: "Подразделение, откуда поступила мат. ценность",
             sortable: true,
             class: 'text-center'
           }, {
@@ -325,27 +857,27 @@
             class: 'text-center'
           }, {
             key: "fault_document_requisites",
-            label: "документы о неисправности",
+            label: "Документы о неисправности",
             sortable: true,
             class: 'text-center'
           }, {
             key: "date_of_receipt",
-            label: "Дата передачи во времнное пользование",
+            label: "Дата поступления на учет",
             sortable: true,
             class: 'text-center'
           }, {
             key: "number_of_receipt",
-            label: "номер требования о поступлении на учет",
+            label: "Номер требования о поступлении на учет",
             sortable: true,
             class: 'text-center'
           }, {
             key: "requisites",
-            label: "реквизиты книги учета мат. ценностей",
+            label: "Реквизиты книги учета мат. ценностей",
             sortable: true,
             class: 'text-center'
           }, {
             key: "transfer_date",
-            label: "дата передачи во временное пользование",
+            label: "Дата передачи во временное пользование",
             sortable: true,
             class: 'text-center'
           }, {
@@ -355,28 +887,28 @@
             class: 'text-center'
           }, {
             key: "spsi_requisites",
-            label: "реквизиты документа о прохождении СПСИ",
+            label: "Реквизиты документа о прохождении СПСИ",
             sortable: true,
             class: 'text-center'
           }, {
             key: "transfer_requisites",
-            label: "реквизиты о передаче во временное пользование",
+            label: "Реквизиты о передаче во временное пользование",
             sortable: true,
             class: 'text-center'
           }, {
             key: "last_check",
-            label: "дата последней проверки",
+            label: "Дата последней проверки",
             sortable: true,
             class: 'text-center'
           }, {
             key: "comment",
-            label: "примечания",
+            label: "Примечания",
             sortable: true,
             class: 'text-center'
           },
           {
             key: "user",
-            label: "сотрудник, которому передали мат. ценность в пользование",
+            label: "Сотрудник, которому передали мат. ценность в пользование",
             sortable: true,
             class: 'text-center'
           },
@@ -409,12 +941,37 @@
       }
     },
     methods: {
-      isRowDetail(data){
-        if (data) {
-          this.eye = 'eye'
-        } else {
-          this.eye = 'eye-slash'
+      async getCurrentDate(item){
+        let today = new Date()
+        let dd = String(today.getDate()).padStart(2, '0')
+        let mm = String(today.getMonth() + 1).padStart(2, '0')
+        let yyyy = today.getFullYear()
+
+        today = yyyy + '-' + mm + '-' + dd
+
+        item.last_check = today
+
+        await this.editItem(item)
+      },
+      async fetchOTSS() {
+        const response = await fetch('http://localhost:8000/api/v1/otss/')
+        this.otss = await response.json()
+        this.otss = this.otss['otss']
+        let temp = []
+        for (let i = 0; i < this.otss.length; i++) {
+          temp.push(this.otss[i]['category'])
         }
+        this.otss = temp
+      },
+      async fetchUnits() {
+        const response = await fetch('http://localhost:8000/api/v1/unit/')
+        this.units = await response.json()
+        this.units = this.units['units']
+        let temp = []
+        for (let i = 0; i < this.units.length; i++) {
+          temp.push(this.units[i]['unit'])
+        }
+        this.units = temp
       },
       stickyHeaderHeightToString() {
         return this.sliderValue.toString() + 'px'
@@ -574,6 +1131,8 @@
       await this.fetchItems()
       await this.fetchEmployees()
       await this.setFilters()
+      await this.fetchOTSS()
+      await this.fetchUnits()
       await bus.$on('updateList', () => this.fetchItems())
       await bus.$on('cancel', () => {this.selected = []})
       await bus.$on('resetFilters', (data) => {
