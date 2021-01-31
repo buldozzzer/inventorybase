@@ -6,13 +6,18 @@
     <b-form>
       <b-container>
         <b-row>
-          <b-col>
+          <b-col :cols="colsize">
             <form-template :itemForm="itemForm"
                            :employeeInitials="employeeInitials">
             </form-template>
           </b-col>
           <b-col>
+            <b-button @click="showComponents = !showComponents">
+              {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
+            </b-button>
             <component-list ref="componentList"
+                            class="mt-3"
+                            v-if="showComponents"
                             :payload="itemForm['components']">
             </component-list>
           </b-col>
@@ -37,6 +42,15 @@
     props:['employeeInitials', 'itemForm'],
     data(){
       return {
+        showComponents: false
+      }
+    },
+    computed:{
+      colsize: function(){
+        if(this.showComponents)
+          return 6
+        else
+          return 10
       }
     },
     methods:{
