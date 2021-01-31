@@ -53,13 +53,22 @@
              :sort-by.sync="sortBy"
              sticky-header="380px"
              :items="items"
-             :fields="itemFields"
+             :fields="fields"
              :filter-function="filterFunction"
              :filter="filters"
              @row-selected="onRowSelected">
       <template #head()="scope">
         <div class="text-nowrap">
           {{ scope.label }}
+          <b-icon icon="x"
+                  class="mt-1"
+                  variant="dark"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Скрыть колонку"
+                  font-scale="1.5"
+                  @click="hideColumn(scope.label)">
+          </b-icon>
         </div>
       </template>
 
@@ -67,7 +76,10 @@
         <div>&nbsp;&nbsp;</div>
       </template>
       <template #head(index)="scope">
-        <div class="text-nowrap">Номер</div>
+        <div>Номер</div>
+      </template>
+      <template #head(components)="scope">
+        <div>Компоненты</div>
       </template>
       <template #cell(index)="data">
         {{ data.index + 1 }}
@@ -802,17 +814,87 @@
             label: "Местонахождение",
           },
         ],
+        titles: [
+          {
+            key: "Наименование",
+            show: true
+          }, {
+            key: "Компоненты",
+            show: true
+          }, {
+            key: "Ответсвенный сотрудник",
+            show: true
+          },
+          {
+            key: "Инвентрный номер",
+            show: true
+          },
+          {
+            key: "Категория ОТСС",
+            show: true
+          },
+          {
+            key: "Состояние",
+            show: true
+          }, {
+            key: "Подразделение, откуда поступила мат. ценность",
+            show: true
+          }, {
+            key: "Используется?",
+            show: true
+          }, {
+            key: "Документы о неисправности",
+            show: true
+          }, {
+            key: "Дата поступления на учет",
+            show: true
+          }, {
+            key: "Номер требования о поступлении на учет",
+            show: true
+          }, {
+            key: "Реквизиты книги учета мат. ценностей",
+            show: true
+          }, {
+            key: "Дата передачи во временное пользование",
+            show: true
+          }, {
+            key: "Реквизиты документа о категории ОТСС",
+            show: true
+          }, {
+            key: "Реквизиты документа о прохождении СПСИ",
+            show: true
+          }, {
+            key: "Реквизиты о передаче во временное пользование",
+            show: true
+          }, {
+            key: "Дата последней проверки",
+            show: true
+          }, {
+            key: "Примечания",
+            show: true
+          },
+          {
+            key: "Сотрудник, которому передали мат. ценность в пользование",
+            show: true
+          },
+        ],
         itemFields: [
           {
-            key: "selected",
-            class: 'text-center'
-          }, {
             key: "edit_remove",
+            stickyColumn: true,
+            class: 'text-center'
+          },
+          {
+            key: "selected",
             stickyColumn: true,
             isRowHeader: true,
             class: 'text-center'
           },
-          'index',
+          {
+            key: "index",
+            label: "Номер",
+            class: 'text-center'
+          },
           {
             key: "name",
             label: "Наименование",
@@ -882,7 +964,7 @@
             class: 'text-center'
           }, {
             key: "otss_requisites",
-            label: "реквизиты документа о категории ОТСС",
+            label: "Реквизиты документа о категории ОТСС",
             sortable: true,
             class: 'text-center'
           }, {
@@ -928,9 +1010,9 @@
         fuseString: "",
       };
     },
-    computed:{
+    computed: {
       message: function () {
-        if(this.selected) {
+        if (this.selected) {
           if (this.selected.length === 1) {
             this.m = 'Вы уверены, что хотите удалить запись?'
           } else {
@@ -938,9 +1020,30 @@
           }
         }
         return this.m
+      },
+      fields: function () {
+        let showingFields = []
+        for(let i = 0; i < this.itemFields.length; i++){
+          showingFields.push(this.itemFields[i])
+        }
+        for(let i = 0; i < this.titles.length; i++){
+          if(this.titles[i].show === false &&
+            this.titles[i].key === this.itemFields[i+3].label){
+            showingFields.splice(showingFields.indexOf(this.itemFields[i+3]), 1)
+          }
+        }
+        return showingFields
       }
     },
     methods: {
+      hideColumn(key){
+        for(let i = 0; i < this.titles.length; i++){
+          if(this.titles[i].key === key){
+            this.titles[i].show = false
+            break
+          }
+        }
+      },
       async getCurrentDate(item){
         let today = new Date()
         let dd = String(today.getDate()).padStart(2, '0')
@@ -1075,7 +1178,7 @@
             matchAllTokens: true,
             defaultAll: false,
             keys: [
-              "name", "responsible"
+              "name", "responsible", "inventory_n"
             ]
           }).then(results => {
           this.items = results
