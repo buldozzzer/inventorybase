@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-3">
+  <b-col class="mt-3">
     <h3>
       {{ itemForm.name }}
     </h3>
@@ -10,7 +10,7 @@
             <form-template :item-form="itemForm"
                    :employee-initials="employeeInitials"/>
           </b-col>
-          <div class="col">
+          <b-col v-if="itemForm['components'].length > 0">
             <b-card no-body>
               <b-nav card-header slot="header" v-b-scrollspy:nav-scroller>
                 <b-nav-item @click="scrollIntoView"
@@ -32,12 +32,11 @@
                 />
               </b-card-body>
             </b-card>
-          </div>
+          </b-col>
         </b-row>
       </b-container>
     </b-form>
-
-  </div>
+  </b-col>
 </template>
 
 <script>
