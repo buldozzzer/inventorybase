@@ -7,7 +7,12 @@
           <b-button variant="danger"
                     class="mt-3"
                     v-if="selected.length !== 0" v-b-modal.confirm-modal>
-            Удалить выбранные
+            <b-icon icon="trash"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  font-scale="1"
+                  aria-hidden="false"></b-icon>
+            Удалить
           </b-button>
         </b-col>
         <b-col>
@@ -16,18 +21,46 @@
                     href="#/items/groupedit"
                     v-if="selected.length !== 0"
                     @click="sendToEditItems">
+            <b-icon icon="pencil-square"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  font-scale="1"
+                  aria-hidden="false"></b-icon>
             Редактровать
           </b-button>
         </b-col>
         <b-col>
           <!--          variant="danger"-->
           <b-button class="mt-3" @click="selectAllRows">
+            <b-icon icon="check2-all"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  font-scale="1"
+                  aria-hidden="false"></b-icon>
             {{ selected.length === 0 ? 'Выбрать записи' : 'Снять отметку' }}
           </b-button>
         </b-col>
         <b-col>
           <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>
+            <b-icon icon="download"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  font-scale="1"
+                  aria-hidden="false"></b-icon>
             Добавить запись
+          </b-button>
+        </b-col>
+        <b-col>
+          <b-button variant="success"
+                    class="mt-3"
+                    v-if="fields.length !== 22"
+                    @click="showFullTable">
+            <b-icon icon="arrows-fullscreen"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  font-scale="1"
+                  aria-hidden="false"></b-icon>
+            Полная таблица
           </b-button>
         </b-col>
 <!--        <b-col>-->
@@ -77,9 +110,6 @@
       </template>
       <template #head(index)="scope">
         <div>Номер</div>
-      </template>
-      <template #head(components)="scope">
-        <div>Компоненты</div>
       </template>
       <template #cell(index)="data">
         {{ data.index + 1 }}
@@ -1032,10 +1062,21 @@
             showingFields.splice(showingFields.indexOf(this.itemFields[i+3]), 1)
           }
         }
+        bus.$on('fullTable', () => {
+          for (let i = 0; i < this.itemFields.length; i++) {
+            showingFields.push(this.itemFields[i])
+          }
+          for(let i = 0; i < this.titles.length; i++){
+            this.titles[i].show = true
+          }
+        })
         return showingFields
       }
     },
     methods: {
+      showFullTable(){
+        bus.$emit('fullTable')
+      },
       hideColumn(key){
         for(let i = 0; i < this.titles.length; i++){
           if(this.titles[i].key === key){
