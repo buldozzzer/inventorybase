@@ -51,16 +51,27 @@
           </b-button>
         </b-col>
         <b-col>
-          <b-button variant="success"
+          <b-button variant="light"
                     class="mt-3"
                     v-if="fields.length !== 22"
                     @click="showFullTable">
-            <b-icon icon="arrows-fullscreen"
+            <b-icon icon="arrows-angle-expand"
                   data-toggle="tooltip"
                   data-placement="top"
                   font-scale="1"
                   aria-hidden="false"></b-icon>
             Полная таблица
+          </b-button>
+          <b-button variant="light"
+                    class="mt-3"
+                    v-else
+                    @click="showClippedTable">
+            <b-icon icon="arrows-angle-contract"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  font-scale="1"
+                  aria-hidden="false"></b-icon>
+            Неполная таблица
           </b-button>
         </b-col>
 <!--        <b-col>-->
@@ -512,6 +523,7 @@
           <template #cell(index)="data">
             {{ data.index + 1 }}
           </template>
+
           <template #cell(location)="data">
             Объект: {{ data.item.location.object }}<br>
             Корпус: {{ data.item.location.corpus }}<br>
@@ -850,7 +862,7 @@
             show: true
           }, {
             key: "Компоненты",
-            show: true
+            show: false
           }, {
             key: "Ответсвенный сотрудник",
             show: true
@@ -861,7 +873,7 @@
           },
           {
             key: "Категория ОТСС",
-            show: true
+            show: false
           },
           {
             key: "Состояние",
@@ -874,25 +886,25 @@
             show: true
           }, {
             key: "Документы о неисправности",
-            show: true
+            show: false
           }, {
             key: "Дата поступления на учет",
             show: true
           }, {
             key: "Номер требования о поступлении на учет",
-            show: true
+            show: false
           }, {
             key: "Реквизиты книги учета мат. ценностей",
-            show: true
+            show: false
           }, {
             key: "Дата передачи во временное пользование",
-            show: true
+            show: false
           }, {
             key: "Реквизиты документа о категории ОТСС",
-            show: true
+            show: false
           }, {
             key: "Реквизиты документа о прохождении СПСИ",
-            show: true
+            show: false
           }, {
             key: "Реквизиты о передаче во временное пользование",
             show: true
@@ -905,7 +917,7 @@
           },
           {
             key: "Сотрудник, которому передали мат. ценность в пользование",
-            show: true
+            show: false
           },
         ],
         itemFields: [
@@ -1053,6 +1065,12 @@
       },
       fields: function () {
         let showingFields = []
+        bus.$on('clippedTable', () => {
+          let indexArr = [1,4,8,10,11,12,13,14,18]
+          for(let i = 0; i < indexArr.length; i++){
+            this.titles[indexArr[i]].show = false
+          }
+        })
         for(let i = 0; i < this.itemFields.length; i++){
           showingFields.push(this.itemFields[i])
         }
@@ -1076,6 +1094,9 @@
     methods: {
       showFullTable(){
         bus.$emit('fullTable')
+      },
+      showClippedTable(){
+        bus.$emit('clippedTable')
       },
       hideColumn(key){
         for(let i = 0; i < this.titles.length; i++){

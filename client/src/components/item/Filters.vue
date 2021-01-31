@@ -90,6 +90,11 @@
             payload[i].secname[0] + '.');
         }
       },
+      async fetchOTSS() {
+        const response = await fetch('http://localhost:8000/api/v1/otss/')
+        this.otssCategories = await response.json()
+        this.otssCategories = this.otssCategories['otss']
+      },
       resetFilters(){
         this.filters = {
           responsible: null,
@@ -110,6 +115,7 @@
     },
     async created(){
       await this.createEmployeeList()
+      await this.fetchOTSS()
     }
   }
 </script>
