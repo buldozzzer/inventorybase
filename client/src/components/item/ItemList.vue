@@ -795,6 +795,18 @@
                   :message="message"
                   :op="removeItems"
     ></confirm-form>
+    <b-alert
+      :show="dismissCountDown"
+      dismissible
+      @dismissed="dismissCountDown=0"
+      @dismiss-count-down="countDownChanged">
+      <p><b-icon icon="check2"
+                  variant="success"
+                  font-scale="2"
+                  data-toggle="tooltip"
+                  data-placement="top">
+          </b-icon>Успешно</p>
+    </b-alert>
   </div>
 </template>
 
@@ -822,6 +834,7 @@
     },
     data() {
       return {
+        dismissCountDown: 0,
         otss: [1, 2, 3, 'Не секретно'],
         units: [],
         conditions: ['Исправно', 'Неисправно'],
@@ -1092,6 +1105,12 @@
       }
     },
     methods: {
+      countDownChanged(dismissCountDown) {
+        this.dismissCountDown = dismissCountDown
+      },
+      showAlert() {
+        this.dismissCountDown = 10
+      },
       showFullTable(){
         bus.$emit('fullTable')
       },
@@ -1115,7 +1134,6 @@
         today = yyyy + '-' + mm + '-' + dd
 
         item.last_check = today
-
         await this.editItem(item)
       },
       async fetchOTSS() {
@@ -1171,6 +1189,7 @@
           }
           await this.fetchItems()
         }
+        this.showAlert()
         this.selected = []
       },
       async editItem(item) {
@@ -1189,6 +1208,7 @@
         if (response.status !== 202) {
           alert(JSON.stringify(await response.json(), null, 2));
         }
+        this.showAlert()
         await this.fetchItems()
       },
       onRowSelected(items) {
@@ -1260,7 +1280,6 @@
       },
       onSubmit(id, form) {
         this.$refs[id].hide();
-        debugger;
         const payload = {
           _id: form._id,
           name: form.name,
@@ -1283,8 +1302,10 @@
           comment: form.comment,
           last_check: form.last_check,
         }
+        this.showAlert()
         this.editItem(payload)
         this.fetchItems()
+
       },
     },
     watch:{

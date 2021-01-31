@@ -42,10 +42,15 @@
 <!--            Применить фильтры-->
 <!--          </b-button>-->
 <!--        </b-col>-->
-        <b-col>
-          <b-button variant="dark" @click="resetFilters">
-            Сбросить фильтры
-          </b-button>
+        <b-col cols="2">
+          <b-icon icon="arrow-counterclockwise"
+                  data-toggle="tooltip"
+                  class="mt-4"
+                  data-placement="top"
+                  title="Сбросить фильтры"
+                  font-scale="2"
+                  aria-hidden="false"
+                  @click="resetFilters"></b-icon>
         </b-col>
       </b-row>
     </b-container>
@@ -61,7 +66,7 @@
     props: ['employeeInitials'],
     data() {
       return {
-        otssCategories: [1, 2, 3, 'Не секретно', {text: '-', value: null}],
+        otssCategories: [],
         conditions: ['Исправно', 'Неисправно', {text: '-', value: null}],
         operation: ['Используется', 'Не используется', {text: '-', value: null}],
         filters: {
@@ -91,9 +96,14 @@
         }
       },
       async fetchOTSS() {
+        let categories = {}
         const response = await fetch('http://localhost:8000/api/v1/otss/')
-        this.otssCategories = await response.json()
-        this.otssCategories = this.otssCategories['otss']
+        categories = await response.json()
+        categories = categories['otss']
+        for(let key in categories){
+          this.otssCategories.push(categories[key]['category'])
+        }
+        this.otssCategories.push({text: '-', value: null})
       },
       resetFilters(){
         this.filters = {
@@ -105,7 +115,6 @@
         this.$parent.$data.fuseString = null
         bus.$emit('resetFilters', this.filters)
       },
-
     },
     watch:{
       fuseString: function (){

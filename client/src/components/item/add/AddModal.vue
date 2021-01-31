@@ -128,6 +128,7 @@
           last_check: this.itemForm.last_check,
         };
         this.createItem(payload);
+        this.$parent.showAlert()
         this.clearFrom()
       },
       isIntroduced(left, right) {
