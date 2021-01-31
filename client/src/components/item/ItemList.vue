@@ -807,6 +807,18 @@
                   data-placement="top">
           </b-icon>Успешно</p>
     </b-alert>
+    <b-alert
+      :show="dismissCountDownError"
+      dismissible
+      @dismissed="dismissCountDownError=0"
+      @dismiss-count-down="countDownChangedError">
+      <p><b-icon icon="x"
+                  variant="danger"
+                  font-scale="2"
+                  data-toggle="tooltip"
+                  data-placement="top">
+          </b-icon>Ошибка</p>
+    </b-alert>
   </div>
 </template>
 
@@ -835,6 +847,7 @@
     data() {
       return {
         dismissCountDown: 0,
+        dismissCountDownError: 0,
         otss: [1, 2, 3, 'Не секретно'],
         units: [],
         conditions: ['Исправно', 'Неисправно'],
@@ -1108,8 +1121,14 @@
       countDownChanged(dismissCountDown) {
         this.dismissCountDown = dismissCountDown
       },
+      countDownChangedError(dismissCountDown) {
+        this.dismissCountDownError = dismissCountDown
+      },
       showAlert() {
-        this.dismissCountDown = 10
+        this.dismissCountDown = 2
+      },
+      showErrorAlert() {
+        this.dismissCountDown = 2
       },
       showFullTable(){
         bus.$emit('fullTable')
@@ -1186,6 +1205,7 @@
             });
           if (response.status !== 204) {
             alert(JSON.stringify(await response.json(), null, 2));
+            this.showErrorAlert()
           }
           await this.fetchItems()
         }
@@ -1207,6 +1227,7 @@
         console.log(JSON.stringify(json));
         if (response.status !== 202) {
           alert(JSON.stringify(await response.json(), null, 2));
+          this.showErrorAlert()
         }
         this.showAlert()
         await this.fetchItems()

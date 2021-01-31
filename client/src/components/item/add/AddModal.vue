@@ -93,8 +93,10 @@
         /* eslint-disable */
         if (response.status !== 201) {
           alert(JSON.stringify(await response.json(), null, 2));
+          this.$parent.showErrorAlert()
         }
         bus.$emit('updateList')
+        this.$parent.showAlert()
       },
 
       onReset(evt) {
@@ -128,7 +130,6 @@
           last_check: this.itemForm.last_check,
         };
         this.createItem(payload);
-        this.$parent.showAlert()
         this.clearFrom()
       },
       isIntroduced(left, right) {
