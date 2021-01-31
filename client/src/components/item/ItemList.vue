@@ -88,6 +88,30 @@
              ref="filtersForList"
              :employee-initials="employeeInitials">
     </filters>
+    <b-alert
+      :show="dismissCountDown"
+      dismissible
+      @dismissed="dismissCountDown=0"
+      @dismiss-count-down="countDownChanged">
+      <p><b-icon icon="check2"
+                  variant="success"
+                  font-scale="2"
+                  data-toggle="tooltip"
+                  data-placement="top">
+          </b-icon>Успешно</p>
+    </b-alert>
+    <b-alert
+      :show="dismissCountDownError"
+      dismissible
+      @dismissed="dismissCountDownError=0"
+      @dismiss-count-down="countDownChangedError">
+      <p><b-icon icon="x"
+                  variant="danger"
+                  font-scale="2"
+                  data-toggle="tooltip"
+                  data-placement="top">
+          </b-icon>Ошибка</p>
+    </b-alert>
     <!--    sticky-header="850px"-->
 <!--    v-bind:sticky-header="sliderValue+'px'"-->
     <b-table class="mt-3"
@@ -795,30 +819,6 @@
                   :message="message"
                   :op="removeItems"
     ></confirm-form>
-    <b-alert
-      :show="dismissCountDown"
-      dismissible
-      @dismissed="dismissCountDown=0"
-      @dismiss-count-down="countDownChanged">
-      <p><b-icon icon="check2"
-                  variant="success"
-                  font-scale="2"
-                  data-toggle="tooltip"
-                  data-placement="top">
-          </b-icon>Успешно</p>
-    </b-alert>
-    <b-alert
-      :show="dismissCountDownError"
-      dismissible
-      @dismissed="dismissCountDownError=0"
-      @dismiss-count-down="countDownChangedError">
-      <p><b-icon icon="x"
-                  variant="danger"
-                  font-scale="2"
-                  data-toggle="tooltip"
-                  data-placement="top">
-          </b-icon>Ошибка</p>
-    </b-alert>
   </div>
 </template>
 
