@@ -116,6 +116,7 @@
 <!--    v-bind:sticky-header="sliderValue+'px'"-->
     <b-table class="mt-3"
              striped hover
+             bordered
              ref="selectableTable"
              selectable
              :sort-by.sync="sortBy"
