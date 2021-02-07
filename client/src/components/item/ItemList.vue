@@ -8,10 +8,10 @@
                     class="mt-3"
                     v-if="selected.length !== 0" v-b-modal.confirm-modal>
             <b-icon icon="trash"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  font-scale="1"
-                  aria-hidden="false"></b-icon>
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    font-scale="1"
+                    aria-hidden="false"></b-icon>
             Удалить
           </b-button>
         </b-col>
@@ -22,10 +22,10 @@
                     v-if="selected.length !== 0"
                     @click="sendToEditItems">
             <b-icon icon="pencil-square"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  font-scale="1"
-                  aria-hidden="false"></b-icon>
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    font-scale="1"
+                    aria-hidden="false"></b-icon>
             Редактровать
           </b-button>
         </b-col>
@@ -33,55 +33,74 @@
           <!--          variant="danger"-->
           <b-button class="mt-3" @click="selectAllRows">
             <b-icon icon="check2-all"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  font-scale="1"
-                  aria-hidden="false"></b-icon>
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    font-scale="1"
+                    aria-hidden="false"></b-icon>
             {{ selected.length === 0 ? 'Выбрать записи' : 'Снять отметку' }}
           </b-button>
         </b-col>
         <b-col>
+          <b-dropdown text="Поля таблицы"
+                      variant="light"
+                      class="mt-3"
+                      role="menu">
+            <b-dropdown-text class="text-nowrap">
+              <b-form-checkbox v-for="title in titles"
+                               style="text-align: left"
+                               v-model="title['show']"
+                               @click="title['show'] = !title['show']"
+                               :key="title['key']">
+                {{ title['key'] }}
+              </b-form-checkbox>
+            </b-dropdown-text>
+          </b-dropdown>
+        </b-col>
+        <b-col>
           <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>
             <b-icon icon="download"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  font-scale="1"
-                  aria-hidden="false"></b-icon>
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    font-scale="1"
+                    aria-hidden="false"></b-icon>
             Добавить запись
           </b-button>
         </b-col>
-        <b-col>
-          <b-button variant="light"
-                    class="mt-3"
-                    v-if="fields.length !== 22"
-                    @click="showFullTable">
-            <b-icon icon="arrows-angle-expand"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  font-scale="1"
-                  aria-hidden="false"></b-icon>
-            Полная таблица
-          </b-button>
-          <b-button variant="light"
-                    class="mt-3"
-                    v-else
-                    @click="showClippedTable">
-            <b-icon icon="arrows-angle-contract"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  font-scale="1"
-                  aria-hidden="false"></b-icon>
-            Неполная таблица
-          </b-button>
-        </b-col>
 <!--        <b-col>-->
-<!--          <vue-range-slider class="mt-3" ref="slider"-->
-<!--                            v-model="sliderValue"-->
-<!--                            @change="stickyHeaderHeightToString"-->
-<!--                            min="300"-->
-<!--                            max="1000"-->
-<!--          ></vue-range-slider>-->
+<!--          <div class="btn-group dropdown">-->
+<!--            <b-button variant="light"-->
+<!--                      class="mt-3"-->
+<!--                      v-if="fields.length !== 22"-->
+<!--                      @click="showFullTable">-->
+<!--              <b-icon icon="arrows-angle-expand"-->
+<!--                      data-toggle="tooltip"-->
+<!--                      data-placement="top"-->
+<!--                      font-scale="1"-->
+<!--                      aria-hidden="false"></b-icon>-->
+<!--              Полная таблица-->
+<!--            </b-button>-->
+
+<!--            <b-button variant="light"-->
+<!--                      class="mt-3"-->
+<!--                      v-else-->
+<!--                      @click="showClippedTable">-->
+<!--              <b-icon icon="arrows-angle-contract"-->
+<!--                      data-toggle="tooltip"-->
+<!--                      data-placement="top"-->
+<!--                      font-scale="1"-->
+<!--                      aria-hidden="false"></b-icon>-->
+<!--              Неполная таблица-->
+<!--            </b-button>-->
+<!--          </div>-->
 <!--        </b-col>-->
+        <!--        <b-col>-->
+        <!--          <vue-range-slider class="mt-3" ref="slider"-->
+        <!--                            v-model="sliderValue"-->
+        <!--                            @change="stickyHeaderHeightToString"-->
+        <!--                            min="300"-->
+        <!--                            max="1000"-->
+        <!--          ></vue-range-slider>-->
+        <!--        </b-col>-->
       </b-row>
     </b-container>
     <filters class="mt-3"
@@ -93,27 +112,33 @@
       dismissible
       @dismissed="dismissCountDown=0"
       @dismiss-count-down="countDownChanged">
-      <p><b-icon icon="check2"
-                  variant="success"
-                  font-scale="2"
-                  data-toggle="tooltip"
-                  data-placement="top">
-          </b-icon>Успешно</p>
+      <p>
+        <b-icon icon="check2"
+                variant="success"
+                font-scale="2"
+                data-toggle="tooltip"
+                data-placement="top">
+        </b-icon>
+        Успешно
+      </p>
     </b-alert>
     <b-alert
       :show="dismissCountDownError"
       dismissible
       @dismissed="dismissCountDownError=0"
       @dismiss-count-down="countDownChangedError">
-      <p><b-icon icon="x"
-                  variant="danger"
-                  font-scale="2"
-                  data-toggle="tooltip"
-                  data-placement="top">
-          </b-icon>Ошибка</p>
+      <p>
+        <b-icon icon="x"
+                variant="danger"
+                font-scale="2"
+                data-toggle="tooltip"
+                data-placement="top">
+        </b-icon>
+        Ошибка
+      </p>
     </b-alert>
     <!--    sticky-header="850px"-->
-<!--    v-bind:sticky-header="sliderValue+'px'"-->
+    <!--    v-bind:sticky-header="sliderValue+'px'"-->
     <b-table class="mt-3"
              striped hover
              bordered
@@ -128,6 +153,20 @@
              @row-selected="onRowSelected">
       <template #head()="scope">
         <div class="text-nowrap">
+          {{ scope.label }}
+          <b-icon icon="x"
+                  class="mt-1"
+                  variant="dark"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Скрыть колонку"
+                  font-scale="1.5"
+                  @click="hideColumn(scope.label)">
+          </b-icon>
+        </div>
+      </template>
+      <template #head(unit_from)="scope">
+        <div class="text-nowrap" title="Подразделение, откуда поступила мат. ценность">
           {{ scope.label }}
           <b-icon icon="x"
                   class="mt-1"
@@ -295,11 +334,11 @@
             <div class="container mt-3">
               <b-form-group label-for="form-select">
                 <b-form-select id="form-select"
-                              type="text"
-                              class="mt-3"
-                              :options="operation"
-                              v-model="editableRow.in_operation"
-                              :value="editableRow.in_operation">
+                               type="text"
+                               class="mt-3"
+                               :options="operation"
+                               v-model="editableRow.in_operation"
+                               :value="editableRow.in_operation">
                 </b-form-select>
               </b-form-group>
               <div class="mt-3">
@@ -328,11 +367,11 @@
             <div class="container mt-3">
               <b-form-group label-for="form-select">
                 <b-form-select id="form-select"
-                              type="text"
-                              class="mt-3"
-                              :options="operation"
-                              v-model="editableRow.in_operation"
-                              :value="editableRow.in_operation">
+                               type="text"
+                               class="mt-3"
+                               :options="operation"
+                               v-model="editableRow.in_operation"
+                               :value="editableRow.in_operation">
                 </b-form-select>
               </b-form-group>
               <div class="mt-3">
@@ -361,11 +400,11 @@
             <div class="container mt-3">
               <b-form-group label-for="form-select">
                 <b-form-select id="form-select"
-                              type="text"
-                              class="mt-3"
-                              :options="conditions"
-                              v-model="editableRow.condition"
-                              :value="editableRow.condition">
+                               type="text"
+                               class="mt-3"
+                               :options="conditions"
+                               v-model="editableRow.condition"
+                               :value="editableRow.condition">
                 </b-form-select>
               </b-form-group>
               <div class="mt-3">
@@ -397,8 +436,8 @@
                             :value="editableRow.unit_from">
               </b-form-input>
               <datalist id="unit_from-list">
-                  <option v-for="unit in units">{{ unit }}</option>
-                </datalist>
+                <option v-for="unit in units">{{ unit }}</option>
+              </datalist>
               <div class="mt-3">
                 <b-button variant="success" @click="onSubmit('unit_from', editableRow)">Изменить</b-button>
                 <b-button variant="danger" @click="onReset('unit_from')">Отмена</b-button>
@@ -484,10 +523,10 @@
           <b-form class="w-100">
             <div class="container mt-3">
               <b-form-textarea id="form-input"
-                            type="text"
-                            class="mt-3"
-                            v-model="editableRow.requisites"
-                            :value="editableRow.requisites">
+                               type="text"
+                               class="mt-3"
+                               v-model="editableRow.requisites"
+                               :value="editableRow.requisites">
               </b-form-textarea>
               <div class="mt-3">
                 <b-button variant="success"
@@ -586,10 +625,10 @@
           <b-form class="w-100">
             <div class="container mt-3">
               <b-form-textarea id="form-input"
-                            type="text"
-                            class="mt-3"
-                            v-model="editableRow.otss_requisites"
-                            :value="editableRow.otss_requisites">
+                               type="text"
+                               class="mt-3"
+                               v-model="editableRow.otss_requisites"
+                               :value="editableRow.otss_requisites">
               </b-form-textarea>
               <div class="mt-3">
                 <b-button variant="success"
@@ -618,10 +657,10 @@
           <b-form class="w-100">
             <div class="container mt-3">
               <b-form-textarea id="form-input"
-                            type="text"
-                            class="mt-3"
-                            v-model="editableRow.spsi_requisites"
-                            :value="editableRow.spsi_requisites">
+                               type="text"
+                               class="mt-3"
+                               v-model="editableRow.spsi_requisites"
+                               :value="editableRow.spsi_requisites">
               </b-form-textarea>
               <div class="mt-3">
                 <b-button variant="success"
@@ -650,10 +689,10 @@
           <b-form class="w-100">
             <div class="container mt-3">
               <b-form-textarea id="form-input"
-                            type=""
-                            class="mt-3"
-                            v-model="editableRow.spsi_requisites"
-                            :value="editableRow.spsi_requisites">
+                               type=""
+                               class="mt-3"
+                               v-model="editableRow.spsi_requisites"
+                               :value="editableRow.spsi_requisites">
               </b-form-textarea>
               <div class="mt-3">
                 <b-button variant="success"
@@ -682,10 +721,10 @@
           <b-form class="w-100">
             <div class="container mt-3">
               <b-form-textarea id="form-input"
-                            type="text"
-                            class="mt-3"
-                            v-model="editableRow.transfer_requisites"
-                            :value="editableRow.transfer_requisites">
+                               type="text"
+                               class="mt-3"
+                               v-model="editableRow.transfer_requisites"
+                               :value="editableRow.transfer_requisites">
               </b-form-textarea>
               <div class="mt-3">
                 <b-button variant="success"
@@ -714,10 +753,10 @@
           <b-form class="w-100">
             <div class="container mt-3">
               <b-form-textarea id="form-input"
-                            type="text"
-                            class="mt-3"
-                            v-model="editableRow['comment']"
-                            :value="editableRow['comment']">
+                               type="text"
+                               class="mt-3"
+                               v-model="editableRow['comment']"
+                               :value="editableRow['comment']">
               </b-form-textarea>
               <div class="mt-3">
                 <b-button variant="success"
@@ -746,14 +785,14 @@
           <b-form class="w-100">
             <div class="container mt-3">
               <b-form-datepicker
-              v-model="editableRow.date_of_receipt"
-              aria-controls="date_of_receipt-input"
-              today-button
-              reset-button
-              close-button
-              placeholder="Выберите дату"
-              :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
-            ></b-form-datepicker>
+                v-model="editableRow.date_of_receipt"
+                aria-controls="date_of_receipt-input"
+                today-button
+                reset-button
+                close-button
+                placeholder="Выберите дату"
+                :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
+              ></b-form-datepicker>
               <div class="mt-3">
                 <b-button variant="success"
                           @click="onSubmit('date_of_receipt', editableRow)">
@@ -781,14 +820,14 @@
           <b-form class="w-100">
             <div class="container mt-3">
               <b-form-datepicker
-              v-model="editableRow.transfer_date"
-              aria-controls="transfer_date-input"
-              today-button
-              reset-button
-              close-button
-              placeholder="Выберите дату"
-              :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
-            ></b-form-datepicker>
+                v-model="editableRow.transfer_date"
+                aria-controls="transfer_date-input"
+                today-button
+                reset-button
+                close-button
+                placeholder="Выберите дату"
+                :date-format-options="{ day: '2-digit', month: 'short', year: 'numeric'}"
+              ></b-form-datepicker>
               <div class="mt-3">
                 <b-button variant="success"
                           @click="onSubmit('transfer_date', editableRow)">
@@ -906,7 +945,8 @@
             key: "Состояние",
             show: true
           }, {
-            key: "Подразделение, откуда поступила мат. ценность",
+            // key: "Подразделение, откуда поступила мат. ценность",
+            key: "Откуда поступила",
             show: true
           }, {
             key: "Используется?",
@@ -943,7 +983,7 @@
             show: true
           },
           {
-            key: "Сотрудник, которому передали мат. ценность в пользование",
+            key: "Сотрудник, которому передали в пользование",
             show: false
           },
         ],
@@ -998,7 +1038,8 @@
             class: 'text-center'
           }, {
             key: "unit_from",
-            label: "Подразделение, откуда поступила мат. ценность",
+            // label: "Подразделение, откуда поступила мат. ценность",
+            label: "Откуда поступила",
             sortable: true,
             class: 'text-center'
           }, {
@@ -1059,7 +1100,7 @@
           },
           {
             key: "user",
-            label: "Сотрудник, которому передали мат. ценность в пользование",
+            label: "Сотрудник, которому передали в пользование",
             sortable: true,
             class: 'text-center'
           },
