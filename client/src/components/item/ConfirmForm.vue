@@ -4,6 +4,7 @@
              :id="dynamicId"
              :title="title"
              hide-footer
+             centered
              hide-header-close>
       <p>{{message}}</p>
       <b-button variant="success"
