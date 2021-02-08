@@ -24,6 +24,10 @@ from . import mongo
 class ItemView(APIView):
 
     def get(self, _):
+        """
+        :param _: Default to none.
+        :return: Item list. Response status 200.
+        """
         result = []
         collection = mongo.get_conn()['main_item']
         items = collection.find()
@@ -36,6 +40,11 @@ class ItemView(APIView):
         }, status=200)
 
     def post(self, request):
+        """
+        :param request: Request entity, contains request payload.
+        :return: Response message: "message": "Item '{}' created successfully.",
+                response status 201.
+        """
         collection = mongo.get_conn()['main_item']
         item = request.data
         item_id = collection.insert_one(item).inserted_id
@@ -43,6 +52,13 @@ class ItemView(APIView):
                         .format(item_id)}, status=201)
 
     def delete(self, request, pk):
+        """
+        :param request: Request entity, contains request payload.
+        :param pk: entity primary key.
+        :return: Response message: "message": "Item with id `{}` has been deleted.",
+                response status 204 if success, or "message": "Item with _id `{}` not found."
+                response status 404 otherwise.
+        """
         collection = mongo.get_conn()['main_item']
         if collection:
             collection.delete_one({"_id": ObjectId(pk)})
@@ -52,6 +68,13 @@ class ItemView(APIView):
             return Response({"message": "Item with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
+        """
+        :param request: Request entity, contains request payload.
+        :param pk: entity primary key.
+        :return: Response message: "message": "Item with id `{}` has been updated.",
+                response status 202 if success, or "message": "Item with _id `{}` not found."
+                response status 404 otherwise.
+        """
         updated_fields = request.data
         collection = mongo.get_conn()['main_item']
         if collection:
@@ -75,6 +98,10 @@ class ItemView(APIView):
 class EmployeeView(APIView):
 
     def get(self, _):
+        """
+            :param _: Default to none.
+            :return: Employee list. Response status 200.
+        """
         result = []
         collection = mongo.get_conn()['main_employee']
         employees = collection.find()
@@ -87,6 +114,11 @@ class EmployeeView(APIView):
         }, status=200)
 
     def post(self, request):
+        """
+            :param request: Request entity, contains request payload.
+            :return: Response message: "message": "Employee '{}' created successfully.",
+                    response status 201.
+        """
         collection = mongo.get_conn()['main_employee']
         employee = request.data
         employee_id = collection.insert_one(employee).inserted_id
@@ -94,6 +126,13 @@ class EmployeeView(APIView):
                         .format(employee_id)}, status=201)
 
     def delete(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "Employee with id `{}` has been deleted.",
+                    response status 204 if success, or "message": "Employee with _id `{}` not found."
+                    response status 404 otherwise.
+        """
         collection = mongo.get_conn()['main_employee']
         if collection:
             collection.delete_one({"_id": ObjectId(pk)})
@@ -103,6 +142,13 @@ class EmployeeView(APIView):
             return Response({"message": "Employee with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "Employee with id `{}` has been updated.",
+                    response status 202 if success, or "message": "Employee with _id `{}` not found."
+                    response status 404 otherwise.
+        """
         updated_fields = request.data
         collection = mongo.get_conn()['main_employee']
         if collection:
@@ -121,6 +167,10 @@ class EmployeeView(APIView):
 class OTSSView(APIView):
 
     def get(self, _):
+        """
+            :param _: Default to none.
+            :return: OTSS category list. Response status 200.
+        """
         result = []
         collection = mongo.get_conn()['main_otss']
         categories = collection.find()
@@ -133,6 +183,11 @@ class OTSSView(APIView):
         }, status=200)
 
     def post(self, request):
+        """
+            :param request: Request entity, contains request payload.
+            :return: Response message: "message": "OTSS category '{}' created successfully.",
+                    response status 201.
+        """
         collection = mongo.get_conn()['main_otss']
         category = request.data
         category_id = collection.insert_one(category).inserted_id
@@ -140,6 +195,13 @@ class OTSSView(APIView):
                         .format(category_id)}, status=201)
 
     def delete(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "OTSS category with id `{}` has been deleted.",
+                    response status 204 if success, or "message": "OTSS category with _id `{}` not found."
+                    response status 404 otherwise.
+        """
         collection = mongo.get_conn()['main_otss']
         if collection:
             collection.delete_one({"_id": ObjectId(pk)})
@@ -149,6 +211,13 @@ class OTSSView(APIView):
             return Response({"message": "OTSS category with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "OTSS category with id `{}` has been updated.",
+                    response status 202 if success, or "message": "OTSS category with _id `{}` not found."
+                    response status 404 otherwise.
+        """
         updated_fields = request.data
         collection = mongo.get_conn()['main_otss']
         if collection:
@@ -167,6 +236,10 @@ class OTSSView(APIView):
 class UnitView(APIView):
 
     def get(self, _):
+        """
+            :param _: Default to none.
+            :return: Unit list. Response status 200.
+        """
         result = []
         collection = mongo.get_conn()['main_unit']
         units = collection.find()
@@ -179,6 +252,11 @@ class UnitView(APIView):
         }, status=200)
 
     def post(self, request):
+        """
+            :param request: Request entity, contains request payload.
+            :return: Response message: "message": "Unit '{}' created successfully.",
+                    response status 201.
+        """
         collection = mongo.get_conn()['main_unit']
         unit = request.data
         unit_id = collection.insert_one(unit).inserted_id
@@ -186,6 +264,13 @@ class UnitView(APIView):
                         .format(unit_id)}, status=201)
 
     def delete(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "Unit with id `{}` has been deleted.",
+                    response status 204 if success, or "message": "Unit with _id `{}` not found."
+                    response status 404 otherwise.
+        """
         collection = mongo.get_conn()['main_unit']
         if collection:
             collection.delete_one({"_id": ObjectId(pk)})
@@ -195,6 +280,13 @@ class UnitView(APIView):
             return Response({"message": "Unit with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "Unit with id `{}` has been updated.",
+                    response status 202 if success, or "message": "Unit with _id `{}` not found."
+                    response status 404 otherwise.
+        """
         updated_fields = request.data
         collection = mongo.get_conn()['main_unit']
         if collection:
@@ -213,6 +305,10 @@ class UnitView(APIView):
 class TypeView(APIView):
 
     def get(self, _):
+        """
+            :param _: Default to none.
+            :return: Type list. Response status 200.
+        """
         result = []
         collection = mongo.get_conn()['main_type']
         types = collection.find()
@@ -225,6 +321,11 @@ class TypeView(APIView):
         }, status=200)
 
     def post(self, request):
+        """
+            :param request: Request entity, contains request payload.
+            :return: Response message: "message": "Type '{}' created successfully.",
+                    response status 201.
+        """
         collection = mongo.get_conn()['main_type']
         type = request.data
         type_id = collection.insert_one(type).inserted_id
@@ -232,6 +333,13 @@ class TypeView(APIView):
                         .format(type_id)}, status=201)
 
     def delete(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "Type with id `{}` has been deleted.",
+                    response status 204 if success, or "message": "Type with _id `{}` not found."
+                    response status 404 otherwise.
+        """
         collection = mongo.get_conn()['main_type']
         if collection:
             collection.delete_one({"_id": ObjectId(pk)})
@@ -241,6 +349,13 @@ class TypeView(APIView):
             return Response({"message": "Type with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "Type with id `{}` has been updated.",
+                    response status 202 if success, or "message": "Type with _id `{}` not found."
+                    response status 404 otherwise.
+        """
         updated_fields = request.data
         collection = mongo.get_conn()['main_type']
         if collection:
@@ -259,6 +374,10 @@ class TypeView(APIView):
 class CategoryView(APIView):
 
     def get(self, _):
+        """
+            :param _: Default to none.
+            :return: Type list. Response status 200.
+        """
         result = []
         collection = mongo.get_conn()['main_category']
         categories = collection.find()
@@ -271,6 +390,11 @@ class CategoryView(APIView):
         }, status=200)
 
     def post(self, request):
+        """
+            :param request: Request entity, contains request payload.
+            :return: Response message: "message": "Unit '{}' created successfully.",
+                    response status 201.
+        """
         collection = mongo.get_conn()['main_category']
         category = request.data
         category_id = collection.insert_one(category).inserted_id
@@ -278,6 +402,13 @@ class CategoryView(APIView):
                         .format(category_id)}, status=201)
 
     def delete(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "OTSS category with id `{}` has been deleted.",
+                    response status 204 if success, or "message": "OTSS category with _id `{}` not found."
+                    response status 404 otherwise.
+        """
         collection = mongo.get_conn()['main_category']
         if collection:
             collection.delete_one({"_id": ObjectId(pk)})
@@ -287,6 +418,13 @@ class CategoryView(APIView):
             return Response({"message": "Category with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "Type with id `{}` has been updated.",
+                    response status 202 if success, or "message": "Type with _id `{}` not found."
+                    response status 404 otherwise.
+        """
         updated_fields = request.data
         collection = mongo.get_conn()['main_category']
         if collection:
@@ -305,6 +443,10 @@ class CategoryView(APIView):
 class LocationView(APIView):
 
     def get(self, _):
+        """
+            :param _: Default to none.
+            :return: Location list. Response status 200.
+        """
         result = []
         collection = mongo.get_conn()['main_location']
         locations = collection.find()
@@ -317,6 +459,11 @@ class LocationView(APIView):
         }, status=200)
 
     def post(self, request):
+        """
+            :param request: Request entity, contains request payload.
+            :return: Response message: "message": "Location '{}' created successfully.",
+                    response status 201.
+        """
         collection = mongo.get_conn()['main_location']
         category = request.data
         category_id = collection.insert_one(category).inserted_id
@@ -324,6 +471,13 @@ class LocationView(APIView):
                         .format(category_id)}, status=201)
 
     def delete(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "OTSS category with id `{}` has been deleted.",
+                    response status 204 if success, or "message": "OTSS category with _id `{}` not found."
+                    response status 404 otherwise.
+        """
         collection = mongo.get_conn()['main_location']
         if collection:
             collection.delete_one({"_id": ObjectId(pk)})
@@ -333,6 +487,13 @@ class LocationView(APIView):
             return Response({"message": "Location with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "Type with id `{}` has been updated.",
+                    response status 202 if success, or "message": "Type with _id `{}` not found."
+                    response status 404 otherwise.
+        """
         updated_fields = request.data
         collection = mongo.get_conn()['main_location']
         if collection:
