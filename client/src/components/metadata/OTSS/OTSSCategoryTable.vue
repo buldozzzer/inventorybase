@@ -5,8 +5,8 @@
              ref="selectableTable"
              fixed
              sort-by="surname"
-             :items="units"
-             :fields="unitFields"
+             :items="otssCategories"
+             :fields="otssFields"
              small>
       <template #head(edit_remove)="scope">
         <div class="text-nowrap">Изменить/Удалить</div>
@@ -19,7 +19,7 @@
                   data-placement="top"
                   title="Редактировать"
                   font-scale="2"
-                  v-b-modal.edit-item-modal
+                  v-b-modal.otss-edit-modal
                   @click="edit(row.item)">
           </b-icon>
           <b-icon icon="trash"
@@ -28,7 +28,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Удалить"
-                  v-b-modal.confirm-modal
+                  v-b-modal.otss-confirm
                   @click="remove(row.item)">
           </b-icon>
         </div>
@@ -40,23 +40,23 @@
 <script>
 /* eslint-disable */
   export default {
-    name: "UnitTable",
-    props:['units', 'editUnit', 'selectToRemoveRecord'],
+    name: "OTSSCategoryTable",
+    props:['otssCategories', 'editOTSS', 'selectToRemoveRecord'],
     data(){
       return {
-        unitFields:[
+        otssFields:[
           {
             key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: 'unit', label: "Подразделние, откуда поступила мат. ценность", sortable: true, class: 'text-center'
+            key: 'category', label: "ОТСС категория", sortable: true, class: 'text-center'
           },
         ]
       }
     },
     methods:{
       edit(data){
-        this.editUnit(data)
+        this.editOTSS(data)
       },
       remove(data){
         this.selectToRemoveRecord(data)
@@ -65,6 +65,6 @@
   }
 </script>
 
-<style>
+<style scoped>
 
 </style>

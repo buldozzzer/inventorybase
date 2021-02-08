@@ -4,9 +4,9 @@
              striped hover
              ref="selectableTable"
              fixed
-             sort-by="surname"
-             :items="types"
-             :fields="typeFields"
+             sort-by="category"
+             :items="categories"
+             :fields="categoryFields"
              small>
       <template #head(edit_remove)="scope">
         <div class="text-nowrap">Изменить/Удалить</div>
@@ -19,7 +19,7 @@
                   data-placement="top"
                   title="Редактировать"
                   font-scale="2"
-                  v-b-modal.edit-item-modal
+                  v-b-modal.category-edit-modal
                   @click="edit(row.item)">
           </b-icon>
           <b-icon icon="trash"
@@ -28,7 +28,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Удалить"
-                  v-b-modal.confirm-modal
+                  v-b-modal.category-confirm
                   @click="remove(row.item)">
           </b-icon>
         </div>
@@ -40,23 +40,23 @@
 <script>
 /* eslint-disable */
   export default {
-    name: "TypeTable",
-    props:['types', 'editType', 'selectToRemoveRecord'],
+    name: "CategoryTable",
+    props:['categories', 'editCategory', 'selectToRemoveRecord'],
     data(){
       return {
-        typeFields:[
+        categoryFields:[
           {
             key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: 'type', label: "Тип составляющей", sortable: true, class: 'text-center'
+            key: 'category', label: "Категория", sortable: true, class: 'text-center'
           },
         ]
       }
     },
     methods:{
       edit(data){
-        this.editType(data)
+        this.editCategory(data)
       },
       remove(data){
         this.selectToRemoveRecord(data)

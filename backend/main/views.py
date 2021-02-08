@@ -1,7 +1,7 @@
 # Представления для работы через Djongo
 # from rest_framework.viewsets import ModelViewSet
 #
-# from .models import Item, Employee
+# from .models import Item, employee
 # from .serializers import EmployeeSerializer, ItemSerializer
 #
 #
@@ -11,7 +11,7 @@
 #
 #
 # class EmployeeViewSet(ModelViewSet):
-#     queryset = Employee.objects.all()
+#     queryset = employee.objects.all()
 #     serializer_class = EmployeeSerializer
 
 from bson import ObjectId
@@ -100,7 +100,7 @@ class EmployeeView(APIView):
     def get(self, _):
         """
             :param _: Default to none.
-            :return: Employee list. Response status 200.
+            :return: employee list. Response status 200.
         """
         result = []
         collection = mongo.get_conn()['main_employee']
@@ -116,37 +116,37 @@ class EmployeeView(APIView):
     def post(self, request):
         """
             :param request: Request entity, contains request payload.
-            :return: Response message: "message": "Employee '{}' created successfully.",
+            :return: Response message: "message": "employee '{}' created successfully.",
                     response status 201.
         """
         collection = mongo.get_conn()['main_employee']
         employee = request.data
         employee_id = collection.insert_one(employee).inserted_id
-        return Response({"message": "Employee with _id '{}' created successfully."
+        return Response({"message": "employee with _id '{}' created successfully."
                         .format(employee_id)}, status=201)
 
     def delete(self, request, pk):
         """
             :param request: Request entity, contains request payload.
             :param pk: entity primary key.
-            :return: Response message: "message": "Employee with id `{}` has been deleted.",
-                    response status 204 if success, or "message": "Employee with _id `{}` not found."
+            :return: Response message: "message": "employee with id `{}` has been deleted.",
+                    response status 204 if success, or "message": "employee with _id `{}` not found."
                     response status 404 otherwise.
         """
         collection = mongo.get_conn()['main_employee']
         if collection:
             collection.delete_one({"_id": ObjectId(pk)})
-            return Response({"message": "Employee with id `{}` has been deleted."
+            return Response({"message": "employee with id `{}` has been deleted."
                             .format(pk)}, status=204)
         else:
-            return Response({"message": "Employee with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "employee with _id `{}` not found.".format(pk)}, status=404)
 
     def put(self, request, pk):
         """
             :param request: Request entity, contains request payload.
             :param pk: entity primary key.
-            :return: Response message: "message": "Employee with id `{}` has been updated.",
-                    response status 202 if success, or "message": "Employee with _id `{}` not found."
+            :return: Response message: "message": "employee with id `{}` has been updated.",
+                    response status 202 if success, or "message": "employee with _id `{}` not found."
                     response status 404 otherwise.
         """
         updated_fields = request.data
@@ -158,10 +158,10 @@ class EmployeeView(APIView):
             }, {
                 '$set': updated_fields
             }, upsert=False)
-            return Response({"message": "Employee with id `{}` has been updated."
+            return Response({"message": "employee with id `{}` has been updated."
                             .format(pk)}, status=202)
         else:
-            return Response({"message": "Employee with _id `{}` not found.".format(pk)}, status=404)
+            return Response({"message": "employee with _id `{}` not found.".format(pk)}, status=404)
 
 
 class OTSSView(APIView):

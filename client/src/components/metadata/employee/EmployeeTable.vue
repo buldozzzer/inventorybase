@@ -4,9 +4,9 @@
              striped hover
              ref="selectableTable"
              fixed
-             sort-by="category"
-             :items="categories"
-             :fields="categoryFields"
+             sort-by="surname"
+             :items="employeeList"
+             :fields="employeeFields"
              small>
       <template #head(edit_remove)="scope">
         <div class="text-nowrap">Изменить/Удалить</div>
@@ -19,7 +19,7 @@
                   data-placement="top"
                   title="Редактировать"
                   font-scale="2"
-                  v-b-modal.edit-item-modal
+                  v-b-modal.employee-edit-modal
                   @click="edit(row.item)">
           </b-icon>
           <b-icon icon="trash"
@@ -28,7 +28,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Удалить"
-                  v-b-modal.confirm-modal
+                  v-b-modal.employee-confirm
                   @click="remove(row.item)">
           </b-icon>
         </div>
@@ -40,23 +40,29 @@
 <script>
 /* eslint-disable */
   export default {
-    name: "CategoryTable",
-    props:['categories', 'editCategory', 'selectToRemoveRecord'],
-    data(){
+    name: "EmployeeTable",
+    props: ['employeeList', 'editEmployee', 'selectToRemoveRecord'],
+    data() {
       return {
-        categoryFields:[
+        employeeFields: [
           {
             key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: 'category', label: "Категория", sortable: true, class: 'text-center'
+            key: "surname", label: "Фамилия", sortable: true, class: 'text-center'
           },
-        ]
+          {
+            key: "name", label: "Имя", sortable: true, class: 'text-center'
+          },
+          {
+            key: "secname", label: "Отчество", sortable: true, class: 'text-center'
+          },
+        ],
       }
     },
-    methods:{
+    methods: {
       edit(data){
-        this.editCategory(data)
+        this.editEmployee(data)
       },
       remove(data){
         this.selectToRemoveRecord(data)
@@ -65,6 +71,6 @@
   }
 </script>
 
-<style>
+<style scoped>
 
 </style>

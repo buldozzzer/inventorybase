@@ -5,8 +5,8 @@
              ref="selectableTable"
              fixed
              sort-by="surname"
-             :items="employeeList"
-             :fields="employeeFields"
+             :items="types"
+             :fields="typeFields"
              small>
       <template #head(edit_remove)="scope">
         <div class="text-nowrap">Изменить/Удалить</div>
@@ -19,7 +19,7 @@
                   data-placement="top"
                   title="Редактировать"
                   font-scale="2"
-                  v-b-modal.edit-item-modal
+                  v-b-modal.type-edit-modal
                   @click="edit(row.item)">
           </b-icon>
           <b-icon icon="trash"
@@ -28,7 +28,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Удалить"
-                  v-b-modal.confirm-modal
+                  v-b-modal.type-confirm
                   @click="remove(row.item)">
           </b-icon>
         </div>
@@ -40,29 +40,23 @@
 <script>
 /* eslint-disable */
   export default {
-    name: "EmployeeTable",
-    props: ['employeeList', 'editEmployee', 'selectToRemoveRecord'],
-    data() {
+    name: "TypeTable",
+    props:['types', 'editType', 'selectToRemoveRecord'],
+    data(){
       return {
-        employeeFields: [
+        typeFields:[
           {
             key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: "surname", label: "Фамилия", sortable: true, class: 'text-center'
+            key: 'type', label: "Тип составляющей", sortable: true, class: 'text-center'
           },
-          {
-            key: "name", label: "Имя", sortable: true, class: 'text-center'
-          },
-          {
-            key: "secname", label: "Отчество", sortable: true, class: 'text-center'
-          },
-        ],
+        ]
       }
     },
-    methods: {
+    methods:{
       edit(data){
-        this.editEmployee(data)
+        this.editType(data)
       },
       remove(data){
         this.selectToRemoveRecord(data)
@@ -71,6 +65,6 @@
   }
 </script>
 
-<style scoped>
+<style>
 
 </style>

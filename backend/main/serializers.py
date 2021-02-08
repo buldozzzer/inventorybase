@@ -1,6 +1,6 @@
 # from rest_framework import serializers
 #
-# from .models import Employee, Location, Component, Item
+# from .models import employee, Location, Component, Item
 #
 #
 # class LocationSerializer(serializers.Serializer):
@@ -40,7 +40,7 @@
 # class EmployeeSerializer(serializers.ModelSerializer):
 #
 #     class Meta:
-#         model = Employee
+#         model = employee
 #         read_only_fields = (
 #             'id',
 #         )

@@ -9,7 +9,12 @@
           <b-navbar-nav>
             <b-nav-item-dropdown text="Таблицы">
               <b-dropdown-item href="#/items">Мат. ценности</b-dropdown-item>
-              <b-dropdown-item href="#/metadata">Метаданные</b-dropdown-item>
+              <b-dropdown-item href="#/employees">Сотрудники</b-dropdown-item>
+              <b-dropdown-item href="#/categories">Категории</b-dropdown-item>
+              <b-dropdown-item href="#/otss">Катеогрии ОТСС</b-dropdown-item>
+              <b-dropdown-item href="#/locations">Местоположения</b-dropdown-item>
+              <b-dropdown-item href="#/units">Подразделения</b-dropdown-item>
+              <b-dropdown-item href="#/types">Типы</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>
 
