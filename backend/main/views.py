@@ -405,8 +405,8 @@ class CategoryView(APIView):
         """
             :param request: Request entity, contains request payload.
             :param pk: entity primary key.
-            :return: Response message: "message": "OTSS category with id `{}` has been deleted.",
-                    response status 204 if success, or "message": "OTSS category with _id `{}` not found."
+            :return: Response message: "message": "Type with id `{}` has been deleted.",
+                    response status 204 if success, or "message": "Type with _id `{}` not found."
                     response status 404 otherwise.
         """
         collection = mongo.get_conn()['main_category']
@@ -474,8 +474,8 @@ class LocationView(APIView):
         """
             :param request: Request entity, contains request payload.
             :param pk: entity primary key.
-            :return: Response message: "message": "OTSS category with id `{}` has been deleted.",
-                    response status 204 if success, or "message": "OTSS category with _id `{}` not found."
+            :return: Response message: "message": "Location with id `{}` has been deleted.",
+                    response status 204 if success, or "message": "Location with _id `{}` not found."
                     response status 404 otherwise.
         """
         collection = mongo.get_conn()['main_location']
@@ -490,8 +490,8 @@ class LocationView(APIView):
         """
             :param request: Request entity, contains request payload.
             :param pk: entity primary key.
-            :return: Response message: "message": "Type with id `{}` has been updated.",
-                    response status 202 if success, or "message": "Type with _id `{}` not found."
+            :return: Response message: "message": "Location with id `{}` has been updated.",
+                    response status 202 if success, or "message": "Location with _id `{}` not found."
                     response status 404 otherwise.
         """
         updated_fields = request.data
