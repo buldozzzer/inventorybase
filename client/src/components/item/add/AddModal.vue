@@ -19,18 +19,22 @@
           Отмена
         </b-button>
       </div>
-      <div class="container mt-3">
-        <div class="row">
-          <div class="col">
+      <b-container class="mt-3">
+        <b-row>
+          <b-col :cols="colsize">
             <form-template :itemForm="itemForm"
                            :employeeInitials="employeeInitials">
             </form-template>
-          </div>
-          <div class="col">
-            <component-list ref="componentList"/>
-          </div>
-        </div>
-      </div>
+          </b-col>
+          <b-col>
+            <b-button @click="showComponents = !showComponents">
+              {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
+            </b-button>
+            <component-list v-if="showComponents"
+                            ref="componentList"/>
+          </b-col>
+        </b-row>
+      </b-container>
     </b-form>
   </b-modal>
 </template>
@@ -76,8 +80,16 @@
           comment: '',
           last_check: null,
         },
+        showComponents: false
       }
-
+    },
+    computed:{
+      colsize: function(){
+        if(this.showComponents)
+          return 6
+        else
+          return 10
+      }
     },
     methods: {
       /* eslint-disable */
