@@ -46,6 +46,12 @@
                       class="mt-3"
                       role="menu">
             <b-dropdown-text class="text-nowrap">
+              <b-form-checkbox @change="showFullTable"
+                               style="text-align: left">
+                {{ full ? 'Неполная таблица' : 'Полная таблица' }}
+              </b-form-checkbox>
+            </b-dropdown-text>
+            <b-dropdown-text class="text-nowrap">
               <b-form-checkbox v-for="title in titles"
                                style="text-align: left"
                                v-model="title['show']"
@@ -896,6 +902,7 @@
         editableRow: '',
         dynamicId: "confirm-modal",
         noCollapse: false,
+        full: false,
         sortBy: 'name',
         componentFields: [
           'index',
@@ -1152,6 +1159,7 @@
           for (let i = 0; i < this.itemFields.length; i++) {
             showingFields.push(this.itemFields[i])
           }
+          debugger
           for(let i = 0; i < this.titles.length; i++){
             this.titles[i].show = true
           }
@@ -1173,10 +1181,14 @@
         this.dismissCountDown = 2
       },
       showFullTable(){
-        bus.$emit('fullTable')
-      },
-      showClippedTable(){
-        bus.$emit('clippedTable')
+        if (!this.full) {
+          bus.$emit('fullTable')
+          this.full = true
+        }
+        else {
+          bus.$emit('clippedTable')
+          this.full = false
+        }
       },
       hideColumn(key){
         for(let i = 0; i < this.titles.length; i++){
