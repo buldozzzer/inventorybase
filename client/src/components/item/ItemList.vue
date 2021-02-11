@@ -181,7 +181,7 @@
       </template>
 
       <template #head(selected)="scope">
-        <div>&nbsp;&nbsp;</div>
+        <div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
       </template>
       <template #head(index)="scope">
         <div>Номер</div>
@@ -603,7 +603,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Редактировать"
-                  font-scale="0.5"
+                  font-scale="1.5"
                   aria-hidden="false"></b-icon>
           <span class="sr-only">Selected</span>
         </template>

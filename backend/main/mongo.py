@@ -1,6 +1,6 @@
 import pymongo
 
-__db_conn: pymongo.database.Database = None
+__db_conn = None
 
 
 def set_conn(host: str, port: int, db_name: str) -> None:
