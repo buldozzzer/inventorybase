@@ -524,7 +524,7 @@ class ConditionView(APIView):
                 document['_id'] = str(document['_id'])
                 result.append(document)
         return Response({
-            'categories': result
+            'conditions': result
         }, status=200)
 
     def post(self, request):

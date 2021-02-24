@@ -1,7 +1,7 @@
 <template>
   <div>
-    <b-modal ref="categoryEditModal"
-             id="category-edit-modal"
+    <b-modal ref="conditionEditModal"
+             id="condition-edit-modal"
              title="Редактировать запись"
              no-close-on-backdrop
              hide-footer
@@ -18,17 +18,17 @@
         <div class="container mt-3">
           <div class="row">
             <div class="col">
-              <b-form-group id="form-category-group"
+              <b-form-group id="form-condition-group"
                             label="Категория:"
-                            label-for="form-category-input">
-                <b-form-input id="form-category-input"
+                            label-for="form-condition-input">
+                <b-form-input id="form-condition-input"
                               type="text"
                               class="mt-3"
-                              v-model="form.category"
-                              :value="form.category"
+                              v-model="form.condition"
+                              :value="form.condition"
                               required
-                              placeholder="Введите название категории"
-                              :state="check(form.category, '')">
+                              placeholder="Введите название состояния"
+                              :state="check(form.condition, '')">
                 </b-form-input>
               </b-form-group>
             </div>
@@ -44,18 +44,18 @@
   import {bus} from "../../../main";
 
   export default {
-    name: "CategoryEditModal",
+    name: "ConditionEditModal",
     data() {
       return {
         form:{
-          category: ''
+          condition: ''
         }
       }
     },
     methods:{
-      async editCategory(payload) {
+      async editCondition(payload) {
         const _id = payload['_id'];
-        const response = await fetch(`http://localhost:8000/api/v1/category/${_id}/`, {
+        const response = await fetch(`http://localhost:8000/api/v1/condition/${_id}/`, {
           method: 'PUT',
           body: JSON.stringify(payload),
           headers: {
@@ -72,13 +72,13 @@
       },
       onReset(evt) {
         evt.preventDefault()
-        this.$refs.categoryEditModal.hide()
+        this.$refs.conditionEditModal.hide()
       },
       onSubmit(evt) {
         evt.preventDefault();
-        this.$refs.categoryEditModal.hide();
+        this.$refs.conditionEditModal.hide();
         const payload = this.form
-        this.editCategory(payload)
+        this.editCondition(payload)
       },
       check(left, right){
         return left !== right

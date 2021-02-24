@@ -2,23 +2,23 @@
   <div>
     <b-container>
       <b-col class="mt-3">
-        <h3>Категории</h3>
+        <h3>Состояния</h3>
       </b-col>
       <b-col>
-        <b-button variant="success" class="mt-3" v-b-modal.category-add-modal>
-          Добавить категорию
+        <b-button variant="success" class="mt-3" v-b-modal.condition-add-modal>
+          Добавить состояние
         </b-button>
       </b-col>
-      <category-table :categories="categories"
-                      :edit-category="editCategories"
-                      :select-to-remove-record="selectToRemoveCategory"/>
+      <condition-table :conditions="conditions"
+                      :edit-condition="editConditions"
+                      :select-to-remove-record="selectToRemoveCondition"/>
     </b-container>
-    <category-add-modal/>
+    <condition-add-modal/>
     <confirm-form :payload="selected[0]"
-                  :dynamic-id="categoryConfirm"
-                  :message="categoryMessage"
-                  :op="removeCategory"/>
-    <category-edit-modal ref="categoryEdit"/>
+                  :dynamic-id="conditionConfirm"
+                  :message="conditionMessage"
+                  :op="removeCondition"/>
+    <condition-edit-modal ref="conditionEdit"/>
   </div>
 </template>
 
@@ -26,40 +26,40 @@
 /* eslint-disable */
   import {bus} from "../../../main";
   import ConfirmForm from "../../item/ConfirmForm";
-  import CategoryTable from "../category/CategoryTable";
-  import CategoryAddModal from "../category/CategoryAddModal";
-  import CategoryEditModal from "../category/CategoryEditModal";
+  import ConditionTable from "../condition/ConditionTable";
+  import ConditionAddModal from "../condition/ConditionAddModal";
+  import ConditionEditModal from "../condition/ConditionEditModal";
 
   export default {
-    name: 'CategoryPage',
+    name: 'ConditionPage',
     components: {
       ConfirmForm,
-      CategoryTable,
-      CategoryAddModal,
-      CategoryEditModal,
+      ConditionTable,
+      ConditionAddModal,
+      ConditionEditModal,
     },
     data() {
       return {
-        categoryMessage: 'Удалить категорию из базы?',
-        categoryConfirm: 'category-confirm',
-        categories: [],
+        conditionMessage: 'Удалить состояние из базы?',
+        conditionConfirm: 'condition-confirm',
+        conditions: [],
         selected: []
       };
     },
     methods: {
-      async selectToRemoveCategory(data) {
+      async selectToRemoveCondition(data) {
         this.selected.push(data)
       },
 
-      async fetchCategories() {
-        const response = await fetch('http://localhost:8000/api/v1/category/')
-        this.categories = await response.json()
-        this.categories = this.categories['categories']
+      async fetchConditions() {
+        const response = await fetch('http://localhost:8000/api/v1/condition/')
+        this.conditions = await response.json()
+        this.conditions = this.conditions['conditions']
         this.selected = []
       },
-      async removeCategory(unit) {
+      async removeCondition(unit) {
         const _id = unit['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/category/${_id}/`, {
+        const response = await fetch(`http://localhost:8000/api/v1/condition/${_id}/`, {
           method: 'DELETE',
           headers: {
             'Accept': 'application/json',
@@ -69,17 +69,17 @@
         if (response.status !== 204) {
           alert(JSON.stringify(await response.json(), null, 2));
         }
-        await this.fetchCategories()
+        await this.fetchConditions()
       },
-      editCategories(item) {
-        this.$refs.categoryEdit.form = item
+      editConditions(item) {
+        this.$refs.conditionEdit.form = item
       },
     },
     async created() {
-      await this.fetchCategories()
+      await this.fetchConditions()
 
       await bus.$on('newData', () => {
-        this.fetchCategories()
+        this.fetchConditions()
       })
     },
   };

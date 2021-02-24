@@ -4,9 +4,9 @@
              striped hover
              ref="selectableTable"
              fixed
-             sort-by="category"
-             :items="categories"
-             :fields="categoryFields"
+             sort-by="condition"
+             :items="conditions"
+             :fields="conditionFields"
              small>
       <template #head(edit_remove)="scope">
         <div class="text-nowrap">Изменить/Удалить</div>
@@ -19,7 +19,7 @@
                   data-placement="top"
                   title="Редактировать"
                   font-scale="2"
-                  v-b-modal.category-edit-modal
+                  v-b-modal.condition-edit-modal
                   @click="edit(row.item)">
           </b-icon>
           <b-icon icon="trash"
@@ -28,7 +28,7 @@
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Удалить"
-                  v-b-modal.category-confirm
+                  v-b-modal.condition-confirm
                   @click="remove(row.item)">
           </b-icon>
         </div>
@@ -40,23 +40,23 @@
 <script>
 /* eslint-disable */
   export default {
-    name: "CategoryTable",
-    props:['categories', 'editCategory', 'selectToRemoveRecord'],
+    name: "ConditionTable",
+    props:['conditions', 'editCondition', 'selectToRemoveRecord'],
     data(){
       return {
-        categoryFields:[
+        conditionFields:[
           {
             key: "edit_remove", isRowHeader: true, class: 'text-center'
           },
           {
-            key: 'category', label: "Категория", sortable: true, class: 'text-center'
+            key: 'condition', label: "Категория", sortable: true, class: 'text-center'
           },
         ]
       }
     },
     methods:{
       edit(data){
-        this.editCategory(data)
+        this.editCondition(data)
       },
       remove(data){
         this.selectToRemoveRecord(data)

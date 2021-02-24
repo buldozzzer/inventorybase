@@ -10,6 +10,7 @@ import UnitPage from "../components/metadata/unit/UnitPage";
 import CategoryPage from "../components/metadata/category/CategoryPage";
 import LocationPage from "../components/metadata/location/LocationPage";
 import TypePage from "../components/metadata/type/TypePage";
+import ConditionPage from "../components/metadata/condition/ConditionPage";
 
 Vue.use(Router);
 
@@ -59,6 +60,11 @@ export default new Router({
       path: '/types',
       name: 'TypeList',
       component: TypePage,
+    },
+    {
+      path: '/conditions',
+      name: 'ConditionList',
+      component: ConditionPage,
     },
   ],
 });

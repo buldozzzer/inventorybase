@@ -19,7 +19,7 @@
           <div class="row">
             <div class="col">
               <b-form-group id="form-condition-group"
-                            label="Категория:"
+                            label="Состоние:"
                             label-for="form-condition-input">
                 <b-form-input id="form-condition-input"
                               type="text"
@@ -27,7 +27,7 @@
                               v-model="form.condition"
                               :value="form.condition"
                               required
-                              placeholder="Введите название категории"
+                              placeholder="Введите название состояния"
                               :state="check(form.condition, '')">
                 </b-form-input>
               </b-form-group>
@@ -74,6 +74,7 @@
       },
       onSubmit(evt) {
         evt.preventDefault();
+        debugger
         this.$refs.conditionAddModal.hide();
         this.createCondition();
         this.initForm()
