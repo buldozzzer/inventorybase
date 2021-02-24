@@ -198,7 +198,7 @@
 
       <template #cell(name)="row">
         <div @dblclick="showFieldFromModal('name'), editableRow=row.item">
-          {{ row.item.name ? row.item.name : '&nbsp' }}
+          <p>{{ row.item.name ? row.item.name : '&nbsp' }}</p>
         </div>
         <b-modal ref="name" centered
                  title="Измените значение поля"
@@ -260,7 +260,7 @@
       <template #cell(user)="row">
         <div @dblclick="showFieldFromModal('user'), editableRow=row.item"
              class="text-nowrap">
-          {{ row.item.user ? row.item.user : '&nbsp' }}
+          <p>{{ row.item.user ? row.item.user : '&nbsp' }}</p>
         </div>
         <b-modal ref="user"
                  centered
@@ -296,7 +296,7 @@
       <template #cell(inventory_n)="row">
         <div @dblclick="showFieldFromModal('inventory_n'), editableRow=row.item"
              class="text-nowrap">
-          {{ row.item.inventory_n ? row.item.inventory_n : '&nbsp' }}
+          <p>{{ row.item.inventory_n ? row.item.inventory_n : '&nbsp' }}</p>
         </div>
         <b-modal ref="inventory_n"
                  centered
@@ -328,7 +328,7 @@
       <template #cell(in_operation)="row">
         <div @dblclick="showFieldFromModal('in_operation'), editableRow=row.item"
              class="text-nowrap">
-          {{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}
+          <p>{{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}</p>
         </div>
         <b-modal ref="in_operation"
                  centered
@@ -361,7 +361,7 @@
       <template #cell(in_operation)="row">
         <div @dblclick="showFieldFromModal('in_operation'), editableRow=row.item"
              class="text-nowrap">
-          {{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}
+          <p>{{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}</p>
         </div>
         <b-modal ref="in_operation"
                  centered
@@ -394,7 +394,7 @@
       <template #cell(condition)="row">
         <div @dblclick="showFieldFromModal('condition'), editableRow=row.item"
              class="text-nowrap">
-          {{ row.item.condition ? row.item.condition : '&nbsp' }}
+          <p>{{ row.item.condition ? row.item.condition : '&nbsp' }}</p>
         </div>
         <b-modal ref="condition"
                  centered
@@ -426,7 +426,7 @@
 
       <template #cell(unit_from)="row">
         <div @dblclick="showFieldFromModal('unit_from'), editableRow=row.item">
-          {{ row.item.unit_from ? row.item.unit_from : '&nbsp' }}
+          <p>{{ row.item.unit_from ? row.item.unit_from : '&nbsp' }}</p>
         </div>
         <b-modal ref="unit_from" centered
                  title="Измените значение поля"
@@ -455,7 +455,7 @@
 
       <template #cell(fault_document_requisites)="row">
         <div @dblclick="showFieldFromModal('fault_document_requisites'), editableRow=row.item">
-          {{ row.item.fault_document_requisites ? row.item.fault_document_requisites : '&nbsp' }}
+          <p>{{ row.item.fault_document_requisites ? row.item.fault_document_requisites : '&nbsp' }}</p>
         </div>
         <b-modal ref="fault_document_requisites"
                  centered
@@ -487,7 +487,7 @@
 
       <template #cell(number_of_receipt)="row">
         <div @dblclick="showFieldFromModal('number_of_receipt'), editableRow=row.item">
-          {{ row.item.number_of_receipt ? row.item.number_of_receipt : '&nbsp' }}
+          <p>{{ row.item.number_of_receipt ? row.item.number_of_receipt : '&nbsp' }}</p>
         </div>
         <b-modal ref="number_of_receipt"
                  centered
@@ -519,7 +519,7 @@
 
       <template #cell(requisites)="row">
         <div @dblclick="showFieldFromModal('requisites'), editableRow=row.item">
-          {{ row.item.requisites ? row.item.requisites : '&nbsp' }}
+          <p>{{ row.item.requisites ? row.item.requisites : '&nbsp' }}</p>
         </div>
         <b-modal ref="requisites"
                  centered
@@ -621,7 +621,7 @@
 
       <template #cell(otss_requisites)="row">
         <div @dblclick="showFieldFromModal('otss_requisites'), editableRow=row.item">
-          {{ row.item.otss_requisites ? row.item.otss_requisites : '&nbsp' }}
+          <p>{{ row.item.otss_requisites ? row.item.otss_requisites : '&nbsp' }}</p>
         </div>
         <b-modal ref="otss_requisites"
                  centered
@@ -653,7 +653,7 @@
 
       <template #cell(spsi_requisites)="row">
         <div @dblclick="showFieldFromModal('spsi_requisites'), editableRow=row.item">
-          {{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}
+          <p>{{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}</p>
         </div>
         <b-modal ref="spsi_requisites"
                  centered
@@ -685,7 +685,7 @@
 
       <template #cell(spsi_requisites)="row">
         <div @dblclick="showFieldFromModal('spsi_requisites'), editableRow=row.item">
-          {{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}
+          <p>{{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}</p>
         </div>
         <b-modal ref="spsi_requisites"
                  centered
@@ -717,7 +717,7 @@
 
       <template #cell(transfer_requisites)="row">
         <div @dblclick="showFieldFromModal('transfer_requisites'), editableRow=row.item">
-          {{ row.item.transfer_requisites ? row.item.transfer_requisites : '&nbsp' }}
+          <p>{{ row.item.transfer_requisites ? row.item.transfer_requisites : '&nbsp' }}</p>
         </div>
         <b-modal ref="transfer_requisites"
                  centered
@@ -749,7 +749,7 @@
 
       <template #cell(comment)="row">
         <div @dblclick="showFieldFromModal('comment'), editableRow=row.item">
-          {{ row.item['comment'] ? row.item['comment'] : '&nbsp' }}
+          <p>{{ row.item['comment'] ? row.item['comment'] : '&nbsp' }}</p>
         </div>
         <b-modal ref="comment"
                  centered
@@ -781,7 +781,7 @@
 
       <template #cell(date_of_receipt)="row">
         <div @dblclick="showFieldFromModal('date_of_receipt'), editableRow=row.item">
-          {{ row.item.date_of_receipt ? row.item.date_of_receipt : '&nbsp' }}
+          <p>{{ row.item.date_of_receipt ? row.item.date_of_receipt : '&nbsp' }}</p>
         </div>
         <b-modal ref="date_of_receipt"
                  centered
@@ -816,7 +816,7 @@
 
       <template #cell(transfer_date)="row">
         <div @dblclick="showFieldFromModal('transfer_date'), editableRow=row.item">
-          {{ row.item.transfer_date ? row.item.transfer_date : '&nbsp' }}
+          <p>{{ row.item.transfer_date ? row.item.transfer_date : '&nbsp' }}</p>
         </div>
         <b-modal ref="transfer_date"
                  centered
@@ -851,7 +851,7 @@
 
       <template #cell(last_check)="row">
         <div @dblclick="editableRow=row.item, getCurrentDate(editableRow)">
-          {{ row.item.last_check ? row.item.last_check : '&nbsp' }}
+          <p>{{ row.item.last_check ? row.item.last_check : '&nbsp' }}</p>
         </div>
       </template>
 
@@ -1406,4 +1406,15 @@
 </script>
 
 <style>
+  td {
+    max-width: 250px;
+
+  }
+  table {
+    white-space: nowrap;
+  }
+  p {
+    text-overflow: ellipsis;
+    overflow: auto;
+  }
 </style>
