@@ -14,6 +14,7 @@
               <b-dropdown-item href="#/otss">Катеогрии ОТСС</b-dropdown-item>
               <b-dropdown-item href="#/locations">Местоположения</b-dropdown-item>
               <b-dropdown-item href="#/units">Подразделения</b-dropdown-item>
+              <b-dropdown-item href="#/conditions">Состояния</b-dropdown-item>
               <b-dropdown-item href="#/types">Типы</b-dropdown-item>
             </b-nav-item-dropdown>
           </b-navbar-nav>

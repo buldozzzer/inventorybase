@@ -376,7 +376,7 @@ class CategoryView(APIView):
     def get(self, _):
         """
             :param _: Default to none.
-            :return: Type list. Response status 200.
+            :return: Category list. Response status 200.
         """
         result = []
         collection = mongo.get_conn()['main_category']
@@ -392,7 +392,7 @@ class CategoryView(APIView):
     def post(self, request):
         """
             :param request: Request entity, contains request payload.
-            :return: Response message: "message": "Unit '{}' created successfully.",
+            :return: Response message: "message": "Category '{}' created successfully.",
                     response status 201.
         """
         collection = mongo.get_conn()['main_category']
@@ -405,8 +405,8 @@ class CategoryView(APIView):
         """
             :param request: Request entity, contains request payload.
             :param pk: entity primary key.
-            :return: Response message: "message": "Type with id `{}` has been deleted.",
-                    response status 204 if success, or "message": "Type with _id `{}` not found."
+            :return: Response message: "message": "Category with id `{}` has been deleted.",
+                    response status 204 if success, or "message": "Category with _id `{}` not found."
                     response status 404 otherwise.
         """
         collection = mongo.get_conn()['main_category']
@@ -421,8 +421,8 @@ class CategoryView(APIView):
         """
             :param request: Request entity, contains request payload.
             :param pk: entity primary key.
-            :return: Response message: "message": "Type with id `{}` has been updated.",
-                    response status 202 if success, or "message": "Type with _id `{}` not found."
+            :return: Response message: "message": "Category with id `{}` has been updated.",
+                    response status 202 if success, or "message": "Category with _id `{}` not found."
                     response status 404 otherwise.
         """
         updated_fields = request.data
@@ -465,10 +465,10 @@ class LocationView(APIView):
                     response status 201.
         """
         collection = mongo.get_conn()['main_location']
-        category = request.data
-        category_id = collection.insert_one(category).inserted_id
+        location = request.data
+        location_id = collection.insert_one(location).inserted_id
         return Response({"message": "Location with _id '{}' created successfully."
-                        .format(category_id)}, status=201)
+                        .format(location_id)}, status=201)
 
     def delete(self, request, pk):
         """
@@ -507,3 +507,72 @@ class LocationView(APIView):
                             .format(pk)}, status=202)
         else:
             return Response({"message": "Location with _id `{}` not found.".format(pk)}, status=404)
+
+
+class ConditionView(APIView):
+
+    def get(self, _):
+        """
+            :param _: Default to none.
+            :return: Condition list. Response status 200.
+        """
+        result = []
+        collection = mongo.get_conn()['main_condition']
+        conditions = collection.find()
+        if collection:
+            for document in conditions:
+                document['_id'] = str(document['_id'])
+                result.append(document)
+        return Response({
+            'categories': result
+        }, status=200)
+
+    def post(self, request):
+        """
+            :param request: Request entity, contains request payload.
+            :return: Response message: "message": "Condition '{}' created successfully.",
+                    response status 201.
+        """
+        collection = mongo.get_conn()['main_condition']
+        condition = request.data
+        condition_id = collection.insert_one(condition).inserted_id
+        return Response({"message": "Condition with _id '{}' created successfully."
+                        .format(condition_id)}, status=201)
+
+    def delete(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "Condition with id `{}` has been deleted.",
+                    response status 204 if success, or "message": "Condition with _id `{}` not found."
+                    response status 404 otherwise.
+        """
+        collection = mongo.get_conn()['main_condition']
+        if collection:
+            collection.delete_one({"_id": ObjectId(pk)})
+            return Response({"message": "Category with id `{}` has been deleted."
+                            .format(pk)}, status=204)
+        else:
+            return Response({"message": "Category with _id `{}` not found.".format(pk)}, status=404)
+
+    def put(self, request, pk):
+        """
+            :param request: Request entity, contains request payload.
+            :param pk: entity primary key.
+            :return: Response message: "message": "Condition with id `{}` has been updated.",
+                    response status 202 if success, or "message": "Condition with _id `{}` not found."
+                    response status 404 otherwise.
+        """
+        updated_fields = request.data
+        condition = mongo.get_conn()['main_condition']
+        if condition:
+            updated_fields.pop("_id")
+            condition.update_one({
+                '_id': ObjectId(pk)
+            }, {
+                '$set': updated_fields
+            }, upsert=False)
+            return Response({"message": "Condition with id `{}` has been updated."
+                            .format(pk)}, status=202)
+        else:
+            return Response({"message": "Condition with _id `{}` not found.".format(pk)}, status=404)

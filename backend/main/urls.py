@@ -36,5 +36,8 @@ urlpatterns = [
     path('category/<pk>/', views.CategoryView.as_view(), name='edit_category'),
 
     path('location/', views.LocationView.as_view(), name='get_category'),
-    path('location/<pk>/', views.LocationView.as_view(), name='edit_category')
+    path('location/<pk>/', views.LocationView.as_view(), name='edit_category'),
+
+    path('condition/', views.ConditionView.as_view(), name='get_condition'),
+    path('condition/<pk>/', views.ConditionView.as_view(), name='edit_condition')
 ]
