@@ -41,9 +41,10 @@
 <!--          <b-button variant="dark" @click="changeString">-->
 <!--            Применить фильтры-->
 <!--          </b-button>-->
-<!--        </b-col>-->
-        <b-col cols="2">
+        <!--        </b-col>-->
+        <b-col align="center">
           <b-icon icon="arrow-counterclockwise"
+                  type="button"
                   data-toggle="tooltip"
                   class="mt-4"
                   data-placement="top"
