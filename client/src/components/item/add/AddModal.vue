@@ -119,7 +119,9 @@
       onSubmit(evt) {
         evt.preventDefault();
         this.$refs.addItemModal.hide();
-        this.itemForm.components = this.$refs.componentList.createComponentList()
+        if(this.showComponents) {
+          this.itemForm.components = this.$refs.componentList.createComponentList()
+        }
         const payload = {
           name: this.itemForm.name,
           user: this.itemForm.user,
