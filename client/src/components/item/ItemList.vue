@@ -158,7 +158,7 @@
              :filter="filters"
              @row-selected="onRowSelected">
       <template #head()="scope">
-        <div class="text-nowrap">
+        <div class="text-nowrap" :title="scope.label">
           {{ scope.label }}
           <b-icon icon="x"
                   class="mt-1"
@@ -173,6 +173,21 @@
       </template>
       <template #head(unit_from)="scope">
         <div class="text-nowrap" title="Подразделение, откуда поступила мат. ценность">
+          {{ scope.label }}
+          <b-icon icon="x"
+                  class="mt-1"
+                  variant="dark"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  title="Скрыть колонку"
+                  font-scale="1.5"
+                  @click="hideColumn(scope.label)">
+          </b-icon>
+        </div>
+      </template>
+
+      <template #head(transfer_requisites)="scope">
+        <div class="text-nowrap" title="Реквизиты о передаче во временное пользование">
           {{ scope.label }}
           <b-icon icon="x"
                   class="mt-1"
@@ -980,7 +995,7 @@
             key: "Реквизиты документа о прохождении СПСИ",
             show: false
           }, {
-            key: "Реквизиты о передаче во временное пользование",
+            key: "Реквизиты о передаче в пользование",
             show: true
           }, {
             key: "Дата последней проверки",
@@ -1091,7 +1106,7 @@
             class: 'text-center'
           }, {
             key: "transfer_requisites",
-            label: "Реквизиты о передаче во временное пользование",
+            label: "Реквизиты о передаче в пользование",
             sortable: true,
             class: 'text-center'
           }, {
