@@ -68,8 +68,9 @@
     data() {
       return {
         otssCategories: [],
-        conditions: ['Исправно', 'Неисправно', {text: '-', value: null}],
+        conditions: [],
         operation: ['Используется', 'Не используется', {text: '-', value: null}],
+        units: [],
         filters: {
           responsible: null,
           otss_category: null,
@@ -106,6 +107,16 @@
         }
         this.otssCategories.push({text: '-', value: null})
       },
+      async fetchConditions() {
+        let tempArr = []
+        const response = await fetch('http://localhost:8000/api/v1/condition/')
+        tempArr = await response.json()
+        tempArr = tempArr['conditions']
+        for (let i = 0; i < tempArr.length; ++i){
+          this.conditions.push(tempArr[i]['condition'])
+        }
+        this.conditions.push({text: '-', value: null})
+      },
       resetFilters(){
         this.filters = {
           responsible: null,
@@ -116,6 +127,15 @@
         this.$parent.$data.fuseString = null
         bus.$emit('resetFilters', this.filters)
       },
+      async fetchUnits() {
+        let tempArr = []
+        const response = await fetch('http://localhost:8000/api/v1/unit/')
+        tempArr = await response.json()
+        tempArr = tempArr['units']
+        for (let i = 0; i < tempArr.length; ++i){
+          this.units.push(tempArr[i]['unit'])
+        }
+      }
     },
     watch:{
       fuseString: function (){
@@ -126,6 +146,7 @@
     async created(){
       await this.createEmployeeList()
       await this.fetchOTSS()
+      await this.fetchConditions()
     }
   }
 </script>
