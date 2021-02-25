@@ -27,6 +27,7 @@
                               v-model="form.type"
                               :value="form.type"
                               required
+                              autofocus
                               placeholder="Введите тип составляющей"
                               :state="check(form.type, '')">
                 </b-form-input>

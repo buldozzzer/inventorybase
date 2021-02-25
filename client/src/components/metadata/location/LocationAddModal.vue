@@ -27,6 +27,7 @@
                               v-model="form.object"
                               :value="form.object"
                               required
+                              autofocus
                               placeholder="Введите название объекта"
                               :state="check(form.object, '')">
                 </b-form-input>

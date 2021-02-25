@@ -55,10 +55,6 @@
     },
     data() {
       return {
-        otssCategories: [1, 2, 3, 'Не секретно'],
-        conditions: ['Исправно', 'Неисправно'],
-        operation: ['Используется', 'Не используется'],
-        employeeList: [],
         itemForm: {
           name: '',
           user: '',
@@ -119,7 +115,7 @@
       onSubmit(evt) {
         evt.preventDefault();
         this.$refs.addItemModal.hide();
-        if(this.showComponents) {
+        if (this.showComponents) {
           this.itemForm.components = this.$refs.componentList.createComponentList()
         }
         const payload = {
@@ -149,11 +145,11 @@
       isIntroduced(left, right) {
         return left !== right
       },
-      sendForm(){
+      sendForm() {
         this.itemForm['components'] = this.$refs.componentList.createComponentList()
         this.$parent.$parent.$data.dataForChildren = this.itemForm
       },
-      clearFrom(){
+      clearFrom() {
         this.itemForm = {
           name: '',
           user: '',
@@ -176,7 +172,7 @@
           last_check: null,
         }
       }
-    },
+    }
   }
 </script>
 

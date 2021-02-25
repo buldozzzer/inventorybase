@@ -7,6 +7,7 @@
                       label="Наименование:"
                       label-for="form-name-input">
           <b-form-input id="form-name-input"
+                        autofocus
                         type="text"
                         v-model="itemForm.name"
                         :value="itemForm.name"
@@ -85,12 +86,17 @@
                       label="Подразделение, откуда поступило:"
                       label-for="form-unit_from-input">
           <b-form-input id="form-unit_from-input"
-                        type="text"
+                        list="unit-list"
                         v-model="itemForm.unit_from">
 <!--                        :state="isIntroduced(itemForm.unit_from, '')"-->
 <!--                        required>-->
           </b-form-input>
+          <datalist id="unit-list">
+            <option>---------</option>
+            <option v-for="unit in units">{{ unit }}</option>
+          </datalist>
         </b-form-group>
+
       </b-col>
 
       <b-col cols="6">
@@ -288,16 +294,48 @@
     props: ['itemForm', 'employeeInitials'],
     data(){
       return {
-        otssCategories: [1, 2, 3, 'Не секретно'],
-        conditions: ['Исправно', 'Неисправно'],
+        otssCategories: [],
+        conditions: [],
         operation: ['Используется', 'Не используется'],
-
+        units: []
       }
     },
     methods:{
       isIntroduced(left, right) {
         return left !== right
       },
+      async fetchOTSS() {
+        let tempArr = []
+        const response = await fetch('http://localhost:8000/api/v1/otss/')
+        tempArr = await response.json()
+        tempArr = tempArr['otss']
+        for (let i = 0; i < tempArr.length; ++i){
+          this.otssCategories.push(tempArr[i]['category'])
+        }
+      },
+      async fetchConditions() {
+        let tempArr = []
+        const response = await fetch('http://localhost:8000/api/v1/condition/')
+        tempArr = await response.json()
+        tempArr = tempArr['conditions']
+        for (let i = 0; i < tempArr.length; ++i){
+          this.conditions.push(tempArr[i]['condition'])
+        }
+      },
+      async fetchUnits() {
+        let tempArr = []
+        const response = await fetch('http://localhost:8000/api/v1/unit/')
+        tempArr = await response.json()
+        tempArr = tempArr['units']
+        for (let i = 0; i < tempArr.length; ++i){
+          this.units.push(tempArr[i]['unit'])
+        }
+      }
+    },
+    async created(){
+      await this.fetchUnits()
+      await this.fetchOTSS()
+      await this.fetchConditions()
     }
   }
 </script>

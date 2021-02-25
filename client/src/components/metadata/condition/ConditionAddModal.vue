@@ -24,6 +24,7 @@
                 <b-form-input id="form-condition-input"
                               type="text"
                               class="mt-3"
+                              autofocus
                               v-model="form.condition"
                               :value="form.condition"
                               required
@@ -74,7 +75,6 @@
       },
       onSubmit(evt) {
         evt.preventDefault();
-        debugger
         this.$refs.conditionAddModal.hide();
         this.createCondition();
         this.initForm()

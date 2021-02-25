@@ -24,6 +24,7 @@
                 <b-form-input id="form-surname-input"
                               type="text"
                               class="mt-3"
+                              autofocus
                               v-model="form.surname"
                               :value="form.surname"
                               required

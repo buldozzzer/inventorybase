@@ -27,6 +27,7 @@
                               v-model="form.category"
                               :value="form.category"
                               required
+                              autofocus
                               placeholder="Введите название категории"
                               :state="check(form.category, '')">
                 </b-form-input>

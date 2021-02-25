@@ -27,6 +27,7 @@
                               v-model="form.unit"
                               :value="form.unit"
                               required
+                              autofocus
                               placeholder="Введите название подразделния"
                               :state="check(form.unit, '')">
                 </b-form-input>

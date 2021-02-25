@@ -23,6 +23,7 @@
                             label-for="form-category-input">
                 <b-form-input id="form-category-input"
                               type="text"
+                              autofocus
                               class="mt-3"
                               v-model="form.category"
                               :value="form.category"

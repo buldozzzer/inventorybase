@@ -45,8 +45,16 @@
 <!--                  :state="check(component.type, '')">-->
                   <b-form-input id="form-comp_type-input"
                                 type="text"
+                                list="type-list"
                                 v-model="component.type">
                   </b-form-input>
+                  <datalist id="type-list">
+                    <option>---------</option>
+                    <option v-for="type in types"
+                            :key="type['_id']">
+                      {{ type.type }}
+                    </option>
+                  </datalist>
                 </b-form-group>
               </b-col>
 
@@ -71,10 +79,18 @@
                               label-for="form-comp_category-input">
                   <b-form-input id="form-comp_category-input"
                                 type="text"
+                                list="category-list"
                                 v-model="component.category">
 <!--                                required-->
 <!--                                :state="check(component.category, '')"-->
                   </b-form-input>
+                  <datalist id="category-list">
+                    <option>---------</option>
+                    <option v-for="category in categories"
+                            :key="category['_id']">
+                      {{ category.category }}
+                    </option>
+                  </datalist>
                 </b-form-group>
               </b-col>
 
@@ -84,6 +100,7 @@
                               label-for="form-comp_year-input">
                   <b-form-input id="form-comp_year-input"
                                 type="text"
+                                placeholder="YYYY"
                                 v-model="component.year">
 <!--                                required-->
 <!--                                :state="check(component.year, '')"-->
@@ -98,7 +115,7 @@
                               label="Цена:"
                               label-for="form-comp_cost-input">
                   <b-form-input id="form-comp_cost-input"
-                                type="text"
+                                type="number"
                                 v-model="component.cost">
 <!--                                required-->
 <!--                                :state="check(component.cost, '')"-->
@@ -114,10 +131,16 @@
                               label-for="form-comp_object-input">
                   <b-form-input id="form-comp_object-input"
                                 type="text"
+                                list="object-list"
                                 v-model="component.location.object">
 <!--                                required-->
 <!--                                :state="check(component.location.object, '')"-->
                   </b-form-input>
+                  <datalist id="object-list">
+                    <option>---------</option>
+                    <option v-for="object in points[0]"
+                            :key="object">{{ object }}</option>
+                  </datalist>
                 </b-form-group>
               </b-col>
 
@@ -127,10 +150,16 @@
                               label-for="form-comp_corpus-input">
                   <b-form-input id="form-comp_corpus-input"
                                 type="text"
+                                list="corpus-list"
                                 v-model="component.location.corpus">
 <!--                                required-->
 <!--                                :state="check(component.location.corpus, '')"-->
                   </b-form-input>
+                  <datalist id="corpus-list">
+                    <option>---------</option>
+                    <option v-for="corpus in points[2]"
+                            :key="corpus">{{ corpus }}</option>
+                  </datalist>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -142,10 +171,16 @@
                               label-for="form-comp_unit-input">
                   <b-form-input id="form-comp_unit-input"
                                 type="text"
+                                list="unit-list"
                                 v-model="component.location.unit">
 <!--                                required-->
 <!--                                :state="check(component.location.unit, '')"-->
                   </b-form-input>
+                  <datalist id="unit-list">
+                    <option>---------</option>
+                    <option v-for="unit in points[3]"
+                            :key="unit">{{ unit }}</option>
+                  </datalist>
                 </b-form-group>
               </b-col>
 
@@ -155,10 +190,16 @@
                               label-for="form-comp_cabinet-input">
                   <b-form-input id="form-comp_cabinet-input"
                                 type="text"
+                                list="cabinet-list"
                                 v-model="component.location.cabinet">
 <!--                                required-->
 <!--                                :state="check(component.location.cabinet, '')"-->
                   </b-form-input>
+                  <datalist id="cabinet-list">
+                    <option>---------</option>
+                    <option v-for="cabinet in points[1]"
+                            :key="cabinet">{{ cabinet }}</option>
+                  </datalist>
                 </b-form-group>
               </b-col>
             </b-row>
@@ -173,13 +214,50 @@
     props: ['component'],
     data(){
       return{
-
+        locations: [],
+        categories: [],
+        types: [],
+      }
+    },
+    computed:{
+      points: function () {
+        let objects = []
+        let cabinets = []
+        let corpuses = []
+        let units =[]
+        for(let i = 0; i < this.locations.length; ++i){
+          objects.push(this.locations[i]['object'])
+          cabinets.push(this.locations[i]['cabinet'])
+          corpuses.push(this.locations[i]['corpus'])
+          units.push(this.locations[i]['unit'])
+        }
+        return [objects, cabinets, corpuses, units]
       }
     },
     methods:{
       check(left, right){
         return left !== right
-      }
+      },
+      async fetchLocations() {
+        const response = await fetch('http://localhost:8000/api/v1/location/')
+        this.locations = await response.json()
+        this.locations = this.locations['locations']
+      },
+      async fetchCategories() {
+        const response = await fetch('http://localhost:8000/api/v1/category/')
+        this.categories = await response.json()
+        this.categories = this.categories['categories']
+      },
+      async fetchTypes() {
+        const response = await fetch('http://localhost:8000/api/v1/type/')
+        this.types = await response.json()
+        this.types = this.types['types']
+      },
+    },
+    async created(){
+      await this.fetchLocations()
+      await this.fetchCategories()
+      await this.fetchTypes()
     }
   }
 </script>

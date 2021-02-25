@@ -221,12 +221,12 @@
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
-              <b-form-input id="form-input"
+              <b-form-textarea id="form-input"
                             type="text"
                             class="mt-3"
                             v-model="editableRow.name"
                             :value="editableRow.name">
-              </b-form-input>
+              </b-form-textarea>
               <div class="mt-3">
                 <b-button variant="success" @click="onSubmit('name', editableRow)">Изменить</b-button>
                 <b-button variant="danger" @click="onReset('name')">Отмена</b-button>
