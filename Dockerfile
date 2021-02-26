@@ -11,6 +11,6 @@ WORKDIR /code
 COPY ./backend/requirements.txt /code/
 RUN pip install -r requirements.txt
 COPY ./backend/ /code/
-COPY --from=static /app/dist/static/js /code/static
-COPY --from=static /app/dist/static/css /code/static
+COPY --from=static /app/dist/static/js /code/static/js
+COPY --from=static /app/dist/static/css /code/static/css
 COPY --from=static /app/dist/index.html /code/templates/index.html
