@@ -1,7 +1,7 @@
 <!--eslint-disable-->
 <template>
   <div id="app">
-    <nav/>
+    <Nav/>
     <router-view/>
   </div>
 </template>
