@@ -1,7 +1,47 @@
 version: '3'
 
-services:
+#services:
+#  mongo:
+#    image: mongo:latest
+#    container_name: mongo
+#    restart: always
+#    environment:
+#      - MONGO_INITDB_DATABASE=ItemsDB
+#    volumes:
+##      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+#      - ./docker-entrypoint-initdb.d/mongo-init.js:/mongo-init.js
+#    networks:
+#      - backend-net
+#
+#  backend:
+#    build: ./backend
+#    container_name: backend
+#    restart: unless-stopped
+#    command: 'gunicorn backend.wsgi:application -b 0.0.0.0:8000'
+#    ports:
+#      - "0.0.0.0:8000:8000"
+#    depends_on:
+#      - mongo
+#    networks:
+#      - backend-net
+#
+#  client:
+#    build: ./client
+#    container_name: client
+#    restart: unless-stopped
+#    ports:
+##      - "0.0.0.0:8080:80"
+#      - "0.0.0.0:8080:8080"
+#    depends_on:
+#      - backend
+#    networks:
+#      - backend-net
+#
+#networks:
+#  backend-net:
+#    driver: bridge
 
+services:
   mongo:
     image: mongo:latest
     container_name: mongo
@@ -12,11 +52,11 @@ services:
 #      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
       - ./docker-entrypoint-initdb.d/mongo-init.js:/mongo-init.js
     networks:
-      - backend-net
+      - app-net
 
-  backend:
-    build: ./backend
-    container_name: backend
+  app:
+    build: ./
+    container_name: app
     restart: unless-stopped
     command: 'gunicorn backend.wsgi:application -b 0.0.0.0:8000'
     ports:
@@ -24,20 +64,8 @@ services:
     depends_on:
       - mongo
     networks:
-      - backend-net
-
-  client:
-    build: ./client
-    container_name: client
-    restart: unless-stopped
-    ports:
-#      - "0.0.0.0:8080:80"
-      - "0.0.0.0:8080:8080"
-    depends_on:
-      - backend
-    networks:
-      - backend-net
+      - app-net
 
 networks:
-  backend-net:
+  app-net:
     driver: bridge

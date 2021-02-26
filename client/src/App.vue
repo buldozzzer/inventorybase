@@ -1,7 +1,7 @@
 <!--eslint-disable-->
 <template>
   <div id="app">
-    <Nav/>
+    <nav/>
     <router-view/>
   </div>
 </template>
@@ -9,7 +9,7 @@
 <script>
 /* eslint-disable */
   import { bus } from "@/main";
-import Nav from "./components/Nav";
+  import Nav from "./components/Nav";
   export default {
     name: 'App',
     components: {Nav},
