@@ -4,25 +4,32 @@
            ref="editItemModal"
            title="Изменить запись в базе мат. ценностей"
            size="xl"
-           no-close-on-backdrop
-           hide-footer
-           hide-header-close>
+           hide-footer>
     <!--no-close-on-backdrop или настроить очистку формы при нажатии на задний фон-->
 
     <b-form @submit="onSubmit" @reset="onReset" class="w-100">
       <div class="submit-reset-buttons mt-3">
-        <b-button type="submit" variant="primary">Добавить запись</b-button>
+        <b-button type="submit"
+                  :disabled="itemForm.name === ''"
+                  variant="primary">
+          Изменить запись
+        </b-button>
         <!--        @click="initForm"-->
         <b-button type="reset" variant="danger">Отмена</b-button>
       </div>
-      <div class="container mt-3">
-        <div class="row">
-          <div class="col">
+      <b-container class="mt-3">
+        <b-row>
+          <b-col :cols="colsize">
             <form-template :itemForm="itemForm"
                            :employeeInitials="employeeInitials"></form-template>
-          </div>
-          <div class="col">
-            <b-card no-body>
+          </b-col>
+          <b-col>
+            <b-button @click="showComponents = !showComponents">
+              {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
+            </b-button>
+            <b-card v-if="showComponents"
+                    no-body
+                    class="mt-3">
               <b-nav pills card-header slot="header" v-b-scrollspy:nav-scroller>
                 <b-nav-item @click="scrollIntoView"
                             v-for="component in itemForm['components']"
@@ -59,9 +66,9 @@
 
               </b-card-body>
             </b-card>
-          </div>
-        </div>
-      </div>
+          </b-col>
+        </b-row>
+      </b-container>
     </b-form>
   </b-modal>
 </template>
@@ -86,7 +93,16 @@
         itemForm: {
           components: []
         },
-        index: 0
+        index: 0,
+        showComponents: false
+      }
+    },
+    computed:{
+      colsize: function(){
+        if(this.showComponents)
+          return 6
+        else
+          return 10
       }
     },
     methods: {
@@ -130,11 +146,11 @@
             unit: ''
           }
         }
-        this.itemForm['components'].push(componentForm)
+        this.itemForm.components.push(componentForm)
         this.index += 1
       },
       deleteLastComponent(){
-        this.itemForm['components'].splice( this.itemForm['components'].length-1, 1)
+        this.itemForm.components.splice( this.itemForm.components.length-1, 1)
         this.index -= 1
       },
     },
