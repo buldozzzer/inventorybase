@@ -4,12 +4,16 @@
            id="add-item-modal"
            title="Добавить запись в базу мат. ценностей"
            size="xl"
-           no-close-on-backdrop
-           hide-footer
-           hide-header-close>
+           @hidden="clearForm"
+           @show="clearForm"
+           hide-footer>
+<!--    hide-header-close no-close-on-backdrop-->
     <b-form class="w-100">
-      <div class="submit-reset-buttons mt-3 my">
-        <b-button type="submit" variant="success" @click="onSubmit">
+      <div class="submit-reset-buttons mt-3">
+        <b-button type="submit"
+                  variant="success"
+                  :disabled="itemForm.name === ''"
+                  @click="onSubmit">
           Добавить запись
         </b-button>
         <b-button href="#/items/groupadd" variant="light" @click="sendForm">
@@ -23,6 +27,7 @@
         <b-row>
           <b-col :cols="colsize">
             <form-template :itemForm="itemForm"
+                           ref="itemForm"
                            :employeeInitials="employeeInitials">
             </form-template>
           </b-col>
@@ -110,7 +115,7 @@
       onReset(evt) {
         evt.preventDefault()
         this.$refs.addItemModal.hide()
-        this.clearFrom()
+        this.clearForm()
       },
       onSubmit(evt) {
         evt.preventDefault();
@@ -140,7 +145,7 @@
           last_check: this.itemForm.last_check,
         };
         this.createItem(payload);
-        this.clearFrom()
+        this.clearForm()
       },
       isIntroduced(left, right) {
         return left !== right
@@ -149,7 +154,7 @@
         this.itemForm['components'] = this.$refs.componentList.createComponentList()
         this.$parent.$parent.$data.dataForChildren = this.itemForm
       },
-      clearFrom() {
+      clearForm() {
         this.itemForm = {
           name: '',
           user: '',
