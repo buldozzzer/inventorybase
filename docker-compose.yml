@@ -9,7 +9,7 @@ version: '3'
 #      - MONGO_INITDB_DATABASE=ItemsDB
 #    volumes:
 ##      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-#      - ./docker-entrypoint-initdb.d/mongo-init.js:/mongo-init.js
+#      - ./mongo-init.js:/mongo-init.js
 #    networks:
 #      - backend-net
 #
@@ -50,7 +50,7 @@ services:
       - MONGO_INITDB_DATABASE=ItemsDB
     volumes:
 #      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-      - ./docker-entrypoint-initdb.d/mongo-init.js:/mongo-init.js
+      - ./mongo-init.js:/mongo-init.js
     networks:
       - app-net
 
