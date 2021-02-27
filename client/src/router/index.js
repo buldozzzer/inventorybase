@@ -17,52 +17,52 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/items/groupadd',
+      path: '/items/groupadd/',
       name: 'GroupAddPage',
       component: GroupAddPage,
     },
     {
-      path: '/items/groupedit',
+      path: '/items/groupedit/',
       name: 'GroupEditPage',
       component: GroupEditPage,
     },
     {
-      path: '/items',
+      path: '/items/',
       name: 'ItemList',
       component: ItemList,
     },
     {
-      path: '/employees',
+      path: '/employees/',
       name: 'EmployeeList',
       component: EmployeePage,
     },
     {
-      path: '/otss',
+      path: '/otss/',
       name: 'OTSSList',
       component: OTSSCategoryPage,
     },
     {
-      path: '/units',
+      path: '/units/',
       name: 'UnitList',
       component: UnitPage,
     },
     {
-      path: '/categories',
+      path: '/categories/',
       name: 'CategoryList',
       component: CategoryPage,
     },
     {
-      path: '/locations',
+      path: '/locations/',
       name: 'LocationList',
       component: LocationPage,
     },
     {
-      path: '/types',
+      path: '/types/',
       name: 'TypeList',
       component: TypePage,
     },
     {
-      path: '/conditions',
+      path: '/conditions/',
       name: 'ConditionList',
       component: ConditionPage,
     },

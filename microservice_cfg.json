@@ -1,0 +1,22 @@
+{
+  "service_name": "inventorybase",
+  "service_fullname": "Система хранения базы материальных ценностей",
+  "default_urn": "/inventorybase/",
+  "app_port": 8000,
+  "curators": [
+    "barabass"
+  ],
+  "developer": "ivan_perevoschikov",
+  "update_token": "9e559c99-9f93-4657-8eef-4f50ac9bba1a",
+  "static": "/app/static/",
+  "database": {
+    "name": "ItemsDB",
+    "docker_image": "mongo:latest",
+    "env": {
+      "MONGO_INITDB_DATABASE": "ItemsDB"
+    },
+    "volumes": [
+      "/data/db"
+    ]
+  }
+}
