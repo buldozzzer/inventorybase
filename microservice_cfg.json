@@ -8,7 +8,6 @@
   ],
   "developer": "ivan_perevoschikov",
   "update_token": "9e559c99-9f93-4657-8eef-4f50ac9bba1a",
-  "static": "/app/static/",
   "database": {
     "name": "items_db",
     "docker_image": "mongo:4.4",
