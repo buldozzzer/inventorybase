@@ -1423,7 +1423,7 @@
 <style>
   td {
     max-width: 250px;
-
+    line-height: 15px;
   }
   table {
     white-space: nowrap;
