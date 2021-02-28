@@ -623,7 +623,7 @@
           <b-icon icon="check2"
                   data-toggle="tooltip"
                   data-placement="top"
-                  title="Редактировать"
+                  title="Выбрано"
                   font-scale="1.5"
                   aria-hidden="false"></b-icon>
           <span class="sr-only">Selected</span>

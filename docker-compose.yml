@@ -42,9 +42,9 @@ version: '3'
 #    driver: bridge
 
 services:
-  mongo:
-    image: mongo:latest
-    container_name: mongo
+  items_db:
+    image: mongo:4.4
+    container_name: items_db
     restart: always
     environment:
       - MONGO_INITDB_DATABASE=ItemsDB
@@ -61,7 +61,7 @@ services:
     ports:
       - "0.0.0.0:8000:8000"
     depends_on:
-      - mongo
+      - items_db
     networks:
       - app-net
 

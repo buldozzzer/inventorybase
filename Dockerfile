@@ -1,4 +1,4 @@
-FROM node:10-alpine as static
+FROM node:15-alpine as static
 WORKDIR /app
 COPY /client/package*.json ./
 RUN npm install
@@ -11,7 +11,6 @@ WORKDIR /app
 COPY ./backend/requirements.txt /app/
 RUN pip install -r requirements.txt
 COPY ./backend/ /app/
-COPY --from=static /app/dist/static/js /app/static/js
-COPY --from=static /app/dist/static/css /app/static/css
-COPY --from=static /app/dist/index.html /app/templates/index.html
+COPY --from=static /app/dist/inventorybase /app/
+COPY --from=static /app/dist/index.html /app/templates/
 ENTRYPOINT ["gunicorn", "backend.wsgi:application", "-b", "0.0.0.0:8000"]
