@@ -24,7 +24,7 @@
                            :employeeInitials="employeeInitials"></form-template>
           </b-col>
           <b-col>
-            <b-button @click="showComponents = !showComponents">
+            <b-button @click="showComponentForm">
               {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
             </b-button>
             <b-card v-if="showComponents"
@@ -153,6 +153,16 @@
         this.itemForm.components.splice( this.itemForm.components.length-1, 1)
         this.index -= 1
       },
+      showComponentForm(){
+        if(!this.showComponents){
+          this.showComponents = true
+          this.addComponent()
+        } else {
+          this.showComponents = false
+          this.itemForm.components = []
+          this.index = 0
+        }
+      }
     },
   };
 </script>
