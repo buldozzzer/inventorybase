@@ -952,11 +952,11 @@
             key: "Компоненты",
             show: false
           }, {
-            key: "Ответсвенный сотрудник",
+            key: "Ответственный сотрудник",
             show: true
           },
           {
-            key: "Инвентрный номер",
+            key: "Инвентарный номер",
             show: true
           },
           {
@@ -1037,13 +1037,13 @@
             class: 'text-center'
           }, {
             key: "responsible",
-            label: "Ответсвенный сотрудник",
+            label: "Ответственный сотрудник",
             sortable: true,
             class: 'text-center'
           },
           {
             key: "inventory_n",
-            label: "Инвентрный номер",
+            label: "Инвентарный номер",
             sortable: true,
             class: 'text-center'
           },
