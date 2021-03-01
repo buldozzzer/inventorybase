@@ -1,7 +1,7 @@
 <template>
   <div class="p-3 mb-2 bg-gradient-primary">
     <b-container>
-      <b-row>
+      <b-row class="text-center">
         <b-col>
           <b-form-group label="Ответственный:">
             <b-form-select

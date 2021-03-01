@@ -2,8 +2,8 @@
   <!--    eslint-disable-->
   <div>
     <b-container>
-      <b-row>
-        <b-col>
+      <b-row class="text-center">
+        <b-col cols="4">
           <b-button variant="danger"
                     class="mt-3"
                     v-if="selected.length !== 0" v-b-modal.confirm-modal>
@@ -15,7 +15,51 @@
             Удалить
           </b-button>
         </b-col>
-        <b-col>
+<!--        <b-col>-->
+<!--          &lt;!&ndash;          variant="danger"&ndash;&gt;-->
+<!--          <b-button class="mt-3" @click="selectAllRows">-->
+<!--            <b-icon icon="check2-all"-->
+<!--                    data-toggle="tooltip"-->
+<!--                    data-placement="top"-->
+<!--                    font-scale="1"-->
+<!--                    aria-hidden="false"></b-icon>-->
+<!--            {{ selected.length === 0 ? 'Выбрать записи' : 'Снять отметку' }}-->
+<!--          </b-button>-->
+<!--        </b-col>-->
+<!--        <b-col>-->
+<!--          <b-dropdown text="Поля таблицы"-->
+<!--                      variant="light"-->
+<!--                      class="mt-3"-->
+<!--                      role="menu">-->
+<!--            <b-dropdown-text class="text-nowrap">-->
+<!--              <b-form-checkbox @change="showFullTable"-->
+<!--                               style="text-align: left">-->
+<!--                {{ full ? 'Неполная таблица' : 'Полная таблица' }}-->
+<!--              </b-form-checkbox>-->
+<!--            </b-dropdown-text>-->
+<!--            <b-dropdown-text class="text-nowrap">-->
+<!--              <b-form-checkbox v-for="title in titles"-->
+<!--                               style="text-align: left"-->
+<!--                               v-model="title['show']"-->
+<!--                               @click="title['show'] = !title['show']"-->
+<!--                               :key="title['key']">-->
+<!--                {{ title['key'] }}-->
+<!--              </b-form-checkbox>-->
+<!--            </b-dropdown-text>-->
+<!--          </b-dropdown>-->
+<!--        </b-col>-->
+        <b-col cols="4">
+          <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>
+            <b-icon icon="download"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    font-scale="1"
+                    aria-hidden="false"></b-icon>
+            Добавить запись
+          </b-button>
+        </b-col>
+
+        <b-col cols="4" align-self="center">
           <b-button class="mt-3"
                     variant="primary"
                     href="#/items/groupedit"
@@ -27,49 +71,6 @@
                     font-scale="1"
                     aria-hidden="false"></b-icon>
             Редактровать
-          </b-button>
-        </b-col>
-        <b-col>
-          <!--          variant="danger"-->
-          <b-button class="mt-3" @click="selectAllRows">
-            <b-icon icon="check2-all"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    font-scale="1"
-                    aria-hidden="false"></b-icon>
-            {{ selected.length === 0 ? 'Выбрать записи' : 'Снять отметку' }}
-          </b-button>
-        </b-col>
-        <b-col>
-          <b-dropdown text="Поля таблицы"
-                      variant="light"
-                      class="mt-3"
-                      role="menu">
-            <b-dropdown-text class="text-nowrap">
-              <b-form-checkbox @change="showFullTable"
-                               style="text-align: left">
-                {{ full ? 'Неполная таблица' : 'Полная таблица' }}
-              </b-form-checkbox>
-            </b-dropdown-text>
-            <b-dropdown-text class="text-nowrap">
-              <b-form-checkbox v-for="title in titles"
-                               style="text-align: left"
-                               v-model="title['show']"
-                               @click="title['show'] = !title['show']"
-                               :key="title['key']">
-                {{ title['key'] }}
-              </b-form-checkbox>
-            </b-dropdown-text>
-          </b-dropdown>
-        </b-col>
-        <b-col>
-          <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>
-            <b-icon icon="download"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    font-scale="1"
-                    aria-hidden="false"></b-icon>
-            Добавить запись
           </b-button>
         </b-col>
 <!--        <b-col>-->
@@ -145,13 +146,12 @@
     </b-alert>
     <!--    sticky-header="850px"-->
     <!--    v-bind:sticky-header="sliderValue+'px'"-->
-    <b-table class="mt-3"
-             striped hover
+    <b-table striped hover
              bordered
              ref="selectableTable"
              selectable
              :sort-by.sync="sortBy"
-             sticky-header="380px"
+             sticky-header="700px"
              :items="items"
              :fields="fields"
              :filter-function="filterFunction"
@@ -202,7 +202,44 @@
       </template>
 
       <template #head(selected)="scope">
-        <div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+        <b-button-group>
+          <button :title="allRows"
+                  class="button-select-rows"
+                  @click="selectAllRows">
+            <b-icon icon="check-square"
+                    v-if="selected.length === 0"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    font-scale="1.5"
+                    aria-hidden="false"></b-icon>
+            <b-icon icon="check-square-fill"
+                    v-else
+                    v-if="selected.length !== 0"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    font-scale="1.5"
+                    aria-hidden="false"></b-icon>
+          </button>
+          <b-dropdown text="Поля таблицы"
+                      role="menu">
+            <b-dropdown-text class="text-nowrap">
+              <b-form-checkbox @change="showFullTable"
+                               switch
+                               style="text-align: left">
+                {{ full ? 'Неполная таблица' : 'Полная таблица' }}
+              </b-form-checkbox>
+            </b-dropdown-text>
+            <b-dropdown-text class="text-nowrap">
+              <b-form-checkbox v-for="title in titles"
+                               style="text-align: left"
+                               v-model="title['show']"
+                               @click="title['show'] = !title['show']"
+                               :key="title['key']">
+                {{ title['key'] }}
+              </b-form-checkbox>
+            </b-dropdown-text>
+          </b-dropdown>
+        </b-button-group>
       </template>
       <template #head(index)="scope">
         <div>Номер</div>
@@ -564,32 +601,6 @@
         </b-modal>
       </template>
 
-      <template #head(edit_remove)="scope">
-        <div class="text-nowrap">Изменить/Удалить</div>
-      </template>
-      <template #cell(edit_remove)="row">
-        <div class="text-nowrap">
-          <b-icon icon="pencil-square"
-                  variant="warning"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Редактировать"
-                  font-scale="2"
-                  v-b-modal.edit-item-modal
-                  @click="selectToEditItem(row.item)">
-          </b-icon>
-          <b-icon icon="trash"
-                  variant="danger"
-                  font-scale="2"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Удалить"
-                  v-b-modal.confirm-modal
-                  @click="selectToRemoveItem(row.item)">
-          </b-icon>
-        </div>
-      </template>
-
       <template #cell(components)="row">
         <b-icon v-if="row.detailsShowing"
                 icon="eye-slash"
@@ -619,19 +630,39 @@
       </template>
 
       <template #cell(selected)="{ rowSelected }">
-        <template v-if="rowSelected">
-          <b-icon icon="check2"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Выбрано"
-                  font-scale="1.5"
-                  aria-hidden="false"></b-icon>
-          <span class="sr-only">Selected</span>
-        </template>
-        <template v-else>
-          <span aria-hidden="true">&nbsp;</span>
-          <span class="sr-only">Not selected</span>
-        </template>
+        <b-container>
+          <b-row class="text-center">
+            <b-col cols="6">
+              <b-icon icon="check2"
+                      v-show="rowSelected"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Выбрано"
+                      font-scale="2">
+              </b-icon>
+            </b-col>
+            <b-col cols="6">
+              <b-icon icon="pencil-square"
+                      variant="warning"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Редактировать"
+                      font-scale="2"
+                      v-b-modal.edit-item-modal
+                      @click="selectToEditItem(row.item)">
+              </b-icon>
+              <b-icon icon="trash"
+                      variant="danger"
+                      font-scale="2"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Удалить"
+                      v-b-modal.confirm-modal
+                      @click="selectToRemoveItem(row.item)">
+              </b-icon>
+            </b-col>
+          </b-row>
+        </b-container>
       </template>
 
       <template #cell(otss_requisites)="row">
@@ -878,8 +909,9 @@
     <confirm-form :payload="selected"
                   :dynamic-id="dynamicId"
                   :message="message"
-                  :op="removeItems"
-    ></confirm-form>
+                  :op="removeItems">
+
+    </confirm-form>
   </div>
 </template>
 
@@ -1010,11 +1042,6 @@
           },
         ],
         itemFields: [
-          {
-            key: "edit_remove",
-            stickyColumn: true,
-            class: 'text-center'
-          },
           {
             key: "selected",
             stickyColumn: true,
@@ -1166,8 +1193,8 @@
         }
         for(let i = 0; i < this.titles.length; i++){
           if(this.titles[i].show === false &&
-            this.titles[i].key === this.itemFields[i+3].label){
-            showingFields.splice(showingFields.indexOf(this.itemFields[i+3]), 1)
+            this.titles[i].key === this.itemFields[i+2].label){
+            showingFields.splice(showingFields.indexOf(this.itemFields[i+2]), 1)
           }
         }
         bus.$on('fullTable', () => {
@@ -1180,6 +1207,12 @@
           }
         })
         return showingFields
+      },
+      allRows: function () {
+        if(this.selected.length === 0)
+          return 'Выбрать все записи'
+        else
+          return 'Отменить выбор'
       }
     },
     methods: {
@@ -1423,13 +1456,45 @@
 <style>
   td {
     max-width: 250px;
+    min-width: 150px;
     line-height: 15px;
+    max-height: 58px;
+    min-height: 58px;
+    color: black;
+  }
+  .button-select-rows{
+    color: #000000;
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
   }
   table {
     white-space: nowrap;
   }
   p {
     text-overflow: ellipsis;
-    overflow: auto;
+    overflow-x: auto;
   }
+  .table thead th {
+    vertical-align: sub;
+    color: black;
+  }
+  a {
+    color: black;
+  }
+  .btn-secondary:hover {
+    color: #000000;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+  }
+  .btn-secondary {
+    color: #000000;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+  }
+  .btn-secondary.dropdown-toggle {
+    color: #000000;
+    background-color: #ffffff;
+    border-color: #ffffff;
+}
 </style>
