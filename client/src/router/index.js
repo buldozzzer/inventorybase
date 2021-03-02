@@ -16,6 +16,7 @@ Vue.use(Router);
 
 export default new Router({
   routes: [
+    { path: '/', redirect: '/items/' },
     {
       path: '/items/groupadd/',
       name: 'GroupAddPage',

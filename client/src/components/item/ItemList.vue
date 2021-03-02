@@ -151,14 +151,14 @@
              ref="selectableTable"
              selectable
              :sort-by.sync="sortBy"
-             sticky-header="700px"
+             sticky-header="410px"
              :items="items"
              :fields="fields"
              :filter-function="filterFunction"
              :filter="filters"
              @row-selected="onRowSelected">
       <template #head()="scope">
-        <div class="text-nowrap" :title="scope.label">
+        <div class="text-nowrap text-center" :title="scope.label">
           {{ scope.label }}
           <b-icon icon="x"
                   class="mt-1"
@@ -229,6 +229,7 @@
                 {{ full ? 'Неполная таблица' : 'Полная таблица' }}
               </b-form-checkbox>
             </b-dropdown-text>
+            <div class="dropdown-divider"></div>
             <b-dropdown-text class="text-nowrap">
               <b-form-checkbox v-for="title in titles"
                                style="text-align: left"
@@ -638,7 +639,7 @@
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Выбрано"
-                      font-scale="2">
+                      font-scale="1.5">
               </b-icon>
             </b-col>
             <b-col cols="6">
@@ -647,13 +648,13 @@
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Редактировать"
-                      font-scale="2"
+                      font-scale="1.5"
                       v-b-modal.edit-item-modal
                       @click="selectToEditItem(row.item)">
               </b-icon>
               <b-icon icon="trash"
                       variant="danger"
-                      font-scale="2"
+                      font-scale="1.5"
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Удалить"
@@ -1458,8 +1459,9 @@
     max-width: 250px;
     min-width: 150px;
     line-height: 15px;
-    max-height: 58px;
-    min-height: 58px;
+    max-height: 40px;
+    height: 40px;
+    min-height: 40px;
     color: black;
   }
   .button-select-rows{
