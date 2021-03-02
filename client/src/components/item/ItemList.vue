@@ -166,6 +166,7 @@
                     aria-hidden="false"></b-icon>
           </button>
           <b-dropdown text="Поля таблицы"
+                      variant="warning"
                       role="menu">
             <b-dropdown-text class="text-nowrap">
               <b-form-checkbox @change="showFullTable"
@@ -1439,17 +1440,17 @@
   a {
     color: black;
   }
-  .btn-secondary:hover {
+  .btn-warning:hover {
     color: #000000;
     background-color: #FFFFFF;
     border-color: #FFFFFF;
   }
-  .btn-secondary {
+  .btn-warning {
     color: #000000;
     background-color: #FFFFFF;
     border-color: #FFFFFF;
   }
-  .btn-secondary.dropdown-toggle {
+  .btn-warning.dropdown-toggle {
     color: #000000;
     background-color: #ffffff;
     border-color: #ffffff;
