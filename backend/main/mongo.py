@@ -18,8 +18,8 @@ def get_conn(db_name: str = 'ItemsDB'):
     if not __db_conn:
         set_conn(
             # host='mongo',
-            # host='items_db',
-            host='localhost',
+            host='items_db',
+            # host='localhost',
             port=27017,
             db_name=db_name)
     return __db_conn

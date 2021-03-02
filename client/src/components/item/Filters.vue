@@ -78,7 +78,7 @@
           in_operation: null,
         },
         employees: [],
-        fuseString: null
+        fuseString: ''
       }
     },
     methods:{
@@ -124,7 +124,8 @@
           condition: null,
           in_operation: null
         }
-        this.$parent.$data.fuseString = null
+        this.$parent.$data.fuseString = ''
+        this.fuseString =''
         bus.$emit('resetFilters', this.filters)
       },
       async fetchUnits() {

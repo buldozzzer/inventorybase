@@ -3,7 +3,7 @@
   <div>
     <b-container>
       <b-row class="text-center">
-        <b-col cols="4">
+        <b-col cols="3">
           <b-button variant="danger"
                     class="mt-3"
                     v-if="selected.length !== 0" v-b-modal.confirm-modal>
@@ -15,40 +15,7 @@
             Удалить
           </b-button>
         </b-col>
-<!--        <b-col>-->
-<!--          &lt;!&ndash;          variant="danger"&ndash;&gt;-->
-<!--          <b-button class="mt-3" @click="selectAllRows">-->
-<!--            <b-icon icon="check2-all"-->
-<!--                    data-toggle="tooltip"-->
-<!--                    data-placement="top"-->
-<!--                    font-scale="1"-->
-<!--                    aria-hidden="false"></b-icon>-->
-<!--            {{ selected.length === 0 ? 'Выбрать записи' : 'Снять отметку' }}-->
-<!--          </b-button>-->
-<!--        </b-col>-->
-<!--        <b-col>-->
-<!--          <b-dropdown text="Поля таблицы"-->
-<!--                      variant="light"-->
-<!--                      class="mt-3"-->
-<!--                      role="menu">-->
-<!--            <b-dropdown-text class="text-nowrap">-->
-<!--              <b-form-checkbox @change="showFullTable"-->
-<!--                               style="text-align: left">-->
-<!--                {{ full ? 'Неполная таблица' : 'Полная таблица' }}-->
-<!--              </b-form-checkbox>-->
-<!--            </b-dropdown-text>-->
-<!--            <b-dropdown-text class="text-nowrap">-->
-<!--              <b-form-checkbox v-for="title in titles"-->
-<!--                               style="text-align: left"-->
-<!--                               v-model="title['show']"-->
-<!--                               @click="title['show'] = !title['show']"-->
-<!--                               :key="title['key']">-->
-<!--                {{ title['key'] }}-->
-<!--              </b-form-checkbox>-->
-<!--            </b-dropdown-text>-->
-<!--          </b-dropdown>-->
-<!--        </b-col>-->
-        <b-col cols="4">
+        <b-col cols="3">
           <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>
             <b-icon icon="download"
                     data-toggle="tooltip"
@@ -58,8 +25,19 @@
             Добавить запись
           </b-button>
         </b-col>
-
-        <b-col cols="4" align-self="center">
+        <b-col cols="3">
+          <b-button variant="light"
+                    @click="showFilters = !showFilters"
+                    class="mt-3">
+            <b-icon :icon="filterIcon"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    font-scale="1"
+                    aria-hidden="false"></b-icon>
+            {{showFilters ? 'Скрыть фильтры' : 'Показать фильтры' }}
+          </b-button>
+        </b-col>
+        <b-col cols="3" align-self="center">
           <b-button class="mt-3"
                     variant="primary"
                     href="#/items/groupedit"
@@ -73,44 +51,10 @@
             Редактровать
           </b-button>
         </b-col>
-<!--        <b-col>-->
-<!--          <div class="btn-group dropdown">-->
-<!--            <b-button variant="light"-->
-<!--                      class="mt-3"-->
-<!--                      v-if="fields.length !== 22"-->
-<!--                      @click="showFullTable">-->
-<!--              <b-icon icon="arrows-angle-expand"-->
-<!--                      data-toggle="tooltip"-->
-<!--                      data-placement="top"-->
-<!--                      font-scale="1"-->
-<!--                      aria-hidden="false"></b-icon>-->
-<!--              Полная таблица-->
-<!--            </b-button>-->
-
-<!--            <b-button variant="light"-->
-<!--                      class="mt-3"-->
-<!--                      v-else-->
-<!--                      @click="showClippedTable">-->
-<!--              <b-icon icon="arrows-angle-contract"-->
-<!--                      data-toggle="tooltip"-->
-<!--                      data-placement="top"-->
-<!--                      font-scale="1"-->
-<!--                      aria-hidden="false"></b-icon>-->
-<!--              Неполная таблица-->
-<!--            </b-button>-->
-<!--          </div>-->
-<!--        </b-col>-->
-        <!--        <b-col>-->
-        <!--          <vue-range-slider class="mt-3" ref="slider"-->
-        <!--                            v-model="sliderValue"-->
-        <!--                            @change="stickyHeaderHeightToString"-->
-        <!--                            min="300"-->
-        <!--                            max="1000"-->
-        <!--          ></vue-range-slider>-->
-        <!--        </b-col>-->
       </b-row>
     </b-container>
     <filters class="mt-3"
+             v-show="showFilters === true"
              ref="filtersForList"
              :employee-initials="employeeInitials">
     </filters>
@@ -148,10 +92,11 @@
     <!--    v-bind:sticky-header="sliderValue+'px'"-->
     <b-table striped hover
              bordered
+             class="mt-3"
              ref="selectableTable"
              selectable
              :sort-by.sync="sortBy"
-             sticky-header="410px"
+             :sticky-header="sliderValue"
              :items="items"
              :fields="fields"
              :filter-function="filterFunction"
@@ -639,7 +584,7 @@
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Выбрано"
-                      font-scale="1.5">
+                      font-scale="1.8">
               </b-icon>
             </b-col>
             <b-col cols="6">
@@ -648,13 +593,13 @@
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Редактировать"
-                      font-scale="1.5"
+                      font-scale="1.8"
                       v-b-modal.edit-item-modal
                       @click="selectToEditItem(row.item)">
               </b-icon>
               <b-icon icon="trash"
                       variant="danger"
-                      font-scale="1.5"
+                      font-scale="1.8"
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Удалить"
@@ -951,7 +896,9 @@
         dynamicId: "confirm-modal",
         noCollapse: false,
         full: false,
+        filterIcon: 'funnel',
         sortBy: 'name',
+        showFilters: false,
         componentFields: [
           'index',
           {
@@ -1158,7 +1105,7 @@
         items: [],
         selectedItem: {},
         selected: [],
-        sliderValue: 405,
+        sliderValue: '540px',
         employeeList: [],
         employeeInitials: [],
         filters: {
@@ -1167,7 +1114,7 @@
           condition: null,
           in_operation: null
         },
-        fuseString: "",
+        fuseString: '',
       };
     },
     computed: {
@@ -1358,9 +1305,10 @@
       selectToEditItem(item) {
         this.$refs.editItemModal.itemForm = item
       },
-
       setFilters() {
-        this.filters = this.$refs.filtersForList.filters
+        if(this.showFilters) {
+          this.filters = this.$refs.filtersForList.filters
+        }
       },
       filterFunction(row, val) {
         const {
@@ -1389,7 +1337,7 @@
           }).then(results => {
           this.items = results
         })
-        if(this.fuseString == ""){
+        if(this.fuseString === ''){
           this.fetchItems()
         }
       },
@@ -1435,6 +1383,13 @@
     watch:{
       fuseString: function () {
         this.fuseSearch()
+      },
+      showFilters: function(){
+        if (this.showFilters){
+          this.sliderValue = '410px'
+        }else{
+          this.sliderValue = '540px'
+        }
       }
     },
     async created() {
@@ -1447,7 +1402,7 @@
       await bus.$on('cancel', () => {this.selected = []})
       await bus.$on('resetFilters', (data) => {
         this.filters = data;
-        this.fuseString = null
+        this.fuseString = ''
       })
 
     },
