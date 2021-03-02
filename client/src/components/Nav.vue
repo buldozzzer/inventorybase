@@ -17,6 +17,17 @@
           </b-nav-item-dropdown>
         </b-navbar-nav>
         <b-navbar-nav class="ml-auto">
+          <b-iconstack :title="message" @click="getConnection">
+            <b-icon icon="diagram2-fill"
+                    scale="1"
+                    variant="success">
+            </b-icon>
+            <b-icon icon="slash-circle"
+                    v-if="!connection"
+                    scale="1.25"
+                    variant="danger">
+            </b-icon>
+          </b-iconstack>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -24,8 +35,27 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
   name: 'Nav',
+  data(){
+    return{
+      connection: false,
+      message: 'Соединение с сервером отсутствует'
+    }
+  },
+  methods:{
+    async getConnection(){
+      const response = await fetch(`http://localhost:8000/api/v1/test/`)
+      if(response.status === 200) {
+        this.connection = true
+        this.message = 'Соединение с сервером установлено'
+      }
+    }
+  },
+  async created() {
+    await this.getConnection()
+  }
 };
 </script>
 

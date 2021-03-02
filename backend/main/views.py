@@ -16,6 +16,7 @@
 
 from bson import ObjectId
 from django.shortcuts import render
+from pymongo import MongoClient
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -581,3 +582,16 @@ class ConditionView(APIView):
                             .format(pk)}, status=202)
         else:
             return Response({"message": "Condition with _id `{}` not found.".format(pk)}, status=404)
+
+
+class TestView(APIView):
+    def get(self, _):
+        """
+            :param _: Default to none.
+            :return: Response status 200.
+        """
+        connection = mongo.get_conn()
+        if connection == MongoClient('localhost', 27017)['ItemsDB']:
+            return Response({}, status=200)
+        else:
+            return Response({}, status=400)
