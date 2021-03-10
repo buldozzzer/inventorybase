@@ -591,7 +591,7 @@ class TestView(APIView):
             :return: Response status 200.
         """
         connection = mongo.get_conn()
-        if connection == MongoClient('localhost', 27017)['ItemsDB']:
+        if connection:
             return Response({}, status=200)
         else:
             return Response({}, status=400)

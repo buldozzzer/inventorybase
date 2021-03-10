@@ -140,7 +140,10 @@
         }
       },
       async fetchEmployees() {
-        const response = await fetch('http://localhost:8000/api/v1/employee/')
+        const response = await fetch('http://localhost:8000/api/v1/employee/',
+        {
+          mode: "cors",
+        })
         this.employeeList = await response.json()
         this.employeeList = this.employeeList['employees']
         this.employeeToString()
@@ -171,6 +174,7 @@
           };
           const response = await fetch(`http://localhost:8000/api/v1/item/`, {
             method: 'POST',
+            mode: 'cors',
             headers: {
               'Accept': 'application/json',
               'Content-type': 'application/json'

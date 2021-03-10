@@ -239,17 +239,26 @@
         return left !== right
       },
       async fetchLocations() {
-        const response = await fetch('http://localhost:8000/api/v1/location/')
+        const response = await fetch('http://localhost:8000/api/v1/location/',
+        {
+          mode: "cors",
+        })
         this.locations = await response.json()
         this.locations = this.locations['locations']
       },
       async fetchCategories() {
-        const response = await fetch('http://localhost:8000/api/v1/category/')
+        const response = await fetch('http://localhost:8000/api/v1/category/',
+        {
+          mode: "cors",
+        })
         this.categories = await response.json()
         this.categories = this.categories['categories']
       },
       async fetchTypes() {
-        const response = await fetch('http://localhost:8000/api/v1/type/')
+        const response = await fetch('http://localhost:8000/api/v1/type/',
+        {
+          mode: "cors",
+        })
         this.types = await response.json()
         this.types = this.types['types']
       },

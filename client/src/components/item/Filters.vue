@@ -83,7 +83,10 @@
     },
     methods:{
       async createEmployeeList() {
-        const response = await fetch('http://localhost:8000/api/v1/employee/')
+        const response = await fetch('http://localhost:8000/api/v1/employee/',
+        {
+          mode: "cors",
+        })
         let payload = await response.json()
         payload = payload['employees']
         this.employeeToString(payload)
@@ -99,7 +102,10 @@
       },
       async fetchOTSS() {
         let categories = {}
-        const response = await fetch('http://localhost:8000/api/v1/otss/')
+        const response = await fetch('http://localhost:8000/api/v1/otss/',
+        {
+          mode: "cors",
+        })
         categories = await response.json()
         categories = categories['otss']
         for(let key in categories){
@@ -109,7 +115,10 @@
       },
       async fetchConditions() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/condition/')
+        const response = await fetch('http://localhost:8000/api/v1/condition/',
+        {
+          mode: "cors",
+        })
         tempArr = await response.json()
         tempArr = tempArr['conditions']
         for (let i = 0; i < tempArr.length; ++i){
@@ -130,7 +139,10 @@
       },
       async fetchUnits() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/unit/')
+        const response = await fetch('http://localhost:8000/api/v1/unit/',
+        {
+          mode: "cors",
+        })
         tempArr = await response.json()
         tempArr = tempArr['units']
         for (let i = 0; i < tempArr.length; ++i){

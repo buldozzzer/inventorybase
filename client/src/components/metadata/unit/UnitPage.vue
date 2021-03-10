@@ -51,7 +51,10 @@
         this.selected.push(data)
       },
       async fetchUnits() {
-        const response = await fetch('http://localhost:8000/api/v1/unit/')
+        const response = await fetch('http://localhost:8000/api/v1/unit/',
+        {
+          mode: "cors",
+        })
         this.units = await response.json()
         this.units = this.units['units']
         this.selected = []
@@ -60,6 +63,7 @@
         const _id = unit['_id']
         const response = await fetch(`http://localhost:8000/api/v1/unit/${_id}/`, {
           method: 'DELETE',
+          mode:'cors',
           headers: {
             'Accept': 'application/json',
             'Content-type': 'application/json'

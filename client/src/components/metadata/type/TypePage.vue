@@ -52,7 +52,10 @@
       },
 
       async fetchTypes() {
-        const response = await fetch('http://localhost:8000/api/v1/type/')
+        const response = await fetch('http://localhost:8000/api/v1/type/',
+        {
+          mode: "cors",
+        })
         this.types = await response.json()
         this.types = this.types['types']
         this.selected = []
@@ -61,6 +64,7 @@
         const _id = unit['_id']
         const response = await fetch(`http://localhost:8000/api/v1/type/${_id}/`, {
           method: 'DELETE',
+          mode: 'cors',
           headers: {
             'Accept': 'application/json',
             'Content-type': 'application/json'

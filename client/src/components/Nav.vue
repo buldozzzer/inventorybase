@@ -46,7 +46,10 @@ export default {
   },
   methods:{
     async getConnection(){
-      const response = await fetch(`http://localhost:8000/api/v1/test/`)
+      const response = await fetch(`http://localhost:8000/api/v1/test/`,
+        {
+          mode: "cors",
+        })
       if(response.status === 200) {
         this.connection = true
         this.message = 'Соединение с сервером установлено'

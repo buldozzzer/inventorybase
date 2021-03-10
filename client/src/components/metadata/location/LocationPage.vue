@@ -52,7 +52,10 @@
       },
 
       async fetchLocations() {
-        const response = await fetch('http://localhost:8000/api/v1/location/')
+        const response = await fetch('http://localhost:8000/api/v1/location/',
+        {
+          mode: "cors",
+        })
         this.locations = await response.json()
         this.locations = this.locations['locations']
         this.selected = []
@@ -61,6 +64,7 @@
         const _id = unit['_id']
         const response = await fetch(`http://localhost:8000/api/v1/location/${_id}/`, {
           method: 'DELETE',
+          mode: 'cors',
           headers: {
             'Accept': 'application/json',
             'Content-type': 'application/json'

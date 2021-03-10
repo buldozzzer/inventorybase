@@ -57,6 +57,7 @@
         const _id = payload['_id'];
         const response = await fetch(`http://localhost:8000/api/v1/condition/${_id}/`, {
           method: 'PUT',
+          mode: 'cors',
           body: JSON.stringify(payload),
           headers: {
             'Accept': 'application/json',

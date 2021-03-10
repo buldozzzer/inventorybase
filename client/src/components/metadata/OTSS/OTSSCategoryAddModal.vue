@@ -57,6 +57,7 @@
       async createOTSSCategory() {
         const response = await fetch('http://localhost:8000/api/v1/otss/', {
           method: 'POST',
+          mode: 'cors',
           headers: {
             'Accept': 'application/json',
             'Content-type': 'application/json'

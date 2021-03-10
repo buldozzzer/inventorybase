@@ -306,7 +306,10 @@
       },
       async fetchOTSS() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/otss/')
+        const response = await fetch('http://localhost:8000/api/v1/otss/',
+        {
+          mode: "cors",
+        })
         tempArr = await response.json()
         tempArr = tempArr['otss']
         for (let i = 0; i < tempArr.length; ++i){
@@ -315,7 +318,10 @@
       },
       async fetchConditions() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/condition/')
+        const response = await fetch('http://localhost:8000/api/v1/condition/',
+        {
+          mode: "cors",
+        })
         tempArr = await response.json()
         tempArr = tempArr['conditions']
         for (let i = 0; i < tempArr.length; ++i){
@@ -324,7 +330,10 @@
       },
       async fetchUnits() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/unit/')
+        const response = await fetch('http://localhost:8000/api/v1/unit/',
+        {
+          mode: "cors",
+        })
         tempArr = await response.json()
         tempArr = tempArr['units']
         for (let i = 0; i < tempArr.length; ++i){

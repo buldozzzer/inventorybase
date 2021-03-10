@@ -1207,7 +1207,10 @@
         await this.editItem(item)
       },
       async fetchOTSS() {
-        const response = await fetch('http://localhost:8000/api/v1/otss/')
+        const response = await fetch('http://localhost:8000/api/v1/otss/',
+        {
+          mode: "cors",
+        })
         this.otss = await response.json()
         this.otss = this.otss['otss']
         let temp = []
@@ -1217,7 +1220,10 @@
         this.otss = temp
       },
       async fetchUnits() {
-        const response = await fetch('http://localhost:8000/api/v1/unit/')
+        const response = await fetch('http://localhost:8000/api/v1/unit/',
+        {
+          mode: "cors",
+        })
         this.units = await response.json()
         this.units = this.units['units']
         let temp = []
@@ -1230,13 +1236,19 @@
         return this.sliderValue.toString() + 'px'
       },
       async fetchEmployees() {
-        const response = await fetch('http://localhost:8000/api/v1/employee/')
+        const response = await fetch('http://localhost:8000/api/v1/employee/',
+        {
+          mode: "cors",
+        })
         this.employeeList = await response.json()
         this.employeeList = this.employeeList['employees']
         this.employeeToString()
       },
       async fetchItems() {
-        const response = await fetch('http://localhost:8000/api/v1/item/')
+        const response = await fetch('http://localhost:8000/api/v1/item/',
+        {
+          mode: "cors",
+        })
         this.items = await response.json()
         this.items = this.items['items']
       },
@@ -1249,6 +1261,7 @@
           const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
             {
               method: 'DELETE',
+              mode: 'cors',
               headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
@@ -1267,13 +1280,14 @@
         const _id = item['_id']
         const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
           {
-          method: 'PUT',
-          body: JSON.stringify(item),
-          headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json'
-          },
-        });
+            method: 'PUT',
+            mode: "cors",
+            body: JSON.stringify(item),
+            headers: {
+              'Accept': 'application/json',
+              'Content-type': 'application/json'
+            },
+          });
         const json = await response.json();
         console.log(JSON.stringify(json));
         if (response.status !== 202) {

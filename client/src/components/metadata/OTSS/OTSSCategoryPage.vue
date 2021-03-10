@@ -54,6 +54,7 @@
         const _id = otss['_id']
         const response = await fetch(`http://localhost:8000/api/v1/otss/${_id}/`, {
           method: 'DELETE',
+          mode: 'cors',
           headers: {
             'Accept': 'application/json',
             'Content-type': 'application/json'
@@ -65,7 +66,10 @@
         await this.fetchOTSS()
       },
       async fetchOTSS() {
-        const response = await fetch('http://localhost:8000/api/v1/otss/')
+        const response = await fetch('http://localhost:8000/api/v1/otss/',
+        {
+          mode: "cors",
+        })
         this.otssCategories = await response.json()
         this.otssCategories = this.otssCategories['otss']
         this.selected = []
