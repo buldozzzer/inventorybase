@@ -52,6 +52,15 @@
           </b-button>
         </b-col>
       </b-row>
+      <b-row>
+        <b-col cols="3">
+          <b-button variant="light"
+                    @click="toExcel"
+                    class="mt-3">
+            Экспорт
+          </b-button>
+        </b-col>
+      </b-row>
     </b-container>
     <filters class="mt-3"
              v-show="showFilters === true"
@@ -1165,6 +1174,42 @@
       }
     },
     methods: {
+      async toExcel(){
+        let titlesInPayload = []
+        let payload = []
+        for (let index = 2; index < this.itemFields.length; index++){
+          if(this.titles[index-2].show === true) {
+            let field = {}
+            field.key = this.itemFields[index].key
+            titlesInPayload.push(field)
+          }
+        }
+        debugger
+        for (let item = 0; item < this.items.length; item++){
+          let itemToExport = {}
+          for (let i = 0; i < titlesInPayload.length; i++){
+            let t = titlesInPayload[i].key
+            itemToExport[t] = this.items[item][t.toString()]
+          }
+          payload.push(itemToExport)
+        }
+
+        const response = await fetch(`http://localhost:8000/api/v1/to_excel/`, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Accept': 'application/json',
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        /* eslint-disable */
+        if (response.status !== 201) {
+          alert(JSON.stringify(await response.json(), null, 2));
+          this.$parent.showErrorAlert()
+        }
+        this.$parent.showAlert()
+      },
       countDownChanged(dismissCountDown) {
         this.dismissCountDown = dismissCountDown
       },
