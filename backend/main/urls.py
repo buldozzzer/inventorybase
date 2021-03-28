@@ -42,4 +42,6 @@ urlpatterns = [
     path('condition/<pk>/', views.ConditionView.as_view(), name='edit_condition'),
 
     path('test/', views.TestView.as_view(), name='test_connection'),
+
+    path('to_excel/', views.ExcelExporterView.as_view(), name='excel_exporter'),
 ]

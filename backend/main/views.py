@@ -16,11 +16,11 @@
 
 from bson import ObjectId
 from django.shortcuts import render
-from pymongo import MongoClient
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from . import mongo
+from . import excel_exporter
 
 
 def index(request):
@@ -595,3 +595,17 @@ class TestView(APIView):
             return Response({}, status=200)
         else:
             return Response({}, status=400)
+
+
+class ExcelExporterView(APIView):
+    def post(self, request):
+        """
+            :param request: Request entity, contains request payload.
+            :return: Response message: "File .xlsx with name '{}' created successfully.",
+                            response status 201.
+        """
+        payload = request.data
+        filename = excel_exporter.export_to_excel(payload=payload)
+        return Response({"message": "File .xlsx with name '{}' created successfully."
+                        .format(filename)}, status=201)
+
