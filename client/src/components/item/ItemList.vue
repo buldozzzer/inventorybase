@@ -52,15 +52,15 @@
           </b-button>
         </b-col>
       </b-row>
-      <b-row>
-        <b-col cols="3">
-          <b-button variant="light"
-                    @click="toExcel"
-                    class="mt-3">
-            Экспорт
-          </b-button>
-        </b-col>
-      </b-row>
+<!--      <b-row>-->
+<!--        <b-col cols="3">-->
+<!--          <b-button variant="light"-->
+<!--                    @click="toExcel"-->
+<!--                    class="mt-3">-->
+<!--            Экспорт-->
+<!--          </b-button>-->
+<!--        </b-col>-->
+<!--      </b-row>-->
     </b-container>
     <filters class="mt-3"
              v-show="showFilters === true"
