@@ -3,7 +3,11 @@ import datetime as dt
 
 
 def get_nested_components(payload: list):
+    """
 
+    :param payload:
+    :return:
+    """
     nested_components = {
         ('Компоненты', 'Наименование'): {},
         ('Компоненты', 'Серийный номер'): {}, ('Компоненты', 'Тип'): {},

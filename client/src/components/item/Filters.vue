@@ -1,5 +1,5 @@
 <template>
-  <div class="p-3 mb-2 bg-gradient-primary">
+  <div class="p-3 mb-2 bg-gradient-primary" style="z-index: 1000">
     <b-container>
       <b-row class="text-center">
         <b-col>

@@ -1,9 +1,10 @@
 <template>
   <!--    eslint-disable-->
   <div>
+    <div id="arrowTop" hidden></div>
     <b-container>
       <b-row class="text-center">
-        <b-col cols="3">
+        <b-col cols="2">
           <b-button variant="danger"
                     class="mt-3"
                     v-if="selected.length !== 0" v-b-modal.confirm-modal>
@@ -15,14 +16,14 @@
             Удалить
           </b-button>
         </b-col>
-        <b-col cols="3">
+        <b-col cols="2">
           <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>
             <b-icon icon="download"
                     data-toggle="tooltip"
                     data-placement="top"
                     font-scale="1"
                     aria-hidden="false"></b-icon>
-            Добавить запись
+            Добавить
           </b-button>
         </b-col>
         <b-col cols="3">
@@ -37,7 +38,7 @@
             {{showFilters ? 'Скрыть фильтры' : 'Показать фильтры' }}
           </b-button>
         </b-col>
-        <b-col cols="3" align-self="center">
+        <b-col cols="2" align-self="center">
           <b-button class="mt-3"
                     variant="primary"
                     href="#/items/groupedit"
@@ -51,16 +52,15 @@
             Редактровать
           </b-button>
         </b-col>
+        <b-col cols="2">
+          <b-button variant="light"
+                    v-b-modal.excel-exporter-modal
+                    :disabled="selected.length === 0"
+                    class="mt-3">
+            Экспорт
+          </b-button>
+        </b-col>
       </b-row>
-<!--      <b-row>-->
-<!--        <b-col cols="3">-->
-<!--          <b-button variant="light"-->
-<!--                    @click="toExcel"-->
-<!--                    class="mt-3">-->
-<!--            Экспорт-->
-<!--          </b-button>-->
-<!--        </b-col>-->
-<!--      </b-row>-->
     </b-container>
     <filters class="mt-3"
              v-show="showFilters === true"
@@ -101,6 +101,7 @@
     <!--    v-bind:sticky-header="sliderValue+'px'"-->
     <b-table striped hover
              bordered
+             id="table"
              class="mt-3"
              ref="selectableTable"
              selectable
@@ -177,7 +178,7 @@
           <b-dropdown text="Поля таблицы"
                       variant="warning"
                       role="menu">
-            <b-dropdown-text class="text-nowrap">
+            <b-dropdown-text  class="text-nowrap">
               <b-form-checkbox @change="showFullTable"
                                switch
                                style="text-align: left">
@@ -868,6 +869,10 @@
                   :op="removeItems">
 
     </confirm-form>
+    <excel-exporter-modal ref="excelExporterModal"
+                          :titles="titles"
+                          :selected="selected"
+                          :item-fields="itemFields"/>
   </div>
 </template>
 
@@ -882,10 +887,13 @@
   import EditModal from './edit/EditModal';
   import ConfirmForm from "./ConfirmForm";
   import FieldModalForm from "./FieldModalForm";
+  import ExcelExporterModal from "./ExcelExporterModal";
+
 
   export default {
     name: "ItemList",
     components: {
+      ExcelExporterModal,
       VueRangeSlider,
       AddModal,
       EditModal,
@@ -1174,42 +1182,6 @@
       }
     },
     methods: {
-      async toExcel(){
-        let titlesInPayload = []
-        let payload = []
-        for (let index = 2; index < this.itemFields.length; index++){
-          if(this.titles[index-2].show === true) {
-            let field = {}
-            field.key = this.itemFields[index].key
-            titlesInPayload.push(field)
-          }
-        }
-        debugger
-        for (let item = 0; item < this.items.length; item++){
-          let itemToExport = {}
-          for (let i = 0; i < titlesInPayload.length; i++){
-            let t = titlesInPayload[i].key
-            itemToExport[t] = this.items[item][t.toString()]
-          }
-          payload.push(itemToExport)
-        }
-
-        const response = await fetch(`http://localhost:8000/api/v1/to_excel/`, {
-          method: 'POST',
-          mode: 'cors',
-          headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json'
-          },
-          body: JSON.stringify(payload)
-        });
-        /* eslint-disable */
-        if (response.status !== 201) {
-          alert(JSON.stringify(await response.json(), null, 2));
-          this.$parent.showErrorAlert()
-        }
-        this.$parent.showAlert()
-      },
       countDownChanged(dismissCountDown) {
         this.dismissCountDown = dismissCountDown
       },
@@ -1513,5 +1485,8 @@
     color: #000000;
     background-color: #ffffff;
     border-color: #ffffff;
-}
+  }
+  .tr{
+    max-height: 20px;
+  }
 </style>
