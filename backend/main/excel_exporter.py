@@ -128,6 +128,14 @@ def get_indices(merge_df: dict):
                 arrays[0].append(key[0])
                 arrays[1].append(key[1])
 
+    else:
+        tuples = list(zip(*arrays))
+        for key in merge_df:
+            for multiindex in merge_df[key]:
+                if multiindex not in tuples:
+                    arrays[0].append(multiindex[0])
+                    arrays[1].append(multiindex[1])
+
     tuples = list(zip(*arrays))
     tuples.sort(key=lambda key: key[0])
 
