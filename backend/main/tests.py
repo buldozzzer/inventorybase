@@ -109,7 +109,7 @@ class ItemTests(APITestCase):
             ],
             "inventory_n": self.mongo_functions.fake.ssn(),
             "otss_category": "не секретно",
-            "condition": "ИСправное",
+            "condition": "Исправное",
             "unit_from": self.mongo_functions.fake.company_prefix(),
             "in_operation": "Используется",
             "fault_document_requisites": self.mongo_functions.fake.ssn(),
@@ -377,3 +377,47 @@ class LocationsTests(APITestCase):
         response = self.client.put('/api/v1/location/' + _id + '/', format='json', data=self.form)
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
         self.connection['main_location'].drop()
+
+
+class ConditionTests(APITestCase):
+    def setUp(self):
+        self.functions = BasicFunctions()
+        self.connection = mongo.get_conn()
+        self.form = {
+            'conditions': self.functions.fake.name()
+        }
+
+    def test_get_type_list(self):
+        response = self.client.get('/api/v1/condition/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.connection['main_condition'].drop()
+
+    def test_add_type(self):
+        response = self.client.post('/api/v1/condition/',
+                                    format='json',
+                                    data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.connection['main_condition'].drop()
+
+    def test_delete_type(self):
+        self.client.post('/api/v1/condition/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/condition/', format='json')
+        _id = data_for_ids.data['conditions'][0]['_id']
+        response = self.client.delete('/api/v1/condition/' + _id + '/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.connection['main_condition'].drop()
+
+    def test_put_type(self):
+        self.client.post('/api/v1/condition/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/condition/', format='json')
+        _id = data_for_ids.data['conditions'][0]['_id']
+        self.form['condition'] = 'blablabla'
+        self.form['_id'] = str(ObjectId(_id))
+        response = self.client.put('/api/v1/condition/' + _id + '/', format='json', data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
+        self.connection['main_condition'].drop()
+

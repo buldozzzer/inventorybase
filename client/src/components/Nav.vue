@@ -62,6 +62,9 @@ export default {
 };
 </script>
 
-<style scoped>
-
+<style>
+  .navbar-nav .dropdown-menu {
+    position: absolute;
+    float: none;
+  }
 </style>

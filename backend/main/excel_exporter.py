@@ -4,9 +4,11 @@ import datetime as dt
 
 def get_nested_components(payload: list):
     """
-
-    :param payload:
-    :return:
+    This method extracts information about nested components
+    and forms dict of dicts in which key is pair of item index
+    and number of item`s nested component
+    :param payload: item list
+    :return: return list of nested components
     """
     nested_components = {
         ('Компоненты', 'Наименование'): {},
@@ -36,7 +38,10 @@ def get_nested_components(payload: list):
 
 
 def get_items(payload: list):
-
+    """
+    :param payload: item list
+    :return: dict of items without nested components
+    """
     item_dict = {}
     item_titles = []
 
@@ -106,6 +111,10 @@ def get_items(payload: list):
 
 
 def get_indices(merge_df: dict):
+    """
+    :param merge_df: merged dict of items and their nested components
+    :return: multiindex for items and their nested components
+    """
     arrays = [[], []]
 
     for key in merge_df[('', 'Наименование')]:
@@ -128,7 +137,10 @@ def get_indices(merge_df: dict):
 
 
 def export_to_excel(payload: list):
-
+    """
+    :param payload: item list
+    :return: name of created file
+    """
     nested_components = {}
 
     if 'components' in payload[0]:
