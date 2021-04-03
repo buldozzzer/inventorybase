@@ -14,7 +14,8 @@ from . import excel_exporter as ee
 
 class BasicFunctions:
     def __init__(self):
-        self.client = MongoClient('localhost', 27017)
+        # self.client = MongoClient('localhost', 27017)
+        self.client = MongoClient('items_db', 27017)
         self.fake = Factory.create('ru_RU')
 
     def generate_employee_data(self):
@@ -39,7 +40,8 @@ class TestBasicFunctions(unittest.TestCase):
         self.assertNotEqual(data, {})
 
     def test_connection(self):
-        self.assertEqual(self.connection, MongoClient('localhost', 27017)['ItemsDB'])
+        # self.assertEqual(self.connection, MongoClient('localhost', 27017)['ItemsDB'])
+        self.assertEqual(self.connection, MongoClient('items_db', 27017)['ItemsDB'])
 
 
 class EmployeeTests(APITestCase):
