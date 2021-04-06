@@ -19,7 +19,6 @@ opencv-python==4.5.1.48
 openpyxl==3.0.7
 pandas==1.2.3
 Pillow==8.2.0
-pkg-resources==0.0.0
 pylint==2.6.0
 pymongo==3.11.1
 pytesseract==0.3.7
