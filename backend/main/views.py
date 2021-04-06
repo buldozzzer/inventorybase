@@ -21,6 +21,7 @@ from rest_framework.views import APIView
 
 from . import mongo
 from . import excel_exporter
+from . import recognizer
 
 
 def index(request):
@@ -609,3 +610,9 @@ class ExcelExporterView(APIView):
         return Response({"message": "File .xlsx with name '{}' created successfully."
                         .format(filename)}, status=201)
 
+
+class RecognizerView(APIView):
+    def post(self, request):
+        payload = request.data
+        recognizer.recognizer(payload)
+        return Response({"message": "SUCCESS"}, status=201)

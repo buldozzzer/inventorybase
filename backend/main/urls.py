@@ -44,4 +44,6 @@ urlpatterns = [
     path('test/', views.TestView.as_view(), name='test_connection'),
 
     path('to_excel/', views.ExcelExporterView.as_view(), name='excel_exporter'),
+
+    path('recognizer/', views.RecognizerView.as_view(), name='recognizer')
 ]
