@@ -1,17 +1,23 @@
 <template>
-  <form>
-    <div ref="dropZone" id="dropZone" v-if="file == null">
-      <input type="file"
-             ref="uploadImage"
-             @change="getFileFromInputTag"
-             accept=".jpg, .jpeg, .png"
-             multiple>
-    </div>
-    <img v-else
-         ref="preview"
-         src=""
-         alt=""/>
-  </form>
+  <b-container>
+    <b-row>
+    <form class="mt-3">
+      <div ref="dropZone" id="dropZone" v-if="file == null">
+        Добавьте файл.
+      </div>
+      <img v-else
+           ref="preview"
+           src=""
+           alt=""/>
+    </form>
+    <input type="file"
+           class="mt-3"
+           ref="uploadImage"
+           @change="getFileFromInputTag"
+           accept=".jpg, .jpeg, .png"
+           multiple>
+    </b-row>
+  </b-container>
 </template>
 
 <script>
@@ -51,9 +57,9 @@
         if (/\.(jpe?g|png)$/i.test(this.file.name)) {
           let reader = new FileReader();
           reader.addEventListener("load", function () {
-            this.$refs['preview'].src = reader.result;
-          }.bind(this), false);
-          reader.readAsDataURL(this.file);
+            this.$refs['preview'].src = reader.result
+          }.bind(this), false)
+          reader.readAsDataURL(this.file)
         }
       },
       getFileFromInputTag() {
@@ -68,20 +74,19 @@
   form {
     display: block;
     width: 400px;
-    margin: auto;
-    margin-top: 40px;
-    line-height: 400px;
+    margin: auto auto auto;
+    line-height: 500px;
     align-content: center;
+    background-color: #95999c;
+    border-radius: 5px;
   }
 
   #dropZone {
     color: #555;
     font-size: 18px;
     text-align: center;
-
     width: 400px;
-    padding: 50px 0;
-    margin: 50px auto;
+    margin: auto;
 
     background: #eee;
     border: 1px solid #ccc;
@@ -91,7 +96,7 @@
     border-radius: 5px;
   }
 
-  #dropZone.hover {
+  #dropZone:hover {
     background: #ddd;
     border-color: #aaa;
   }
@@ -108,8 +113,11 @@
 
   img{
     height: 500px;
-    margin: inherit;
+    margin: auto;
     display: block;
-    border-radius: 5px;
+  }
+  input{
+    text-align: center;
+    margin: auto;
   }
 </style>

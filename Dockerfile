@@ -9,6 +9,8 @@ FROM snakepacker/python:all as server
 ENV PYTHONUNBUFFERED=1
 WORKDIR /app
 COPY ./backend/requirements.txt /app/
+RUN apt-get update
+RUN apt-get install ffmpeg libsm6 libxext6  -y
 RUN pip install -r requirements.txt
 COPY ./backend/ /app/
 COPY --from=static /app/dist/inventorybase/static/css /app/inventorybase/static/css
