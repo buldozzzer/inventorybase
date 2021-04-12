@@ -1,26 +1,35 @@
 <template>
   <b-container>
     <b-row>
-    <form class="mt-3">
-      <div ref="dropZone" id="dropZone" v-if="file == null">
-        <h6>Добавьте файл.</h6>
-      </div>
-      <img v-else
-           ref="preview"
-           src=""
-           alt=""/>
-      <input type="file"
-           class="mt-3"
-           ref="uploadImage"
-           @change="getFileFromInputTag"
-           accept=".jpg, .jpeg, .png">
-    </form>
+      <form class="dropForm mt-3">
+        <div ref="dropZone" id="dropZone" class="doc" v-if="file == null">
+          <h6>Добавьте файл.</h6>
+        </div>
+        <img v-if="file"
+             ref="preview"
+             class="doc"
+             src=""
+             alt=""/>
+        <div>
+          <div>
+            <label for="uploadImage" class="btn">Открыть проводник</label>
+            <input type="file"
+                   class="mt-3"
+                   id="uploadImage"
+                   ref="uploadImage"
+                   style="visibility:hidden;"
+                   @change="getFileFromInputTag"
+                   accept=".jpg, .jpeg, .png">
+          </div>
+        </div>
+      </form>
     </b-row>
   </b-container>
 </template>
 
 <script>
 /* eslint-disable */
+  import {bus} from '../../main'
 
   export default {
     name: "RecognizerModal",
@@ -48,9 +57,6 @@
         }.bind(this));
       }
     },
-    created() {
-
-    },
     methods: {
       getImagePreview() {
         if (/\.(jpe?g|png)$/i.test(this.file.name)) {
@@ -64,8 +70,11 @@
       getFileFromInputTag() {
         this.file = this.$refs.uploadImage.files[0]
         this.getImagePreview()
-      }
-    }
+      },
+
+    },
+    async created() {
+    },
   }
 </script>
 
@@ -74,7 +83,9 @@
     display: block;
     width: 400px;
     margin: auto auto auto;
-    height: 530px;
+    height: 502px;
+    background: #eee;
+    border: 1px solid #ccc;
     padding-bottom: 30px;
     align-content: center;
     border-radius: 5px;
@@ -86,7 +97,7 @@
     font-size: 18px;
     text-align: center;
     width: 400px;
-    height: 500px;
+    height: 502px;
     margin: auto;
 
     background: #eee;
@@ -95,11 +106,6 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-  }
-
-  #dropZone:hover {
-    background: #ddd;
-    border-color: #aaa;
   }
 
   #dropZone.error {
@@ -113,9 +119,22 @@
   }
 
   img{
-    height: 500px;
+    max-height: 500px;
     margin: auto;
     display: block;
+    max-width: 360px;
+  }
+
+  .dropFrom img:hover:after {
+    padding: 90px;
+    position: absolute;
+    margin-left: -250px;
+    content: 'x';
+    font-size: 50px;
+    font-weight: bold;
+    text-align: center;
+    background: rgba(0, 0, 0, 0.5);
+    color: black;
   }
   input{
     text-align: center;
