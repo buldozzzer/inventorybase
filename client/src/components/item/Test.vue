@@ -70,7 +70,7 @@
   }
 </script>
 
-<style>
+<style scope>
   form {
     display: block;
     width: 400px;

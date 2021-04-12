@@ -592,7 +592,7 @@ class TestView(APIView):
             :return: Response status 200.
         """
         connection = mongo.get_conn()
-        if connection:
+        if connection is not None:
             return Response({}, status=200)
         else:
             return Response({}, status=400)
