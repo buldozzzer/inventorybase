@@ -3,19 +3,18 @@
     <b-row>
     <form class="mt-3">
       <div ref="dropZone" id="dropZone" v-if="file == null">
-        Добавьте файл.
+        <h6>Добавьте файл.</h6>
       </div>
       <img v-else
            ref="preview"
            src=""
            alt=""/>
-    </form>
-    <input type="file"
+      <input type="file"
            class="mt-3"
            ref="uploadImage"
            @change="getFileFromInputTag"
-           accept=".jpg, .jpeg, .png"
-           multiple>
+           accept=".jpg, .jpeg, .png">
+    </form>
     </b-row>
   </b-container>
 </template>
@@ -75,10 +74,11 @@
     display: block;
     width: 400px;
     margin: auto auto auto;
-    line-height: 500px;
+    height: 530px;
+    padding-bottom: 30px;
     align-content: center;
-    background-color: #95999c;
     border-radius: 5px;
+    text-align: center;
   }
 
   #dropZone {
@@ -86,6 +86,7 @@
     font-size: 18px;
     text-align: center;
     width: 400px;
+    height: 500px;
     margin: auto;
 
     background: #eee;
@@ -118,6 +119,11 @@
   }
   input{
     text-align: center;
-    margin: auto;
+    bottom: 0;
+    width: 300px;
+  }
+  h6{
+    text-align: center;
+    margin-top: 220px;
   }
 </style>
