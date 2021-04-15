@@ -1,4 +1,5 @@
 import os
+from corsheaders.defaults import default_headers
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "backend.settings")
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -12,7 +13,10 @@ ALLOWED_HOSTS = ['*']
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
-    ]
+    ],
+    'DEFAULT_PARSER_CLASSES': (
+        'rest_framework.parsers.FileUploadParser',
+    )
 }
 
 INSTALLED_APPS = [
@@ -42,6 +46,9 @@ MIDDLEWARE = [
 
 CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Content-Disposition',
+]
 
 ROOT_URLCONF = 'backend.urls'
 
@@ -102,3 +109,5 @@ STATIC_ROOT = ''
 STATICFILES_DIRS = [
     os.path.join('inventorybase', 'static')
 ]
+MEDIA_URL = 'media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')

@@ -13,11 +13,15 @@
 # class EmployeeViewSet(ModelViewSet):
 #     queryset = employee.objects.all()
 #     serializer_class = EmployeeSerializer
+import uuid
 
 from bson import ObjectId
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.core.files.storage import default_storage
+from django.core.files.base import ContentFile
+from django.conf import settings
 
 from . import mongo
 from . import excel_exporter
@@ -614,5 +618,12 @@ class ExcelExporterView(APIView):
 class RecognizerView(APIView):
     def post(self, request):
         payload = request.data
-        recognizer.recognizer(payload)
-        return Response({"message": "SUCCESS"}, status=201)
+        filename = str(uuid.uuid4())
+        with default_storage.open(filename, 'wb+') as destination:
+            for chunk in payload['file'].chunks():
+                destination.write(chunk)
+        print(settings.MEDIA_ROOT + filename)
+        result = recognizer.recognizer(settings.MEDIA_ROOT + '/' + filename)
+        return Response({
+            'text': result
+        }, status=201)
