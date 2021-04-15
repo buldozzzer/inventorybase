@@ -99,7 +99,6 @@
           method: 'POST',
           mode: 'cors',
           headers: {
-            'Accept': 'application/json',
             'Content-type': 'application/json'
           },
           body: JSON.stringify(payload)
