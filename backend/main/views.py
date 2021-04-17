@@ -595,11 +595,12 @@ class TestView(APIView):
             :param _: Default to none.
             :return: Response status 200.
         """
+        host, port = mongo.get_param()
         connection = mongo.get_conn()
         if connection is not None:
-            return Response({}, status=200)
+            return Response({'host': host, 'port': port}, status=200)
         else:
-            return Response({}, status=400)
+            return Response({'host': 'error', 'port': 'error'}, status=400)
 
 
 class ExcelExporterView(APIView):
