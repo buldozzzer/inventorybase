@@ -8,7 +8,7 @@ SECRET_KEY = 'e(y)qn@-nzwoe&%skg)7+=3wbt5c*$-^-(^hjq@ov1pz&^p86o'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*', '127.0.0.1', '.gitwork.ru']
+ALLOWED_HOSTS = ['*', '127.0.0.1', 'localhost', '.gitwork.ru']
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [

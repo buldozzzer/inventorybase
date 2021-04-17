@@ -28,7 +28,6 @@ from . import mongo
 from . import recognizer
 
 
-
 def index(request):
     return render(request, 'index.html')
 
@@ -47,9 +46,8 @@ class ItemView(APIView):
             for document in items:
                 document['_id'] = str(document['_id'])
                 result.append(document)
-        return Response({
-            'items': result
-        }, status=200)
+        return Response({'items': result}, status=200,
+                        headers={'Access-Control-Allow-Origin': '*'})
 
     def post(self, request):
         """
@@ -599,9 +597,11 @@ class TestView(APIView):
         host, port = mongo.get_param()
         connection = mongo.get_conn()
         if connection is not None:
-            return Response({'host': host, 'port': port, 'settings': socket.gethostname()}, status=200)
+            return Response({'host': host, 'port': port, 'settings': socket.gethostname()}, status=200,
+                            headers={'Access-Control-Allow-Origin': '*'})
         else:
-            return Response({'host': 'error', 'port': 'error', 'settings': socket.gethostname()}, status=400)
+            return Response({'host': 'error', 'port': 'error', 'settings': socket.gethostname()}, status=400,
+                            headers={'Access-Control-Allow-Origin': '*'})
 
 
 class ExcelExporterView(APIView):
