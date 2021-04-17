@@ -53,7 +53,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     'Access-Control-Allow-Credentials',
     'Access-Control-Allow-Origin',
 ]
-CORS_ALLOWED_ORIGINS = (
+CORS_ALLOWED_ORIGINS = [
     'http://localhost:8080',
     'http://127.0.0.1:8080',
     'http://0.0.0.0:8080',
@@ -66,8 +66,17 @@ CORS_ALLOWED_ORIGINS = (
     'https://localhost:8000',
     'https://127.0.0.1:8000',
     'https://0.0.0.0:8000',
-    'https://sms.gitwork.ru'
-)
+    'https://sms.gitwork.ru',
+]
+
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
 
 ROOT_URLCONF = 'backend.urls'
 
