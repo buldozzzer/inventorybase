@@ -618,7 +618,7 @@ class ExcelExporterView(APIView):
 class RecognizerView(APIView):
     def post(self, request):
         payload = request.data
-        filename = str(uuid.uuid4())
+        filename = "{}.png".format(str(uuid.uuid4()))
         with default_storage.open(filename, 'wb+') as destination:
             for chunk in payload['file'].chunks():
                 destination.write(chunk)

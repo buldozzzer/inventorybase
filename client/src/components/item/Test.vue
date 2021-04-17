@@ -4,30 +4,27 @@
       <b-col>
         <form class="dropForm mt-3">
           <div ref="dropZone" id="dropZone" class="doc" v-if="file == null">
-            <h6 id="header">Добавьте файл.</h6>
+<!--            <h6 id="header">Добавьте файл.</h6>-->
+            <label id="header" for="uploadImage" class="btn">Добавьте файл.</label>
           </div>
           <img v-if="file"
                ref="preview"
                class="doc"
                src=""
                alt=""/>
-          <div>
-            <div>
-              <label for="uploadImage" class="btn">Открыть проводник</label>
-              <input type="file"
-                     class="mt-3"
-                     id="uploadImage"
-                     ref="uploadImage"
-                     style="visibility:hidden;"
-                     @change="getFileFromInputTag"
-                     accept=".jpg, .jpeg, .png">
-            </div>
-          </div>
+            <input type="file"
+                   class="mt-3"
+                   id="uploadImage"
+                   ref="uploadImage"
+                   style="visibility:hidden;"
+                   @change="getFileFromInputTag"
+                   accept=".jpg, .jpeg, .png">
         </form>
       </b-col>
       <b-col>
-        <label>
-          <textarea class="mt-3" v-model="text"></textarea>
+        <b-icon v-if="isLoad === 1" icon="circle-fill" animation="throb" font-scale="4"></b-icon>
+        <label v-else>
+          <textarea  class="mt-3" v-model="text"></textarea>
         </label>
       </b-col>
     </b-row>
@@ -44,7 +41,8 @@
       return {
         dropZone: null,
         file: null,
-        text: null
+        text: null,
+        isLoad: null
       }
     },
     mounted() {
@@ -67,6 +65,7 @@
     },
     watch: {
       file: async function(){
+        this.isLoad = 1
         if (!['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'].includes(this.file.type)) {
             alert('Разрешены только изображения.');
             document.getElementById('header')
@@ -80,7 +79,9 @@
             },
             body: this.file
           });
-          this.text = response['text']
+          this.text = await response.json()
+          this.text = this.text['text']
+          this.isLoad = null
         if (response.status !== 201) {
           alert(JSON.stringify(await response.json(), null, 2));
         }
@@ -171,8 +172,8 @@
     bottom: 0;
     width: 300px;
   }
-  h6{
-    text-align: center;
+
+  #header{
     margin-top: 220px;
   }
 </style>
