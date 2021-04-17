@@ -53,7 +53,7 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
     'Access-Control-Allow-Credentials',
     'Access-Control-Allow-Origin',
 ]
-CORS_ORIGIN_WHITELIST = (
+CORS_ALLOWED_ORIGINS = (
     'http://localhost:8080',
     'http://127.0.0.1:8080',
 
