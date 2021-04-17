@@ -16,16 +16,17 @@
 import uuid
 
 from bson import ObjectId
+from django.conf import settings
+from django.core.files.storage import default_storage
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.core.files.storage import default_storage
-from django.core.files.base import ContentFile
-from django.conf import settings
+import socket
 
-from . import mongo
 from . import excel_exporter
+from . import mongo
 from . import recognizer
+
 
 
 def index(request):
@@ -598,9 +599,9 @@ class TestView(APIView):
         host, port = mongo.get_param()
         connection = mongo.get_conn()
         if connection is not None:
-            return Response({'host': host, 'port': port}, status=200)
+            return Response({'host': host, 'port': port, 'settings': socket.gethostname()}, status=200)
         else:
-            return Response({'host': 'error', 'port': 'error'}, status=400)
+            return Response({'host': 'error', 'port': 'error', 'settings': socket.gethostname()}, status=400)
 
 
 class ExcelExporterView(APIView):
