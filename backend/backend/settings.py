@@ -10,6 +10,8 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*', '127.0.0.1', 'localhost', '.gitwork.ru']
 
+SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.AllowAny'
