@@ -48,7 +48,7 @@ export default {
   },
   methods:{
     async getConnection(){
-      const response = await fetch(`http://${document.location.hostname}:8000/api/v1/test/`,
+      const response = await fetch(`http://inventorybase:8000/api/v1/test/`,
         {
           headers: {
             'Accept': 'application/json',
