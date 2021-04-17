@@ -27,10 +27,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework',
     'corsheaders',
+    'rest_framework',
     'main',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True
+
+CORS_ALLOW_CREDENTIALS = True
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -45,37 +49,8 @@ MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware'
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True
-
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'Content-Disposition',
-    'Access-Control-Allow-Headers',
-    'Access-Control-Allow-Credentials',
-    'Access-Control-Allow-Origin',
-]
-CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8080',
-    'http://127.0.0.1:8080',
-    'http://0.0.0.0:8080',
-
-    'http://localhost:8000',
-    'http://127.0.0.1:8000',
-    'http://0.0.0.0:8000',
-    'http://sms.gitwork.ru',
-
-    'https://localhost:8000',
-    'https://127.0.0.1:8000',
-    'https://0.0.0.0:8000',
-    'https://sms.gitwork.ru',
-]
-
-CORS_ALLOW_METHODS = [
-    'DELETE',
-    'GET',
-    'OPTIONS',
-    'PATCH',
-    'POST',
-    'PUT',
 ]
 
 ROOT_URLCONF = 'backend.urls'
