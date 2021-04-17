@@ -41,7 +41,7 @@ export default {
   data(){
     return{
       connection: false,
-      message: 'Соединение с сервером отсутствует',
+      message: 'test',
       host: null,
       port: null
     }
@@ -53,11 +53,11 @@ export default {
           mode: "cors",
         })
       let tmp = await response.json()
+      this.host = tmp.host
+      this.port = tmp.port
+      this.message = this.host + ':' + this.port
       if(response.status === 200) {
         this.connection = true
-        this.host = tmp.host
-        this.port = tmp.port
-        this.message = this.host + ':' + this.port
       }
     }
   },
