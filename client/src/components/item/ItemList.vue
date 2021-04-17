@@ -1123,7 +1123,7 @@
         items: [],
         selectedItem: {},
         selected: [],
-        sliderValue: '540px',
+        sliderValue: '',
         employeeList: [],
         employeeInitials: [],
         filters: {
@@ -1438,6 +1438,10 @@
       })
 
     },
+    mounted() {
+      let _height = document.documentElement.clientHeight * 0.8
+      this.sliderValue = _height.toString() + 'px'
+    }
   };
 </script>
 
