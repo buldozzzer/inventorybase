@@ -51,6 +51,7 @@ MIDDLEWARE = [
 
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'Content-Disposition',
+    
 ]
 
 ROOT_URLCONF = 'backend.urls'
