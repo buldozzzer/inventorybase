@@ -8,7 +8,7 @@ SECRET_KEY = 'e(y)qn@-nzwoe&%skg)7+=3wbt5c*$-^-(^hjq@ov1pz&^p86o'
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['*', '127.0.0.1', '.gitwork.ru']
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
@@ -36,6 +36,30 @@ CORS_ORIGIN_ALLOW_ALL = True
 
 CORS_ALLOW_CREDENTIALS = True
 
+CORS_ALLOW_METHODS = [
+    'DELETE',
+    'GET',
+    'OPTIONS',
+    'PATCH',
+    'POST',
+    'PUT',
+]
+
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'Content-Disposition',
+    'accept',
+    'Origin',
+    'accept-encoding',
+    'authorization',
+    'content-type',
+    'dnt',
+    'user-agent',
+    'x-csrftoken',
+    'x-requested-with',
+    'Cache-Control'
+
+]
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -47,11 +71,6 @@ MIDDLEWARE = [
     'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware'
-]
-
-CORS_ALLOW_HEADERS = list(default_headers) + [
-    'Content-Disposition',
-    
 ]
 
 ROOT_URLCONF = 'backend.urls'

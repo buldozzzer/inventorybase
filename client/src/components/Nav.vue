@@ -48,29 +48,30 @@ export default {
   },
   methods:{
     async getConnection(){
-      // const response = await fetch(`http://127.0.0.1:8000/api/v1/test/`,
-      //   {
-      //     headers: {
-      //           'Accept': 'application/json',
-      //         },
-      //     mode: "cors",
-      //   })
-      // let tmp = await response.json()
-      // this.host = tmp.host
-      // this.port = tmp.port
-      // this.message = this.host + ':' + this.port
-      // if(response.status === 200) {
-      //   this.connection = true
-      // }
-      await this.$http.get('http://127.0.0.1:8000/api/v1/test/')
-        .then(response => {
-          this.host = response.data.host
-          this.port = response.data.port
-          this.message = this.host + ':' + this.port
-          this.connection = true
-        }).catch(err => {
-        console.log(err.response);
-      });
+      const response = await fetch(`http://127.0.0.1:8000/api/v1/test/`,
+        {
+          headers: {
+            'Accept': 'application/json',
+            'Origin': 'http://sms.gitwork.ru'
+          },
+          mode: "cors",
+        })
+      let tmp = await response.json()
+      this.host = tmp.host
+      this.port = tmp.port
+      this.message = this.host + ':' + this.port
+      if(response.status === 200) {
+        this.connection = true
+      }
+      // await this.$http.get('http://127.0.0.1:8000/api/v1/test/')
+      //   .then(response => {
+      //     this.host = response.data.host
+      //     this.port = response.data.port
+      //     this.message = this.host + ':' + this.port
+      //     this.connection = true
+      //   }).catch(err => {
+      //   console.log(err.response);
+      // });
     }
   },
   async created() {
