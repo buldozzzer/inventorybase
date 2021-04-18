@@ -55,6 +55,7 @@ export default {
             'Origin': 'http://sms.gitwork.ru'
           },
           mode: "cors",
+          referrer: ""
         })
       let tmp = await response.json()
       this.host = tmp.host
