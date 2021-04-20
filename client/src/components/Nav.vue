@@ -48,11 +48,10 @@ export default {
   },
   methods:{
     async getConnection(){
-      const response = await fetch(`http://inventorybase:8000/api/v1/test/`,
+      const response = await fetch(`http://localhost:8000/api/v1/test/`,
         {
           headers: {
             'Accept': 'application/json',
-            'Origin': 'http://sms.gitwork.ru'
           },
           mode: "cors",
           referrer: ""

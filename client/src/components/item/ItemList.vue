@@ -169,7 +169,6 @@
                     aria-hidden="false"></b-icon>
             <b-icon icon="check-square-fill"
                     v-else
-                    v-if="selected.length !== 0"
                     data-toggle="tooltip"
                     data-placement="top"
                     font-scale="1.5"
@@ -586,12 +585,12 @@
         </b-table>
       </template>
 
-      <template #cell(selected)="{ rowSelected }">
+      <template #cell(selected)="row">
         <b-container>
           <b-row class="text-center">
             <b-col cols="6">
               <b-icon icon="check2"
-                      v-show="rowSelected"
+                      v-show="row.rowSelected"
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Выбрано"
@@ -1167,7 +1166,6 @@
           for (let i = 0; i < this.itemFields.length; i++) {
             showingFields.push(this.itemFields[i])
           }
-          debugger
           for(let i = 0; i < this.titles.length; i++){
             this.titles[i].show = true
           }
