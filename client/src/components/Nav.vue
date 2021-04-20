@@ -36,6 +36,7 @@
 
 <script>
 /* eslint-disable */
+require('dotenv').config()
 export default {
   name: 'Nav',
   data(){
@@ -48,13 +49,12 @@ export default {
   },
   methods:{
     async getConnection(){
-      const response = await fetch(`http://${process.env.HOST}/inventorybase/api/v1/test/`,
+      const response = await fetch(`http://sms.gitwork.ru/inventorybase/api/v1/test/`,
         {
           headers: {
             'Accept': 'application/json',
           },
           mode: "cors",
-          referrer: ""
         })
       let tmp = await response.json()
       this.host = tmp.host

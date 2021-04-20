@@ -4,5 +4,6 @@ const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
   NODE_ENV: '"development"',
-  HOST: "sms.gitwork.ru"
+  HOST: "localhost:8000",
+  // HOST: "sms.gitwork.ru"
 })
