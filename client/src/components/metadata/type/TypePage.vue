@@ -52,7 +52,7 @@
       },
 
       async fetchTypes() {
-        const response = await fetch('http://localhost:8000/api/v1/type/',
+        const response = await fetch('http://localhost:8000/inventorybase/api/v1/type/',
         {
           mode: "cors",
         })
@@ -62,7 +62,7 @@
       },
       async removeType(unit) {
         const _id = unit['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/type/${_id}/`, {
+        const response = await fetch(`http://localhost:8000/inventorybase/api/v1/type/${_id}/`, {
           method: 'DELETE',
           mode: 'cors',
           headers: {

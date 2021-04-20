@@ -41,7 +41,7 @@
       },
       async editItem(item) {
         const _id = item['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
+        const response = await fetch(`http://localhost:8000/inventorybase/api/v1/item/${_id}/`,
           {
             method: 'PUT',
             mode: 'cors',

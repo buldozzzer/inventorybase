@@ -71,7 +71,7 @@
             document.getElementById('header')
         }
         if (this.file != null){
-          const response = await fetch(`http://localhost:8000/api/v1/recognizer/`, {
+          const response = await fetch(`http://localhost:8000/inventorybase/api/v1/recognizer/`, {
             method: 'POST',
             mode: 'cors',
             headers: {

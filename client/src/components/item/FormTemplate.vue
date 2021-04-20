@@ -306,7 +306,7 @@
       },
       async fetchOTSS() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/otss/',
+        const response = await fetch('http://localhost:8000/inventorybase/api/v1/otss/',
         {
           mode: "cors",
         })
@@ -318,7 +318,7 @@
       },
       async fetchConditions() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/condition/',
+        const response = await fetch('http://localhost:8000/inventorybase/api/v1/condition/',
         {
           mode: "cors",
         })
@@ -330,7 +330,7 @@
       },
       async fetchUnits() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/unit/',
+        const response = await fetch('http://localhost:8000/inventorybase/api/v1/unit/',
         {
           mode: "cors",
         })

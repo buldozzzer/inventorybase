@@ -140,7 +140,7 @@
         }
       },
       async fetchEmployees() {
-        const response = await fetch('http://localhost:8000/api/v1/employee/',
+        const response = await fetch('http://localhost:8000/inventorybase/api/v1/employee/',
         {
           mode: "cors",
         })
@@ -172,7 +172,7 @@
             comment: this.listOfNewItems[i].comment,
             last_check: this.listOfNewItems[i].last_check,
           };
-          const response = await fetch(`http://localhost:8000/api/v1/item/`, {
+          const response = await fetch(`http://localhost:8000/inventorybase/api/v1/item/`, {
             method: 'POST',
             mode: 'cors',
             headers: {

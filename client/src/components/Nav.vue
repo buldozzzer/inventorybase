@@ -48,7 +48,7 @@ export default {
   },
   methods:{
     async getConnection(){
-      const response = await fetch(`http://localhost:8000/api/v1/test/`,
+      const response = await fetch(`http://localhost:8000/inventorybase/api/v1/test/`,
         {
           headers: {
             'Accept': 'application/json',
@@ -63,7 +63,7 @@ export default {
       if(response.status === 200) {
         this.connection = true
       }
-      // await this.$http.get('http://127.0.0.1:8000/api/v1/test/')
+      // await this.$http.get('http://127.0.0.1:8000/inventorybase/api/v1/test/')
       //   .then(response => {
       //     this.host = response.data.host
       //     this.port = response.data.port

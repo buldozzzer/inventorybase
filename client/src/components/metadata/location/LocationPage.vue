@@ -52,7 +52,7 @@
       },
 
       async fetchLocations() {
-        const response = await fetch('http://localhost:8000/api/v1/location/',
+        const response = await fetch('http://localhost:8000/inventorybase/api/v1/location/',
         {
           mode: "cors",
         })
@@ -62,7 +62,7 @@
       },
       async removeLocation(unit) {
         const _id = unit['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/location/${_id}/`, {
+        const response = await fetch(`http://localhost:8000/inventorybase/api/v1/location/${_id}/`, {
           method: 'DELETE',
           mode: 'cors',
           headers: {

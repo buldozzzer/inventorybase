@@ -95,7 +95,7 @@
     methods: {
       /* eslint-disable */
       async createItem(payload) {
-        const response = await fetch(`http://localhost:8000/api/v1/item/`, {
+        const response = await fetch(`http://localhost:8000/inventorybase/api/v1/item/`, {
           method: 'POST',
           mode: 'cors',
           headers: {

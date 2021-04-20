@@ -52,7 +52,7 @@
       },
       async removeOTSS(otss) {
         const _id = otss['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/otss/${_id}/`, {
+        const response = await fetch(`http://localhost:8000/inventorybase/api/v1/otss/${_id}/`, {
           method: 'DELETE',
           mode: 'cors',
           headers: {
@@ -66,7 +66,7 @@
         await this.fetchOTSS()
       },
       async fetchOTSS() {
-        const response = await fetch('http://localhost:8000/api/v1/otss/',
+        const response = await fetch('http://localhost:8000/inventorybase/api/v1/otss/',
         {
           mode: "cors",
         })

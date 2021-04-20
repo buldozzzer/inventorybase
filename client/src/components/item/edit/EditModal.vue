@@ -107,7 +107,7 @@
     },
     methods: {
       async fetchEmployees() {
-        const response = await fetch('http://localhost:8000/api/v1/employee/',
+        const response = await fetch('http://localhost:8000/inventorybase/api/v1/employee/',
         {
           mode: "cors",
         })

@@ -51,7 +51,7 @@
         this.selected.push(data)
       },
       async fetchUnits() {
-        const response = await fetch('http://localhost:8000/api/v1/unit/',
+        const response = await fetch('http://localhost:8000/inventorybase/api/v1/unit/',
         {
           mode: "cors",
         })
@@ -61,7 +61,7 @@
       },
       async removeUnit(unit) {
         const _id = unit['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/unit/${_id}/`, {
+        const response = await fetch(`http://localhost:8000/inventorybase/api/v1/unit/${_id}/`, {
           method: 'DELETE',
           mode:'cors',
           headers: {

@@ -52,7 +52,7 @@
       },
 
       async fetchCategories() {
-        const response = await fetch('http://localhost:8000/api/v1/category/',
+        const response = await fetch('http://localhost:8000/inventorybase/api/v1/category/',
         {
           mode: "cors",
         })
@@ -62,7 +62,7 @@
       },
       async removeCategory(unit) {
         const _id = unit['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/category/${_id}/`, {
+        const response = await fetch(`http://localhost:8000/inventorybase/api/v1/category/${_id}/`, {
           method: 'DELETE',
           mode: 'cors',
           headers: {

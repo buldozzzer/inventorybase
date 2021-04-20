@@ -52,7 +52,7 @@
       },
 
       async fetchConditions() {
-        const response = await fetch('http://localhost:8000/api/v1/condition/',
+        const response = await fetch('http://localhost:8000/inventorybase/api/v1/condition/',
         {
           mode: "cors",
         })
@@ -62,7 +62,7 @@
       },
       async removeCondition(unit) {
         const _id = unit['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/condition/${_id}/`, {
+        const response = await fetch(`http://localhost:8000/inventorybase/api/v1/condition/${_id}/`, {
           method: 'DELETE',
           mode: "cors",
           headers: {
