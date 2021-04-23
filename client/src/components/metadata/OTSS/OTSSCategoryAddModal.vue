@@ -55,7 +55,7 @@
     },
     methods: {
       async createOTSSCategory() {
-        const response = await fetch('http://localhost:8000/inventorybase/api/v1/otss/', {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/otss/`, {
           method: 'POST',
           mode: 'cors',
           headers: {

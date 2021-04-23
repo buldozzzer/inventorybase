@@ -55,7 +55,7 @@
     },
     methods: {
       async createUnit() {
-        const response = await fetch('http://localhost:8000/inventorybase/api/v1/unit/', {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/unit/`, {
           method: 'POST',
           mode: 'cors',
           headers: {

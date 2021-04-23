@@ -59,7 +59,7 @@
           payload.push(itemToExport)
         }
 
-        const response = await fetch(`http://localhost:8000/inventorybase/api/v1/to_excel/`, {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/to_excel/`, {
           method: 'POST',
           mode: 'cors',
           headers: {

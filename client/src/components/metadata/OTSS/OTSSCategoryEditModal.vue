@@ -55,7 +55,7 @@
     methods:{
       async editOTSS(payload) {
         const _id = payload['_id'];
-        const response = await fetch(`http://localhost:8000/inventorybase/api/v1/otss/${_id}/`, {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/otss/${_id}/`, {
           method: 'PUT',
           mode: 'cors',
           body: JSON.stringify(payload),

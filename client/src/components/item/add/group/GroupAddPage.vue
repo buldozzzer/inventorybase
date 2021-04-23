@@ -140,7 +140,7 @@
         }
       },
       async fetchEmployees() {
-        const response = await fetch('http://localhost:8000/inventorybase/api/v1/employee/',
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/employee/`,
         {
           mode: "cors",
         })

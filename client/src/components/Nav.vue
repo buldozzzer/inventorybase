@@ -48,7 +48,7 @@ export default {
   },
   methods:{
     async getConnection(){
-      const response = await fetch(`https://sms.gitwork.ru/inventorybase/api/v1/test/`,
+      const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/test/`,
         {
           headers: {
             'Accept': 'application/json',

@@ -1222,7 +1222,7 @@
         await this.editItem(item)
       },
       async fetchOTSS() {
-        const response = await fetch('http://localhost:8000/inventorybase/api/v1/otss/',
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/otss/`,
         {
           mode: "cors",
         })
@@ -1235,7 +1235,7 @@
         this.otss = temp
       },
       async fetchUnits() {
-        const response = await fetch('http://localhost:8000/inventorybase/api/v1/unit/',
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/unit/`,
         {
           mode: "cors",
         })
@@ -1251,7 +1251,7 @@
         return this.sliderValue.toString() + 'px'
       },
       async fetchEmployees() {
-        const response = await fetch('http://localhost:8000/inventorybase/api/v1/employee/',
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/employee/`,
         {
           mode: "cors",
         })
@@ -1260,7 +1260,7 @@
         this.employeeToString()
       },
       async fetchItems() {
-        const response = await fetch('http://localhost:8000/inventorybase/api/v1/item/',
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/item/`,
         {
           mode: "cors",
         })
@@ -1273,7 +1273,7 @@
       async removeItems(selectedItems) {
         for (let item of selectedItems) {
           const _id = item['_id']
-          const response = await fetch(`http://localhost:8000/inventorybase/api/v1/item/${_id}/`,
+          const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/item/${_id}/`,
             {
               method: 'DELETE',
               mode: 'cors',
@@ -1293,7 +1293,7 @@
       },
       async editItem(item) {
         const _id = item['_id']
-        const response = await fetch(`http://localhost:8000/inventorybase/api/v1/item/${_id}/`,
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/item/${_id}/`,
           {
             method: 'PUT',
             mode: "cors",

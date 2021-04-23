@@ -66,7 +66,7 @@
         }
       },
       async fetchEmployees() {
-        const response = await fetch('http://localhost:8000/inventorybase/api/v1/employee/',
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/employee/`,
         {
           mode: "cors",
         })
@@ -85,7 +85,7 @@
       async editItems() {
         for (let i = 0; i < this.itemsForEdit.length; i++) {
           const _id = this.itemsForEdit[i]['_id']
-          const response = await fetch(`http://localhost:8000/inventorybase/api/v1/item/${_id}/`,
+          const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/item/${_id}/`,
             {
               method: 'PUT',
               mode:'cors',
