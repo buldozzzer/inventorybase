@@ -7,6 +7,16 @@
 <!--            <h6 id="header">Добавьте файл.</h6>-->
             <label id="header" for="uploadImage" class="btn">Добавьте файл</label>
           </div>
+          <b-icon icon="x"
+                  id="removeImage"
+                  v-if="file"
+                  type="btn"
+                  title="Удалить изображение"
+                  @click="removeImage"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  font-scale="2"
+                  aria-hidden="false"></b-icon>
           <img v-if="file"
                ref="preview"
                class="doc"
@@ -69,19 +79,19 @@
             }.bind(this), false)
           }.bind(this))
         this.$refs.dropZone.addEventListener('drop', function (e) {
-          this.file = e.dataTransfer.files[0]
-          this.getImagePreview()
+            this.file = e.dataTransfer.files[0]
+            this.getImagePreview()
         }.bind(this));
       }
     },
     watch: {
-      file: async function(){
-        this.isLoad = 1
-        if (!['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'].includes(this.file.type)) {
+      file: async function () {
+        if (this.file != null) {
+          this.isLoad = 1
+          if (!['image/jpeg', 'image/png', 'image/gif', 'image/svg+xml'].includes(this.file.type)) {
             alert('Разрешены только изображения.');
             document.getElementById('header')
-        }
-        if (this.file != null){
+          }
           const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/recognizer/`, {
             method: 'POST',
             mode: 'cors',
@@ -138,9 +148,15 @@
             last_check: null,
           }
         }
+      },
+      removeImage(){
+        this.file=null
+        this.isLoad=null
+        bus.$emit('removeImage')
       }
     },
     async created() {
+      await bus.$on('removeImage', () => {this.isLoad = null})
     },
   }
 </script>
@@ -217,9 +233,18 @@
     min-width: 400px;
     min-height: 250px;
     max-height: 374px;
+    -webkit-border-radius: 5px;
+    -moz-border-radius: 5px;
     border-radius: 5px;
   }
   #count {
     width: 400px;
+  }
+  #removeImage{
+    display: inline;
+    position: absolute;
+    margin-left: 145px;
+    z-index: 999;
+    color: #007bff;
   }
 </style>
