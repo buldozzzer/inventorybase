@@ -1,8 +1,9 @@
-from PIL import Image
-import pytesseract
 import cv2
-import os
 import numpy as np
+import pytesseract
+from PIL import Image
+import os
+
 
 def to_gray(image: str):
     preprocess = "blur"
@@ -17,27 +18,35 @@ def to_gray(image: str):
     elif preprocess == "blur":
         gray = cv2.medianBlur(gray, 3)
 
-    filename = 'tmp.png'
+    filename = 'media/tmp.png'
     cv2.imwrite(filename, gray)
     return filename
 
 
 def recognizer(image):
-    img = cv2.imread(image)
-    name_img = img[0:500, 400:1200]
+    filename = to_gray(image)
+    img = cv2.imread(filename)
+    name_img = img[80:450, 450:1150]
     kernel = np.array([[-1, -1, -1], [-1, 9, -1], [-1, -1, -1]])
     name_img = cv2.filter2D(name_img, -1, kernel)
-    cv2.imwrite("name.png", name_img)
-    text = pytesseract.image_to_string(Image.open("name.png"), lang='rus+eng')
+    cv2.imwrite("media/name.png", name_img)
+    text = pytesseract.image_to_string(Image.open("media/name.png"), lang='rus+eng')
     if text.find('наименование') != -1:
+        os.remove('media/tmp.png')
+        os.remove('media/name.png')
+        os.remove(image)
         return text[text.find('наименование') + len('наименование'):] \
             .replace("\n", " ") \
             .strip()
-
     else:
         name_img = img[660:1800, :620]
-        cv2.imwrite("name.png", name_img)
-        return pytesseract.image_to_string(Image.open("name.png"), lang='rus+eng') \
+        cv2.imwrite("media/name.png", name_img)
+        text = pytesseract.image_to_string(Image.open("media/name.png"), lang='rus+eng') \
             .replace("\n", " ") \
             .strip()
-
+        os.remove('media/tmp.png')
+        os.remove('media/name.png')
+        os.remove(image)
+        return text[text.find('наименование') + len('наименование'):] \
+            .replace("\n", " ") \
+            .strip()

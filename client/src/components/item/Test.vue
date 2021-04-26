@@ -176,4 +176,7 @@
   #header{
     margin-top: 220px;
   }
+  textarea{
+    min-width: 400px;
+  }
 </style>

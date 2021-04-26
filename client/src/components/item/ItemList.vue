@@ -35,7 +35,7 @@
                     data-placement="top"
                     font-scale="1"
                     aria-hidden="false"></b-icon>
-            {{showFilters ? 'Скрыть фильтры' : 'Показать фильтры' }}
+            Фильтры
           </b-button>
         </b-col>
         <b-col cols="2" align-self="center">
