@@ -5,7 +5,7 @@
         <form class="dropForm mt-3">
           <div ref="dropZone" id="dropZone" class="doc" v-if="file == null">
 <!--            <h6 id="header">Добавьте файл.</h6>-->
-            <label id="header" for="uploadImage" class="btn">Добавьте файл.</label>
+            <label id="header" for="uploadImage" class="btn">Добавьте файл</label>
           </div>
           <img v-if="file"
                ref="preview"
@@ -22,10 +22,20 @@
         </form>
       </b-col>
       <b-col>
-        <b-icon v-if="isLoad === 1" icon="circle-fill" animation="throb" font-scale="4"></b-icon>
-        <label v-else>
-          <textarea  class="mt-3" v-model="text"></textarea>
-        </label>
+        <b-icon v-if="isLoad === 1"
+                icon="circle-fill"
+                animation="throb"
+                font-scale="4"></b-icon>
+        <div v-else class="mt-3">
+          <h5>Наименование:</h5>
+          <label>
+            <textarea v-model="text"></textarea>
+          </label>
+          <h5 class=" mt-3" >Количество:</h5>
+          <label>
+            <input id="count" type="number" min="0" max="100" v-model="count">
+          </label>
+        </div>
       </b-col>
     </b-row>
   </b-container>
@@ -42,7 +52,8 @@
         dropZone: null,
         file: null,
         text: null,
-        isLoad: null
+        isLoad: null,
+        count: 0
       }
     },
     mounted() {
@@ -102,7 +113,32 @@
         this.file = this.$refs.uploadImage.files[0]
         this.getImagePreview()
       },
-
+      onSubmit(evt) {
+        evt.preventDefault();
+        for(let i = 0; i < this.count; i++) {
+          const payload = {
+            name: this.text,
+            user: '',
+            responsible: '',
+            components: [],
+            inventory_n: '',
+            otss_category: '',
+            condition: '',
+            unit_from: '',
+            in_operation: '',
+            fault_document_requisites: '',
+            date_of_receipt: null,
+            number_of_receipt: '',
+            requisites: '',
+            transfer_date: null,
+            otss_requisites: '',
+            spsi_requisites: '',
+            transfer_requisites: '',
+            comment: '',
+            last_check: null,
+          }
+        }
+      }
     },
     async created() {
     },
@@ -175,8 +211,15 @@
 
   #header{
     margin-top: 220px;
+    font-size: 22px;
   }
   textarea{
     min-width: 400px;
+    min-height: 250px;
+    max-height: 374px;
+    border-radius: 5px;
+  }
+  #count {
+    width: 400px;
   }
 </style>
