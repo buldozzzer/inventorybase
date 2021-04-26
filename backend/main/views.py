@@ -625,7 +625,7 @@ class RecognizerView(APIView):
             for chunk in payload['file'].chunks():
                 destination.write(chunk)
         print(settings.MEDIA_ROOT + filename)
-        result = recognizer.recognizer(settings.MEDIA_ROOT + '/' + filename)
+        result = recognizer.recognizer('media/' + filename)
         return Response({
             'text': result
         }, status=201)
