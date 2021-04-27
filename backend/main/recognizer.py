@@ -52,7 +52,7 @@ import os
 #             .strip()
 
 def sort_by(val):
-    return val[1]
+    return val[0]
 
 
 def recognizer(filename):
