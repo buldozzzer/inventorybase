@@ -106,4 +106,5 @@ def recognizer(filename):
         elif 'Количество' in column:
             result_extracting_data['count'] = column
 
+    os.remove(filename)
     return result_extracting_data
