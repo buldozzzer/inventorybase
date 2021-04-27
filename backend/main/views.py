@@ -627,5 +627,5 @@ class RecognizerView(APIView):
         print(settings.MEDIA_ROOT + filename)
         result = recognizer.recognizer('media/' + filename)
         return Response({
-            'text': result
+            'extracting_data': result
         }, status=201)
