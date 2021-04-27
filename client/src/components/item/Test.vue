@@ -39,7 +39,7 @@
         <div v-else class="mt-3">
           <h5>Наименование:</h5>
           <label>
-            <textarea v-model="text"></textarea>
+            <textarea v-model="extracting_data"></textarea>
           </label>
           <h5 class=" mt-3" >Количество:</h5>
           <label>
@@ -61,7 +61,7 @@
       return {
         dropZone: null,
         file: null,
-        text: null,
+        extracting_data: null,
         isLoad: null,
         count: 0
       }
@@ -100,8 +100,8 @@
             },
             body: this.file
           });
-          this.text = await response.json()
-          this.text = this.text['text']
+          this.extracting_data = await response.json()
+          this.extracting_data = this.extracting_data['extracting_data']
           this.isLoad = null
         if (response.status !== 201) {
           alert(JSON.stringify(await response.json(), null, 2));
@@ -127,7 +127,7 @@
         evt.preventDefault();
         for(let i = 0; i < this.count; i++) {
           const payload = {
-            name: this.text,
+            name: this.extracting_data,
             user: '',
             responsible: '',
             components: [],

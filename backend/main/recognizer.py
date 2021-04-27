@@ -52,10 +52,19 @@ import os
 #             .strip()
 
 def sort_by(val):
-    return val[0]
+    return val[1]
 
 
 def recognizer(filename):
+    # Поворот изображения в горизонтальное положение
+    os.system('tesseract --psm 0 {} text'.format(filename))
+    im = Image.open(filename)
+    file = open('text.osd', 'r')
+    for line in file:
+        if line.find('Orientation in degrees:') != -1:
+            line = line[len('Orientation in degrees:'):]
+            im.transpose(int(int(line.replace('\n', '').strip()) / 90 + 1)).save(filename)
+    os.remove('text.osd')
     image = cv2.imread(filename)
     # Предобработка изображения перед распознаванием
     gray_image = image[:, :, 0]
