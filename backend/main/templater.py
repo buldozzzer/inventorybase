@@ -82,11 +82,60 @@ def check_templates(all_templates):
 
 def prep_data(payload: list):
     global ALLOWED_TEMPLATES
-    keys = ALLOWED_TEMPLATES.keys()
     prep_payload = []
     for item in payload:
         prep_item = {}
         for field in item:
             prep_item[ALLOWED_TEMPLATES[field]] = item[field]
+            if prep_item[ALLOWED_TEMPLATES[field]] is None:
+                prep_item[ALLOWED_TEMPLATES[field]] = ''
         prep_payload.insert(0, prep_item)
     return prep_payload
+
+
+def docx_write(document, substr, replace):
+    """
+    Основная функция для замены шаблонов из таблицы
+    в docx-документ
+    :param document: Document(file) - открытый docx-файл
+    :param substr: Первая строка в одном из наборов mini_dict
+    :param replace: Вторая строка в одном из наборов mini_dict
+    :return:
+    """
+    # style = document.styles['Normal']
+    # font = style.font
+    # font.name = 'Times New Roman'
+    # font.size = Pt(14)
+
+    for parg in document.paragraphs:
+        if substr in parg.text:
+            inline = parg.runs
+            was_replaced = False
+            for i in range(len(inline)):
+                if substr in inline[i].text:
+                    text = inline[i].text.replace(substr, replace)
+                    was_replaced = True
+                    inline[i].text = text
+            if not was_replaced:
+                text = parg.text.replace(substr, replace)
+                parg.text = text
+    for table in document.tables:
+        for row in table.rows:
+            for cell in row.cells:
+                docx_write(cell, substr, replace)
+
+
+def final_replacement(filename: str, payload: list):
+    final_data = prep_data(payload)
+    replaceable_templates = get_docx_templates(filename)
+    for item, i in zip(final_data, range(len(final_data))):
+        document = docx.Document(filename)
+        for template in replaceable_templates:
+            try:
+                docx_write(document, template, str(item[template]))
+                if os.name == 'nt':
+                    document.save('Документ-{}.docx'.format(i + 1))
+                elif os.name == 'posix':
+                    document.save('Документ-{}.docx'.format(i + 1))
+            except KeyError as error:
+                continue
