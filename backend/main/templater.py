@@ -9,24 +9,27 @@ import pandas as pd
 
 ALLOWED_EXTENSIONS = {'docx', 'xlsx'}
 ALLOWED_TEMPLATES = {
-    '{{наименование}}',
-    '{{инвентарный номер}}',
-    '{{ответственный сотрудник}}',
-    '{{отсс}}',
-    '{{состояние}}',
-    '{{откуда поступила}}',
-    '{{используется}}',
-    '{{документы о неисправности}}',
-    '{{дата поступления}}',
-    '{{номер требования}}',
-    '{{реквизиты книги учета}}',
-    '{{дата передачи}}',
-    '{{реквизиты отсс}}',
-    '{{реквизиты спси}}',
-    '{{реквизиты о передаче}}',
-    '{{последняя проверка}}',
-    '{{примечания}}',
+    'name': '{{наименование}}',
+    'inventory_n': '{{инвентарный номер}}',
+    'responsible': '{{ответственный сотрудник}}',
+    'otss_category': '{{отсс}}',
+    'condition': '{{состояние}}',
+    'unit_from': '{{откуда поступила}}',
+    'in_operation': '{{используется}}',
+    'fault_document_requisites': '{{документы о неисправности}}',
+    'date_of_receipt': '{{дата поступления}}',
+    'number_of_receipt': '{{номер требования}}',
+    'requisites': '{{реквизиты книги учета}}',
+    'transfer_date': '{{дата передачи}}',
+    'otss_requisites': '{{реквизиты отсс}}',
+    'spsi_requisites': '{{реквизиты спси}}',
+    'transfer_requisites': '{{реквизиты о передаче}}',
+    'last_check': '{{последняя проверка}}',
+    'comment': '{{примечания}}',
+    'user': '{{кому передали}}',
+    'components': '{{компоненты}}'
 }
+
 
 def find_docx_templates(doc):
     """
@@ -65,3 +68,25 @@ def get_docx_templates(filename):
         # log.exception('Error with {}'.format(str(error)))
 
     return docx_templates
+
+
+def check_templates(all_templates):
+    global ALLOWED_TEMPLATES
+    correct_templates = ALLOWED_TEMPLATES.values()
+    incorrect_templates = set()
+    for template in all_templates:
+        if template not in correct_templates:
+            incorrect_templates.add(template)
+    return incorrect_templates
+
+
+def prep_data(payload: list):
+    global ALLOWED_TEMPLATES
+    keys = ALLOWED_TEMPLATES.keys()
+    prep_payload = []
+    for item in payload:
+        prep_item = {}
+        for field in item:
+            prep_item[ALLOWED_TEMPLATES[field]] = item[field]
+        prep_payload.insert(0, prep_item)
+    return prep_payload
