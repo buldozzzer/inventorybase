@@ -1,17 +1,21 @@
 <template>
   <b-card no-body id="recognized-text">
-    <b-card no-body>
+    <b-card no-body id="card-body">
       <b-nav pills card-header slot="header" v-b-scrollspy:nav-scroller>
-
+        <b-nav-item v-for="i in items.length"
+                    :key="i"
+                    :href="'#item-' + i"
+                    @click="scrollIntoView">
+          {{ 'Мат. ценность ' + i }}
+        </b-nav-item>
       </b-nav>
 
       <b-card-body
         id="nav-scroller"
         ref="content">
-        <div class="mt-3"
-             v-for="item in items"
+        <div v-for="item in items"
              :key="item.name">
-          <h5>Наименование:</h5>
+          <h5 :id="'item-'+item.index">Наименование:</h5>
           <label>
             <textarea id="name" v-model="item.name"></textarea>
           </label>
@@ -23,6 +27,7 @@
                    max="100"
                    v-model="item.count">
           </label>
+          <hr/>
         </div>
 
       </b-card-body>
@@ -59,7 +64,6 @@
   }
   #nav-scroller {
     position:relative;
-    height: 475px;
     overflow-y:scroll;
     align-content: center;
   }
@@ -69,10 +73,14 @@
   }
   #name {
     width: 350px;
-    max-height: 350px;
+    max-height: 300px;
     min-height: 76px;
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
+  }
+  #card-body{
+    min-height: 500px;
+    max-height: 500px;
   }
 </style>

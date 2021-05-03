@@ -129,11 +129,13 @@ def recognizer(filename):
             result_extracting_data['count'] = counts
 
     result_extracting_data['items'] = []
-
+    index = 1
     for name, count in zip(result_extracting_data['name'],
                            result_extracting_data['count']):
-        result_extracting_data['items'].insert(0, {'name': name, 'count': count})
-
+        result_extracting_data['items'].insert(0, {'name': name,
+                                                   'count': count,
+                                                   'index': index})
+        index += 1
     result_extracting_data.pop('name')
     result_extracting_data.pop('count')
 
