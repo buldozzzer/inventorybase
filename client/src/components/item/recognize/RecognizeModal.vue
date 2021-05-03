@@ -34,10 +34,13 @@
       <b-col cols="6"
              v-if="file"
              id="recognized-text">
-        <b-icon v-if="isLoad === 1"
-                icon="circle-fill"
+        <div id="load" v-if="isLoad === 1">
+        <b-icon icon="binoculars"
                 animation="throb"
-                font-scale="4"></b-icon>
+                font-scale="3"></b-icon>
+          <br/>
+          <h5>Обработка...</h5>
+        </div>
         <div v-else
              class="mt-3">
           <item-form :items="extracting_data['items']"/>
@@ -243,5 +246,15 @@
     margin-left: 145px;
     z-index: 999;
     color: #007bff;
+  }
+  #recognized-text {
+    align-content: center;
+    vertical-align: center;
+  }
+  #load {
+    text-align: center;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 180px;
   }
 </style>
