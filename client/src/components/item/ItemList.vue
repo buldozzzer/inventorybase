@@ -17,14 +17,30 @@
           </b-button>
         </b-col>
         <b-col cols="2">
-          <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>
-            <b-icon icon="download"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    font-scale="1"
-                    aria-hidden="false"></b-icon>
-            Добавить
-          </b-button>
+          <b-button-group>
+            <b-button variant="success"
+                      class="mt-3"
+                      v-b-modal.add-item-modal>
+              <b-icon icon="download"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      font-scale="1"
+                      aria-hidden="false"></b-icon>
+              Добавить
+            </b-button>
+            <b-dropdown right
+                        variant="success"
+                        class="mt-3">
+              <b-dropdown-item href="#/items/recognize">
+                <b-icon icon="card-image"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        font-scale="1"
+                        aria-hidden="false"></b-icon>
+                Распознать текст
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-button-group>
         </b-col>
         <b-col cols="3">
           <b-button variant="light"
@@ -49,7 +65,7 @@
                     data-placement="top"
                     font-scale="1"
                     aria-hidden="false"></b-icon>
-            Редактровать
+            Редактировать
           </b-button>
         </b-col>
         <b-col cols="2">
@@ -898,10 +914,11 @@
       EditModal,
       Filters,
       ConfirmForm,
-      FieldModalForm
+      FieldModalForm,
     },
     data() {
       return {
+        recognizeModalShow: false,
         dismissCountDown: 0,
         dismissCountDownError: 0,
         otss: [1, 2, 3, 'Не секретно'],
@@ -1409,6 +1426,7 @@
         this.fetchItems()
 
       },
+
     },
     watch:{
       fuseString: function () {
@@ -1420,7 +1438,7 @@
         }else{
           this.sliderValue = '540px'
         }
-      }
+      },
     },
     async created() {
       await this.fetchItems()

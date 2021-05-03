@@ -14,12 +14,12 @@
         id="nav-scroller"
         ref="content">
         <div v-for="item in items"
-             :key="item.name">
+             :key="item.index">
           <h5 :id="'item-'+item.index">Наименование:</h5>
           <label>
             <textarea id="name" v-model="item.name"></textarea>
           </label>
-          <h5 class=" mt-3" >Количество:</h5>
+          <h5 class=" mt-3">Количество:</h5>
           <label>
             <input id="count"
                    type="number"
@@ -27,9 +27,21 @@
                    max="100"
                    v-model="item.count">
           </label>
+          <h5 class=" mt-3">Инвентарный номер:</h5>
+          <label>
+            <input id="inventory_n"
+                   v-model="item.inventory_n">
+          </label>
+          <div class="submit-reset-buttons mt-3">
+            <b-button type="submit"
+                      id="add-button"
+                      variant="success"
+                      @click="onSubmit(item)">
+              Добавить запись
+            </b-button>
+          </div>
           <hr/>
         </div>
-
       </b-card-body>
     </b-card>
   </b-card>
@@ -37,7 +49,9 @@
 
 <script>
 /* eslint-disable */
-  export default {
+  import {bus} from "../../../main";
+
+export default {
     name: "ItemForm",
     props: ["items"],
     data(){
@@ -54,7 +68,50 @@
           this.$refs.content.scrollTop = el.offsetTop
         }
       },
-    }
+      onSubmit(item) {
+        for(let i = 0; i < item.count; i++) {
+          const payload = {
+            name: item.name,
+            user: '',
+            responsible: '',
+            components: [],
+            inventory_n: item.inventory_n,
+            otss_category: '',
+            condition: '',
+            unit_from: '',
+            in_operation: '',
+            fault_document_requisites: '',
+            date_of_receipt: null,
+            number_of_receipt: '',
+            requisites: '',
+            transfer_date: null,
+            otss_requisites: '',
+            spsi_requisites: '',
+            transfer_requisites: '',
+            comment: '',
+            last_check: null,
+          }
+          this.createItem(payload)
+        }
+      },
+      async createItem(payload) {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/item/`, {
+          method: 'POST',
+          mode: 'cors',
+          headers: {
+            'Content-type': 'application/json'
+          },
+          body: JSON.stringify(payload)
+        });
+        /* eslint-disable */
+        if (response.status !== 201) {
+          alert(JSON.stringify(await response.json(), null, 2));
+          this.$parent.showErrorAlert()
+        }
+        bus.$emit('updateList')
+        this.$parent.showAlert()
+      },
+    },
   }
 </script>
 
@@ -82,5 +139,11 @@
   #card-body{
     min-height: 500px;
     max-height: 500px;
+  }
+  #inventory_n {
+    width: 350px;
+  }
+  #add-button {
+    margin: auto;
   }
 </style>

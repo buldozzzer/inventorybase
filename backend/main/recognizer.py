@@ -134,7 +134,8 @@ def recognizer(filename):
                            result_extracting_data['count']):
         result_extracting_data['items'].insert(0, {'name': name,
                                                    'count': count,
-                                                   'index': index})
+                                                   'index': index,
+                                                   'inventory_n': ''})
         index += 1
     result_extracting_data.pop('name')
     result_extracting_data.pop('count')

@@ -2,9 +2,9 @@
   <b-container>
     <b-row>
       <b-col cols="6">
-        <form class="dropForm mt-3">
+        <form class="dropForm mt-3 mb-3">
           <div ref="dropZone" id="dropZone" class="doc" v-if="file == null">
-<!--            <h6 id="header">Добавьте файл.</h6>-->
+            <!--            <h6 id="header">Добавьте файл.</h6>-->
             <label id="header" for="uploadImage" class="btn">Добавьте файл</label>
           </div>
           <b-icon icon="x"
@@ -22,22 +22,22 @@
                class="doc"
                src=""
                alt=""/>
-            <input type="file"
-                   class="mt-3"
-                   id="uploadImage"
-                   ref="uploadImage"
-                   style="visibility:hidden;"
-                   @change="getFileFromInputTag"
-                   accept=".jpg, .jpeg, .png">
+          <input type="file"
+                 class="mt-3"
+                 id="uploadImage"
+                 ref="uploadImage"
+                 style="visibility:hidden;"
+                 @change="getFileFromInputTag"
+                 accept=".jpg, .jpeg, .png">
         </form>
       </b-col>
       <b-col cols="6"
              v-if="file"
              id="recognized-text">
         <div id="load" v-if="isLoad === 1">
-        <b-icon icon="binoculars"
-                animation="throb"
-                font-scale="3"></b-icon>
+          <b-icon icon="binoculars"
+                  animation="throb"
+                  font-scale="3"></b-icon>
           <br/>
           <h5>Обработка...</h5>
         </div>
@@ -56,7 +56,7 @@
   import ItemForm from "./ItemForm";
 
   export default {
-    name: "RecognizerModal",
+    name: "RecognizePage",
     components:{
       ItemForm
     },
@@ -66,7 +66,7 @@
         file: null,
         extracting_data: null,
         isLoad: null,
-        count: 0
+
       }
     },
     mounted() {
@@ -126,37 +126,11 @@
         this.file = this.$refs.uploadImage.files[0]
         this.getImagePreview()
       },
-      onSubmit(evt) {
-        evt.preventDefault();
-        for(let i = 0; i < this.count; i++) {
-          const payload = {
-            name: this.extracting_data,
-            user: '',
-            responsible: '',
-            components: [],
-            inventory_n: '',
-            otss_category: '',
-            condition: '',
-            unit_from: '',
-            in_operation: '',
-            fault_document_requisites: '',
-            date_of_receipt: null,
-            number_of_receipt: '',
-            requisites: '',
-            transfer_date: null,
-            otss_requisites: '',
-            spsi_requisites: '',
-            transfer_requisites: '',
-            comment: '',
-            last_check: null,
-          }
-        }
-      },
       removeImage(){
         this.file=null
         this.isLoad=null
         bus.$emit('removeImage')
-      }
+      },
     },
     async created() {
       await bus.$on('removeImage', () => {this.isLoad = null})

@@ -11,7 +11,7 @@ import CategoryPage from "../components/metadata/category/CategoryPage";
 import LocationPage from "../components/metadata/location/LocationPage";
 import TypePage from "../components/metadata/type/TypePage";
 import ConditionPage from "../components/metadata/condition/ConditionPage";
-import Test from "../components/item/recognize/RecognizeModal";
+import RecognizePage from "../components/item/recognize/RecognizePage";
 
 Vue.use(Router);
 
@@ -69,9 +69,9 @@ export default new Router({
       component: ConditionPage,
     },
     {
-      path: '/test2/',
-      name: 'Test',
-      component: Test
+      path: '/items/recognize',
+      name: 'RecognizePage',
+      component: RecognizePage
     }
   ],
 });
