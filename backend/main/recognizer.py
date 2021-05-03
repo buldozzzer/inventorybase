@@ -55,6 +55,14 @@ def sort_by(val):
     return val[0]
 
 
+def is_number(value):
+    try:
+        float(value)
+        return True
+    except ValueError:
+        return False
+
+
 def recognizer(filename):
     # Поворот изображения в горизонтальное положение
     os.system('tesseract --psm 0 {} text'.format(filename))
@@ -99,12 +107,35 @@ def recognizer(filename):
     for column in recognized_table:
         if 'наименование' in column:
             result_extracting_data['name'] = column
+            result_extracting_data['name'].remove('наименование')
         elif 'Наименование' in column:
             result_extracting_data['name'] = column
+            result_extracting_data['name'].remove('Наименование')
         if 'количество' in column:
-            result_extracting_data['count'] = column
+            counts = []
+            for cell in column:
+                cell = cell.replace(',', '.')
+                if is_number(cell):
+                    counts += [int(float(cell))]
+            result_extracting_data['count'] = counts
         elif 'Количество' in column:
-            result_extracting_data['count'] = column
+            counts = []
+            for cell in column:
+                cell = cell.replace(',', '.')
+                if is_number(cell):
+                    counts += [int(float(cell))]
+                print(counts)
+
+            result_extracting_data['count'] = counts
+
+    result_extracting_data['items'] = []
+
+    for name, count in zip(result_extracting_data['name'],
+                           result_extracting_data['count']):
+        result_extracting_data['items'].insert(0, {'name': name, 'count': count})
+
+    result_extracting_data.pop('name')
+    result_extracting_data.pop('count')
 
     os.remove(filename)
     return result_extracting_data

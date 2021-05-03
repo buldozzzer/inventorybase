@@ -11,7 +11,7 @@ import CategoryPage from "../components/metadata/category/CategoryPage";
 import LocationPage from "../components/metadata/location/LocationPage";
 import TypePage from "../components/metadata/type/TypePage";
 import ConditionPage from "../components/metadata/condition/ConditionPage";
-import Test from "../components/item/Test";
+import Test from "../components/item/recognize/RecognizeModal";
 
 Vue.use(Router);
 

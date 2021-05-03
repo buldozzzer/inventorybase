@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <b-row>
-      <b-col>
+      <b-col cols="6">
         <form class="dropForm mt-3">
           <div ref="dropZone" id="dropZone" class="doc" v-if="file == null">
 <!--            <h6 id="header">Добавьте файл.</h6>-->
@@ -31,20 +31,16 @@
                    accept=".jpg, .jpeg, .png">
         </form>
       </b-col>
-      <b-col>
+      <b-col cols="6"
+             v-if="file"
+             id="recognized-text">
         <b-icon v-if="isLoad === 1"
                 icon="circle-fill"
                 animation="throb"
                 font-scale="4"></b-icon>
-        <div v-else class="mt-3">
-          <h5>Наименование:</h5>
-          <label>
-            <textarea v-model="extracting_data"></textarea>
-          </label>
-          <h5 class=" mt-3" >Количество:</h5>
-          <label>
-            <input id="count" type="number" min="0" max="100" v-model="count">
-          </label>
+        <div v-else
+             class="mt-3">
+          <item-form :items="extracting_data['items']"/>
         </div>
       </b-col>
     </b-row>
@@ -53,10 +49,14 @@
 
 <script>
 /* eslint-disable */
-  import {bus} from '../../main'
+  import {bus} from '../../../main'
+  import ItemForm from "./ItemForm";
 
   export default {
     name: "RecognizerModal",
+    components:{
+      ItemForm
+    },
     data(){
       return {
         dropZone: null,
@@ -236,9 +236,6 @@
     -webkit-border-radius: 5px;
     -moz-border-radius: 5px;
     border-radius: 5px;
-  }
-  #count {
-    width: 400px;
   }
   #removeImage{
     display: inline;
