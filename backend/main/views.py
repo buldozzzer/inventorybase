@@ -629,3 +629,8 @@ class RecognizerView(APIView):
         return Response({
             'extracting_data': result
         }, status=201)
+
+
+# class TemplaterView(APIView):
+#     def get(self, _):
+

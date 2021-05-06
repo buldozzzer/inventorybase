@@ -65,16 +65,30 @@
                     data-placement="top"
                     font-scale="1"
                     aria-hidden="false"></b-icon>
-            Редактировать
+            Изменить
           </b-button>
         </b-col>
         <b-col cols="2">
-          <b-button variant="light"
-                    v-b-modal.excel-exporter-modal
-                    :disabled="selected.length === 0"
-                    class="mt-3">
-            Экспорт
-          </b-button>
+          <b-button-group>
+            <b-button variant="light"
+                      v-b-modal.excel-exporter-modal
+                      :disabled="selected.length === 0"
+                      class="mt-3">
+              Экспорт
+            </b-button>
+            <b-dropdown right
+                        variant="light"
+                        class="mt-3">
+              <b-dropdown-item v-b-modal.document-template-modal>
+                <b-icon icon="file-earmark-code"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        font-scale="1"
+                        aria-hidden="false"></b-icon>
+                Шаблоны
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-button-group>
         </b-col>
       </b-row>
     </b-container>
@@ -888,6 +902,7 @@
                           :titles="titles"
                           :selected="selected"
                           :item-fields="itemFields"/>
+    <document-template-modal :selected="selected"/>
   </div>
 </template>
 
@@ -903,6 +918,7 @@
   import ConfirmForm from "./ConfirmForm";
   import FieldModalForm from "./FieldModalForm";
   import ExcelExporterModal from "./ExcelExporterModal";
+  import DocumentTemplateModal from "../documents/DocumentTemplateModal";
 
 
   export default {
@@ -915,6 +931,7 @@
       Filters,
       ConfirmForm,
       FieldModalForm,
+      DocumentTemplateModal
     },
     data() {
       return {
