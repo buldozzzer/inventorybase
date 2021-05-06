@@ -106,9 +106,9 @@
           this.extracting_data = await response.json()
           this.extracting_data = this.extracting_data['extracting_data']
           this.isLoad = null
-        if (response.status !== 201) {
-          alert(JSON.stringify(await response.json(), null, 2));
-        }
+          if (response.status !== 201) {
+            alert(JSON.stringify(await response.json(), null, 2));
+          }
         }
       }
     },

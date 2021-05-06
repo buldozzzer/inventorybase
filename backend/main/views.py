@@ -23,6 +23,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 import socket
 import os
+import shutil
 
 from . import excel_exporter
 from . import mongo
@@ -636,3 +637,10 @@ class TemplaterView(APIView):
     def get(self, _):
         result = os.listdir('media/templates')
         return Response({'docs': result}, status=200)
+
+    def post(self, request):
+        file = request.data['file']
+        with default_storage.open('templates/'+str(request.data['file']), 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)
+        return Response({'message': 'success'}, status=200)
