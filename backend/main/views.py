@@ -22,6 +22,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 import socket
+import os
 
 from . import excel_exporter
 from . import mongo
@@ -631,6 +632,7 @@ class RecognizerView(APIView):
         }, status=201)
 
 
-# class TemplaterView(APIView):
-#     def get(self, _):
-
+class TemplaterView(APIView):
+    def get(self, _):
+        result = os.listdir('media/templates')
+        return Response({'docs': result}, status=200)
