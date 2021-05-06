@@ -31,6 +31,23 @@ ALLOWED_TEMPLATES = {
 }
 
 
+def docx_size():
+    """
+    Осуществляем проверку, не является ли docx файл пустым
+    :return: Количество шаблонов в файле
+    """
+    size = 0
+    global DOCX_FILENAME
+    try:
+        doc = docx.Document(DOCX_FILENAME)
+        size = len(find_docx_templates(doc))
+    except AttributeError as error:
+        print(error)
+        # log.exception('Error with {}'.format(str(error)))
+
+    return size
+
+
 def find_docx_templates(doc):
     """
     Поиск всех шаблонов в docx документе
@@ -45,7 +62,7 @@ def find_docx_templates(doc):
         for table in doc.tables:
             for row in table.rows:
                 for cell in row.cells:
-                    templates = templates.union(find_docx_templates(cell))
+                    templates = templates + find_docx_templates(cell)
     except AttributeError as error:
         print(error)
         # log.exception('Error with {}'.format(str(error)))
@@ -82,14 +99,15 @@ def check_templates(all_templates):
 
 def prep_data(payload: list):
     global ALLOWED_TEMPLATES
+    keys = ALLOWED_TEMPLATES.keys()
     prep_payload = []
     for item in payload:
         prep_item = {}
         for field in item:
-            prep_item[ALLOWED_TEMPLATES[field]] = item[field]
+            prep_item[ALLOWED_TEMPLATES[field]]  = item[field]
             if prep_item[ALLOWED_TEMPLATES[field]] is None:
                 prep_item[ALLOWED_TEMPLATES[field]] = ''
-        prep_payload.insert(0, prep_item)
+        prep_payload += [prep_item]
     return prep_payload
 
 
@@ -102,10 +120,10 @@ def docx_write(document, substr, replace):
     :param replace: Вторая строка в одном из наборов mini_dict
     :return:
     """
-    # style = document.styles['Normal']
-    # font = style.font
-    # font.name = 'Times New Roman'
-    # font.size = Pt(14)
+    #style = document.styles['Normal']
+    #font = style.font
+    #font.name = 'Times New Roman'
+    #font.size = Pt(14)
 
     for parg in document.paragraphs:
         if substr in parg.text:
@@ -125,17 +143,59 @@ def docx_write(document, substr, replace):
                 docx_write(cell, substr, replace)
 
 
-def final_replacement(filename: str, payload: list):
+def final_replacement(filename, payload, merge_doc):
     final_data = prep_data(payload)
     replaceable_templates = get_docx_templates(filename)
     for item, i in zip(final_data, range(len(final_data))):
+        print(item)
+        print(i)
+        print()
         document = docx.Document(filename)
         for template in replaceable_templates:
             try:
                 docx_write(document, template, str(item[template]))
                 if os.name == 'nt':
-                    document.save('Документ-{}.docx'.format(i + 1))
+                    document.save('generated/Документ-{}.docx'.format(i+1))
                 elif os.name == 'posix':
-                    document.save('Документ-{}.docx'.format(i + 1))
+                    document.save('generated/Документ-{}.docx'.format(i+1))
             except KeyError as error:
                 continue
+    if merge_doc:
+        documents = os.listdir(os.getcwd() + '/generated')
+        combine_word_documents(documents)
+        result_path = make_archive('Документы',
+                                   'zip',
+                                   root_dir='generated',
+                                   base_dir='.')
+    else:
+        result_path = make_archive('Документы',
+                                   'zip',
+                                   root_dir='generated',
+                                   base_dir='.')
+    return result_path
+
+
+def combine_word_documents(files):
+    """
+    Метод для слияния файлов в один
+    :param files: Пути к документам в папке
+    :return:
+    """
+    merged_document = docx.Document()
+    os.chdir(os.getcwd() + '/generated/')
+    for index, file in enumerate(files):
+        print('index: {}, file: {}'.format(index, str(file)))
+        if index == 0:
+            merged_document = docx.Document(file)
+            merged_document.add_page_break()
+        else:
+            sub_doc = docx.Document(file)
+            if index < len(files) - 1:
+                sub_doc.add_page_break()
+            for element in sub_doc.element.body:
+                merged_document.element.body.append(element)
+    # del_all()
+    merged_document.save('Документы.docx')
+    os.chdir('..')
+    return True
+
