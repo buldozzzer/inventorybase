@@ -103,7 +103,7 @@ def prep_data(payload: list):
     for item in payload:
         prep_item = {}
         for field in item:
-            prep_item[ALLOWED_TEMPLATES[field]]  = item[field]
+            prep_item[ALLOWED_TEMPLATES[field]] = item[field]
             if prep_item[ALLOWED_TEMPLATES[field]] is None:
                 prep_item[ALLOWED_TEMPLATES[field]] = ''
         prep_payload += [prep_item]
@@ -154,9 +154,9 @@ def final_replacement(filename, payload, merge_doc):
             try:
                 docx_write(document, template, str(item[template]))
                 if os.name == 'nt':
-                    document.save('generated/Документ-{}.docx'.format(i+1))
+                    document.save('media/generated/Документ-{}.docx'.format(i+1))
                 elif os.name == 'posix':
-                    document.save('generated/Документ-{}.docx'.format(i+1))
+                    document.save('media/generated/Документ-{}.docx'.format(i+1))
             except KeyError as error:
                 continue
     if merge_doc:
@@ -164,12 +164,12 @@ def final_replacement(filename, payload, merge_doc):
         combine_word_documents(documents)
         result_path = make_archive('Документы',
                                    'zip',
-                                   root_dir='generated',
+                                   root_dir='media/generated',
                                    base_dir='.')
     else:
         result_path = make_archive('Документы',
                                    'zip',
-                                   root_dir='generated',
+                                   root_dir='media/generated',
                                    base_dir='.')
     return result_path
 

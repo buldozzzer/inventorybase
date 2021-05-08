@@ -23,6 +23,7 @@ from django.core.files.storage import default_storage
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.http import FileResponse
 
 from . import excel_exporter
 from . import mongo
@@ -654,3 +655,15 @@ class TemplaterView(APIView):
             os.remove('media/templates/' + str(request.data['file']))
             return Response({'message': 'Файл {} не содержит шаблонов для вставки.'.format(str(request.data['file']))},
                             status=400)
+
+
+class DownloadDocsView(APIView):
+    def post(self, request):
+        filename = request.data['filename']
+        items = request.data['items']
+        merge_doc = request.data['merge_doc']
+        for item in items:
+            item.pop('_id')
+        print(items)
+        result = templater.final_replacement('media/templates/' + filename, items, merge_doc)
+        return FileResponse(open(result, 'rb'), status=201)

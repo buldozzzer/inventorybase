@@ -55,13 +55,14 @@
           </b-form-checkbox>
         </b-col>
       </b-row>
-      <b-row id="withoutItems" class="mt-3">
-        <div id="warn"
-             v-if="selected.length === 0">
+      <b-row id="withoutItems" class="mt-3" v-if="selected.length === 0">
+        <div id="warn">
           Выберите мат. ценности
         </div>
+      </b-row>
+      <b-row v-else class="mt-3">
         <b-button block
-                  v-else
+                  @click="downloadFiles"
                   variant="success">
           Скачать шаблон
         </b-button>
@@ -119,6 +120,28 @@ export default {
       getFileFromInputTag() {
         this.file = this.$refs.uploadFile.files[0]
       },
+      async downloadFiles(){
+        let payload = {
+          filename: this.doc,
+          items: this.selected,
+          merge_doc: this.merge_docs
+        }
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/download-docs/`,
+          {
+            method: 'POST',
+            mode: "cors",
+            body: JSON.stringify(payload),
+            headers: {
+              'Accept': 'application/json',
+              'Content-type': 'application/json'
+            },
+          });
+        const json = await response.json();
+        console.log(JSON.stringify(json));
+        if (response.status !== 201) {
+          alert(JSON.stringify(await response.json(), null, 2));
+        }
+      }
     },
     watch:{
       file: function () {

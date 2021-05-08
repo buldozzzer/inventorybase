@@ -50,4 +50,6 @@ urlpatterns = [
 
     path('docs/', views.TemplaterView.as_view(), name='documents'),
 
+    path('download-docs/', views.DownloadDocsView.as_view(), name='download-documents'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
