@@ -18,8 +18,24 @@
           </b-input-group>
         </b-col>
         <b-col cols="4">
-        <b-form-file plain v-model="file"></b-form-file>
-      </b-col>
+          <b-form-file plain
+                       accept=".docx, .xlsx"
+                       v-model="file"></b-form-file>
+        </b-col>
+      </b-row>
+      <b-row>
+        <b-col>
+          <b-form-checkbox
+            class="mt-3"
+            :disabled="!doc"
+            id="checkbox-1"
+            v-model="merge_docs"
+            name="checkbox-1"
+            :value="true"
+            :unchecked-value="false">
+            Слить документы в один
+          </b-form-checkbox>
+        </b-col>
       </b-row>
     </b-container>
   </b-modal>
@@ -27,7 +43,7 @@
 
 <script>
 /* eslint-disable */
-  import {bus} from "../../main";
+  import {bus} from "../../../main";
 
 export default {
     name: "DocumentTemplateModal",
@@ -37,7 +53,7 @@ export default {
         docs: [],
         doc: null,
         file: null,
-        filename: ''
+        merge_docs: false
       }
     },
     methods: {
@@ -50,6 +66,7 @@ export default {
         this.docs = this.docs['docs']
       },
       async addDoc() {
+        debugger
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/docs/`, {
             method: 'POST',
             mode: 'cors',
@@ -57,10 +74,7 @@ export default {
               'Content-Disposition': 'attachment; filename=' + this.file.name,
             },
             body: this.file
-          });
-          this.extracting_data = await response.json()
-          this.extracting_data = this.extracting_data['extracting_data']
-          this.isLoad = null
+          })
           if (response.status !== 201) {
             alert(JSON.stringify(await response.json(), null, 2));
           }

@@ -918,7 +918,7 @@
   import ConfirmForm from "./ConfirmForm";
   import FieldModalForm from "./FieldModalForm";
   import ExcelExporterModal from "./ExcelExporterModal";
-  import DocumentTemplateModal from "../documents/DocumentTemplateModal";
+  import DocumentTemplateModal from "./documents/DocumentTemplateModal";
 
 
   export default {
