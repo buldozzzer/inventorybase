@@ -15,12 +15,18 @@
             <b-form-select id="documents-input"
                            v-model="doc"
                            :options="docs">
+              <template #first>
+                <b-form-select-option :value="null"
+                                      disabled>
+                  Выберите документ из списка
+                </b-form-select-option>
+              </template>
             </b-form-select>
           </b-input-group>
         </b-col>
         <b-col cols="4">
+<!--                       accept="application/msword, application/vnd.ms-excel"-->
           <b-form-file plain
-                       accept="application/msword, application/vnd.ms-excel"
                        v-model="file"></b-form-file>
         </b-col>
       </b-row>
@@ -63,14 +69,8 @@ export default {
     props: ["selected"],
     data(){
       return {
-        docs: [
-          {
-          value: null,
-          text: 'Выберите документ из списка'
-        },
-        ],
+        docs: [],
         doc: null,
-
         file: null,
         merge_docs: false
       }
@@ -91,7 +91,6 @@ export default {
         }
       },
       async addDoc() {
-        debugger
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/docs/`, {
           method: 'POST',
           mode: 'cors',

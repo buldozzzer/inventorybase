@@ -31,15 +31,14 @@ ALLOWED_TEMPLATES = {
 }
 
 
-def docx_size():
+def docx_size(filename):
     """
     Осуществляем проверку, не является ли docx файл пустым
     :return: Количество шаблонов в файле
     """
     size = 0
-    global DOCX_FILENAME
     try:
-        doc = docx.Document(DOCX_FILENAME)
+        doc = docx.Document(filename)
         size = len(find_docx_templates(doc))
     except AttributeError as error:
         print(error)

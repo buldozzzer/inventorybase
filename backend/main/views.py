@@ -13,6 +13,8 @@
 # class EmployeeViewSet(ModelViewSet):
 #     queryset = employee.objects.all()
 #     serializer_class = EmployeeSerializer
+import os
+import socket
 import uuid
 
 from bson import ObjectId
@@ -21,13 +23,11 @@ from django.core.files.storage import default_storage
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import socket
-import os
-import shutil
 
 from . import excel_exporter
 from . import mongo
 from . import recognizer
+from . import templater
 
 
 def index(request):
@@ -640,7 +640,13 @@ class TemplaterView(APIView):
 
     def post(self, request):
         file = request.data['file']
-        with default_storage.open('templates/'+str(request.data['file']), 'wb+') as destination:
+        with default_storage.open('templates/' + str(request.data['file']), 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
-        return Response({'message': 'success'}, status=200)
+        if templater.docx_size('media/templates/' + str(request.data['file'])) > 0:
+            return Response({'message': 'File {} added successfully'.format(str(request.data['file']))},
+                            status=201)
+        else:
+            os.remove('media/templates/' + str(request.data['file']))
+            return Response({'message': 'Файл {} не содержит шаблонов для вставки.'.format(str(request.data['file']))},
+                            status=201)
