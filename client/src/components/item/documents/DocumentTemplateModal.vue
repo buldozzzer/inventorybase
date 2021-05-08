@@ -3,12 +3,13 @@
            id="document-template-modal"
            title="Экспорт записей в шаблоны документов"
            centered
+           size="xl"
            @hidden="clear"
            @show="clear"
            hide-footer>
     <b-container>
-      <b-row>
-        <b-col cols="8">
+      <b-row id="firstRow">
+        <b-col cols="7" align="center">
           <b-input-group id="documents"
                          label="Сохранённые шаблоны:"
                          label-for="documents-input">
@@ -24,16 +25,26 @@
             </b-form-select>
           </b-input-group>
         </b-col>
-        <b-col cols="4">
-<!--                       accept="application/msword, application/vnd.ms-excel"-->
-          <b-form-file plain
-                       v-model="file"></b-form-file>
+        <b-col cols="4" align="center">
+          <label for="uploadFile" class="btn">Добавьте файл</label>
+          <input type="file"
+                 id="uploadFile"
+                 ref="uploadFile"
+                 style="visibility:hidden;"
+                 @change="getFileFromInputTag">
+        </b-col>
+        <b-col cols="1" align="center">
+          <b-icon icon="info-circle"
+                  data-toggle="tooltip"
+                  data-placement="top"
+                  font-scale="1"
+                  :title="info"
+                  aria-hidden="false"></b-icon>
         </b-col>
       </b-row>
-      <b-row>
-        <b-col>
+      <b-row class="mt-3">
+        <b-col class="ml-3">
           <b-form-checkbox
-            class="mt-3"
             :disabled="!doc"
             id="checkbox-1"
             v-model="merge_docs"
@@ -44,8 +55,7 @@
           </b-form-checkbox>
         </b-col>
       </b-row>
-      <b-row id="withoutItems"
-             class="mt-3">
+      <b-row id="withoutItems" class="mt-3">
         <div id="warn"
              v-if="selected.length === 0">
           Выберите мат. ценности
@@ -72,7 +82,8 @@ export default {
         docs: [],
         doc: null,
         file: null,
-        merge_docs: false
+        merge_docs: false,
+        info: 'Допустимые шаблоны:\n'
       }
     },
     methods: {
@@ -81,14 +92,9 @@ export default {
         {
           mode: "cors",
         })
-        let result = await response.json()
-        for(let i = 0; i < result['docs'].length; i++){
-          let docOption = {
-            value: result['docs'][i],
-            text: result['docs'][i]
-          }
-          this.docs.push(docOption)
-        }
+        let temp = await response.json()
+        this.docs = temp['docs']
+        this.info += temp['info']
       },
       async addDoc() {
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/docs/`, {
@@ -109,12 +115,14 @@ export default {
         this.doc = null
         this.file = null
         this.merge_docs = false
-      }
+      },
+      getFileFromInputTag() {
+        this.file = this.$refs.uploadFile.files[0]
+      },
     },
     watch:{
       file: function () {
         this.addDoc()
-        this.doc = this.file
         this.file = null
       }
     },
@@ -137,5 +145,8 @@ export default {
     text-align: center;
     margin: auto;
     vertical-align: center;
+  }
+  #firstRow{
+    max-height: 39px;
   }
 </style>

@@ -636,7 +636,11 @@ class RecognizerView(APIView):
 class TemplaterView(APIView):
     def get(self, _):
         result = os.listdir('media/templates')
-        return Response({'docs': result}, status=200)
+        info = ''
+        for key in templater.ALLOWED_TEMPLATES:
+            info += templater.ALLOWED_TEMPLATES[key] + '\n'
+        return Response({'docs': result,
+                         'info': info}, status=200)
 
     def post(self, request):
         file = request.data['file']
@@ -649,4 +653,4 @@ class TemplaterView(APIView):
         else:
             os.remove('media/templates/' + str(request.data['file']))
             return Response({'message': 'Файл {} не содержит шаблонов для вставки.'.format(str(request.data['file']))},
-                            status=201)
+                            status=400)
