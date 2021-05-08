@@ -14,8 +14,7 @@
                          label-for="documents-input">
             <b-form-select id="documents-input"
                            v-model="doc"
-                           :options="docs"
-                           placeholder="Выберите документ из списка">
+                           :options="docs">
             </b-form-select>
           </b-input-group>
         </b-col>
@@ -64,8 +63,14 @@ export default {
     props: ["selected"],
     data(){
       return {
-        docs: [],
+        docs: [
+          {
+          value: null,
+          text: 'Выберите документ из списка'
+        },
+        ],
         doc: null,
+
         file: null,
         merge_docs: false
       }
@@ -76,8 +81,14 @@ export default {
         {
           mode: "cors",
         })
-        this.docs = await response.json()
-        this.docs = this.docs['docs']
+        let result = await response.json()
+        for(let i = 0; i < result['docs'].length; i++){
+          let docOption = {
+            value: result['docs'][i],
+            text: result['docs'][i]
+          }
+          this.docs.push(docOption)
+        }
       },
       async addDoc() {
         debugger
