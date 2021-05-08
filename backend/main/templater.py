@@ -162,12 +162,12 @@ def final_replacement(filename, payload, merge_doc):
     if merge_doc:
         documents = os.listdir(os.getcwd() + '/generated')
         combine_word_documents(documents)
-        result_path = make_archive('Документы',
+        result_path = make_archive('media/Документы',
                                    'zip',
                                    root_dir='media/generated',
                                    base_dir='.')
     else:
-        result_path = make_archive('Документы',
+        result_path = make_archive('media/Документы',
                                    'zip',
                                    root_dir='media/generated',
                                    base_dir='.')
