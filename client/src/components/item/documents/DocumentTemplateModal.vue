@@ -135,12 +135,16 @@ export default {
               'Accept': 'application/json',
               'Content-type': 'application/json'
             },
+          }).then(response => response.blob())
+          .then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = "Документы.zip";
+            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+            a.click();
+            a.remove();  //afterwards we remove the element again
           });
-        const json = await response.json();
-        console.log(JSON.stringify(json));
-        if (response.status !== 201) {
-          alert(JSON.stringify(await response.json(), null, 2));
-        }
       }
     },
     watch:{
