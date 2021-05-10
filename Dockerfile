@@ -5,7 +5,7 @@ RUN npm install
 COPY ./client/ .
 RUN npm run build
 
-FROM snakepacker/python:all as server
+FROM python:3 as server
 ENV PYTHONUNBUFFERED=1
 ENV MONGO_HOST=items_db
 WORKDIR /app

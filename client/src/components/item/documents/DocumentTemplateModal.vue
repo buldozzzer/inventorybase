@@ -141,9 +141,9 @@ export default {
             let a = document.createElement('a');
             a.href = url;
             a.download = "Документы.zip";
-            document.body.appendChild(a); // we need to append the element to the dom -> otherwise it will not work in firefox
+            document.body.appendChild(a);
             a.click();
-            a.remove();  //afterwards we remove the element again
+            a.remove();
           });
       }
     },
