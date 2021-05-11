@@ -634,9 +634,44 @@ class RecognizerView(APIView):
         }, status=201)
 
 
+# class TemplaterView(APIView):
+#     def get(self, _):
+#         result = os.listdir('media/templates')
+#         info = ''
+#         for key in templater.ALLOWED_TEMPLATES:
+#             info += templater.ALLOWED_TEMPLATES[key] + '\n'
+#         return Response({'docs': result,
+#                          'info': info}, status=200)
+#
+#     def post(self, request):
+#         file = request.data['file']
+#         with default_storage.open('templates/' + str(request.data['file']), 'wb+') as destination:
+#             for chunk in file.chunks():
+#                 destination.write(chunk)
+#         if templater.docx_size('media/templates/' + str(request.data['file'])) > 0:
+#             return Response({'message': 'File {} added successfully'.format(str(request.data['file']))},
+#                             status=201)
+#         else:
+#             os.remove('media/templates/' + str(request.data['file']))
+#             return Response({'message': 'Файл {} не содержит шаблонов для вставки.'.format(str(request.data['file']))},
+#                             status=400)
+#
+#
+# class DownloadDocsView(APIView):
+#     def post(self, request):
+#         filename = request.data['filename']
+#         items = request.data['items']
+#         merge_doc = request.data['merge_doc']
+#         for item in items:
+#             item.pop('_id')
+#         print(items)
+#         result = templater.final_replacement('media/templates/' + filename, items, merge_doc)
+#         return FileResponse(open(result, 'rb'), status=201)
+
+
 class TemplaterView(APIView):
     def get(self, _):
-        result = os.listdir('media/templates')
+        result = os.listdir('media/inventorybase/templates')
         info = ''
         for key in templater.ALLOWED_TEMPLATES:
             info += templater.ALLOWED_TEMPLATES[key] + '\n'
