@@ -159,7 +159,7 @@ def final_replacement(filename, payload, merge_doc):
             except KeyError as error:
                 continue
     if merge_doc:
-        documents = os.listdir(os.getcwd() + '/generated')
+        documents = os.listdir(os.getcwd() + '/media/generated')
         combine_word_documents(documents)
         result_path = make_archive(os.getcwd() + '/media/Документы',
                                    'zip',
