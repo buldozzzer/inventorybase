@@ -671,7 +671,7 @@ class RecognizerView(APIView):
 
 class TemplaterView(APIView):
     def get(self, _):
-        result = os.listdir('/app/media/templates/')
+        result = os.listdir(os.getcwd() + '/media/templates/')
         info = ''
         for key in templater.ALLOWED_TEMPLATES:
             info += templater.ALLOWED_TEMPLATES[key] + '\n'
@@ -681,17 +681,17 @@ class TemplaterView(APIView):
 
     def post(self, request):
         file = request.data['file']
-        if not os.path.isdir('media/templates'):
-            os.mkdir('media/templates')
-        with default_storage.open('/app/media/templates/' + str(request.data['file']), 'wb+') as destination:
+        if not os.path.isdir(os.getcwd() + '/media/templates'):
+            os.mkdir(os.getcwd() + '/media/templates')
+        with default_storage.open(os.getcwd() + '/media/templates/' + str(file), 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
-        if templater.docx_size('/app/media/templates/' + str(request.data['file'])) > 0:
-            return Response({'message': 'File {} added successfully'.format(str(request.data['file']))},
+        if templater.docx_size(os.getcwd() + '/media/templates/' + str(file)) > 0:
+            return Response({'message': 'File {} added successfully'.format(str(file))},
                             status=201)
         else:
-            os.remove('/app/media/templates/' + str(request.data['file']))
-            return Response({'message': 'Файл {} не содержит шаблонов для вставки.'.format(str(request.data['file']))},
+            os.remove(os.getcwd() + '/media/templates/' + str(file))
+            return Response({'message': 'Файл {} не содержит шаблонов для вставки.'.format(str(file))},
                             status=400)
 
 
@@ -702,6 +702,7 @@ class DownloadDocsView(APIView):
         merge_doc = request.data['merge_doc']
         for item in items:
             item.pop('_id')
-        print(items)
-        result = templater.final_replacement('media/templates/' + filename, items, merge_doc)
+        result = templater.final_replacement(os.getcwd() + '/media/templates/' + filename,
+                                             items,
+                                             merge_doc)
         return FileResponse(open(result, 'rb'), status=201)

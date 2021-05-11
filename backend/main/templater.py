@@ -143,8 +143,8 @@ def docx_write(document, substr, replace):
 
 
 def final_replacement(filename, payload, merge_doc):
-    if not os.path.isdir('media/generated'):
-        os.mkdir('media/generated')
+    if not os.path.isdir(os.getcwd() + '/media/generated'):
+        os.mkdir(os.getcwd() + '/media/generated')
     final_data = prep_data(payload)
     replaceable_templates = get_docx_templates(filename)
     for item, i in zip(final_data, range(len(final_data))):
@@ -153,22 +153,22 @@ def final_replacement(filename, payload, merge_doc):
             try:
                 docx_write(document, template, str(item[template]))
                 if os.name == 'nt':
-                    document.save('/app/media/generated/Документ-{}.docx'.format(i+1))
+                    document.save(os.getcwd() + '/media/generated/Документ-{}.docx'.format(i+1))
                 elif os.name == 'posix':
-                    document.save('/app/media/generated/Документ-{}.docx'.format(i+1))
+                    document.save(os.getcwd() + '/media/generated/Документ-{}.docx'.format(i+1))
             except KeyError as error:
                 continue
     if merge_doc:
         documents = os.listdir(os.getcwd() + '/generated')
         combine_word_documents(documents)
-        result_path = make_archive('/app/media/Документы',
+        result_path = make_archive(os.getcwd() + '/media/Документы',
                                    'zip',
-                                   root_dir='/app/media/generated',
+                                   root_dir=os.getcwd() + '/media/generated',
                                    base_dir='.')
     else:
-        result_path = make_archive('/app/media/Документы',
+        result_path = make_archive(os.getcwd() + '/media/Документы',
                                    'zip',
-                                   root_dir='/app/media/generated',
+                                   root_dir=os.getcwd() + '/media/generated',
                                    base_dir='.')
     return result_path
 
@@ -180,7 +180,7 @@ def combine_word_documents(files):
     :return:
     """
     merged_document = docx.Document()
-    os.chdir(os.getcwd() + '/generated/')
+    os.chdir(os.getcwd() + '/media/generated/')
     for index, file in enumerate(files):
         print('index: {}, file: {}'.format(index, str(file)))
         if index == 0:
@@ -193,7 +193,20 @@ def combine_word_documents(files):
             for element in sub_doc.element.body:
                 merged_document.element.body.append(element)
     # del_all()
-    merged_document.save('Документы.docx')
+    merged_document.save(os.getcwd() + '/Документы.docx')
     os.chdir('..')
     return True
 
+
+def del_all():
+    """
+    Удаляет все лишние файлы после завершения работы
+    :return:
+    """
+    for file in Path(os.getcwd() + '/media/generated/').glob('*.docx'):
+        try:
+            file.unlink()
+        except OSError as error:
+            print(error)
+
+    os.remove(os.getcwd() + '/media/Документы.zip')
