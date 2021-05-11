@@ -671,7 +671,7 @@ class RecognizerView(APIView):
 
 class TemplaterView(APIView):
     def get(self, _):
-        result = os.listdir('media/inventorybase')
+        result = os.listdir('/media/inventorybase')
         info = ''
         for key in templater.ALLOWED_TEMPLATES:
             info += templater.ALLOWED_TEMPLATES[key] + '\n'
