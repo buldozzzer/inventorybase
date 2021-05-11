@@ -182,7 +182,6 @@ def combine_word_documents(files):
     merged_document = docx.Document()
     os.chdir(os.getcwd() + '/media/generated/')
     for index, file in enumerate(files):
-        print('index: {}, file: {}'.format(index, str(file)))
         if index == 0:
             merged_document = docx.Document(file)
             merged_document.add_page_break()
@@ -193,8 +192,8 @@ def combine_word_documents(files):
             for element in sub_doc.element.body:
                 merged_document.element.body.append(element)
     # del_all()
-    merged_document.save(os.getcwd() + '/Документы.docx')
-    os.chdir('..')
+    merged_document.save('Документы.docx')
+    os.chdir('../..')
     return True
 
 
