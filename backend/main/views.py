@@ -680,10 +680,10 @@ class TemplaterView(APIView):
 
     def post(self, request):
         file = request.data['file']
-        with default_storage.open('/media/' + str(request.data['file']), 'wb+') as destination:
+        with default_storage.open('media/templates' + str(request.data['file']), 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
-        if templater.docx_size('/media/' + str(request.data['file'])) > 0:
+        if templater.docx_size('media/templates' + str(request.data['file'])) > 0:
             return Response({'message': 'File {} added successfully'.format(str(request.data['file']))},
                             status=201)
         else:
