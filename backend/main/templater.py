@@ -165,6 +165,7 @@ def final_replacement(filename, payload, merge_doc):
                                    'zip',
                                    root_dir=os.getcwd() + '/media/generated',
                                    base_dir='.')
+    os.chmod(result_path, 0o777)
     return result_path
 
 
