@@ -143,12 +143,11 @@ def docx_write(document, substr, replace):
 
 
 def final_replacement(filename, payload, merge_doc):
+    if not os.path.isdir('media/generated'):
+        os.mkdir('media/generated')
     final_data = prep_data(payload)
     replaceable_templates = get_docx_templates(filename)
     for item, i in zip(final_data, range(len(final_data))):
-        print(item)
-        print(i)
-        print()
         document = docx.Document(filename)
         for template in replaceable_templates:
             try:
