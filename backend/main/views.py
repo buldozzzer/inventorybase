@@ -702,8 +702,8 @@ class DownloadDocsView(APIView):
         merge_doc = request.data['merge_doc']
         for item in items:
             item.pop('_id')
-        templater.del_all()
         result = templater.final_replacement(os.getcwd() + '/media/templates/' + filename,
                                              items,
                                              merge_doc)
+        templater.del_all()
         return FileResponse(open(result, 'rb'), status=201)
