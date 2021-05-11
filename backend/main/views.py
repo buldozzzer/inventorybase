@@ -680,8 +680,8 @@ class TemplaterView(APIView):
 
     def post(self, request):
         file = request.data['file']
-        if not os.path.isdir('templates'):
-            os.mkdir('templates')
+        if not os.path.isdir('media/templates'):
+            os.mkdir('media/templates')
         with default_storage.open('templates/' + str(request.data['file']), 'wb+') as destination:
             for chunk in file.chunks():
                 destination.write(chunk)
