@@ -207,5 +207,3 @@ def del_all():
             file.unlink()
         except OSError as error:
             print(error)
-
-    os.remove(os.getcwd() + '/media/Документы.zip')
