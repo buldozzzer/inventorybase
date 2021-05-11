@@ -676,6 +676,7 @@ class TemplaterView(APIView):
         for key in templater.ALLOWED_TEMPLATES:
             info += templater.ALLOWED_TEMPLATES[key] + '\n'
         return Response({'docs': result,
+                         'cwd': os.getcwd(),
                          'info': info}, status=200)
 
     def post(self, request):
@@ -689,7 +690,7 @@ class TemplaterView(APIView):
             return Response({'message': 'File {} added successfully'.format(str(request.data['file']))},
                             status=201)
         else:
-            os.remove('media/templates/' + str(request.data['file']))
+            os.remove('/app/media/templates/' + str(request.data['file']))
             return Response({'message': 'Файл {} не содержит шаблонов для вставки.'.format(str(request.data['file']))},
                             status=400)
 

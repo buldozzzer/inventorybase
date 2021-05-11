@@ -154,22 +154,22 @@ def final_replacement(filename, payload, merge_doc):
             try:
                 docx_write(document, template, str(item[template]))
                 if os.name == 'nt':
-                    document.save('media/generated/Документ-{}.docx'.format(i+1))
+                    document.save('/app/media/generated/Документ-{}.docx'.format(i+1))
                 elif os.name == 'posix':
-                    document.save('media/generated/Документ-{}.docx'.format(i+1))
+                    document.save('/app/media/generated/Документ-{}.docx'.format(i+1))
             except KeyError as error:
                 continue
     if merge_doc:
         documents = os.listdir(os.getcwd() + '/generated')
         combine_word_documents(documents)
-        result_path = make_archive('media/Документы',
+        result_path = make_archive('/app/media/Документы',
                                    'zip',
-                                   root_dir='media/generated',
+                                   root_dir='/app/media/generated',
                                    base_dir='.')
     else:
-        result_path = make_archive('media/Документы',
+        result_path = make_archive('/app/media/Документы',
                                    'zip',
-                                   root_dir='media/generated',
+                                   root_dir='/app/media/generated',
                                    base_dir='.')
     return result_path
 
