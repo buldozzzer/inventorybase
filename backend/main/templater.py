@@ -111,14 +111,6 @@ def prep_data(payload: list):
 
 
 def docx_write(document, substr, replace):
-    """
-    Основная функция для замены шаблонов из таблицы
-    в docx-документ
-    :param document: Document(file) - открытый docx-файл
-    :param substr: Первая строка в одном из наборов mini_dict
-    :param replace: Вторая строка в одном из наборов mini_dict
-    :return:
-    """
     #style = document.styles['Normal']
     #font = style.font
     #font.name = 'Times New Roman'
@@ -151,7 +143,10 @@ def final_replacement(filename, payload, merge_doc):
         document = docx.Document(filename)
         for template in replaceable_templates:
             try:
-                docx_write(document, template, str(item[template]))
+                if str(item[template]) != '':
+                    docx_write(document, template, str(item[template]))
+                else:
+                    docx_write(document, template, '<поле отсутствует>')
                 if os.name == 'nt':
                     document.save(os.getcwd() + '/media/generated/Документ-{}.docx'.format(i+1))
                 elif os.name == 'posix':
