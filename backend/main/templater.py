@@ -1,11 +1,9 @@
-from pathlib import Path
-from shutil import make_archive
 import os
 import re
-from slugify import slugify
-from docx.shared import Pt
+from pathlib import Path
+from shutil import make_archive
+
 import docx
-import pandas as pd
 
 ALLOWED_EXTENSIONS = {'docx', 'xlsx'}
 ALLOWED_TEMPLATES = {
@@ -111,10 +109,10 @@ def prep_data(payload: list):
 
 
 def docx_write(document, substr, replace):
-    #style = document.styles['Normal']
-    #font = style.font
-    #font.name = 'Times New Roman'
-    #font.size = Pt(14)
+    # style = document.styles['Normal']
+    # font = style.font
+    # font.name = 'Times New Roman'
+    # font.size = Pt(14)
 
     for parg in document.paragraphs:
         if substr in parg.text:
@@ -148,9 +146,9 @@ def final_replacement(filename, payload, merge_doc):
                 else:
                     docx_write(document, template, '<поле отсутствует>')
                 if os.name == 'nt':
-                    document.save(os.getcwd() + '/media/generated/Документ-{}.docx'.format(i+1))
+                    document.save(os.getcwd() + '/media/generated/Документ-{}.docx'.format(i + 1))
                 elif os.name == 'posix':
-                    document.save(os.getcwd() + '/media/generated/Документ-{}.docx'.format(i+1))
+                    document.save(os.getcwd() + '/media/generated/Документ-{}.docx'.format(i + 1))
             except KeyError as error:
                 continue
     if merge_doc:

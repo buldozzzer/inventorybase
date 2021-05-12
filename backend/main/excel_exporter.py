@@ -1,5 +1,29 @@
-import pandas as pd
 import datetime as dt
+import os
+from shutil import make_archive
+
+import pandas as pd
+
+ALLOWED_HEADERS = {
+    'name': 'Наименование',
+    'user': 'Сотрудник, которому передано в пользование',
+    'responsible': 'Ответственный сотрудник',
+    'inventory_n': 'Инвентарный номер',
+    'otss_category': 'Категория ОТСС',
+    'condition': 'Сосотояние',
+    'unit_from': 'Подразделение',
+    'in_operation': 'Используется',
+    'fault_document_requisites': 'Документы о передаче во временное пользование',
+    'date_of_receipt': 'Дата поступления на учёт',
+    'number_of_receipt': 'Номер требования о поступлении на учёт',
+    'requisites': 'Реквизиты книги учета мат. ценностей',
+    'transfer_date': 'Дата передачи во временное пользование',
+    'otss_requisites': 'Реквизиты документа о категории ОТСС',
+    'spsi_requisites': 'Реквизиты документа о прохождении СПСИ',
+    'transfer_requisites': 'Реквизиты документа о передаче в пользование',
+    'comment': 'Примечания',
+    'last_check': 'Дата последней проверки',
+}
 
 
 def get_nested_components(payload: list):
@@ -144,25 +168,69 @@ def get_indices(merge_df: dict):
     return index
 
 
+def prep_data(payload):
+    for item in payload:
+        if 'components' in item:
+            item.pop('components')
+        if '_id' in item:
+            item.pop('_id')
+
+
+def distribute_to_columns(payload):
+    global ALLOWED_HEADERS
+    columns = {}
+    for key in ALLOWED_HEADERS:
+        columns[ALLOWED_HEADERS[key]] = []
+        for item in payload:
+            columns[ALLOWED_HEADERS[key]] += [item[key]]
+
+    return columns
+
+
+def change_headers(payload):
+    global ALLOWED_HEADERS
+    prepared_data = []
+    for item in payload:
+        prepared_item = {}
+        for key in item:
+            prepared_item[ALLOWED_HEADERS[key]] = item[key]
+        prepared_data += [prepared_item]
+    return prepared_data
+
+
+def write(payload):
+    prep_data(payload)
+    prepared_data = distribute_to_columns(payload)
+    filename = os.getcwd() + \
+               '/media/generated/report_' + \
+               dt.datetime.now().strftime('%d-%m-%Y_%H:%M:%S') + '.xlsx'
+
+    df = pd.DataFrame(prepared_data, index=[i for i in range(1, len(payload) + 1)])
+    df.to_excel(filename, sheet_name='Main')
+    return filename
+
+
 def export_to_excel(payload: list):
     """
     :param payload: item list
     :return: name of created file
     """
-    nested_components = {}
-
     if 'components' in payload[0]:
         nested_components = get_nested_components(payload)
+        items = get_items(payload)
+        merge_data = {**items, **nested_components}
+        index = get_indices(merge_data)
+        filename = os.getcwd() + \
+                   '/media/generated/report_' + \
+                   dt.datetime.now().strftime('%d-%m-%Y_%H:%M:%S') + '.xlsx'
+        temp_df = pd.DataFrame(data=merge_data, index=index)
+        temp_df.to_excel(filename, sheet_name='Main')
 
-    items = get_items(payload)
+    else:
+        filename = write(payload)
 
-    merge_data = {**items, **nested_components}
-
-    index = get_indices(merge_data)
-
-    filename = 'report_' + dt.datetime.now().strftime('%d-%m-%Y_%H:%M:%S') + '.xlsx'
-
-    temp_df = pd.DataFrame(data=merge_data, index=index)
-    temp_df.to_excel(filename, sheet_name='Main')
-
-    return filename
+    result_path = make_archive(os.getcwd() + '/media/Документы',
+                               'zip',
+                               root_dir=os.getcwd() + '/media/generated',
+                               base_dir='.')
+    return result_path
