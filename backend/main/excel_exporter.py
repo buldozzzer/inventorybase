@@ -183,7 +183,8 @@ def distribute_to_columns(payload):
     for key in ALLOWED_HEADERS:
         columns[ALLOWED_HEADERS[key]] = []
         for item in payload:
-            columns[ALLOWED_HEADERS[key]] += [item[key]]
+            if key in item:
+                columns[ALLOWED_HEADERS[key]] += [item[key]]
 
     return columns
 
