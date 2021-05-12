@@ -67,11 +67,18 @@
             'Content-type': 'application/json'
           },
           body: JSON.stringify(payload)
-        });
-        /* eslint-disable */
+        }).then(response => response.blob())
+          .then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = "Документы.zip";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          });
         if (response.status !== 201) {
           alert(JSON.stringify(await response.json(), null, 2));
-          this.$parent.showErrorAlert()
         }
       },
       onReset(evt) {
