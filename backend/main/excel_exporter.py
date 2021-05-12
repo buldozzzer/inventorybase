@@ -1,5 +1,6 @@
 import datetime as dt
 import os
+from pathlib import Path
 from shutil import make_archive
 
 import pandas as pd
@@ -234,3 +235,15 @@ def export_to_excel(payload: list):
                                root_dir=os.getcwd() + '/media/generated',
                                base_dir='.')
     return result_path
+
+
+def del_all():
+    """
+    Удаляет все лишние файлы после завершения работы
+    :return:
+    """
+    for file in Path(os.getcwd() + '/media/generated/').glob('*.xlsx'):
+        try:
+            file.unlink()
+        except OSError as error:
+            print(error)

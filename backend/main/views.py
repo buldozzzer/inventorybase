@@ -615,9 +615,9 @@ class ExcelExporterView(APIView):
                             response status 201.
         """
         payload = request.data
-        filename = excel_exporter.export_to_excel(payload=payload)
-        return Response({"message": "File .xlsx with name '{}' created successfully."
-                        .format(filename)}, status=201)
+        result = excel_exporter.export_to_excel(payload=payload)
+        excel_exporter.del_all()
+        return FileResponse(open(result, 'rb'), status=201)
 
 
 class RecognizerView(APIView):
@@ -691,7 +691,8 @@ class TemplaterView(APIView):
                             status=201)
         else:
             os.remove(os.getcwd() + '/media/templates/' + str(file))
-            return Response({'message': 'Файл {} не содержит шаблонов для вставки.'.format(str(file))},
+            return Response({'message': 'Файл {} не содержит шаблонов для вставки.'
+                            .format(str(file))},
                             status=400)
 
 
