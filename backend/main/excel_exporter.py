@@ -180,12 +180,13 @@ def prep_data(payload):
 def distribute_to_columns(payload):
     global ALLOWED_HEADERS
     columns = {}
+    for key in payload[0]:
+        if key in payload[0]:
+            columns[ALLOWED_HEADERS[key]] = []
     for key in ALLOWED_HEADERS:
-        columns[ALLOWED_HEADERS[key]] = []
         for item in payload:
             if key in item:
                 columns[ALLOWED_HEADERS[key]] += [item[key]]
-
     return columns
 
 
