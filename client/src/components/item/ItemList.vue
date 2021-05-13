@@ -1481,7 +1481,6 @@
 <style>
   td {
     max-width: 250px;
-    min-width: 150px;
     line-height: 15px;
     max-height: 40px;
     height: 40px;
