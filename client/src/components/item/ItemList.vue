@@ -142,6 +142,13 @@
              :filter-function="filterFunction"
              :filter="filters"
              @row-selected="onRowSelected">
+      <template #table-colgroup="scope">
+        <col
+          v-for="field in scope.fields"
+          :key="field.key"
+          :id="'cell-' + field.key"
+        >
+      </template>
       <template #head()="scope">
         <div class="text-nowrap text-center" :title="scope.label">
           {{ scope.label }}
@@ -204,7 +211,7 @@
                     font-scale="1.5"
                     aria-hidden="false"></b-icon>
           </button>
-          <b-dropdown text="Поля таблицы"
+          <b-dropdown text=" Поля "
                       variant="warning"
                       role="menu">
             <b-dropdown-text  class="text-nowrap">
@@ -233,9 +240,8 @@
       <template #cell(index)="data">
         {{ data.index + 1 }}
       </template>
-
       <template #cell(name)="row">
-        <div @dblclick="showFieldFromModal('name'), editableRow=row.item">
+        <div @dblclick="showFieldFromModal('name'), editableRow=row.item" :title="row.item.name">
           <p>{{ row.item.name ? row.item.name : '&nbsp' }}</p>
         </div>
         <b-modal ref="name" centered
@@ -983,7 +989,7 @@
             key: "Компоненты",
             show: false
           }, {
-            key: "Ответственный сотрудник",
+            key: "Ответственный",
             show: true
           },
           {
@@ -1063,7 +1069,7 @@
             class: 'text-center'
           }, {
             key: "responsible",
-            label: "Ответственный сотрудник",
+            label: "Ответственный",
             sortable: true,
             class: 'text-center'
           },
@@ -1480,11 +1486,7 @@
 
 <style>
   td {
-    max-width: 250px;
     line-height: 15px;
-    max-height: 40px;
-    height: 40px;
-    min-height: 40px;
     color: black;
   }
   .button-select-rows{
@@ -1493,13 +1495,13 @@
     border: none;
     border-radius: 10px;
   }
-  table {
-    white-space: nowrap;
-  }
-  p {
-    text-overflow: ellipsis;
-    overflow-x: auto;
-  }
+  /*table {*/
+  /*  white-space: nowrap;*/
+  /*}*/
+  /*p {*/
+  /*  text-overflow: ellipsis;*/
+  /*  overflow-x: scroll;*/
+  /*}*/
   .table thead th {
     vertical-align: sub;
     color: black;
@@ -1524,5 +1526,12 @@
   }
   .tr{
     max-height: 20px;
+  }
+  #cell-name{
+    min-width: 500px;
+    text-align: justify;
+  }
+  p {
+    text-align: justify;
   }
 </style>
