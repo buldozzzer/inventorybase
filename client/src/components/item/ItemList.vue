@@ -131,6 +131,7 @@
     <!--    v-bind:sticky-header="sliderValue+'px'"-->
     <b-table striped hover
              bordered
+             small
              id="table"
              class="mt-3"
              ref="selectableTable"
@@ -202,16 +203,16 @@
                     v-if="selected.length === 0"
                     data-toggle="tooltip"
                     data-placement="top"
-                    font-scale="1.5"
+                    font-scale="1"
                     aria-hidden="false"></b-icon>
             <b-icon icon="check-square-fill"
                     v-else
                     data-toggle="tooltip"
                     data-placement="top"
-                    font-scale="1.5"
+                    font-scale="1"
                     aria-hidden="false"></b-icon>
           </button>
-          <b-dropdown text=" Поля "
+          <b-dropdown text="Поля"
                       variant="warning"
                       role="menu">
             <b-dropdown-text  class="text-nowrap">
@@ -238,11 +239,14 @@
         <div>Номер</div>
       </template>
       <template #cell(index)="data">
-        {{ data.index + 1 }}
+        <div class="text-center">
+          {{ data.index + 1 }}
+        </div>
       </template>
       <template #cell(name)="row">
-        <div @dblclick="showFieldFromModal('name'), editableRow=row.item" :title="row.item.name">
-          <p>{{ row.item.name ? row.item.name : '&nbsp' }}</p>
+        <div @dblclick="showFieldFromModal('name'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.name ? row.item.name : '&nbsp' }}
         </div>
         <b-modal ref="name" centered
                  title="Измените значение поля"
@@ -267,7 +271,7 @@
 
       <template #cell(responsible)="row">
         <div @dblclick="showFieldFromModal('responsible'), editableRow=row.item"
-             class="text-nowrap">
+             class="text-center">
           {{ row.item.responsible ? row.item.responsible : '&nbsp' }}
         </div>
         <b-modal ref="responsible"
@@ -303,8 +307,8 @@
 
       <template #cell(user)="row">
         <div @dblclick="showFieldFromModal('user'), editableRow=row.item"
-             class="text-nowrap">
-          <p>{{ row.item.user ? row.item.user : '&nbsp' }}</p>
+             class="text-center">
+          {{ row.item.user ? row.item.user : '&nbsp' }}
         </div>
         <b-modal ref="user"
                  centered
@@ -339,8 +343,8 @@
 
       <template #cell(inventory_n)="row">
         <div @dblclick="showFieldFromModal('inventory_n'), editableRow=row.item"
-             class="text-nowrap">
-          <p>{{ row.item.inventory_n ? row.item.inventory_n : '&nbsp' }}</p>
+             class="text-center">
+          {{ row.item.inventory_n ? row.item.inventory_n : '&nbsp' }}
         </div>
         <b-modal ref="inventory_n"
                  centered
@@ -371,8 +375,8 @@
 
       <template #cell(in_operation)="row">
         <div @dblclick="showFieldFromModal('in_operation'), editableRow=row.item"
-             class="text-nowrap">
-          <p>{{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}</p>
+             class="text-center">
+          {{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}
         </div>
         <b-modal ref="in_operation"
                  centered
@@ -404,8 +408,8 @@
 
       <template #cell(in_operation)="row">
         <div @dblclick="showFieldFromModal('in_operation'), editableRow=row.item"
-             class="text-nowrap">
-          <p>{{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}</p>
+             class="text-center">
+          {{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}
         </div>
         <b-modal ref="in_operation"
                  centered
@@ -437,8 +441,8 @@
 
       <template #cell(condition)="row">
         <div @dblclick="showFieldFromModal('condition'), editableRow=row.item"
-             class="text-nowrap">
-          <p>{{ row.item.condition ? row.item.condition : '&nbsp' }}</p>
+             class="text-center">
+          {{ row.item.condition ? row.item.condition : '&nbsp' }}
         </div>
         <b-modal ref="condition"
                  centered
@@ -469,8 +473,9 @@
       </template>
 
       <template #cell(unit_from)="row">
-        <div @dblclick="showFieldFromModal('unit_from'), editableRow=row.item">
-          <p>{{ row.item.unit_from ? row.item.unit_from : '&nbsp' }}</p>
+        <div @dblclick="showFieldFromModal('unit_from'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.unit_from ? row.item.unit_from : '&nbsp' }}
         </div>
         <b-modal ref="unit_from" centered
                  title="Измените значение поля"
@@ -498,8 +503,9 @@
       </template>
 
       <template #cell(fault_document_requisites)="row">
-        <div @dblclick="showFieldFromModal('fault_document_requisites'), editableRow=row.item">
-          <p>{{ row.item.fault_document_requisites ? row.item.fault_document_requisites : '&nbsp' }}</p>
+        <div @dblclick="showFieldFromModal('fault_document_requisites'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.fault_document_requisites ? row.item.fault_document_requisites : '&nbsp' }}
         </div>
         <b-modal ref="fault_document_requisites"
                  centered
@@ -531,7 +537,7 @@
 
       <template #cell(number_of_receipt)="row">
         <div @dblclick="showFieldFromModal('number_of_receipt'), editableRow=row.item">
-          <p>{{ row.item.number_of_receipt ? row.item.number_of_receipt : '&nbsp' }}</p>
+          {{ row.item.number_of_receipt ? row.item.number_of_receipt : '&nbsp' }}
         </div>
         <b-modal ref="number_of_receipt"
                  centered
@@ -624,7 +630,7 @@
       <template #cell(selected)="row">
         <b-container>
           <b-row class="text-center">
-            <b-col cols="6">
+            <b-col cols="4">
               <b-icon icon="check2"
                       v-show="row.rowSelected"
                       data-toggle="tooltip"
@@ -633,19 +639,19 @@
                       font-scale="1.8">
               </b-icon>
             </b-col>
-            <b-col cols="6">
+            <b-col cols="8">
               <b-icon icon="pencil-square"
                       variant="primary"
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Изменить"
-                      font-scale="1.5"
+                      font-scale="1"
                       v-b-modal.edit-item-modal
                       @click="selectToEditItem(row.item)">
               </b-icon>
               <b-icon icon="trash"
                       variant="danger"
-                      font-scale="1.5"
+                      font-scale="1"
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Удалить"
@@ -659,7 +665,7 @@
 
       <template #cell(otss_requisites)="row">
         <div @dblclick="showFieldFromModal('otss_requisites'), editableRow=row.item">
-          <p>{{ row.item.otss_requisites ? row.item.otss_requisites : '&nbsp' }}</p>
+          {{ row.item.otss_requisites ? row.item.otss_requisites : '&nbsp' }}
         </div>
         <b-modal ref="otss_requisites"
                  centered
@@ -691,7 +697,7 @@
 
       <template #cell(spsi_requisites)="row">
         <div @dblclick="showFieldFromModal('spsi_requisites'), editableRow=row.item">
-          <p>{{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}</p>
+          {{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}
         </div>
         <b-modal ref="spsi_requisites"
                  centered
@@ -723,7 +729,7 @@
 
       <template #cell(spsi_requisites)="row">
         <div @dblclick="showFieldFromModal('spsi_requisites'), editableRow=row.item">
-          <p>{{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}</p>
+          {{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}
         </div>
         <b-modal ref="spsi_requisites"
                  centered
@@ -755,7 +761,7 @@
 
       <template #cell(transfer_requisites)="row">
         <div @dblclick="showFieldFromModal('transfer_requisites'), editableRow=row.item">
-          <p>{{ row.item.transfer_requisites ? row.item.transfer_requisites : '&nbsp' }}</p>
+          {{ row.item.transfer_requisites ? row.item.transfer_requisites : '&nbsp' }}
         </div>
         <b-modal ref="transfer_requisites"
                  centered
@@ -787,7 +793,7 @@
 
       <template #cell(comment)="row">
         <div @dblclick="showFieldFromModal('comment'), editableRow=row.item">
-          <p>{{ row.item['comment'] ? row.item['comment'] : '&nbsp' }}</p>
+          {{ row.item['comment'] ? row.item['comment'] : '&nbsp' }}
         </div>
         <b-modal ref="comment"
                  centered
@@ -819,7 +825,7 @@
 
       <template #cell(date_of_receipt)="row">
         <div @dblclick="showFieldFromModal('date_of_receipt'), editableRow=row.item">
-          <p>{{ row.item.date_of_receipt ? row.item.date_of_receipt : '&nbsp' }}</p>
+          {{ row.item.date_of_receipt ? row.item.date_of_receipt : '&nbsp' }}
         </div>
         <b-modal ref="date_of_receipt"
                  centered
@@ -854,7 +860,7 @@
 
       <template #cell(transfer_date)="row">
         <div @dblclick="showFieldFromModal('transfer_date'), editableRow=row.item">
-          <p>{{ row.item.transfer_date ? row.item.transfer_date : '&nbsp' }}</p>
+          {{ row.item.transfer_date ? row.item.transfer_date : '&nbsp' }}
         </div>
         <b-modal ref="transfer_date"
                  centered
@@ -889,7 +895,7 @@
 
       <template #cell(last_check)="row">
         <div @dblclick="editableRow=row.item, getCurrentDate(editableRow)">
-          <p>{{ row.item.last_check ? row.item.last_check : '&nbsp' }}</p>
+          {{ row.item.last_check ? row.item.last_check : '&nbsp' }}
         </div>
       </template>
 
@@ -1488,6 +1494,7 @@
   td {
     line-height: 15px;
     color: black;
+    padding: 5px;
   }
   .button-select-rows{
     color: #000000;
@@ -1533,5 +1540,16 @@
   }
   p {
     text-align: justify;
+  }
+  #cell-selected{
+    max-width: 130px;
+    min-width: 130px;
+    text-align: justify;
+  }
+  th.table-b-table-default{
+    vertical-align: middle;
+  }
+  td.text-center{
+    vertical-align: middle;
   }
 </style>
