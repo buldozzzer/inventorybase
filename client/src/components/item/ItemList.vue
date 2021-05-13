@@ -629,17 +629,17 @@
             </b-col>
             <b-col cols="6">
               <b-icon icon="pencil-square"
-                      variant="warning"
+                      variant="primary"
                       data-toggle="tooltip"
                       data-placement="top"
-                      title="Редактировать"
-                      font-scale="1.8"
+                      title="Изменить"
+                      font-scale="1.5"
                       v-b-modal.edit-item-modal
                       @click="selectToEditItem(row.item)">
               </b-icon>
               <b-icon icon="trash"
                       variant="danger"
-                      font-scale="1.8"
+                      font-scale="1.5"
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Удалить"
