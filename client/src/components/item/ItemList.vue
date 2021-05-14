@@ -636,7 +636,7 @@
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Выбрано"
-                      font-scale="1.8">
+                      font-scale="1.2">
               </b-icon>
             </b-col>
             <b-col cols="8">

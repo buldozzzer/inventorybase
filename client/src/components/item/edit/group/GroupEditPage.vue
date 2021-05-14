@@ -1,8 +1,10 @@
 <template>
-  <div>
-    <b-container class="mt-3">
-      <b-row>
-        <b-col cols="2">
+  <div id="edit-form">
+    <b-row class="mt-3">
+      <b-col cols="2">
+        <div id="scrollspy-buttons"
+             :style="{ height: scroll_form }"
+             ref="buttons">
           <b-button variant="dark"
                     v-b-modal.confirm-modal>
             Внести изменения
@@ -17,20 +19,20 @@
               </b-nav-item>
             </b-nav>
           </b-navbar>
-        </b-col>
-        <b-col cols="10">
-          <div id="scrollspy-nested"
-               style="position:relative; height:550px; overflow-y:scroll"
-               ref="items">
-            <group-edit-form v-for="item in itemsForEdit"
-                             :key="item['_id']"
-                             :itemForm="item"
-                             :id="'item-' + item['_id']"
-                             :employeeInitials="employeeInitials"/>
-          </div>
-        </b-col>
-      </b-row>
-    </b-container>
+        </div>
+      </b-col>
+      <b-col cols="10">
+        <div id="scrollspy-nested"
+             :style="{ height: scroll_form }"
+             ref="items">
+          <group-edit-form v-for="item in itemsForEdit"
+                           :key="item['_id']"
+                           :itemForm="item"
+                           :id="'item-' + item['_id']"
+                           :employeeInitials="employeeInitials"/>
+        </div>
+      </b-col>
+    </b-row>
     <confirm-form :message="message"
                   :op="editItems"/>
   </div>
@@ -51,6 +53,8 @@
     data() {
       return {
         employeeInitials: [],
+        disableEdit: true,
+        scroll_form: '',
         employeeList: [],
         itemsForEdit: [],
         m: ''
@@ -120,9 +124,27 @@
       this.itemsForEdit = this.$parent.$data.dataForChildren
       bus.$emit('clearDataForChildren')
     },
+    mounted() {
+      let _height = document.documentElement.clientHeight * 0.9
+      this.scroll_form = _height.toString() + 'px'
+    }
   }
 </script>
 
 <style scoped>
-
+  #scrollspy-nested{
+    position:relative;
+    width: 98%;
+    overflow-y:scroll
+  }
+  #edit-form{
+    width: 98%;
+    margin: auto;
+  }
+  #scrollspy-buttons{
+    position:relative;
+    overflow-y:scroll;
+    width: 105%;
+    overflow-x: hidden;
+  }
 </style>

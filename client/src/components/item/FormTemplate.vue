@@ -6,15 +6,15 @@
         <b-form-group id="form-name-group"
                       label="Наименование:"
                       label-for="form-name-input">
-          <b-form-input id="form-name-input"
-                        autofocus
-                        type="text"
-                        v-model="itemForm.name"
-                        :value="itemForm.name"
-                        required
-                        placeholder="Введите наименование мат. ценности"
-                        :state="isIntroduced(itemForm.name, '')">
-          </b-form-input>
+          <b-form-textarea id="form-name-input"
+                           autofocus
+                           type="text"
+                           v-model="itemForm.name"
+                           :value="itemForm.name"
+                           required
+                           placeholder="Введите наименование мат. ценности"
+                           :state="isIntroduced(itemForm.name, '')">
+          </b-form-textarea>
         </b-form-group>
       </b-col>
     </b-row>
