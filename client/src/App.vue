@@ -19,7 +19,10 @@
       }
     },
     async mounted() {
-      await bus.$on('clearDataForChildren', () => {this.dataForChildren = null})
+      await bus.$on('clearDataForChildren',
+        () => {this.dataForChildren = null})
+      await bus.$on('fetchDataForChildren',
+        (data) => {this.dataForChildren = data})
     }
   };
 </script>

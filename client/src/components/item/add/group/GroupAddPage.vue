@@ -65,6 +65,7 @@
         employeeList: [],
         employeeInitials: [],
         listOfNewItems: [],
+        parent: null
       }
     },
     methods: {
@@ -205,6 +206,7 @@
     async created() {
       await this.fetchEmployees()
       this.init()
+      this.parent = this.$parent
     },
     mounted() {
       let _height = document.documentElement.clientHeight * 0.9

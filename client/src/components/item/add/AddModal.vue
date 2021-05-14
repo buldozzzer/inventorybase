@@ -35,7 +35,7 @@
             <b-button @click="showComponents = !showComponents">
               {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
             </b-button>
-            <component-list v-if="showComponents"
+            <component-list v-show="showComponents"
                             ref="componentList"/>
           </b-col>
         </b-row>
@@ -81,7 +81,8 @@
           comment: '',
           last_check: null,
         },
-        showComponents: false
+        showComponents: false,
+        app: null
       }
     },
     computed:{
@@ -151,7 +152,10 @@
         return left !== right
       },
       sendForm() {
-        this.itemForm['components'] = this.$refs.componentList.createComponentList()
+        if(this.$refs.componentList != null) {
+          this.itemForm['components'] = this.$refs.componentList.createComponentList()
+        }
+        bus.$emit('fetchDataForChildren', this.itemForm)
         this.$parent.$parent.$data.dataForChildren = this.itemForm
       },
       clearForm() {
@@ -177,6 +181,9 @@
           last_check: null,
         }
       }
+    },
+    created() {
+      this.app = this.$parent.$parent
     }
   }
 </script>
