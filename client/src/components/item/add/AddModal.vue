@@ -1,5 +1,6 @@
 <!--eslint-disable-->
 <template>
+<!--  test-branch-->
   <b-modal ref="addItemModal"
            id="add-item-modal"
            title="Добавить запись в базу мат. ценностей"
