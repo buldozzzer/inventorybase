@@ -16,17 +16,18 @@
             <b-dropdown-item href="#/types">Типы</b-dropdown-item>
           </b-nav-item-dropdown>
         </b-navbar-nav>
-
-        <!-- Right aligned nav items -->
         <b-navbar-nav class="ml-auto">
-          <b-nav-item-dropdown right>
-            <!-- Using 'button-content' slot -->
-            <template #button-content>
-              <em>User</em>
-            </template>
-            <b-dropdown-item href="#">Profile</b-dropdown-item>
-            <b-dropdown-item href="#">Sign Out</b-dropdown-item>
-          </b-nav-item-dropdown>
+          <b-iconstack :title="message" @click="getConnection">
+            <b-icon icon="diagram2-fill"
+                    scale="1"
+                    variant="success">
+            </b-icon>
+            <b-icon icon="slash-circle"
+                    v-if="!connection"
+                    scale="1.25"
+                    variant="danger">
+            </b-icon>
+          </b-iconstack>
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
@@ -34,11 +35,44 @@
 </template>
 
 <script>
+/* eslint-disable */
 export default {
   name: 'Nav',
+  data(){
+    return{
+      connection: false,
+      message: 'test',
+      host: null,
+      port: null
+    }
+  },
+  methods:{
+    async getConnection(){
+      const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/test/`,
+        {
+          headers: {
+            'Accept': 'application/json',
+          },
+          mode: "cors",
+        })
+      let tmp = await response.json()
+      this.host = tmp.host
+      this.port = tmp.port
+      this.message = this.host + ':' + this.port
+      if(response.status === 200) {
+        this.connection = true
+      }
+    }
+  },
+  async created() {
+    await this.getConnection()
+  }
 };
 </script>
 
-<style scoped>
-
+<style>
+  .navbar-nav .dropdown-menu {
+    position: absolute;
+    float: none;
+  }
 </style>

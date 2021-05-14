@@ -52,15 +52,19 @@
       },
 
       async fetchConditions() {
-        const response = await fetch('http://localhost:8000/api/v1/condition/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/condition/`,
+        {
+          mode: "cors",
+        })
         this.conditions = await response.json()
         this.conditions = this.conditions['conditions']
         this.selected = []
       },
       async removeCondition(unit) {
         const _id = unit['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/condition/${_id}/`, {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/condition/${_id}/`, {
           method: 'DELETE',
+          mode: "cors",
           headers: {
             'Accept': 'application/json',
             'Content-type': 'application/json'

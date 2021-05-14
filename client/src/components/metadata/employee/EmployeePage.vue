@@ -52,7 +52,10 @@
       },
 
       async fetchEmployees() {
-        const response = await fetch('http://localhost:8000/api/v1/employee/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/employee/`,
+        {
+          mode: "cors",
+        })
         this.employeeList = await response.json()
         this.employeeList = this.employeeList['employees']
         this.selected = []
@@ -62,8 +65,9 @@
       },
       async removeEmployee(employee) {
         const _id = employee['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/employee/${_id}/`, {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/employee/${_id}/`, {
           method: 'DELETE',
+          mode: 'cors',
           headers: {
             'Accept': 'application/json',
             'Content-type': 'application/json'

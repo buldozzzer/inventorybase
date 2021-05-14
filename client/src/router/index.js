@@ -11,11 +11,13 @@ import CategoryPage from "../components/metadata/category/CategoryPage";
 import LocationPage from "../components/metadata/location/LocationPage";
 import TypePage from "../components/metadata/type/TypePage";
 import ConditionPage from "../components/metadata/condition/ConditionPage";
+import RecognizePage from "../components/item/recognize/RecognizePage";
 
 Vue.use(Router);
 
 export default new Router({
   routes: [
+    { path: '/', redirect: '/items/' },
     {
       path: '/items/groupadd/',
       name: 'GroupAddPage',
@@ -66,5 +68,10 @@ export default new Router({
       name: 'ConditionList',
       component: ConditionPage,
     },
+    {
+      path: '/items/recognize',
+      name: 'RecognizePage',
+      component: RecognizePage
+    }
   ],
 });

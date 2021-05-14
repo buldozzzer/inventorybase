@@ -107,7 +107,10 @@
     },
     methods: {
       async fetchEmployees() {
-        const response = await fetch('http://localhost:8000/api/v1/employee/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/employee/`,
+        {
+          mode: "cors",
+        })
         this.employeeList = await response.json()
       },
       onReset(evt) {

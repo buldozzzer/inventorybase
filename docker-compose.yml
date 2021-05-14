@@ -41,30 +41,45 @@ version: '3'
 #  backend-net:
 #    driver: bridge
 
+#services:
+#  items_db:
+#    image: mongo:4.4
+#    container_name: items_db
+#    restart: always
+#    environment:
+#      - MONGO_INITDB_DATABASE=ItemsDB
+#    volumes:
+##      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+#      - ./mongo-init.js:/mongo-init.js
+#    networks:
+#      - app-net
+#
+#  app:
+#    build: ./
+#    container_name: app
+#    restart: unless-stopped
+#    ports:
+#      - "0.0.0.0:8000:8000"
+#    depends_on:
+#      - items_db
+#    networks:
+#      - app-net
+#
+#networks:
+#  app-net:
+#    driver: bridge
 services:
-  mongo:
-    image: mongo:latest
-    container_name: mongo
-    restart: always
-    environment:
-      - MONGO_INITDB_DATABASE=ItemsDB
-    volumes:
-#      - ./docker-entrypoint-initdb.d/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
-      - ./mongo-init.js:/mongo-init.js
-    networks:
-      - app-net
-
-  app:
-    build: ./
-    container_name: app
-    restart: unless-stopped
+  inventorybase:
+    build: .
+    container_name: inventorybase
     ports:
-      - "0.0.0.0:8000:8000"
-    depends_on:
-      - mongo
-    networks:
-      - app-net
+      - 8000:8000
+  items_db:
+    container_name: items_db
+    environment:
+      MONGO_INITDB_DATABASE: ItemsDB
+    image: mongo:4.4
+    restart: always
 
-networks:
-  app-net:
-    driver: bridge
+volumes:
+  items_db_data: null

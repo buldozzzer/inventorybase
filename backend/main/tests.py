@@ -6,13 +6,16 @@ from faker import Factory
 from pymongo import MongoClient
 from rest_framework import status
 from rest_framework.test import APITestCase
+from pandas import MultiIndex
 
 from . import mongo
+from . import excel_exporter as ee
 
 
 class BasicFunctions:
     def __init__(self):
-        self.client = MongoClient('localhost', 27017)
+        # self.client = MongoClient('localhost', 27017)
+        self.client = MongoClient('items_db', 27017)
         self.fake = Factory.create('ru_RU')
 
     def generate_employee_data(self):
@@ -37,7 +40,8 @@ class TestBasicFunctions(unittest.TestCase):
         self.assertNotEqual(data, {})
 
     def test_connection(self):
-        self.assertEqual(self.connection, MongoClient('localhost', 27017)['ItemsDB'])
+        # self.assertEqual(self.connection, MongoClient('localhost', 27017)['ItemsDB'])
+        self.assertEqual(self.connection, MongoClient('items_db', 27017)['ItemsDB'])
 
 
 class EmployeeTests(APITestCase):
@@ -109,7 +113,7 @@ class ItemTests(APITestCase):
             ],
             "inventory_n": self.mongo_functions.fake.ssn(),
             "otss_category": "не секретно",
-            "condition": "ИСправное",
+            "condition": "Исправное",
             "unit_from": self.mongo_functions.fake.company_prefix(),
             "in_operation": "Используется",
             "fault_document_requisites": self.mongo_functions.fake.ssn(),
@@ -338,11 +342,11 @@ class LocationsTests(APITestCase):
         self.functions = BasicFunctions()
         self.connection = mongo.get_conn()
         self.form = {
-                        "object": self.functions.fake.name(),
-                        "corpus": self.functions.fake.name(),
-                        "unit": self.functions.fake.name(),
-                        "cabinet": self.functions.fake.name()
-                    }
+            "object": self.functions.fake.name(),
+            "corpus": self.functions.fake.name(),
+            "unit": self.functions.fake.name(),
+            "cabinet": self.functions.fake.name()
+        }
 
     def test_get_location_list(self):
         response = self.client.get('/api/v1/location/', format='json')
@@ -377,3 +381,215 @@ class LocationsTests(APITestCase):
         response = self.client.put('/api/v1/location/' + _id + '/', format='json', data=self.form)
         self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
         self.connection['main_location'].drop()
+
+
+class ConditionTests(APITestCase):
+    def setUp(self):
+        self.functions = BasicFunctions()
+        self.connection = mongo.get_conn()
+        self.form = {
+            'conditions': self.functions.fake.name()
+        }
+
+    def test_get_type_list(self):
+        response = self.client.get('/api/v1/condition/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_200_OK)
+        self.connection['main_condition'].drop()
+
+    def test_add_type(self):
+        response = self.client.post('/api/v1/condition/',
+                                    format='json',
+                                    data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.connection['main_condition'].drop()
+
+    def test_delete_type(self):
+        self.client.post('/api/v1/condition/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/condition/', format='json')
+        _id = data_for_ids.data['conditions'][0]['_id']
+        response = self.client.delete('/api/v1/condition/' + _id + '/', format='json')
+        self.assertEqual(response.status_code, status.HTTP_204_NO_CONTENT)
+        self.connection['main_condition'].drop()
+
+    def test_put_type(self):
+        self.client.post('/api/v1/condition/',
+                         format='json',
+                         data=self.form)
+        data_for_ids = self.client.get('/api/v1/condition/', format='json')
+        _id = data_for_ids.data['conditions'][0]['_id']
+        self.form['condition'] = 'blablabla'
+        self.form['_id'] = str(ObjectId(_id))
+        response = self.client.put('/api/v1/condition/' + _id + '/', format='json', data=self.form)
+        self.assertEqual(response.status_code, status.HTTP_202_ACCEPTED)
+        self.connection['main_condition'].drop()
+
+
+class ExcelExporterTests(APITestCase):
+    def setUp(self) -> None:
+        self.payload = [
+            {
+                'name': 'name_1',
+                'user': 'test_user',
+                'responsible': 'test_responsible',
+                'components': [{
+                    'name': 'comp_name1_sample1',
+                    'serial_n': 'comp_serial_n_sample1',
+                    'type': 'comp_type_sample1',
+                    'view': 'comp_view_sample1',
+                    'category': 'comp_category_sample1',
+                    'year': 'comp_year_sample1',
+                    'cost': 'comp_cost_sample1',
+                    'location': {
+                        'object': 'comp_object_sample1',
+                        'corpus': 'comp_corpus_sample1',
+                        'unit': 'comp_unit_sample1',
+                        'cabinet': 'comp_cabinet_sample1',
+                    }
+                },
+                    {
+                        'name': 'comp_name2_sample1',
+                        'serial_n': 'comp_serial_n_sample1',
+                        'type': 'comp_type_sample1',
+                        'view': 'comp_view_sample1',
+                        'category': 'comp_category_sample1',
+                        'year': 'comp_year_sample1',
+                        'cost': 'comp_cost_sample1',
+                        'location': {
+                            'object': 'comp_object_sample1',
+                            'corpus': 'comp_corpus_sample1',
+                            'unit': 'comp_unit_sample1',
+                            'cabinet': 'comp_cabinet_sample1',
+                        }
+                    }],
+                'inventory_n': 'test_inventory_n',
+                'otss_category': 'test_otss_category',
+                'condition': 'test_condition',
+                'unit_from': 'test_unit_from',
+                'in_operation': 'test_in_operation',
+                'fault_document_requisites': 'test_fault_document_requisites',
+                'date_of_receipt': 'test_date_of_receipt',
+                'number_of_receipt': 'test_number_of_receipt',
+                'requisites': 'test_requisites',
+                'transfer_date': 'test_transfer_date',
+                'otss_requisites': 'test_otss_requisites',
+                'spsi_requisites': 'test_spsi_requisites',
+                'transfer_requisites': 'test_transfer_requisites',
+                'comment': 'test_comment',
+                'last_check': 'test_last_check',
+            },
+            {
+                'name': 'name_2',
+                'user': 'test_user',
+                'responsible': '',
+                'components': [],
+                'inventory_n': 'test_inventory_n',
+                'otss_category': 'test_otss_category',
+                'condition': 'test_condition',
+                'unit_from': 'test_unit_from',
+                'in_operation': 'test_in_operation',
+                'fault_document_requisites': 'test_fault_document_requisites',
+                'date_of_receipt': 'test_date_of_receipt',
+                'number_of_receipt': 'test_number_of_receipt',
+                'requisites': 'test_requisites',
+                'transfer_date': 'test_transfer_date',
+                'otss_requisites': 'test_otss_requisites',
+                'spsi_requisites': 'test_spsi_requisites',
+                'transfer_requisites': 'test_transfer_requisites',
+                'comment': 'test_comment',
+                'last_check': 'test_last_check',
+            },
+            {
+                'name': 'name_3',
+                'user': 'test_user',
+                'responsible': 'test_responsible',
+                'components': [{
+                    'name': 'comp_name_sample2',
+                    'serial_n': 'comp_serial_n_sample2',
+                    'type': 'comp_type_sample2',
+                    'view': 'comp_view_sample2',
+                    'category': 'comp_category_sample2',
+                    'year': 'comp_year_sample2',
+                    'cost': 'comp_cost_sample2',
+                    'location': {
+                        'object': 'comp_object_sample2',
+                        'corpus': 'comp_corpus_sample2',
+                        'unit': 'comp_unit_sample2',
+                        'cabinet': 'comp_cabinet_sample2',
+                    }
+                }],
+                'inventory_n': 'test_inventory_n',
+                'otss_category': 'test_otss_category',
+                'condition': 'test_condition',
+                'unit_from': 'test_unit_from',
+                'in_operation': 'test_in_operation',
+                'fault_document_requisites': 'test_fault_document_requisites',
+                'date_of_receipt': 'test_date_of_receipt',
+                'number_of_receipt': 'test_number_of_receipt',
+                'requisites': 'test_requisites',
+                'transfer_date': 'test_transfer_date',
+                'otss_requisites': 'test_otss_requisites',
+                'spsi_requisites': 'test_spsi_requisites',
+                'transfer_requisites': 'test_transfer_requisites',
+                'comment': 'test_comment',
+                'last_check': 'test_last_check',
+            },
+        ]
+
+    def test_get_nested_components(self):
+        my_nested_components = {('Компоненты', 'Наименование'): {(1, 1): 'comp_name1_sample1',
+                                                                 (1, 2): 'comp_name2_sample1',
+                                                                 (3, 1): 'comp_name_sample2'},
+                                ('Компоненты', 'Серийный номер'): {(1, 1): 'comp_serial_n_sample1',
+                                                                   (1, 2): 'comp_serial_n_sample1',
+                                                                   (3, 1): 'comp_serial_n_sample2'},
+                                ('Компоненты', 'Тип'): {(1, 1): 'comp_type_sample1',
+                                                        (1, 2): 'comp_type_sample1',
+                                                        (3, 1): 'comp_type_sample2'},
+                                ('Компоненты', 'Вид'): {(1, 1): 'comp_view_sample1',
+                                                        (1, 2): 'comp_view_sample1',
+                                                        (3, 1): 'comp_view_sample2'},
+                                ('Компоненты', 'Категория'): {(1, 1): 'comp_category_sample1',
+                                                              (1, 2): 'comp_category_sample1',
+                                                              (3, 1): 'comp_category_sample2'},
+                                ('Компоненты', 'Год выпуска'): {(1, 1): 'comp_year_sample1',
+                                                                (1, 2): 'comp_year_sample1',
+                                                                (3, 1): 'comp_year_sample2'},
+                                ('Компоненты', 'Цена'): {(1, 1): 'comp_cost_sample1',
+                                                         (1, 2): 'comp_cost_sample1',
+                                                         (3, 1): 'comp_cost_sample2'},
+                                ('Компоненты',
+                                 'Местонахождение'): {(1, 1): 'Объект: comp_object_sample1,\nкорпус: '
+                                                              'comp_object_sample1,\nкабинет: comp_object_sample1,'
+                                                              '\nподразделние: comp_object_sample1',
+                                                      (1, 2): 'Объект: comp_object_sample1,\nкорпус: '
+                                                              'comp_object_sample1,\nкабинет: comp_object_sample1,'
+                                                              '\nподразделние: comp_object_sample1',
+                                                      (3, 1): 'Объект: comp_object_sample2,\nкорпус: '
+                                                              'comp_object_sample2,\nкабинет: comp_object_sample2,'
+                                                              '\nподразделние: comp_object_sample2'}}
+        self.maxDiff = None
+        self.assertEqual(my_nested_components, ee.get_nested_components(self.payload))
+
+    def test_get_items(self):
+        self.assertEqual(len(self.payload[0]) - 1, len(ee.get_items(self.payload)))
+
+    def test_get_indices(self):
+        nested_components = ee.get_nested_components(self.payload)
+        items = ee.get_items(self.payload)
+        merge_data = {**items, **nested_components}
+        self.assertEqual([(1, 1),
+                          (1, 2),
+                          (2, 1),
+                          (3, 1)], list(ee.get_indices(merge_data)))
+
+    def test_get_indices_without_nested_components(self):
+        items = ee.get_items(self.payload)
+        merge_data = {**items, **{}}
+        self.assertEqual([(1, 1),
+                          (2, 1),
+                          (3, 1)], list(ee.get_indices(merge_data)))
+
+    def test_export_to_excel(self):
+        self.assertNotEqual(None, ee.export_to_excel(self.payload))

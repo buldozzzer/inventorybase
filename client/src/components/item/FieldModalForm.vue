@@ -41,15 +41,16 @@
       },
       async editItem(item) {
         const _id = item['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/item/${_id}/`,
           {
-          method: 'PUT',
-          body: JSON.stringify(item),
-          headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json'
-          },
-        });
+            method: 'PUT',
+            mode: 'cors',
+            body: JSON.stringify(item),
+            headers: {
+              'Accept': 'application/json',
+              'Content-type': 'application/json'
+            },
+          });
         const json = await response.json();
         console.log(JSON.stringify(json));
         if (response.status !== 202) {

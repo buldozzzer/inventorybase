@@ -1,9 +1,10 @@
 <template>
   <!--    eslint-disable-->
   <div>
+    <div id="arrowTop" hidden></div>
     <b-container>
-      <b-row>
-        <b-col>
+      <b-row class="text-center">
+        <b-col cols="2">
           <b-button variant="danger"
                     class="mt-3"
                     v-if="selected.length !== 0" v-b-modal.confirm-modal>
@@ -15,7 +16,45 @@
             Удалить
           </b-button>
         </b-col>
-        <b-col>
+        <b-col cols="2">
+          <b-button-group>
+            <b-button variant="success"
+                      class="mt-3"
+                      v-b-modal.add-item-modal>
+              <b-icon icon="download"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      font-scale="1"
+                      aria-hidden="false"></b-icon>
+              Добавить
+            </b-button>
+            <b-dropdown right
+                        variant="success"
+                        class="mt-3">
+              <b-dropdown-item href="#/items/recognize">
+                <b-icon icon="card-image"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        font-scale="1"
+                        aria-hidden="false"></b-icon>
+                Распознать текст
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-button-group>
+        </b-col>
+        <b-col cols="3">
+          <b-button variant="light"
+                    @click="showFilters = !showFilters"
+                    class="mt-3">
+            <b-icon :icon="filterIcon"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    font-scale="1"
+                    aria-hidden="false"></b-icon>
+            Фильтры
+          </b-button>
+        </b-col>
+        <b-col cols="2" align-self="center">
           <b-button class="mt-3"
                     variant="primary"
                     href="#/items/groupedit"
@@ -26,90 +65,35 @@
                     data-placement="top"
                     font-scale="1"
                     aria-hidden="false"></b-icon>
-            Редактровать
+            Изменить
           </b-button>
         </b-col>
-        <b-col>
-          <!--          variant="danger"-->
-          <b-button class="mt-3" @click="selectAllRows">
-            <b-icon icon="check2-all"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    font-scale="1"
-                    aria-hidden="false"></b-icon>
-            {{ selected.length === 0 ? 'Выбрать записи' : 'Снять отметку' }}
-          </b-button>
+        <b-col cols="2">
+          <b-button-group>
+            <b-button variant="light"
+                      v-b-modal.excel-exporter-modal
+                      :disabled="selected.length === 0"
+                      class="mt-3">
+              Экспорт
+            </b-button>
+            <b-dropdown right
+                        variant="light"
+                        class="mt-3">
+              <b-dropdown-item v-b-modal.document-template-modal>
+                <b-icon icon="file-earmark-code"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        font-scale="1"
+                        aria-hidden="false"></b-icon>
+                Шаблоны
+              </b-dropdown-item>
+            </b-dropdown>
+          </b-button-group>
         </b-col>
-        <b-col>
-          <b-dropdown text="Поля таблицы"
-                      variant="light"
-                      class="mt-3"
-                      role="menu">
-            <b-dropdown-text class="text-nowrap">
-              <b-form-checkbox @change="showFullTable"
-                               style="text-align: left">
-                {{ full ? 'Неполная таблица' : 'Полная таблица' }}
-              </b-form-checkbox>
-            </b-dropdown-text>
-            <b-dropdown-text class="text-nowrap">
-              <b-form-checkbox v-for="title in titles"
-                               style="text-align: left"
-                               v-model="title['show']"
-                               @click="title['show'] = !title['show']"
-                               :key="title['key']">
-                {{ title['key'] }}
-              </b-form-checkbox>
-            </b-dropdown-text>
-          </b-dropdown>
-        </b-col>
-        <b-col>
-          <b-button variant="success" class="mt-3" v-b-modal.add-item-modal>
-            <b-icon icon="download"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    font-scale="1"
-                    aria-hidden="false"></b-icon>
-            Добавить запись
-          </b-button>
-        </b-col>
-<!--        <b-col>-->
-<!--          <div class="btn-group dropdown">-->
-<!--            <b-button variant="light"-->
-<!--                      class="mt-3"-->
-<!--                      v-if="fields.length !== 22"-->
-<!--                      @click="showFullTable">-->
-<!--              <b-icon icon="arrows-angle-expand"-->
-<!--                      data-toggle="tooltip"-->
-<!--                      data-placement="top"-->
-<!--                      font-scale="1"-->
-<!--                      aria-hidden="false"></b-icon>-->
-<!--              Полная таблица-->
-<!--            </b-button>-->
-
-<!--            <b-button variant="light"-->
-<!--                      class="mt-3"-->
-<!--                      v-else-->
-<!--                      @click="showClippedTable">-->
-<!--              <b-icon icon="arrows-angle-contract"-->
-<!--                      data-toggle="tooltip"-->
-<!--                      data-placement="top"-->
-<!--                      font-scale="1"-->
-<!--                      aria-hidden="false"></b-icon>-->
-<!--              Неполная таблица-->
-<!--            </b-button>-->
-<!--          </div>-->
-<!--        </b-col>-->
-        <!--        <b-col>-->
-        <!--          <vue-range-slider class="mt-3" ref="slider"-->
-        <!--                            v-model="sliderValue"-->
-        <!--                            @change="stickyHeaderHeightToString"-->
-        <!--                            min="300"-->
-        <!--                            max="1000"-->
-        <!--          ></vue-range-slider>-->
-        <!--        </b-col>-->
       </b-row>
     </b-container>
     <filters class="mt-3"
+             v-show="showFilters === true"
              ref="filtersForList"
              :employee-initials="employeeInitials">
     </filters>
@@ -145,20 +129,29 @@
     </b-alert>
     <!--    sticky-header="850px"-->
     <!--    v-bind:sticky-header="sliderValue+'px'"-->
-    <b-table class="mt-3"
-             striped hover
+    <b-table striped hover
              bordered
+             small
+             id="table"
+             class="mt-3"
              ref="selectableTable"
              selectable
              :sort-by.sync="sortBy"
-             sticky-header="380px"
+             :sticky-header="sliderValue"
              :items="items"
              :fields="fields"
              :filter-function="filterFunction"
              :filter="filters"
              @row-selected="onRowSelected">
+      <template #table-colgroup="scope">
+        <col
+          v-for="field in scope.fields"
+          :key="field.key"
+          :id="'cell-' + field.key"
+        >
+      </template>
       <template #head()="scope">
-        <div class="text-nowrap" :title="scope.label">
+        <div class="text-nowrap text-center" :title="scope.label">
           {{ scope.label }}
           <b-icon icon="x"
                   class="mt-1"
@@ -202,18 +195,58 @@
       </template>
 
       <template #head(selected)="scope">
-        <div>&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp</div>
+        <b-button-group>
+          <button :title="allRows"
+                  class="button-select-rows"
+                  @click="selectAllRows">
+            <b-icon icon="check-square"
+                    v-if="selected.length === 0"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    font-scale="1"
+                    aria-hidden="false"></b-icon>
+            <b-icon icon="check-square-fill"
+                    v-else
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    font-scale="1"
+                    aria-hidden="false"></b-icon>
+          </button>
+          <b-dropdown text="Поля"
+                      variant="warning"
+                      role="menu">
+            <b-dropdown-text  class="text-nowrap">
+              <b-form-checkbox @change="showFullTable"
+                               switch
+                               style="text-align: left">
+                {{ full ? 'Неполная таблица' : 'Полная таблица' }}
+              </b-form-checkbox>
+            </b-dropdown-text>
+            <div class="dropdown-divider"></div>
+            <b-dropdown-text class="text-nowrap">
+              <b-form-checkbox v-for="title in titles"
+                               style="text-align: left"
+                               v-model="title['show']"
+                               @click="title['show'] = !title['show']"
+                               :key="title['key']">
+                {{ title['key'] }}
+              </b-form-checkbox>
+            </b-dropdown-text>
+          </b-dropdown>
+        </b-button-group>
       </template>
       <template #head(index)="scope">
         <div>Номер</div>
       </template>
       <template #cell(index)="data">
-        {{ data.index + 1 }}
+        <div class="text-center">
+          {{ data.index + 1 }}
+        </div>
       </template>
-
       <template #cell(name)="row">
-        <div @dblclick="showFieldFromModal('name'), editableRow=row.item">
-          <p>{{ row.item.name ? row.item.name : '&nbsp' }}</p>
+        <div @dblclick="showFieldFromModal('name'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.name ? row.item.name : '&nbsp' }}
         </div>
         <b-modal ref="name" centered
                  title="Измените значение поля"
@@ -238,7 +271,7 @@
 
       <template #cell(responsible)="row">
         <div @dblclick="showFieldFromModal('responsible'), editableRow=row.item"
-             class="text-nowrap">
+             class="text-center">
           {{ row.item.responsible ? row.item.responsible : '&nbsp' }}
         </div>
         <b-modal ref="responsible"
@@ -274,8 +307,8 @@
 
       <template #cell(user)="row">
         <div @dblclick="showFieldFromModal('user'), editableRow=row.item"
-             class="text-nowrap">
-          <p>{{ row.item.user ? row.item.user : '&nbsp' }}</p>
+             class="text-center">
+          {{ row.item.user ? row.item.user : '&nbsp' }}
         </div>
         <b-modal ref="user"
                  centered
@@ -310,8 +343,8 @@
 
       <template #cell(inventory_n)="row">
         <div @dblclick="showFieldFromModal('inventory_n'), editableRow=row.item"
-             class="text-nowrap">
-          <p>{{ row.item.inventory_n ? row.item.inventory_n : '&nbsp' }}</p>
+             class="text-center">
+          {{ row.item.inventory_n ? row.item.inventory_n : '&nbsp' }}
         </div>
         <b-modal ref="inventory_n"
                  centered
@@ -342,8 +375,8 @@
 
       <template #cell(in_operation)="row">
         <div @dblclick="showFieldFromModal('in_operation'), editableRow=row.item"
-             class="text-nowrap">
-          <p>{{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}</p>
+             class="text-center">
+          {{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}
         </div>
         <b-modal ref="in_operation"
                  centered
@@ -375,8 +408,8 @@
 
       <template #cell(in_operation)="row">
         <div @dblclick="showFieldFromModal('in_operation'), editableRow=row.item"
-             class="text-nowrap">
-          <p>{{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}</p>
+             class="text-center">
+          {{ row.item.in_operation ? row.item.in_operation : '&nbsp' }}
         </div>
         <b-modal ref="in_operation"
                  centered
@@ -408,8 +441,8 @@
 
       <template #cell(condition)="row">
         <div @dblclick="showFieldFromModal('condition'), editableRow=row.item"
-             class="text-nowrap">
-          <p>{{ row.item.condition ? row.item.condition : '&nbsp' }}</p>
+             class="text-center">
+          {{ row.item.condition ? row.item.condition : '&nbsp' }}
         </div>
         <b-modal ref="condition"
                  centered
@@ -440,8 +473,9 @@
       </template>
 
       <template #cell(unit_from)="row">
-        <div @dblclick="showFieldFromModal('unit_from'), editableRow=row.item">
-          <p>{{ row.item.unit_from ? row.item.unit_from : '&nbsp' }}</p>
+        <div @dblclick="showFieldFromModal('unit_from'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.unit_from ? row.item.unit_from : '&nbsp' }}
         </div>
         <b-modal ref="unit_from" centered
                  title="Измените значение поля"
@@ -469,8 +503,9 @@
       </template>
 
       <template #cell(fault_document_requisites)="row">
-        <div @dblclick="showFieldFromModal('fault_document_requisites'), editableRow=row.item">
-          <p>{{ row.item.fault_document_requisites ? row.item.fault_document_requisites : '&nbsp' }}</p>
+        <div @dblclick="showFieldFromModal('fault_document_requisites'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.fault_document_requisites ? row.item.fault_document_requisites : '&nbsp' }}
         </div>
         <b-modal ref="fault_document_requisites"
                  centered
@@ -502,7 +537,7 @@
 
       <template #cell(number_of_receipt)="row">
         <div @dblclick="showFieldFromModal('number_of_receipt'), editableRow=row.item">
-          <p>{{ row.item.number_of_receipt ? row.item.number_of_receipt : '&nbsp' }}</p>
+          {{ row.item.number_of_receipt ? row.item.number_of_receipt : '&nbsp' }}
         </div>
         <b-modal ref="number_of_receipt"
                  centered
@@ -564,32 +599,6 @@
         </b-modal>
       </template>
 
-      <template #head(edit_remove)="scope">
-        <div class="text-nowrap">Изменить/Удалить</div>
-      </template>
-      <template #cell(edit_remove)="row">
-        <div class="text-nowrap">
-          <b-icon icon="pencil-square"
-                  variant="warning"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Редактировать"
-                  font-scale="2"
-                  v-b-modal.edit-item-modal
-                  @click="selectToEditItem(row.item)">
-          </b-icon>
-          <b-icon icon="trash"
-                  variant="danger"
-                  font-scale="2"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Удалить"
-                  v-b-modal.confirm-modal
-                  @click="selectToRemoveItem(row.item)">
-          </b-icon>
-        </div>
-      </template>
-
       <template #cell(components)="row">
         <b-icon v-if="row.detailsShowing"
                 icon="eye-slash"
@@ -618,25 +627,45 @@
         </b-table>
       </template>
 
-      <template #cell(selected)="{ rowSelected }">
-        <template v-if="rowSelected">
-          <b-icon icon="check2"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  title="Редактировать"
-                  font-scale="1.5"
-                  aria-hidden="false"></b-icon>
-          <span class="sr-only">Selected</span>
-        </template>
-        <template v-else>
-          <span aria-hidden="true">&nbsp;</span>
-          <span class="sr-only">Not selected</span>
-        </template>
+      <template #cell(selected)="row">
+        <b-container>
+          <b-row class="text-center">
+            <b-col cols="4">
+              <b-icon icon="check2"
+                      v-show="row.rowSelected"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Выбрано"
+                      font-scale="1.2">
+              </b-icon>
+            </b-col>
+            <b-col cols="8">
+              <b-icon icon="pencil-square"
+                      variant="primary"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Изменить"
+                      font-scale="1"
+                      v-b-modal.edit-item-modal
+                      @click="selectToEditItem(row.item)">
+              </b-icon>
+              <b-icon icon="trash"
+                      variant="danger"
+                      font-scale="1"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Удалить"
+                      v-b-modal.confirm-modal
+                      @click="selectToRemoveItem(row.item)">
+              </b-icon>
+            </b-col>
+          </b-row>
+        </b-container>
       </template>
 
       <template #cell(otss_requisites)="row">
         <div @dblclick="showFieldFromModal('otss_requisites'), editableRow=row.item">
-          <p>{{ row.item.otss_requisites ? row.item.otss_requisites : '&nbsp' }}</p>
+          {{ row.item.otss_requisites ? row.item.otss_requisites : '&nbsp' }}
         </div>
         <b-modal ref="otss_requisites"
                  centered
@@ -668,7 +697,7 @@
 
       <template #cell(spsi_requisites)="row">
         <div @dblclick="showFieldFromModal('spsi_requisites'), editableRow=row.item">
-          <p>{{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}</p>
+          {{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}
         </div>
         <b-modal ref="spsi_requisites"
                  centered
@@ -700,7 +729,7 @@
 
       <template #cell(spsi_requisites)="row">
         <div @dblclick="showFieldFromModal('spsi_requisites'), editableRow=row.item">
-          <p>{{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}</p>
+          {{ row.item.spsi_requisites ? row.item.spsi_requisites : '&nbsp' }}
         </div>
         <b-modal ref="spsi_requisites"
                  centered
@@ -732,7 +761,7 @@
 
       <template #cell(transfer_requisites)="row">
         <div @dblclick="showFieldFromModal('transfer_requisites'), editableRow=row.item">
-          <p>{{ row.item.transfer_requisites ? row.item.transfer_requisites : '&nbsp' }}</p>
+          {{ row.item.transfer_requisites ? row.item.transfer_requisites : '&nbsp' }}
         </div>
         <b-modal ref="transfer_requisites"
                  centered
@@ -764,7 +793,7 @@
 
       <template #cell(comment)="row">
         <div @dblclick="showFieldFromModal('comment'), editableRow=row.item">
-          <p>{{ row.item['comment'] ? row.item['comment'] : '&nbsp' }}</p>
+          {{ row.item['comment'] ? row.item['comment'] : '&nbsp' }}
         </div>
         <b-modal ref="comment"
                  centered
@@ -796,7 +825,7 @@
 
       <template #cell(date_of_receipt)="row">
         <div @dblclick="showFieldFromModal('date_of_receipt'), editableRow=row.item">
-          <p>{{ row.item.date_of_receipt ? row.item.date_of_receipt : '&nbsp' }}</p>
+          {{ row.item.date_of_receipt ? row.item.date_of_receipt : '&nbsp' }}
         </div>
         <b-modal ref="date_of_receipt"
                  centered
@@ -831,7 +860,7 @@
 
       <template #cell(transfer_date)="row">
         <div @dblclick="showFieldFromModal('transfer_date'), editableRow=row.item">
-          <p>{{ row.item.transfer_date ? row.item.transfer_date : '&nbsp' }}</p>
+          {{ row.item.transfer_date ? row.item.transfer_date : '&nbsp' }}
         </div>
         <b-modal ref="transfer_date"
                  centered
@@ -866,7 +895,7 @@
 
       <template #cell(last_check)="row">
         <div @dblclick="editableRow=row.item, getCurrentDate(editableRow)">
-          <p>{{ row.item.last_check ? row.item.last_check : '&nbsp' }}</p>
+          {{ row.item.last_check ? row.item.last_check : '&nbsp' }}
         </div>
       </template>
 
@@ -878,8 +907,14 @@
     <confirm-form :payload="selected"
                   :dynamic-id="dynamicId"
                   :message="message"
-                  :op="removeItems"
-    ></confirm-form>
+                  :op="removeItems">
+
+    </confirm-form>
+    <excel-exporter-modal ref="excelExporterModal"
+                          :titles="titles"
+                          :selected="selected"
+                          :item-fields="itemFields"/>
+    <document-template-modal :selected="selected"/>
   </div>
 </template>
 
@@ -894,19 +929,25 @@
   import EditModal from './edit/EditModal';
   import ConfirmForm from "./ConfirmForm";
   import FieldModalForm from "./FieldModalForm";
+  import ExcelExporterModal from "./ExcelExporterModal";
+  import DocumentTemplateModal from "./documents/DocumentTemplateModal";
+
 
   export default {
     name: "ItemList",
     components: {
+      ExcelExporterModal,
       VueRangeSlider,
       AddModal,
       EditModal,
       Filters,
       ConfirmForm,
-      FieldModalForm
+      FieldModalForm,
+      DocumentTemplateModal
     },
     data() {
       return {
+        recognizeModalShow: false,
         dismissCountDown: 0,
         dismissCountDownError: 0,
         otss: [1, 2, 3, 'Не секретно'],
@@ -918,7 +959,9 @@
         dynamicId: "confirm-modal",
         noCollapse: false,
         full: false,
+        filterIcon: 'funnel',
         sortBy: 'name',
+        showFilters: false,
         componentFields: [
           'index',
           {
@@ -952,11 +995,11 @@
             key: "Компоненты",
             show: false
           }, {
-            key: "Ответсвенный сотрудник",
+            key: "Ответственный",
             show: true
           },
           {
-            key: "Инвентрный номер",
+            key: "Инвентарный номер",
             show: true
           },
           {
@@ -1011,11 +1054,6 @@
         ],
         itemFields: [
           {
-            key: "edit_remove",
-            stickyColumn: true,
-            class: 'text-center'
-          },
-          {
             key: "selected",
             stickyColumn: true,
             isRowHeader: true,
@@ -1037,13 +1075,13 @@
             class: 'text-center'
           }, {
             key: "responsible",
-            label: "Ответсвенный сотрудник",
+            label: "Ответственный",
             sortable: true,
             class: 'text-center'
           },
           {
             key: "inventory_n",
-            label: "Инвентрный номер",
+            label: "Инвентарный номер",
             sortable: true,
             class: 'text-center'
           },
@@ -1130,7 +1168,7 @@
         items: [],
         selectedItem: {},
         selected: [],
-        sliderValue: 405,
+        sliderValue: '',
         employeeList: [],
         employeeInitials: [],
         filters: {
@@ -1139,7 +1177,7 @@
           condition: null,
           in_operation: null
         },
-        fuseString: "",
+        fuseString: '',
       };
     },
     computed: {
@@ -1166,20 +1204,25 @@
         }
         for(let i = 0; i < this.titles.length; i++){
           if(this.titles[i].show === false &&
-            this.titles[i].key === this.itemFields[i+3].label){
-            showingFields.splice(showingFields.indexOf(this.itemFields[i+3]), 1)
+            this.titles[i].key === this.itemFields[i+2].label){
+            showingFields.splice(showingFields.indexOf(this.itemFields[i+2]), 1)
           }
         }
         bus.$on('fullTable', () => {
           for (let i = 0; i < this.itemFields.length; i++) {
             showingFields.push(this.itemFields[i])
           }
-          debugger
           for(let i = 0; i < this.titles.length; i++){
             this.titles[i].show = true
           }
         })
         return showingFields
+      },
+      allRows: function () {
+        if(this.selected.length === 0)
+          return 'Выбрать все записи'
+        else
+          return 'Отменить выбор'
       }
     },
     methods: {
@@ -1225,7 +1268,10 @@
         await this.editItem(item)
       },
       async fetchOTSS() {
-        const response = await fetch('http://localhost:8000/api/v1/otss/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/otss/`,
+        {
+          mode: "cors",
+        })
         this.otss = await response.json()
         this.otss = this.otss['otss']
         let temp = []
@@ -1235,7 +1281,10 @@
         this.otss = temp
       },
       async fetchUnits() {
-        const response = await fetch('http://localhost:8000/api/v1/unit/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/unit/`,
+        {
+          mode: "cors",
+        })
         this.units = await response.json()
         this.units = this.units['units']
         let temp = []
@@ -1248,13 +1297,19 @@
         return this.sliderValue.toString() + 'px'
       },
       async fetchEmployees() {
-        const response = await fetch('http://localhost:8000/api/v1/employee/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/employee/`,
+        {
+          mode: "cors",
+        })
         this.employeeList = await response.json()
         this.employeeList = this.employeeList['employees']
         this.employeeToString()
       },
       async fetchItems() {
-        const response = await fetch('http://localhost:8000/api/v1/item/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/item/`,
+        {
+          mode: "cors",
+        })
         this.items = await response.json()
         this.items = this.items['items']
       },
@@ -1264,9 +1319,10 @@
       async removeItems(selectedItems) {
         for (let item of selectedItems) {
           const _id = item['_id']
-          const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
+          const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/item/${_id}/`,
             {
               method: 'DELETE',
+              mode: 'cors',
               headers: {
                 'Accept': 'application/json',
                 'Content-type': 'application/json'
@@ -1283,15 +1339,16 @@
       },
       async editItem(item) {
         const _id = item['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/item/${_id}/`,
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/item/${_id}/`,
           {
-          method: 'PUT',
-          body: JSON.stringify(item),
-          headers: {
-            'Accept': 'application/json',
-            'Content-type': 'application/json'
-          },
-        });
+            method: 'PUT',
+            mode: "cors",
+            body: JSON.stringify(item),
+            headers: {
+              'Accept': 'application/json',
+              'Content-type': 'application/json'
+            },
+          });
         const json = await response.json();
         console.log(JSON.stringify(json));
         if (response.status !== 202) {
@@ -1324,9 +1381,10 @@
       selectToEditItem(item) {
         this.$refs.editItemModal.itemForm = item
       },
-
       setFilters() {
-        this.filters = this.$refs.filtersForList.filters
+        if(this.showFilters) {
+          this.filters = this.$refs.filtersForList.filters
+        }
       },
       filterFunction(row, val) {
         const {
@@ -1355,7 +1413,7 @@
           }).then(results => {
           this.items = results
         })
-        if(this.fuseString == ""){
+        if(this.fuseString === ''){
           this.fetchItems()
         }
       },
@@ -1397,11 +1455,19 @@
         this.fetchItems()
 
       },
+
     },
     watch:{
       fuseString: function () {
         this.fuseSearch()
-      }
+      },
+      showFilters: function(){
+        if (this.showFilters){
+          this.sliderValue = '410px'
+        }else{
+          this.sliderValue = '540px'
+        }
+      },
     },
     async created() {
       await this.fetchItems()
@@ -1413,23 +1479,77 @@
       await bus.$on('cancel', () => {this.selected = []})
       await bus.$on('resetFilters', (data) => {
         this.filters = data;
-        this.fuseString = null
+        this.fuseString = ''
       })
 
     },
+    mounted() {
+      let _height = document.documentElement.clientHeight * 0.8
+      this.sliderValue = _height.toString() + 'px'
+    }
   };
 </script>
 
 <style>
   td {
-    max-width: 250px;
-
+    line-height: 15px;
+    color: black;
+    padding: 5px;
   }
-  table {
-    white-space: nowrap;
+  .button-select-rows{
+    color: #000000;
+    background-color: #FFFFFF;
+    border: none;
+    border-radius: 10px;
+  }
+  /*table {*/
+  /*  white-space: nowrap;*/
+  /*}*/
+  /*p {*/
+  /*  text-overflow: ellipsis;*/
+  /*  overflow-x: scroll;*/
+  /*}*/
+  .table thead th {
+    vertical-align: sub;
+    color: black;
+  }
+  a {
+    color: black;
+  }
+  .btn-warning:hover {
+    color: #000000;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+  }
+  .btn-warning {
+    color: #000000;
+    background-color: #FFFFFF;
+    border-color: #FFFFFF;
+  }
+  .btn-warning.dropdown-toggle {
+    color: #000000;
+    background-color: #ffffff;
+    border-color: #ffffff;
+  }
+  .tr{
+    max-height: 20px;
+  }
+  #cell-name{
+    min-width: 500px;
+    text-align: justify;
   }
   p {
-    text-overflow: ellipsis;
-    overflow: auto;
+    text-align: justify;
+  }
+  #cell-selected{
+    max-width: 130px;
+    min-width: 130px;
+    text-align: justify;
+  }
+  th.table-b-table-default{
+    vertical-align: middle;
+  }
+  td.text-center{
+    vertical-align: middle;
   }
 </style>

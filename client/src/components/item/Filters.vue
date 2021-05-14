@@ -1,7 +1,7 @@
 <template>
-  <div class="p-3 mb-2 bg-gradient-primary">
+  <div class="p-3 mb-2 bg-gradient-primary" style="z-index: 1000">
     <b-container>
-      <b-row>
+      <b-row class="text-center">
         <b-col>
           <b-form-group label="Ответственный:">
             <b-form-select
@@ -38,9 +38,9 @@
           </b-form-group>
         </b-col>
 <!--        <b-col>-->
-<!--          <b-button variant="dark" @click="changeString">-->
+<!--          <0/inventorybase/apiutton variant="dark" @click="changeString">-->
 <!--            Применить фильтры-->
-<!--          </b-button>-->
+<!--          </0/inventorybase/apiutton>-->
         <!--        </b-col>-->
         <b-col align="center">
           <b-icon icon="arrow-counterclockwise"
@@ -78,12 +78,15 @@
           in_operation: null,
         },
         employees: [],
-        fuseString: null
+        fuseString: ''
       }
     },
     methods:{
       async createEmployeeList() {
-        const response = await fetch('http://localhost:8000/api/v1/employee/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/employee/`,
+        {
+          mode: "cors",
+        })
         let payload = await response.json()
         payload = payload['employees']
         this.employeeToString(payload)
@@ -99,7 +102,10 @@
       },
       async fetchOTSS() {
         let categories = {}
-        const response = await fetch('http://localhost:8000/api/v1/otss/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/otss/`,
+        {
+          mode: "cors",
+        })
         categories = await response.json()
         categories = categories['otss']
         for(let key in categories){
@@ -109,7 +115,10 @@
       },
       async fetchConditions() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/condition/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/condition/`,
+        {
+          mode: "cors",
+        })
         tempArr = await response.json()
         tempArr = tempArr['conditions']
         for (let i = 0; i < tempArr.length; ++i){
@@ -124,12 +133,16 @@
           condition: null,
           in_operation: null
         }
-        this.$parent.$data.fuseString = null
+        this.$parent.$data.fuseString = ''
+        this.fuseString =''
         bus.$emit('resetFilters', this.filters)
       },
       async fetchUnits() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/unit/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/unit/`,
+        {
+          mode: "cors",
+        })
         tempArr = await response.json()
         tempArr = tempArr['units']
         for (let i = 0; i < tempArr.length; ++i){

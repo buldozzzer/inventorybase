@@ -13,13 +13,22 @@
 # class EmployeeViewSet(ModelViewSet):
 #     queryset = employee.objects.all()
 #     serializer_class = EmployeeSerializer
+import os
+import socket
+import uuid
 
 from bson import ObjectId
+from django.conf import settings
+from django.core.files.storage import default_storage
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from django.http import FileResponse
 
+from . import excel_exporter
 from . import mongo
+from . import recognizer
+from . import templater
 
 
 def index(request):
@@ -40,9 +49,8 @@ class ItemView(APIView):
             for document in items:
                 document['_id'] = str(document['_id'])
                 result.append(document)
-        return Response({
-            'items': result
-        }, status=200)
+        return Response({'items': result}, status=200,
+                        headers={'Access-Control-Allow-Origin': '*'})
 
     def post(self, request):
         """
@@ -581,3 +589,122 @@ class ConditionView(APIView):
                             .format(pk)}, status=202)
         else:
             return Response({"message": "Condition with _id `{}` not found.".format(pk)}, status=404)
+
+
+class TestView(APIView):
+    def get(self, _):
+        """
+            :param _: Default to none.
+            :return: Response status 200.
+        """
+        host, port = mongo.get_param()
+        connection = mongo.get_conn()
+        if connection is not None:
+            return Response({'host': host, 'port': port, 'settings': socket.gethostname()}, status=200,
+                            headers={'Access-Control-Allow-Origin': '*'})
+        else:
+            return Response({'host': 'error', 'port': 'error', 'settings': socket.gethostname()}, status=400,
+                            headers={'Access-Control-Allow-Origin': '*'})
+
+
+class ExcelExporterView(APIView):
+    def post(self, request):
+        """
+            :param request: Request entity, contains request payload.
+            :return: Response message: "File .xlsx with name '{}' created successfully.",
+                            response status 201.
+        """
+        payload = request.data
+        result = excel_exporter.export_to_excel(payload=payload)
+        excel_exporter.del_all()
+        return FileResponse(open(result, 'rb'), status=201)
+
+
+class RecognizerView(APIView):
+    def post(self, request):
+        payload = request.data
+        filename = "{}.png".format(str(uuid.uuid4()))
+        with default_storage.open(filename, 'wb+') as destination:
+            for chunk in payload['file'].chunks():
+                destination.write(chunk)
+        print(settings.MEDIA_ROOT + filename)
+        result = recognizer.recognizer('media/' + filename)
+        return Response({
+            'extracting_data': result
+        }, status=201)
+
+
+# class TemplaterView(APIView):
+#     def get(self, _):
+#         result = os.listdir('media/templates')
+#         info = ''
+#         for key in templater.ALLOWED_TEMPLATES:
+#             info += templater.ALLOWED_TEMPLATES[key] + '\n'
+#         return Response({'docs': result,
+#                          'info': info}, status=200)
+#
+#     def post(self, request):
+#         file = request.data['file']
+#         with default_storage.open('templates/' + str(request.data['file']), 'wb+') as destination:
+#             for chunk in file.chunks():
+#                 destination.write(chunk)
+#         if templater.docx_size('media/templates/' + str(request.data['file'])) > 0:
+#             return Response({'message': 'File {} added successfully'.format(str(request.data['file']))},
+#                             status=201)
+#         else:
+#             os.remove('media/templates/' + str(request.data['file']))
+#             return Response({'message': 'Файл {} не содержит шаблонов для вставки.'.format(str(request.data['file']))},
+#                             status=400)
+#
+#
+# class DownloadDocsView(APIView):
+#     def post(self, request):
+#         filename = request.data['filename']
+#         items = request.data['items']
+#         merge_doc = request.data['merge_doc']
+#         for item in items:
+#             item.pop('_id')
+#         print(items)
+#         result = templater.final_replacement('media/templates/' + filename, items, merge_doc)
+#         return FileResponse(open(result, 'rb'), status=201)
+
+
+class TemplaterView(APIView):
+    def get(self, _):
+        result = os.listdir(os.getcwd() + '/media/templates/')
+        info = ''
+        for key in templater.ALLOWED_TEMPLATES:
+            info += templater.ALLOWED_TEMPLATES[key] + '\n'
+        return Response({'docs': result,
+                         'cwd': os.getcwd(),
+                         'info': info}, status=200)
+
+    def post(self, request):
+        file = request.data['file']
+        if not os.path.isdir(os.getcwd() + '/media/templates'):
+            os.mkdir(os.getcwd() + '/media/templates')
+        with default_storage.open(os.getcwd() + '/media/templates/' + str(file), 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)
+        if templater.docx_size(os.getcwd() + '/media/templates/' + str(file)) > 0:
+            return Response({'message': 'File {} added successfully'.format(str(file))},
+                            status=201)
+        else:
+            os.remove(os.getcwd() + '/media/templates/' + str(file))
+            return Response({'message': 'Файл {} не содержит шаблонов для вставки.'
+                            .format(str(file))},
+                            status=400)
+
+
+class DownloadDocsView(APIView):
+    def post(self, request):
+        filename = request.data['filename']
+        items = request.data['items']
+        merge_doc = request.data['merge_doc']
+        for item in items:
+            item.pop('_id')
+        result = templater.final_replacement(os.getcwd() + '/media/templates/' + filename,
+                                             items,
+                                             merge_doc)
+        templater.del_all()
+        return FileResponse(open(result, 'rb'), status=201)

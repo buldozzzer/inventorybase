@@ -6,15 +6,15 @@
         <b-form-group id="form-name-group"
                       label="Наименование:"
                       label-for="form-name-input">
-          <b-form-input id="form-name-input"
-                        autofocus
-                        type="text"
-                        v-model="itemForm.name"
-                        :value="itemForm.name"
-                        required
-                        placeholder="Введите наименование мат. ценности"
-                        :state="isIntroduced(itemForm.name, '')">
-          </b-form-input>
+          <b-form-textarea id="form-name-input"
+                           autofocus
+                           type="text"
+                           v-model="itemForm.name"
+                           :value="itemForm.name"
+                           required
+                           placeholder="Введите наименование мат. ценности"
+                           :state="isIntroduced(itemForm.name, '')">
+          </b-form-textarea>
         </b-form-group>
       </b-col>
     </b-row>
@@ -306,7 +306,10 @@
       },
       async fetchOTSS() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/otss/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/otss/`,
+        {
+          mode: "cors",
+        })
         tempArr = await response.json()
         tempArr = tempArr['otss']
         for (let i = 0; i < tempArr.length; ++i){
@@ -315,7 +318,10 @@
       },
       async fetchConditions() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/condition/')
+        const response = await fetch('http://localhost:8000/inventorybase/api/v1/condition/',
+        {
+          mode: "cors",
+        })
         tempArr = await response.json()
         tempArr = tempArr['conditions']
         for (let i = 0; i < tempArr.length; ++i){
@@ -324,7 +330,10 @@
       },
       async fetchUnits() {
         let tempArr = []
-        const response = await fetch('http://localhost:8000/api/v1/unit/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/unit/`,
+        {
+          mode: "cors",
+        })
         tempArr = await response.json()
         tempArr = tempArr['units']
         for (let i = 0; i < tempArr.length; ++i){

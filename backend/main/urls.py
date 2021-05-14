@@ -11,7 +11,8 @@
 #
 # urlpatterns = router.urls
 from django.urls import path
-
+from django.conf import settings
+from django.conf.urls.static import static
 from . import views
 
 app_name = 'main'
@@ -39,5 +40,16 @@ urlpatterns = [
     path('location/<pk>/', views.LocationView.as_view(), name='edit_category'),
 
     path('condition/', views.ConditionView.as_view(), name='get_condition'),
-    path('condition/<pk>/', views.ConditionView.as_view(), name='edit_condition')
-]
+    path('condition/<pk>/', views.ConditionView.as_view(), name='edit_condition'),
+
+    path('test/', views.TestView.as_view(), name='test_connection'),
+
+    path('to_excel/', views.ExcelExporterView.as_view(), name='excel_exporter'),
+
+    path('recognizer/', views.RecognizerView.as_view(), name='recognizer'),
+
+    path('docs/', views.TemplaterView.as_view(), name='documents'),
+
+    path('download-docs/', views.DownloadDocsView.as_view(), name='download-documents'),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

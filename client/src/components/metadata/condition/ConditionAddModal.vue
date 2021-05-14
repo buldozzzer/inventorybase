@@ -55,8 +55,9 @@
     },
     methods: {
       async createCondition() {
-        const response = await fetch('http://localhost:8000/api/v1/condition/', {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/condition/`, {
           method: 'POST',
+          mode: 'cors',
           headers: {
             'Accept': 'application/json',
             'Content-type': 'application/json'

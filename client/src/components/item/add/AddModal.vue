@@ -36,7 +36,7 @@
             <b-button @click="showComponents = !showComponents">
               {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
             </b-button>
-            <component-list v-if="showComponents"
+            <component-list v-show="showComponents"
                             ref="componentList"/>
           </b-col>
         </b-row>
@@ -82,7 +82,8 @@
           comment: '',
           last_check: null,
         },
-        showComponents: false
+        showComponents: false,
+        app: null
       }
     },
     computed:{
@@ -96,10 +97,10 @@
     methods: {
       /* eslint-disable */
       async createItem(payload) {
-        const response = await fetch(`http://localhost:8000/api/v1/item/`, {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/item/`, {
           method: 'POST',
+          mode: 'cors',
           headers: {
-            'Accept': 'application/json',
             'Content-type': 'application/json'
           },
           body: JSON.stringify(payload)
@@ -152,7 +153,10 @@
         return left !== right
       },
       sendForm() {
-        this.itemForm['components'] = this.$refs.componentList.createComponentList()
+        if(this.$refs.componentList != null) {
+          this.itemForm['components'] = this.$refs.componentList.createComponentList()
+        }
+        bus.$emit('fetchDataForChildren', this.itemForm)
         this.$parent.$parent.$data.dataForChildren = this.itemForm
       },
       clearForm() {
@@ -178,6 +182,9 @@
           last_check: null,
         }
       }
+    },
+    created() {
+      this.app = this.$parent.$parent
     }
   }
 </script>

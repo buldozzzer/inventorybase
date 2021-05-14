@@ -55,8 +55,9 @@
     },
     methods: {
       async createType() {
-        const response = await fetch('http://localhost:8000/api/v1/type/', {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/type/`, {
           method: 'POST',
+          mode: 'cors',
           headers: {
             'Accept': 'application/json',
             'Content-type': 'application/json'

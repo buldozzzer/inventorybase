@@ -52,15 +52,19 @@
       },
 
       async fetchCategories() {
-        const response = await fetch('http://localhost:8000/api/v1/category/')
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/category/`,
+        {
+          mode: "cors",
+        })
         this.categories = await response.json()
         this.categories = this.categories['categories']
         this.selected = []
       },
       async removeCategory(unit) {
         const _id = unit['_id']
-        const response = await fetch(`http://localhost:8000/api/v1/category/${_id}/`, {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/category/${_id}/`, {
           method: 'DELETE',
+          mode: 'cors',
           headers: {
             'Accept': 'application/json',
             'Content-type': 'application/json'
