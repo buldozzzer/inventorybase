@@ -84,7 +84,6 @@
           last_check: null,
         },
         showComponents: false,
-        app: null
       }
     },
     computed:{
@@ -183,9 +182,6 @@
           last_check: null,
         }
       }
-    },
-    created() {
-      this.app = this.$parent.$parent
     }
   }
 </script>
