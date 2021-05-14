@@ -1,5 +1,6 @@
 <!--eslint-disable-->
 <template>
+<!--  test-branch-->
   <b-modal ref="addItemModal"
            id="add-item-modal"
            title="Добавить запись в базу мат. ценностей"
@@ -22,6 +23,10 @@
         <b-button type="reset" variant="danger" @click="onReset">
           Отмена
         </b-button>
+        <b-button id="add-component-button"
+                  @click="showComponents = !showComponents">
+          {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
+        </b-button>
       </div>
       <b-container class="mt-3">
         <b-row>
@@ -32,9 +37,6 @@
             </form-template>
           </b-col>
           <b-col>
-            <b-button @click="showComponents = !showComponents">
-              {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
-            </b-button>
             <component-list v-show="showComponents"
                             ref="componentList"/>
           </b-col>
@@ -90,7 +92,7 @@
         if(this.showComponents)
           return 6
         else
-          return 10
+          return 12
       }
     },
     methods: {
@@ -191,5 +193,9 @@
 <style>
   .submit-reset-buttons{
     display: -o-flex;
+  }
+  #add-component-button{
+    position: absolute;
+    right: 1.5%;
   }
 </style>
