@@ -1,31 +1,39 @@
 <template>
-  <b-container class="mt-3">
-    <b-row>
+  <div id="add-form">
+    <b-row class="mt-3">
       <b-col cols="2">
-        <b-navbar v-b-scrollspy:scrollspy-nested class="flex-column">
-          <b-nav pills vertical>
-            <b-nav-item v-for="item in listOfNewItems"
-                        :key="item.index"
-                        :href="'#item-' + item.index"
-                        @click="scrollIntoView">
-              {{ item.name ? item.name : 'Материальная ценность ' + (item.index + 1) }}
-            </b-nav-item>
-            <b-button variant="light"
-                      @click="addForm">+</b-button>
-            <b-button variant="danger"
-                      class="mt-3"
-                      v-if="listOfNewItems.length > 1"
-                      @click="deleteLastForm">-</b-button>
-            <b-button variant="success"
-                      @click="createItems">
-              {{ listOfNewItems.length === 1 ? 'Добавить запись' : 'Добавить записи' }}
-            </b-button>
-          </b-nav>
-        </b-navbar>
+        <div id="scrollspy-buttons"
+             :style="{ height: scroll_form }"
+             ref="buttons">
+          <b-navbar v-b-scrollspy:scrollspy-nested
+                    style="margin: auto"
+                    class="flex-column">
+            <b-nav pills vertical>
+              <b-nav-item v-for="item in listOfNewItems"
+                          :key="item.index"
+                          :href="'#item-' + item.index"
+                          @click="scrollIntoView">
+                {{ item.name ? item.name : 'Материальная ценность ' + (item.index + 1) }}
+              </b-nav-item>
+              <b-button variant="light"
+                        class="mt-3"
+                        @click="addForm">+
+              </b-button>
+              <b-button variant="danger"
+                        v-if="listOfNewItems.length > 1"
+                        @click="deleteLastForm">-
+              </b-button>
+              <b-button variant="success"
+                        @click="createItems">
+                {{ listOfNewItems.length === 1 ? 'Добавить запись' : 'Добавить записи' }}
+              </b-button>
+            </b-nav>
+          </b-navbar>
+        </div>
       </b-col>
       <b-col cols="10">
         <div id="scrollspy-nested"
-             style="position:relative; height:550px; overflow-y:scroll"
+             :style="{ height: scroll_form }"
              ref="content">
           <group-add-form v-for="item in listOfNewItems"
                           :key="item.index"
@@ -36,7 +44,7 @@
         </div>
       </b-col>
     </b-row>
-  </b-container>
+  </div>
 </template>
 
 <script>
@@ -53,6 +61,7 @@
       return {
         index: 0,
         show: false,
+        scroll_form: '',
         employeeList: [],
         employeeInitials: [],
         listOfNewItems: [],
@@ -197,8 +206,27 @@
       await this.fetchEmployees()
       this.init()
     },
+    mounted() {
+      let _height = document.documentElement.clientHeight * 0.9
+      this.scroll_form = _height.toString() + 'px'
+    }
   }
 </script>
 
-<style>
+<style scoped>
+  #scrollspy-nested{
+    position:relative;
+    width: 98%;
+    overflow-y:scroll
+  }
+  #add-form{
+    width: 98%;
+    margin: auto;
+  }
+  #scrollspy-buttons{
+    position:relative;
+    overflow-y:scroll;
+    width: 105%;
+    overflow-x: hidden;
+  }
 </style>
