@@ -59,14 +59,14 @@
               </b-col>
 
               <b-col cols="6">
-                <b-form-group id="form-comp_view-group"
-                              label="Вид составляющей:"
-                              label-for="form-comp_view-input">
-<!--                  required-->
-<!--                  :state="check(component.view, '')"-->
-                  <b-form-input id="form-comp_view-input"
-                                type="text"
-                                v-model="component.view">
+                <b-form-group id="form-comp_cost-group"
+                              label="Цена:"
+                              label-for="form-comp_cost-input">
+                  <b-form-input id="form-comp_cost-input"
+                                type="number"
+                                v-model="component.cost">
+<!--                                required-->
+<!--                                :state="check(component.cost, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
@@ -104,21 +104,6 @@
                                 v-model="component.year">
 <!--                                required-->
 <!--                                :state="check(component.year, '')"-->
-                  </b-form-input>
-                </b-form-group>
-              </b-col>
-            </b-row>
-
-            <b-row>
-              <b-col cols="6">
-                <b-form-group id="form-comp_cost-group"
-                              label="Цена:"
-                              label-for="form-comp_cost-input">
-                  <b-form-input id="form-comp_cost-input"
-                                type="number"
-                                v-model="component.cost">
-<!--                                required-->
-<!--                                :state="check(component.cost, '')"-->
                   </b-form-input>
                 </b-form-group>
               </b-col>
