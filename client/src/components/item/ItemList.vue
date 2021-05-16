@@ -899,6 +899,268 @@
         </div>
       </template>
 
+      <template #cell(serial_n)="row">
+        <div @dblclick="showFieldFromModal('serial_n'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.serial_n ? row.item.serial_n : '&nbsp' }}
+        </div>
+        <b-modal ref="serial_n"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-input">
+                <b-form-input id="form-input"
+                              type="text"
+                              class="mt-3"
+                              v-model="editableRow.serial_n"
+                              :value="editableRow.serial_n">
+                </b-form-input>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('serial_n', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('serial_n')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(category)="row">
+        <div @dblclick="showFieldFromModal('category'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.category ? row.item.category : '&nbsp' }}
+        </div>
+        <b-modal ref="category"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-input">
+                <b-form-select id="form-input"
+                              type="text"
+                              class="mt-3"
+                              :options="categories"
+                              v-model="editableRow.category"
+                              :value="editableRow.category">
+                </b-form-select>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('category', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('category')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(year)="row">
+        <div @dblclick="showFieldFromModal('year'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.year ? row.item.year : '&nbsp' }}
+        </div>
+        <b-modal ref="year"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-input">
+                <b-form-input id="form-input"
+                              type="text"
+                              class="mt-3"
+                              v-model="editableRow.year"
+                              :value="editableRow.year">
+                </b-form-input>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('year', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('year')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(cost)="row">
+        <div @dblclick="showFieldFromModal('cost'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.cost ? row.item.cost : '&nbsp' }}
+        </div>
+        <b-modal ref="cost"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-input">
+                <b-form-input id="form-input"
+                              type="number"
+                              min="0"
+                              class="mt-3"
+                              v-model="editableRow.cost"
+                              :value="editableRow.cost">
+                </b-form-input>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('cost', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('cost')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(location_object)="row">
+        <div @dblclick="showFieldFromModal('location_object'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.location_object ? row.item.location_object : '&nbsp' }}
+        </div>
+        <b-modal ref="location_object"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-input">
+                <b-form-select id="form-input"
+                              type="text"
+                              class="mt-3"
+                              :options="location_objects"
+                              v-model="editableRow.location_object"
+                              :value="editableRow.location_object">
+                </b-form-select>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('location_object', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('location_object')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(location_unit)="row">
+        <div @dblclick="showFieldFromModal('location_unit'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.location_unit ? row.item.location_unit : '&nbsp' }}
+        </div>
+        <b-modal ref="location_unit"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-input">
+                <b-form-select id="form-input"
+                              type="text"
+                              class="mt-3"
+                              :options="location_units"
+                              v-model="editableRow.location_unit"
+                              :value="editableRow.location_unit">
+                </b-form-select>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('location_unit', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('location_unit')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(location_corpus)="row">
+        <div @dblclick="showFieldFromModal('location_corpus'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.location_corpus ? row.item.location_corpus : '&nbsp' }}
+        </div>
+        <b-modal ref="location_corpus"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-input">
+                <b-form-select id="form-input"
+                              type="text"
+                              class="mt-3"
+                              :options="location_corpuses"
+                              v-model="editableRow.location_corpus"
+                              :value="editableRow.location_corpus">
+                </b-form-select>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('location_corpus', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('location_corpus')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
+      <template #cell(location_cabinet)="row">
+        <div @dblclick="showFieldFromModal('location_cabinet'), editableRow=row.item"
+             class="text-center">
+          {{ row.item.location_cabinet ? row.item.location_cabinet : '&nbsp' }}
+        </div>
+        <b-modal ref="location_cabinet"
+                 centered
+                 title="Измените значение поля"
+                 size="sm"
+                 hide-footer
+                 hide-header-close>
+          <b-form class="w-100">
+            <div class="container mt-3">
+              <b-form-group label-for="form-input">
+                <b-form-select id="form-input"
+                              type="text"
+                              class="mt-3"
+                              :options="location_cabinets"
+                              v-model="editableRow.location_cabinet"
+                              :value="editableRow.location_cabinet">
+                </b-form-select>
+              </b-form-group>
+              <div class="mt-3">
+                <b-button variant="success" @click="onSubmit('location_cabinet', editableRow)">
+                  Изменить
+                </b-button>
+                <b-button variant="danger" @click="onReset('location_cabinet')">Отмена</b-button>
+              </div>
+            </div>
+          </b-form>
+        </b-modal>
+      </template>
+
     </b-table>
     <add-modal ref="addItemModal" :employee-initials="employeeInitials"/>
     <edit-modal ref="editItemModal"
@@ -956,6 +1218,7 @@
         operation: ['Используется', 'Не используется'],
         m: '',
         editableRow: '',
+        categories: [],
         dynamicId: "confirm-modal",
         noCollapse: false,
         full: false,
@@ -1221,25 +1484,25 @@
             class: 'text-center'
           },
           {
-            key: "object",
+            key: "location_object",
             label: "Объект",
             sortable: true,
             class: 'text-center'
           },
           {
-            key: "unit",
+            key: "location_unit",
             label: "Подразделение",
             sortable: true,
             class: 'text-center'
           },
           {
-            key: "corpus",
+            key: "location_corpus",
             label: "Корпус",
             sortable: true,
             class: 'text-center'
           },
           {
-            key: "cabinet",
+            key: "location_cabinet",
             label: "Кабинет",
             sortable: true,
             class: 'text-center'
@@ -1258,6 +1521,10 @@
           in_operation: null
         },
         fuseString: '',
+        location_units: [],
+        location_objects: [],
+        location_corpuses: [],
+        location_cabinets: [],
       };
     },
     computed: {
@@ -1359,6 +1626,33 @@
           temp.push(this.otss[i]['category'])
         }
         this.otss = temp
+      },
+      async fetchLocations() {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/location/`,
+        {
+          mode: "cors",
+        })
+        let temp = await response.json()
+        temp = temp['locations']
+        for(let i = 0; i < temp.length; i++){
+          this.location_cabinets.push(temp[i].cabinet)
+          this.location_objects.push(temp[i].object)
+          this.location_corpuses.push(temp[i].corpus)
+          this.location_units.push(temp[i].unit)
+        }
+      },
+      async fetchCategories() {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/category/`,
+        {
+          mode: "cors",
+        })
+        this.categories = await response.json()
+        this.categories = this.categories['categories']
+        let temp = []
+        for (let i = 0; i < this.categories.length; i++) {
+          temp.push(this.categories[i]['category'])
+        }
+        this.categories = temp
       },
       async fetchUnits() {
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/unit/`,
@@ -1551,7 +1845,9 @@
     },
     async created() {
       await this.fetchItems()
+      await this.fetchCategories()
       await this.fetchEmployees()
+      await this.fetchLocations()
       await this.setFilters()
       await this.fetchOTSS()
       await this.fetchUnits()
