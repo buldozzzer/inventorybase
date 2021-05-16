@@ -181,6 +181,14 @@
             transfer_requisites: this.listOfNewItems[i].transfer_requisites,
             comment: this.listOfNewItems[i].comment,
             last_check: this.listOfNewItems[i].last_check,
+            serial_n: this.listOfNewItems[i].serial_n,
+            category: this.listOfNewItems[i].category,
+            year: this.listOfNewItems[i].year,
+            cost: this.listOfNewItems[i].cost,
+            location_object: this.listOfNewItems[i].location_object,
+            location_unit: this.listOfNewItems[i].location_unit,
+            location_corpus: this.listOfNewItems[i].location_corpus,
+            location_cabinet: this.listOfNewItems[i].location_cabinet
           };
           const response = await fetch(`http://localhost:8000/inventorybase/api/v1/item/`, {
             method: 'POST',
