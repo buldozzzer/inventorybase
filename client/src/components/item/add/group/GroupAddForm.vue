@@ -1,8 +1,9 @@
 <template>
-  <div>
+  <div style="overflow-x: hidden">
     <b-row id="name">
       <h5>
-        {{itemForm.name ? itemForm.name : 'Материальная ценность ' + (itemForm.index + 1) }}
+<!--        {{itemForm.name ? itemForm.name : 'Материальная ценность ' + (itemForm.index + 1) }}-->
+        {{ 'Материальная ценность ' + (itemForm.index + 1) }}
       </h5>
       <b-button id="add-component-button"
                 @click="showComponents = !showComponents">
