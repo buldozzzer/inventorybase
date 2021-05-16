@@ -26,6 +26,12 @@
         <b-row>
           <b-col :cols="colsize">
             <form-template :itemForm="itemForm"
+                           :categories="categories"
+                           :show-components="showComponents"
+                           :location_units="location_units"
+                           :location_objects="location_objects"
+                           :location_corpuses="location_corpuses"
+                           :location_cabinets="location_cabinets"
                            :employeeInitials="employeeInitials"></form-template>
           </b-col>
           <b-col>
@@ -82,15 +88,21 @@
 
   export default {
     name: 'editModal',
-    props: ['employeeInitials', 'editItem'],
+    props: ['employeeInitials',
+      'editItem',
+      'categories',
+      'location_units',
+      'location_objects',
+      'location_corpuses',
+      'location_cabinets'],
     components: {
       ComponentCard,
       FormTemplate
     },
     data() {
       return {
-        otssCategories: [1, 2, 3, 'Не секретно'],
-        conditions: ['Исправно', 'Неисправно'],
+        otssCategories: [],
+        conditions: [],
         operation: ['Используется', 'Не используется'],
         itemForm: {
           components: []
@@ -114,6 +126,28 @@
           mode: "cors",
         })
         this.employeeList = await response.json()
+      },
+      async fetchConditions() {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/condition/`,
+        {
+          mode: "cors",
+        })
+        let temp = await response.json()
+        temp = temp['conditions']
+        for(let i = 0; i < temp.length; i++){
+          this.conditions.push(temp[i].condition)
+        }
+      },
+      async fetchOTSS() {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/otss/`,
+        {
+          mode: "cors",
+        })
+        let temp = await response.json()
+        temp = temp['otss']
+        for(let i = 0; i < temp.length; i++){
+          this.otssCategories.push(temp[i].category)
+        }
       },
       onReset(evt) {
         evt.preventDefault();
