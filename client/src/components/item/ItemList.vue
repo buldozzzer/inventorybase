@@ -1635,10 +1635,18 @@
         let temp = await response.json()
         temp = temp['locations']
         for(let i = 0; i < temp.length; i++){
-          this.location_cabinets.push(temp[i].cabinet)
-          this.location_objects.push(temp[i].object)
-          this.location_corpuses.push(temp[i].corpus)
-          this.location_units.push(temp[i].unit)
+          if (temp[i].cabinet !== '') {
+            this.location_cabinets.push(temp[i].cabinet)
+          }
+          if (temp[i].object !== '') {
+            this.location_objects.push(temp[i].object)
+          }
+          if (temp[i].corpus !== '') {
+            this.location_corpuses.push(temp[i].corpus)
+          }
+          if (temp[i].unit !== '') {
+            this.location_units.push(temp[i].unit)
+          }
         }
       },
       async fetchCategories() {
