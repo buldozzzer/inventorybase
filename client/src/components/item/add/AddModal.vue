@@ -103,11 +103,6 @@
           location_cabinet: ''
         },
         showComponents: false,
-        categories: [],
-        location_units: [],
-        location_objects: [],
-        location_corpuses: [],
-        location_cabinets: [],
       }
     },
     computed:{
