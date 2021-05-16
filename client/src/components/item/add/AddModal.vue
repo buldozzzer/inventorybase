@@ -82,6 +82,14 @@
           transfer_requisites: '',
           comment: '',
           last_check: null,
+          serial_n: '',
+          category: '',
+          year: '',
+          cost: '',
+          location_object: '',
+          location_unit: '',
+          location_corpus: '',
+          location_cabinet: ''
         },
         showComponents: false,
       }
@@ -145,6 +153,14 @@
           transfer_requisites: this.itemForm.transfer_requisites,
           comment: this.itemForm.comment,
           last_check: this.itemForm.last_check,
+          serial_n: this.itemForm.serial_n,
+          category: this.itemForm.category,
+          year: this.itemForm.year,
+          cost: this.itemForm.cost,
+          location_object: this.itemForm.location_object,
+          location_unit: this.itemForm.location_unit,
+          location_corpus: this.itemForm.location_corpus,
+          location_cabinet: this.itemForm.location_cabinet
         };
         this.createItem(payload);
         this.clearForm()
@@ -180,6 +196,14 @@
           transfer_requisites: '',
           comment: '',
           last_check: null,
+          serial_n: '',
+          category: '',
+          year: '',
+          cost: '',
+          location_object: '',
+          location_unit: '',
+          location_corpus: '',
+          location_cabinet: ''
         }
       }
     }
