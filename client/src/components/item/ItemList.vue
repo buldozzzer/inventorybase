@@ -979,7 +979,8 @@
             <div class="container mt-3">
               <b-form-group label-for="form-input">
                 <b-form-input id="form-input"
-                              type="text"
+                              type="number"
+                              min="0"
                               class="mt-3"
                               v-model="editableRow.year"
                               :value="editableRow.year">
@@ -1162,7 +1163,14 @@
       </template>
 
     </b-table>
-    <add-modal ref="addItemModal" :employee-initials="employeeInitials"/>
+    <add-modal ref="addItemModal"
+               :employee-initials="employeeInitials"
+               :categories="categories"
+               :location_units="location_units"
+               :location_objects="location_objects"
+               :location_corpuses="location_corpuses"
+               :location_cabinets="location_cabinets"/>
+
     <edit-modal ref="editItemModal"
                 :employee-initials="employeeInitials"
                 :edit-item="editItem"/>

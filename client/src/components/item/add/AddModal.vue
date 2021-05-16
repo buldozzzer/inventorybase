@@ -31,8 +31,14 @@
       <b-container class="mt-3">
         <b-row>
           <b-col :cols="colsize">
-            <form-template :itemForm="itemForm"
-                           ref="itemForm"
+            <form-template ref="itemForm"
+                           :itemForm="itemForm"
+                           :categories="categories"
+                           :show-components="showComponents"
+                           :location_units="location_units"
+                           :location_objects="location_objects"
+                           :location_corpuses="location_corpuses"
+                           :location_cabinets="location_cabinets"
                            :employeeInitials="employeeInitials">
             </form-template>
           </b-col>
@@ -55,7 +61,12 @@
   export default {
     /* eslint-disable */
     name: "AddModal",
-    props: ['employeeInitials'],
+    props: ['employeeInitials',
+      'categories',
+      'location_units',
+      'location_objects',
+      'location_corpuses',
+      'location_cabinets'],
     components: {
       ComponentList,
       FormTemplate
@@ -174,7 +185,7 @@
         return left !== right
       },
       sendForm() {
-        if(this.$refs.componentList != null) {
+        if (this.$refs.componentList != null) {
           this.itemForm['components'] = this.$refs.componentList.createComponentList()
         }
         bus.$emit('fetchDataForChildren', this.itemForm)
@@ -211,45 +222,6 @@
           location_cabinet: ''
         }
       },
-      async fetchLocations() {
-        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/location/`,
-        {
-          mode: "cors",
-        })
-        let temp = await response.json()
-        temp = temp['locations']
-        for(let i = 0; i < temp.length; i++){
-          if (temp[i].cabinet !== '') {
-            this.location_cabinets.push(temp[i].cabinet)
-          }
-          if (temp[i].object !== '') {
-            this.location_objects.push(temp[i].object)
-          }
-          if (temp[i].corpus !== '') {
-            this.location_corpuses.push(temp[i].corpus)
-          }
-          if (temp[i].unit !== '') {
-            this.location_units.push(temp[i].unit)
-          }
-        }
-      },
-      async fetchCategories() {
-        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/category/`,
-        {
-          mode: "cors",
-        })
-        this.categories = await response.json()
-        this.categories = this.categories['categories']
-        let temp = []
-        for (let i = 0; i < this.categories.length; i++) {
-          temp.push(this.categories[i]['category'])
-        }
-        this.categories = temp
-      },
-    },
-    async created(){
-      await this.fetchCategories()
-      await this.fetchLocations()
     }
   }
 </script>
