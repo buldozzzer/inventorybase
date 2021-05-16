@@ -1051,6 +1051,38 @@
             key: "Сотрудник, которому передали в пользование",
             show: false
           },
+          {
+            key: "Заводской номер",
+            show: false
+          },
+          {
+            key: "Категория",
+            show: false
+          },
+          {
+            key: "Год выпуска",
+            show: false
+          },
+          {
+            key: "Цена",
+            show: false
+          },
+          {
+            key: "Объект",
+            show: false
+          },
+          {
+            key: "Подразделение",
+            show: false
+          },
+          {
+            key: "Корпус",
+            show: false
+          },
+          {
+            key: "Кабинет",
+            show: false
+          }
         ],
         itemFields: [
           {
@@ -1164,6 +1196,54 @@
             sortable: true,
             class: 'text-center'
           },
+          {
+            key: "serial_n",
+            label: "Заводской номер",
+            sortable: true,
+            class: 'text-center'
+          },
+          {
+            key: "category",
+            label: "Категория",
+            sortable: true,
+            class: 'text-center'
+          },
+          {
+            key: "year",
+            label: "Год выпуска",
+            sortable: true,
+            class: 'text-center'
+          },
+          {
+            key: "cost",
+            label: "Цена",
+            sortable: true,
+            class: 'text-center'
+          },
+          {
+            key: "object",
+            label: "Объект",
+            sortable: true,
+            class: 'text-center'
+          },
+          {
+            key: "unit",
+            label: "Подразделение",
+            sortable: true,
+            class: 'text-center'
+          },
+          {
+            key: "corpus",
+            label: "Корпус",
+            sortable: true,
+            class: 'text-center'
+          },
+          {
+            key: "cabinet",
+            label: "Кабинет",
+            sortable: true,
+            class: 'text-center'
+          }
         ],
         items: [],
         selectedItem: {},
