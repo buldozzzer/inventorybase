@@ -65,7 +65,12 @@
         employeeList: [],
         employeeInitials: [],
         listOfNewItems: [],
-        parent: null
+        parent: null,
+        categories: [],
+        location_units: [],
+        location_objects: [],
+        location_corpuses: [],
+        location_cabinets: [],
       }
     },
     methods: {
@@ -92,6 +97,14 @@
             transfer_requisites: '',
             comment: '',
             last_check: null,
+            serial_n: '',
+            category: '',
+            year: '',
+            cost: '',
+            location_object: '',
+            location_unit: '',
+            location_corpus: '',
+            location_cabinet: ''
           }
           this.listOfNewItems.push(item)
           this.index += 1
@@ -124,6 +137,14 @@
           transfer_requisites: '',
           comment: '',
           last_check: null,
+          serial_n: '',
+          category: '',
+          year: '',
+          cost: '',
+          location_object: '',
+          location_unit: '',
+          location_corpus: '',
+          location_cabinet: ''
         }
         item.index = this.index
         this.listOfNewItems.push(item)
