@@ -1839,6 +1839,14 @@
           transfer_requisites: form.transfer_requisites,
           comment: form.comment,
           last_check: form.last_check,
+          serial_n: form.serial_n,
+          category: form.category,
+          year: form.year,
+          cost: form.cost,
+          location_object: form.location_object,
+          location_unit: form.location_unit,
+          location_corpus: form.location_corpus,
+          location_cabinet: form.location_cabinet
         }
         this.showAlert()
         this.editItem(payload)
