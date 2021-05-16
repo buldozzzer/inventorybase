@@ -215,7 +215,7 @@
           <b-dropdown text="Поля"
                       variant="warning"
                       role="menu">
-            <b-dropdown-text  class="text-nowrap">
+            <b-dropdown-text class="text-nowrap">
               <b-form-checkbox @change="showFullTable"
                                switch
                                style="text-align: left">
@@ -223,15 +223,17 @@
               </b-form-checkbox>
             </b-dropdown-text>
             <div class="dropdown-divider"></div>
-            <b-dropdown-text class="text-nowrap">
-              <b-form-checkbox v-for="title in titles"
-                               style="text-align: left"
-                               v-model="title['show']"
-                               @click="title['show'] = !title['show']"
-                               :key="title['key']">
-                {{ title['key'] }}
-              </b-form-checkbox>
-            </b-dropdown-text>
+            <div style="overflow-y: scroll; height: 500px">
+              <b-dropdown-text class="text-nowrap">
+                <b-form-checkbox v-for="title in titles"
+                                 style="text-align: left"
+                                 v-model="title['show']"
+                                 @click="title['show'] = !title['show']"
+                                 :key="title['key']">
+                  {{ title['key'] }}
+                </b-form-checkbox>
+              </b-dropdown-text>
+            </div>
           </b-dropdown>
         </b-button-group>
       </template>
@@ -1902,6 +1904,11 @@
     border: none;
     border-radius: 10px;
   }
+  table{
+    position: relative;
+    bottom: 0;
+    white-space: normal;
+  }
   /*table {*/
   /*  white-space: nowrap;*/
   /*}*/
@@ -1952,4 +1959,8 @@
   td.text-center{
     vertical-align: middle;
   }
+  /*.dropdown-menu{*/
+  /*  overflow-y: scroll;*/
+  /*  height: 550px;*/
+  /*}*/
 </style>
