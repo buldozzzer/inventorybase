@@ -101,9 +101,6 @@
     },
     data() {
       return {
-        otssCategories: [],
-        conditions: [],
-        operation: ['Используется', 'Не используется'],
         itemForm: {
           components: []
         },
@@ -126,28 +123,6 @@
           mode: "cors",
         })
         this.employeeList = await response.json()
-      },
-      async fetchConditions() {
-        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/condition/`,
-        {
-          mode: "cors",
-        })
-        let temp = await response.json()
-        temp = temp['conditions']
-        for(let i = 0; i < temp.length; i++){
-          this.conditions.push(temp[i].condition)
-        }
-      },
-      async fetchOTSS() {
-        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/otss/`,
-        {
-          mode: "cors",
-        })
-        let temp = await response.json()
-        temp = temp['otss']
-        for(let i = 0; i < temp.length; i++){
-          this.otssCategories.push(temp[i].category)
-        }
       },
       onReset(evt) {
         evt.preventDefault();

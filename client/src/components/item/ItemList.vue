@@ -41,7 +41,7 @@
             </b-dropdown>
           </b-button-group>
         </b-col>
-        <b-col cols="3">
+        <b-col cols="2">
           <b-button variant="light"
                     @click="showFilters = !showFilters"
                     class="mt-3">
@@ -96,6 +96,40 @@
              ref="filtersForList"
              :employee-initials="employeeInitials">
     </filters>
+    <div style="position: absolute; z-index: 999; width: 100%">
+      <b-alert
+        :show="dismissCountDown"
+        align="center"
+        dismissible
+        @dismissed="dismissCountDown=0"
+        @dismiss-count-down="countDownChanged">
+        <p>
+          <b-icon icon="check2"
+                  variant="success"
+                  font-scale="2"
+                  data-toggle="tooltip"
+                  data-placement="top">
+          </b-icon>
+          Успешно
+        </p>
+      </b-alert>
+      <b-alert
+        style="position: absolute"
+        :show="dismissCountDownError"
+        dismissible
+        @dismissed="dismissCountDownError=0"
+        @dismiss-count-down="countDownChangedError">
+        <p>
+          <b-icon icon="x"
+                  variant="danger"
+                  font-scale="2"
+                  data-toggle="tooltip"
+                  data-placement="top">
+          </b-icon>
+          Ошибка
+        </p>
+      </b-alert>
+    </div>
     <!--    sticky-header="850px"-->
     <!--    v-bind:sticky-header="sliderValue+'px'"-->
     <b-table striped hover
