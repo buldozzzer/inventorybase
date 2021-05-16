@@ -1,8 +1,7 @@
 <template>
-  <!--    eslint-disable-->
+<!--    eslint-disable-->
   <div>
-    <div id="arrowTop" hidden></div>
-    <b-container>
+    <div id="firstRow">
       <b-row class="text-center">
         <b-col cols="2">
           <b-button variant="danger"
@@ -91,42 +90,12 @@
           </b-button-group>
         </b-col>
       </b-row>
-    </b-container>
+    </div>
     <filters class="mt-3"
              v-show="showFilters === true"
              ref="filtersForList"
              :employee-initials="employeeInitials">
     </filters>
-    <b-alert
-      :show="dismissCountDown"
-      dismissible
-      @dismissed="dismissCountDown=0"
-      @dismiss-count-down="countDownChanged">
-      <p>
-        <b-icon icon="check2"
-                variant="success"
-                font-scale="2"
-                data-toggle="tooltip"
-                data-placement="top">
-        </b-icon>
-        Успешно
-      </p>
-    </b-alert>
-    <b-alert
-      :show="dismissCountDownError"
-      dismissible
-      @dismissed="dismissCountDownError=0"
-      @dismiss-count-down="countDownChangedError">
-      <p>
-        <b-icon icon="x"
-                variant="danger"
-                font-scale="2"
-                data-toggle="tooltip"
-                data-placement="top">
-        </b-icon>
-        Ошибка
-      </p>
-    </b-alert>
     <!--    sticky-header="850px"-->
     <!--    v-bind:sticky-header="sliderValue+'px'"-->
     <b-table striped hover
@@ -1861,11 +1830,13 @@
       fuseString: function () {
         this.fuseSearch()
       },
-      showFilters: function(){
-        if (this.showFilters){
-          this.sliderValue = '410px'
-        }else{
-          this.sliderValue = '540px'
+      showFilters: function () {
+        if (this.showFilters) {
+          let _height = document.documentElement.clientHeight * 0.81 - 117
+          this.sliderValue = _height.toString() + 'px'
+        } else {
+          let _height = document.documentElement.clientHeight * 0.83
+          this.sliderValue = _height.toString() + 'px'
         }
       },
     },
@@ -1886,7 +1857,7 @@
 
     },
     mounted() {
-      let _height = document.documentElement.clientHeight * 0.8
+      let _height = document.documentElement.clientHeight * 0.83
       this.sliderValue = _height.toString() + 'px'
     }
   };
@@ -1905,8 +1876,6 @@
     border-radius: 10px;
   }
   table{
-    position: relative;
-    bottom: 0;
     white-space: normal;
   }
   /*table {*/
@@ -1963,4 +1932,7 @@
   /*  overflow-y: scroll;*/
   /*  height: 550px;*/
   /*}*/
+  #firstRow{
+    width: 98%;
+  }
 </style>
