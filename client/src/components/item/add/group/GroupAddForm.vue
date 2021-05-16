@@ -1,8 +1,14 @@
 <template>
   <div>
-    <h5>
-      {{itemForm.name ? itemForm.name : 'Материальная ценность ' + (itemForm.index + 1) }}
-    </h5>
+    <b-row id="name">
+      <h5>
+        {{itemForm.name ? itemForm.name : 'Материальная ценность ' + (itemForm.index + 1) }}
+      </h5>
+      <b-button id="add-component-button"
+                @click="showComponents = !showComponents">
+        {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
+      </b-button>
+    </b-row>
     <b-form>
       <b-container>
         <b-row>
@@ -12,9 +18,6 @@
             </form-template>
           </b-col>
           <b-col>
-            <b-button @click="showComponents = !showComponents">
-              {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
-            </b-button>
             <component-list ref="componentList"
                             class="mt-3"
                             v-if="showComponents"
@@ -50,7 +53,7 @@
         if(this.showComponents)
           return 6
         else
-          return 10
+          return 12
       }
     },
     methods:{
@@ -66,6 +69,13 @@
   }
 </script>
 
-<style>
-
+<style scoped>
+  #add-component-button{
+    position: absolute;
+    right: 1.5%;
+  }
+  h5 {
+    position: relative;
+    left: 1.5%;
+  }
 </style>
