@@ -16,6 +16,11 @@
         </b-button>
         <!--        @click="initForm"-->
         <b-button type="reset" variant="danger">Отмена</b-button>
+
+        <b-button id="add-component-button"
+                  @click="showComponents = !showComponents">
+          {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
+        </b-button>
       </div>
       <b-container class="mt-3">
         <b-row>
@@ -24,9 +29,6 @@
                            :employeeInitials="employeeInitials"></form-template>
           </b-col>
           <b-col>
-            <b-button @click="showComponentForm">
-              {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
-            </b-button>
             <b-card v-if="showComponents"
                     no-body
                     class="mt-3">
@@ -102,7 +104,7 @@
         if(this.showComponents)
           return 6
         else
-          return 10
+          return 12
       }
     },
     methods: {
@@ -171,7 +173,12 @@
 </script>
 
 <style>
-.add-component {
-  display: flow;
-}
+  .add-component {
+    display: flow;
+  }
+
+  #add-component-button {
+    position: absolute;
+    right: 1.5%;
+  }
 </style>
