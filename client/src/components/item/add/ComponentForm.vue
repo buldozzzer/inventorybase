@@ -63,6 +63,7 @@
                         label-for="form-comp_cost-input">
             <b-form-input id="form-comp_cost-input"
                           type="number"
+                          min="0"
                           v-model="component.cost">
               <!--                                required-->
               <!--                                :state="check(component.cost, '')"-->
