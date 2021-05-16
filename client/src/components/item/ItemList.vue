@@ -3,7 +3,7 @@
   <div>
     <div id="firstRow">
       <b-row class="text-center">
-        <b-col cols="2">
+        <b-col cols="2" align-self="center">
           <b-button variant="danger"
                     class="mt-3"
                     v-if="selected.length !== 0" v-b-modal.confirm-modal>
@@ -15,7 +15,7 @@
             Удалить
           </b-button>
         </b-col>
-        <b-col cols="2">
+        <b-col cols="3" align-self="center">
           <b-button-group>
             <b-button variant="success"
                       class="mt-3"
@@ -41,7 +41,7 @@
             </b-dropdown>
           </b-button-group>
         </b-col>
-        <b-col cols="2">
+        <b-col cols="2" align-self="center">
           <b-button variant="light"
                     @click="showFilters = !showFilters"
                     class="mt-3">
@@ -67,7 +67,7 @@
             Изменить
           </b-button>
         </b-col>
-        <b-col cols="2">
+        <b-col cols="2" align-self="center">
           <b-button-group>
             <b-button variant="light"
                       v-b-modal.excel-exporter-modal
@@ -99,7 +99,6 @@
     <div style="position: absolute; z-index: 999; width: 100%">
       <b-alert
         :show="dismissCountDown"
-        align="center"
         dismissible
         @dismissed="dismissCountDown=0"
         @dismiss-count-down="countDownChanged">
@@ -1178,7 +1177,12 @@
 
     <edit-modal ref="editItemModal"
                 :employee-initials="employeeInitials"
-                :edit-item="editItem"/>
+                :edit-item="editItem"
+                :categories="categories"
+                :location_units="location_units"
+                :location_objects="location_objects"
+                :location_corpuses="location_corpuses"
+                :location_cabinets="location_cabinets"/>
     <confirm-form :payload="selected"
                   :dynamic-id="dynamicId"
                   :message="message"

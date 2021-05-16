@@ -57,7 +57,7 @@
         scroll_form: '',
         employeeList: [],
         itemsForEdit: [],
-        m: ''
+        m: '',
       }
     },
     methods: {
