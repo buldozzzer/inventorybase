@@ -1,15 +1,15 @@
 <template>
   <b-col class="mt-3">
     <b-row id="firstRow">
-      <b-col :cols="colsize" id="colname">
+      <b-col :cols=9 id="colname">
         <h3 :title="itemForm.name">
           {{ itemForm.name }}
         </h3>
       </b-col>
-      <b-col v-if="itemForm['components'].length === 0">
+      <b-col>
         <b-button id="add-component-button"
                   @click="showComponents = !showComponents">
-          {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
+          Изменить компоненты
         </b-button>
       </b-col>
     </b-row>
@@ -25,8 +25,8 @@
                            :location_cabinets="location_cabinets"
                            :employee-initials="employeeInitials"/>
           </b-col>
-          <b-col v-if="itemForm['components'].length > 0">
-            <b-card no-body>
+          <b-col v-if="showComponents">
+            <b-card no-body class="mt-3">
               <b-nav card-header slot="header" v-b-scrollspy:nav-scroller>
                 <b-nav-item @click="scrollIntoView"
                             v-for="component in itemForm['components']"
@@ -38,13 +38,24 @@
               <b-card-body
                 id="nav-scroller"
                 ref="content"
-                style="position:relative; height:650px; overflow-y:scroll;">
+                style="position:relative; height:1105px; overflow-y:scroll;">
                 <component-card ref="componentCard"
                                 v-for="component in itemForm['components']"
                                 :key="component.id"
                                 :components="itemForm['components']"
                                 :component="component"
                 />
+                <b-row>
+                  <b-col cols="6">
+                    <b-button @click="addComponent">Добавить компонент</b-button>
+                  </b-col>
+                  <b-col cols="6">
+                    <b-button variant="danger"
+                              v-if="itemForm['components'].length > 0"
+                              @click="deleteComponent">Удалить компонент
+                    </b-button>
+                  </b-col>
+                </b-row>
               </b-card-body>
             </b-card>
           </b-col>
@@ -69,7 +80,8 @@
         location_objects: [],
         location_corpuses: [],
         location_cabinets: [],
-        showComponents: false
+        showComponents: false,
+        componentCount: 0
       }
     },
     methods:{
@@ -116,19 +128,32 @@
         }
         this.categories = temp
       },
+      addComponent() {
+        let componentForm = {
+          id: this.index,
+          name: '',
+          serial_n: '',
+          type: '',
+          category: '',
+          year: '',
+          cost: '',
+          location: {
+            object: '',
+            corpus: '',
+            unit: '',
+            cabinet: ''
+          }
+        }
+        this.itemForm['components'].push(componentForm)
+      },
+      deleteComponent(){
+        this.itemForm['components'].splice(this.components.length-1, 1)
+      },
     },
     async created(){
       await this.fetchLocations()
       await this.fetchCategories()
 
-    },
-    computed:{
-      colsize: function(){
-        if(this.itemForm['components'].length === 0)
-          return 9
-        else
-          return 12
-      }
     },
   }
 </script>

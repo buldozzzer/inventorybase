@@ -4,6 +4,8 @@
            ref="editItemModal"
            title="Изменить запись в базе мат. ценностей"
            size="xl"
+           @hidden="clearForm"
+           @show="clearForm"
            hide-footer>
     <!--no-close-on-backdrop или настроить очистку формы при нажатии на задний фон-->
 
@@ -19,7 +21,7 @@
 
         <b-button id="add-component-button"
                   @click="showComponents = !showComponents">
-          {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
+          Изменить компоненты
         </b-button>
       </div>
       <b-container class="mt-3">
@@ -50,7 +52,7 @@
               <b-card-body
                 id="nav-scroller"
                 ref="content"
-                style="position:relative; height:650px; overflow-y:scroll;">
+                style="position:relative; overflow-y:scroll;">
                 <component-card ref="componentCard"
                                 v-for="component in itemForm['components']"
                                 :key="component.id"
@@ -71,7 +73,6 @@
                     </b-button>
                   </b-col>
                 </b-row>
-
               </b-card-body>
             </b-card>
           </b-col>
@@ -173,19 +174,25 @@
           this.addComponent()
         } else {
           this.showComponents = false
-          this.itemForm.components = []
+          this.deleteLastComponent()
           this.index = 0
         }
+      },
+      clearForm(){
+        this.index = 0
+        this.showComponents = false
       }
     },
   };
 </script>
 
-<style>
+<style scoped>
   .add-component {
     display: flow;
   }
-
+  .card {
+    height: 1105px;
+  }
   #add-component-button {
     position: absolute;
     right: 1.5%;
