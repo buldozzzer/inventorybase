@@ -8,7 +8,7 @@
       </b-col>
       <b-col>
         <b-button id="add-component-button"
-                  @click="showComponents = !showComponents">
+                  @click="showComponentsFunc">
           Изменить компоненты
         </b-button>
       </b-col>
@@ -47,7 +47,9 @@
                 />
                 <b-row>
                   <b-col cols="6">
-                    <b-button @click="addComponent">Добавить компонент</b-button>
+                    <b-button @click="addComponent" variant="primary">
+                      Добавить компонент
+                    </b-button>
                   </b-col>
                   <b-col cols="6">
                     <b-button variant="danger"
@@ -81,7 +83,8 @@
         location_corpuses: [],
         location_cabinets: [],
         showComponents: false,
-        componentCount: 0
+        componentCount: 0,
+        index: 0
       }
     },
     methods:{
@@ -145,15 +148,26 @@
           }
         }
         this.itemForm['components'].push(componentForm)
+        this.index += 1
       },
       deleteComponent(){
-        this.itemForm['components'].splice(this.components.length-1, 1)
+        this.itemForm['components'].splice(this.itemForm['components'].length-1, 1)
+        this.index -= 1
       },
+      showComponentsFunc(){
+        this.showComponents = !this.showComponents
+        if(this.showComponents === false) {
+          for (let i = 0; i < this.index - this.componentCount - 1; i++) {
+            this.itemForm['components'].splice(this.itemForm['components'].length - 1, 1)
+          }
+        }
+      }
     },
     async created(){
       await this.fetchLocations()
       await this.fetchCategories()
-
+      this.index = this.itemForm['components'].length + 1
+      this.componentCount = this.itemForm['components'].length
     },
   }
 </script>

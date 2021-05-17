@@ -1,7 +1,7 @@
 <template>
   <div>
     <h4 :id="'component'+component.id">
-      {{ 'Компонент ' + (component.id + 1) }}
+      {{ 'Компонент ' + (component.id) }}
     </h4>
     <b-container>
       <b-row>
