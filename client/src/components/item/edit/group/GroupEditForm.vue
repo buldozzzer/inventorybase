@@ -1,8 +1,18 @@
 <template>
   <b-col class="mt-3">
-    <h3>
-      {{ itemForm.name }}
-    </h3>
+    <b-row id="firstRow">
+      <b-col :cols="colsize" id="colname">
+        <h3 :title="itemForm.name">
+          {{ itemForm.name }}
+        </h3>
+      </b-col>
+      <b-col v-if="itemForm['components'].length === 0">
+        <b-button id="add-component-button"
+                  @click="showComponents = !showComponents">
+          {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
+        </b-button>
+      </b-col>
+    </b-row>
     <b-form>
       <b-container>
         <b-row>
@@ -58,7 +68,8 @@
         location_units: [],
         location_objects: [],
         location_corpuses: [],
-        location_cabinets: []
+        location_cabinets: [],
+        showComponents: false
       }
     },
     methods:{
@@ -110,12 +121,30 @@
       await this.fetchLocations()
       await this.fetchCategories()
 
-    }
+    },
+    computed:{
+      colsize: function(){
+        if(this.itemForm['components'].length === 0)
+          return 9
+        else
+          return 12
+      }
+    },
   }
 </script>
 
-<style>
-h3 {
-  text-align: center
-}
+<style scoped>
+  #firstRow {
+    text-align: center;
+  }
+  h3 {
+    width: 99%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  #colname{
+    white-space: nowrap;
+    text-overflow: ellipsis;
+  }
 </style>
