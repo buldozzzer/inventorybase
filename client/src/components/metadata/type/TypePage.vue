@@ -5,7 +5,7 @@
         <h3>Типы состовляющих</h3>
       </b-col>
       <b-col>
-        <b-button variant="success" class="mt-3" v-b-modal.type-add-modal>
+        <b-button variant="success" v-b-modal.type-add-modal>
           Добавить тип составляющей
         </b-button>
       </b-col>

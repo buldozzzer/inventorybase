@@ -5,7 +5,7 @@
         <h3>Сотрудники</h3>
       </b-col>
       <b-col>
-        <b-button variant="success" class="mt-3" v-b-modal.employee-add-modal>
+        <b-button variant="success" v-b-modal.employee-add-modal>
           Добавить сотрудника
         </b-button>
       </b-col>

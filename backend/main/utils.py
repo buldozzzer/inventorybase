@@ -11,5 +11,4 @@ def prepare_data(item):
                         else:
                             for key_l in component['location']:
                                 item[key_i] = item[key_l].strip()
-    print('name:{}:name'.format(item['name']))
     return item

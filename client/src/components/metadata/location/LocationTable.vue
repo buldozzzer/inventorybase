@@ -13,17 +13,17 @@
       <template #cell(edit_remove)="row">
         <div class="text-nowrap">
           <b-icon icon="pencil-square"
-                  variant="warning"
+                  variant="primary"
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Редактировать"
-                  font-scale="2"
+                  font-scale="1.2"
                   v-b-modal.location-edit-modal
                   @click="edit(row.item)">
           </b-icon>
           <b-icon icon="trash"
                   variant="danger"
-                  font-scale="2"
+                  font-scale="1.2"
                   data-toggle="tooltip"
                   data-placement="top"
                   title="Удалить"

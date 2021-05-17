@@ -5,7 +5,7 @@
         <h3>Подразделение, откуда поступила мат. ценность</h3>
       </b-col>
       <b-col>
-        <b-button variant="success" class="mt-3" v-b-modal.unit-add-modal>
+        <b-button variant="success" v-b-modal.unit-add-modal>
           Добавить подразделение
         </b-button>
       </b-col>

@@ -5,7 +5,7 @@
         <h3>ОТСС категории</h3>
       </b-col>
       <b-col>
-        <b-button variant="success" class="mt-3" v-b-modal.o-t-s-s-category-add-modal>
+        <b-button variant="success" v-b-modal.o-t-s-s-category-add-modal>
           Добавить категорию ОТСС
         </b-button>
       </b-col>

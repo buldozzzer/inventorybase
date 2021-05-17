@@ -5,7 +5,7 @@
         <h3>Категории</h3>
       </b-col>
       <b-col>
-        <b-button variant="success" class="mt-3" v-b-modal.category-add-modal>
+        <b-button variant="success" v-b-modal.category-add-modal>
           Добавить категорию
         </b-button>
       </b-col>

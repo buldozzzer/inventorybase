@@ -5,7 +5,7 @@
         <h3>Местоположения</h3>
       </b-col>
       <b-col>
-        <b-button variant="success" class="mt-3" v-b-modal.location-add-modal>
+        <b-button variant="success" v-b-modal.location-add-modal>
           Добавить местопложение
         </b-button>
       </b-col>

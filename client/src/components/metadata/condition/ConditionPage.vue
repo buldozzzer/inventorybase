@@ -5,7 +5,7 @@
         <h3>Состояния</h3>
       </b-col>
       <b-col>
-        <b-button variant="success" class="mt-3" v-b-modal.condition-add-modal>
+        <b-button variant="success" v-b-modal.condition-add-modal>
           Добавить состояние
         </b-button>
       </b-col>
