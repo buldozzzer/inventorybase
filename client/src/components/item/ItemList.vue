@@ -1914,6 +1914,7 @@
   }
   table{
     white-space: normal;
+    overflow-x: scroll;
   }
   /*table {*/
   /*  white-space: nowrap;*/

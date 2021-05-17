@@ -1,7 +1,7 @@
 <template>
   <div id="edit-form">
     <div style="position: absolute; z-index: 999; width: 99%; margin: auto">
-      <b-alert :show="success" dismissible>
+      <b-alert :show="success" dismissible variant="success">
         <p style="text-align: center;">
           <b-icon icon="check2"
                   variant="success"
@@ -154,18 +154,14 @@
     position:relative;
     width: 98%;
     overflow-y:scroll;
-    overflow-x: hidden;
   }
   #edit-form{
-    width: 97%;
+    width: 99%;
     margin: auto;
-    overflow-x: hidden;
   }
   #scrollspy-buttons{
     position:relative;
     overflow-y:scroll;
     width: 105%;
-    overflow-x: hidden;
-
   }
 </style>
