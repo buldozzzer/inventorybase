@@ -29,6 +29,7 @@ from . import excel_exporter
 from . import mongo
 from . import recognizer
 from . import templater
+from . import utils
 
 
 def index(request):
@@ -60,7 +61,8 @@ class ItemView(APIView):
         """
         collection = mongo.get_conn()['main_item']
         item = request.data
-        item_id = collection.insert_one(item).inserted_id
+        prep_item = utils.prepare_data(item)
+        item_id = collection.insert_one(prep_item).inserted_id
         return Response({"message": "Item '{}' created successfully."
                         .format(item_id)}, status=201)
 
@@ -89,18 +91,19 @@ class ItemView(APIView):
                 response status 404 otherwise.
         """
         updated_fields = request.data
+        prep_updated_fields = utils.prepare_data(updated_fields)
         collection = mongo.get_conn()['main_item']
         if collection:
-            updated_fields.pop("_id")
-            if updated_fields['components']:
+            prep_updated_fields.pop("_id")
+            if prep_updated_fields['components']:
                 index = 1
-                for component in updated_fields['components']:
+                for component in prep_updated_fields['components']:
                     component['id'] = index
                     index += 1
             collection.update_one({
                 "_id": ObjectId(pk)
             }, {
-                "$set": updated_fields
+                "$set": prep_updated_fields
             }, upsert=False)
             return Response({"message": "Item with id `{}` has been updated."
                             .format(pk)}, status=202)
@@ -134,7 +137,8 @@ class EmployeeView(APIView):
         """
         collection = mongo.get_conn()['main_employee']
         employee = request.data
-        employee_id = collection.insert_one(employee).inserted_id
+        prep_employee = utils.prepare_data(employee)
+        employee_id = collection.insert_one(prep_employee).inserted_id
         return Response({"message": "employee with _id '{}' created successfully."
                         .format(employee_id)}, status=201)
 
@@ -163,13 +167,14 @@ class EmployeeView(APIView):
                     response status 404 otherwise.
         """
         updated_fields = request.data
+        prep_updated_fields = utils.prepare_data(updated_fields)
         collection = mongo.get_conn()['main_employee']
         if collection:
-            updated_fields.pop("_id")
+            prep_updated_fields.pop("_id")
             collection.update_one({
                 '_id': ObjectId(pk)
             }, {
-                '$set': updated_fields
+                '$set': prep_updated_fields
             }, upsert=False)
             return Response({"message": "employee with id `{}` has been updated."
                             .format(pk)}, status=202)
@@ -203,7 +208,8 @@ class OTSSView(APIView):
         """
         collection = mongo.get_conn()['main_otss']
         category = request.data
-        category_id = collection.insert_one(category).inserted_id
+        prep_category = utils.prepare_data(category)
+        category_id = collection.insert_one(prep_category).inserted_id
         return Response({"message": "OTSS category with _id '{}' created successfully."
                         .format(category_id)}, status=201)
 
@@ -232,13 +238,14 @@ class OTSSView(APIView):
                     response status 404 otherwise.
         """
         updated_fields = request.data
+        prep_updated_fields = utils.prepare_data(updated_fields)
         collection = mongo.get_conn()['main_otss']
         if collection:
-            updated_fields.pop("_id")
+            prep_updated_fields.pop("_id")
             collection.update_one({
                 '_id': ObjectId(pk)
             }, {
-                '$set': updated_fields
+                '$set': prep_updated_fields
             }, upsert=False)
             return Response({"message": "OTSS category with id `{}` has been updated."
                             .format(pk)}, status=202)
@@ -272,7 +279,8 @@ class UnitView(APIView):
         """
         collection = mongo.get_conn()['main_unit']
         unit = request.data
-        unit_id = collection.insert_one(unit).inserted_id
+        prep_unit = utils.prepare_data(unit)
+        unit_id = collection.insert_one(prep_unit).inserted_id
         return Response({"message": "Unit with _id '{}' created successfully."
                         .format(unit_id)}, status=201)
 
@@ -301,13 +309,14 @@ class UnitView(APIView):
                     response status 404 otherwise.
         """
         updated_fields = request.data
+        prep_updated_fields = utils.prepare_data(updated_fields)
         collection = mongo.get_conn()['main_unit']
         if collection:
-            updated_fields.pop("_id")
+            prep_updated_fields.pop("_id")
             collection.update_one({
                 '_id': ObjectId(pk)
             }, {
-                '$set': updated_fields
+                '$set': prep_updated_fields
             }, upsert=False)
             return Response({"message": "Unit with id `{}` has been updated."
                             .format(pk)}, status=202)
@@ -340,8 +349,9 @@ class TypeView(APIView):
                     response status 201.
         """
         collection = mongo.get_conn()['main_type']
-        type = request.data
-        type_id = collection.insert_one(type).inserted_id
+        _type = request.data
+        prep_type = utils.prepare_data(_type)
+        type_id = collection.insert_one(prep_type).inserted_id
         return Response({"message": "Type with _id '{}' created successfully."
                         .format(type_id)}, status=201)
 
@@ -370,13 +380,14 @@ class TypeView(APIView):
                     response status 404 otherwise.
         """
         updated_fields = request.data
+        prep_updated_fields = utils.prepare_data(updated_fields)
         collection = mongo.get_conn()['main_type']
         if collection:
-            updated_fields.pop("_id")
+            prep_updated_fields.pop("_id")
             collection.update_one({
                 '_id': ObjectId(pk)
             }, {
-                '$set': updated_fields
+                '$set': prep_updated_fields
             }, upsert=False)
             return Response({"message": "Type with id `{}` has been updated."
                             .format(pk)}, status=202)
@@ -410,7 +421,8 @@ class CategoryView(APIView):
         """
         collection = mongo.get_conn()['main_category']
         category = request.data
-        category_id = collection.insert_one(category).inserted_id
+        prep_category = utils.prepare_data(category)
+        category_id = collection.insert_one(prep_category).inserted_id
         return Response({"message": "Category with _id '{}' created successfully."
                         .format(category_id)}, status=201)
 
@@ -439,13 +451,14 @@ class CategoryView(APIView):
                     response status 404 otherwise.
         """
         updated_fields = request.data
+        prep_updated_fields = utils.prepare_data(updated_fields)
         collection = mongo.get_conn()['main_category']
         if collection:
-            updated_fields.pop("_id")
+            prep_updated_fields.pop("_id")
             collection.update_one({
                 '_id': ObjectId(pk)
             }, {
-                '$set': updated_fields
+                '$set': prep_updated_fields
             }, upsert=False)
             return Response({"message": "Category with id `{}` has been updated."
                             .format(pk)}, status=202)
@@ -479,7 +492,8 @@ class LocationView(APIView):
         """
         collection = mongo.get_conn()['main_location']
         location = request.data
-        location_id = collection.insert_one(location).inserted_id
+        prep_location = utils.prepare_data(location)
+        location_id = collection.insert_one(prep_location).inserted_id
         return Response({"message": "Location with _id '{}' created successfully."
                         .format(location_id)}, status=201)
 
@@ -508,13 +522,14 @@ class LocationView(APIView):
                     response status 404 otherwise.
         """
         updated_fields = request.data
+        prep_updated_fields = utils.prepare_data(updated_fields)
         collection = mongo.get_conn()['main_location']
         if collection:
-            updated_fields.pop("_id")
+            prep_updated_fields.pop("_id")
             collection.update_one({
                 '_id': ObjectId(pk)
             }, {
-                '$set': updated_fields
+                '$set': prep_updated_fields
             }, upsert=False)
             return Response({"message": "Location with id `{}` has been updated."
                             .format(pk)}, status=202)
@@ -548,7 +563,8 @@ class ConditionView(APIView):
         """
         collection = mongo.get_conn()['main_condition']
         condition = request.data
-        condition_id = collection.insert_one(condition).inserted_id
+        prep_condition = utils.prepare_data(condition)
+        condition_id = collection.insert_one(prep_condition).inserted_id
         return Response({"message": "Condition with _id '{}' created successfully."
                         .format(condition_id)}, status=201)
 
@@ -577,13 +593,14 @@ class ConditionView(APIView):
                     response status 404 otherwise.
         """
         updated_fields = request.data
+        prep_updated_fields = utils.prepare_data(updated_fields)
         condition = mongo.get_conn()['main_condition']
         if condition:
-            updated_fields.pop("_id")
+            prep_updated_fields.pop("_id")
             condition.update_one({
                 '_id': ObjectId(pk)
             }, {
-                '$set': updated_fields
+                '$set': prep_updated_fields
             }, upsert=False)
             return Response({"message": "Condition with id `{}` has been updated."
                             .format(pk)}, status=202)
