@@ -24,7 +24,6 @@
         <b-form-group id="form-inventory_n-group"
                       label="Инвентарный номер:"
                       label-for="form-inventory_n-input">
-<!--                        :state="isIntroduced(itemForm.inventory_n, '')"-->
           <b-form-input id="form-inventory_n-input"
                         type="text"
                         v-model="itemForm.inventory_n"
@@ -284,6 +283,98 @@
         </b-form-group>
       </b-col>
     </b-row>
+
+    <b-row v-if="!showComponents">
+      <b-col cols="6">
+        <b-form-group id="form-serial_n-group"
+                      label="Серийный номер:"
+                      label-for="form-serial_n-input">
+          <b-form-input id="form-serial_n-input"
+                        type="text"
+                        v-model="itemForm.serial_n">
+          </b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col cols="6">
+        <b-form-group id="form-category-group"
+                      label="Категория:"
+                      label-for="form-category-input">
+          <b-form-select id="form-category-input"
+                        type="text"
+                        :options="categories"
+                        v-model="itemForm.category">
+          </b-form-select>
+        </b-form-group>
+      </b-col>
+    </b-row>
+    <b-row v-if="!showComponents">
+      <b-col cols="6">
+        <b-form-group id="form-cost-group"
+                      label="Цена:"
+                      label-for="form-cost-input">
+          <b-form-input id="form-cost-input"
+                        type="number"
+                        min="0"
+                        v-model="itemForm.cost">
+          </b-form-input>
+        </b-form-group>
+      </b-col>
+      <b-col cols="6">
+        <b-form-group id="form-year-group"
+                      label="Год выпуска:"
+                      label-for="form-year-input">
+          <b-form-input id="form-year-input"
+                        type="number"
+                        min="0"
+                        v-model="itemForm.year">
+          </b-form-input>
+        </b-form-group>
+      </b-col>
+    </b-row>
+    <b-row v-if="!showComponents">
+      <b-col cols="6">
+        <b-form-group id="form-location_object-group"
+                      label="Объект:"
+                      label-for="form-location_object-input">
+          <b-form-select id="form-location_object-input"
+                         :options="location_objects"
+                         v-model="itemForm.location_object">
+          </b-form-select>
+        </b-form-group>
+      </b-col>
+      <b-col cols="6">
+        <b-form-group id="form-location_unit-group"
+                      label="Подразделение:"
+                      label-for="form-location_unit-input">
+          <b-form-select id="form-location_unit-input"
+                         :options="location_units"
+                         v-model="itemForm.location_unit">
+          </b-form-select>
+        </b-form-group>
+      </b-col>
+    </b-row>
+    <b-row v-if="!showComponents">
+      <b-col cols="6">
+        <b-form-group id="form-location_corpus-group"
+                      label="Корпус:"
+                      label-for="form-location_corpus-input">
+          <b-form-select id="form-location_corpus-input"
+                         :options="location_corpuses"
+                         v-model="itemForm.location_corpus">
+          </b-form-select>
+        </b-form-group>
+      </b-col>
+      <b-col cols="6">
+        <b-form-group id="form-location_cabinet-group"
+                      label="Кабинет:"
+                      label-for="form-location_cabinet-input">
+          <b-form-select id="form-location_cabinet-input"
+                         :options="location_cabinets"
+                         v-model="itemForm.location_cabinet">
+          </b-form-select>
+        </b-form-group>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -291,7 +382,14 @@
 /* eslint-disable */
   export default {
     name: "FormTemplate",
-    props: ['itemForm', 'employeeInitials'],
+    props: ['itemForm',
+      'showComponents',
+      'categories',
+      'employeeInitials',
+      'location_units',
+      'location_objects',
+      'location_corpuses',
+      'location_cabinets'],
     data(){
       return {
         otssCategories: [],

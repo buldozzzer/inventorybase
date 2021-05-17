@@ -65,7 +65,12 @@
         employeeList: [],
         employeeInitials: [],
         listOfNewItems: [],
-        parent: null
+        parent: null,
+        categories: [],
+        location_units: [],
+        location_objects: [],
+        location_corpuses: [],
+        location_cabinets: [],
       }
     },
     methods: {
@@ -92,6 +97,14 @@
             transfer_requisites: '',
             comment: '',
             last_check: null,
+            serial_n: '',
+            category: '',
+            year: '',
+            cost: '',
+            location_object: '',
+            location_unit: '',
+            location_corpus: '',
+            location_cabinet: ''
           }
           this.listOfNewItems.push(item)
           this.index += 1
@@ -124,6 +137,14 @@
           transfer_requisites: '',
           comment: '',
           last_check: null,
+          serial_n: '',
+          category: '',
+          year: '',
+          cost: '',
+          location_object: '',
+          location_unit: '',
+          location_corpus: '',
+          location_cabinet: ''
         }
         item.index = this.index
         this.listOfNewItems.push(item)
@@ -181,6 +202,14 @@
             transfer_requisites: this.listOfNewItems[i].transfer_requisites,
             comment: this.listOfNewItems[i].comment,
             last_check: this.listOfNewItems[i].last_check,
+            serial_n: this.listOfNewItems[i].serial_n,
+            category: this.listOfNewItems[i].category,
+            year: this.listOfNewItems[i].year,
+            cost: this.listOfNewItems[i].cost,
+            location_object: this.listOfNewItems[i].location_object,
+            location_unit: this.listOfNewItems[i].location_unit,
+            location_corpus: this.listOfNewItems[i].location_corpus,
+            location_cabinet: this.listOfNewItems[i].location_cabinet
           };
           const response = await fetch(`http://localhost:8000/inventorybase/api/v1/item/`, {
             method: 'POST',

@@ -31,8 +31,14 @@
       <b-container class="mt-3">
         <b-row>
           <b-col :cols="colsize">
-            <form-template :itemForm="itemForm"
-                           ref="itemForm"
+            <form-template ref="itemForm"
+                           :itemForm="itemForm"
+                           :categories="categories"
+                           :show-components="showComponents"
+                           :location_units="location_units"
+                           :location_objects="location_objects"
+                           :location_corpuses="location_corpuses"
+                           :location_cabinets="location_cabinets"
                            :employeeInitials="employeeInitials">
             </form-template>
           </b-col>
@@ -55,7 +61,12 @@
   export default {
     /* eslint-disable */
     name: "AddModal",
-    props: ['employeeInitials'],
+    props: ['employeeInitials',
+      'categories',
+      'location_units',
+      'location_objects',
+      'location_corpuses',
+      'location_cabinets'],
     components: {
       ComponentList,
       FormTemplate
@@ -82,9 +93,16 @@
           transfer_requisites: '',
           comment: '',
           last_check: null,
+          serial_n: '',
+          category: '',
+          year: '',
+          cost: '',
+          location_object: '',
+          location_unit: '',
+          location_corpus: '',
+          location_cabinet: ''
         },
         showComponents: false,
-        app: null
       }
     },
     computed:{
@@ -146,6 +164,14 @@
           transfer_requisites: this.itemForm.transfer_requisites,
           comment: this.itemForm.comment,
           last_check: this.itemForm.last_check,
+          serial_n: this.itemForm.serial_n,
+          category: this.itemForm.category,
+          year: this.itemForm.year,
+          cost: this.itemForm.cost,
+          location_object: this.itemForm.location_object,
+          location_unit: this.itemForm.location_unit,
+          location_corpus: this.itemForm.location_corpus,
+          location_cabinet: this.itemForm.location_cabinet
         };
         this.createItem(payload);
         this.clearForm()
@@ -154,7 +180,7 @@
         return left !== right
       },
       sendForm() {
-        if(this.$refs.componentList != null) {
+        if (this.$refs.componentList != null) {
           this.itemForm['components'] = this.$refs.componentList.createComponentList()
         }
         bus.$emit('fetchDataForChildren', this.itemForm)
@@ -181,11 +207,16 @@
           transfer_requisites: '',
           comment: '',
           last_check: null,
+          serial_n: '',
+          category: '',
+          year: '',
+          cost: '',
+          location_object: '',
+          location_unit: '',
+          location_corpus: '',
+          location_cabinet: ''
         }
-      }
-    },
-    created() {
-      this.app = this.$parent.$parent
+      },
     }
   }
 </script>

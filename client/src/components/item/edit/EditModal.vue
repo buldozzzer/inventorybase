@@ -4,6 +4,8 @@
            ref="editItemModal"
            title="Изменить запись в базе мат. ценностей"
            size="xl"
+           @hidden="clearForm"
+           @show="clearForm"
            hide-footer>
     <!--no-close-on-backdrop или настроить очистку формы при нажатии на задний фон-->
 
@@ -16,17 +18,25 @@
         </b-button>
         <!--        @click="initForm"-->
         <b-button type="reset" variant="danger">Отмена</b-button>
+
+        <b-button id="add-component-button"
+                  @click="showComponents = !showComponents">
+          Изменить компоненты
+        </b-button>
       </div>
       <b-container class="mt-3">
         <b-row>
           <b-col :cols="colsize">
             <form-template :itemForm="itemForm"
+                           :categories="categories"
+                           :show-components="showComponents"
+                           :location_units="location_units"
+                           :location_objects="location_objects"
+                           :location_corpuses="location_corpuses"
+                           :location_cabinets="location_cabinets"
                            :employeeInitials="employeeInitials"></form-template>
           </b-col>
           <b-col>
-            <b-button @click="showComponentForm">
-              {{!showComponents ? 'Добавить компоненты' : 'Убрать компоненты'}}
-            </b-button>
             <b-card v-if="showComponents"
                     no-body
                     class="mt-3">
@@ -42,7 +52,7 @@
               <b-card-body
                 id="nav-scroller"
                 ref="content"
-                style="position:relative; height:650px; overflow-y:scroll;">
+                style="position:relative; overflow-y:scroll;">
                 <component-card ref="componentCard"
                                 v-for="component in itemForm['components']"
                                 :key="component.id"
@@ -63,7 +73,6 @@
                     </b-button>
                   </b-col>
                 </b-row>
-
               </b-card-body>
             </b-card>
           </b-col>
@@ -80,16 +89,19 @@
 
   export default {
     name: 'editModal',
-    props: ['employeeInitials', 'editItem'],
+    props: ['employeeInitials',
+      'editItem',
+      'categories',
+      'location_units',
+      'location_objects',
+      'location_corpuses',
+      'location_cabinets'],
     components: {
       ComponentCard,
       FormTemplate
     },
     data() {
       return {
-        otssCategories: [1, 2, 3, 'Не секретно'],
-        conditions: ['Исправно', 'Неисправно'],
-        operation: ['Используется', 'Не используется'],
         itemForm: {
           components: []
         },
@@ -102,7 +114,7 @@
         if(this.showComponents)
           return 6
         else
-          return 10
+          return 12
       }
     },
     methods: {
@@ -162,16 +174,27 @@
           this.addComponent()
         } else {
           this.showComponents = false
-          this.itemForm.components = []
+          this.deleteLastComponent()
           this.index = 0
         }
+      },
+      clearForm(){
+        this.index = 0
+        this.showComponents = false
       }
     },
   };
 </script>
 
-<style>
-.add-component {
-  display: flow;
-}
+<style scoped>
+  .add-component {
+    display: flow;
+  }
+  .card {
+    height: 1105px;
+  }
+  #add-component-button {
+    position: absolute;
+    right: 1.5%;
+  }
 </style>

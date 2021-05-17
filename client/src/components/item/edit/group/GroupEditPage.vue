@@ -1,5 +1,18 @@
 <template>
   <div id="edit-form">
+    <div style="position: absolute; z-index: 999; width: 99%; margin: auto">
+      <b-alert :show="success" dismissible variant="success">
+        <p style="text-align: center;">
+          <b-icon icon="check2"
+                  variant="success"
+                  font-scale="1"
+                  data-toggle="tooltip"
+                  data-placement="top">
+          </b-icon>
+          Успешно <a href="#/items/">Вернуться на главную</a>
+        </p>
+      </b-alert>
+    </div>
     <b-row class="mt-3">
       <b-col cols="2">
         <div id="scrollspy-buttons"
@@ -34,6 +47,8 @@
       </b-col>
     </b-row>
     <confirm-form :message="message"
+                  :payload="itemsForEdit"
+                  dynamic-id="confirm-modal"
                   :op="editItems"/>
   </div>
 </template>
@@ -57,7 +72,8 @@
         scroll_form: '',
         employeeList: [],
         itemsForEdit: [],
-        m: ''
+        m: '',
+        success: false
       }
     },
     methods: {
@@ -105,6 +121,7 @@
             alert(JSON.stringify(await response.json(), null, 2));
           }
         }
+        this.success = true
       },
     },
     computed:{
@@ -123,6 +140,7 @@
       await this.fetchEmployees()
       this.itemsForEdit = this.$parent.$data.dataForChildren
       bus.$emit('clearDataForChildren')
+      this.success = false
     },
     mounted() {
       let _height = document.documentElement.clientHeight * 0.9
@@ -135,16 +153,15 @@
   #scrollspy-nested{
     position:relative;
     width: 98%;
-    overflow-y:scroll
+    overflow-y:scroll;
   }
   #edit-form{
-    width: 98%;
+    width: 99%;
     margin: auto;
   }
   #scrollspy-buttons{
     position:relative;
     overflow-y:scroll;
     width: 105%;
-    overflow-x: hidden;
   }
 </style>

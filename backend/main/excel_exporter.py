@@ -12,7 +12,7 @@ ALLOWED_HEADERS = {
     'inventory_n': 'Инвентарный номер',
     'otss_category': 'Категория ОТСС',
     'condition': 'Сосотояние',
-    'unit_from': 'Подразделение',
+    'unit_from': 'Подразделение, откуда поступила мат. ценность',
     'in_operation': 'Используется',
     'fault_document_requisites': 'Документы о передаче во временное пользование',
     'date_of_receipt': 'Дата поступления на учёт',
@@ -24,6 +24,14 @@ ALLOWED_HEADERS = {
     'transfer_requisites': 'Реквизиты документа о передаче в пользование',
     'comment': 'Примечания',
     'last_check': 'Дата последней проверки',
+    'serial_n': 'Заводской номер',
+    'category': 'Категория',
+    'year': 'Год выпуска',
+    'cost': 'Цена',
+    'location_object': 'Объект',
+    'location_unit': 'Подразделение',
+    'location_corpus': 'Корпус',
+    'location_cabinet': 'Кабинет'
 }
 
 
@@ -38,12 +46,11 @@ def get_nested_components(payload: list):
     nested_components = {
         ('Компоненты', 'Наименование'): {},
         ('Компоненты', 'Серийный номер'): {}, ('Компоненты', 'Тип'): {},
-        ('Компоненты', 'Вид'): {}, ('Компоненты', 'Категория'): {},
-        ('Компоненты', 'Год выпуска'): {}, ('Компоненты', 'Цена'): {},
-        ('Компоненты', 'Местонахождение'): {}
+        ('Компоненты', 'Категория'): {}, ('Компоненты', 'Год выпуска'): {},
+        ('Компоненты', 'Цена'): {}, ('Компоненты', 'Местонахождение'): {}
     }
 
-    component_titles = ['name', 'serial_n', 'type', 'view', 'category', 'year', 'cost', 'location']
+    component_titles = ['name', 'serial_n', 'type', 'category', 'year', 'cost', 'location']
 
     for key, title in zip(component_titles, nested_components):
         component_cell = {}
@@ -124,6 +131,30 @@ def get_items(payload: list):
             item_titles.append(key)
         if 'user' == key:
             item_dict[('', 'Сотрудник, которому передали в пользование')] = {}
+            item_titles.append(key)
+        if 'serial_n' == key:
+            item_dict[('', 'Заводской номер')] = {}
+            item_titles.append(key)
+        if 'category' == key:
+            item_dict[('', 'Категория')] = {}
+            item_titles.append(key)
+        if 'year' == key:
+            item_dict[('', 'Год выпуска')] = {}
+            item_titles.append(key)
+        if 'cost' == key:
+            item_dict[('', 'Цена')] = {}
+            item_titles.append(key)
+        if 'location_object' == key:
+            item_dict[('', 'Объект')] = {}
+            item_titles.append(key)
+        if 'location_unit' == key:
+            item_dict[('', 'Подразделение')] = {}
+            item_titles.append(key)
+        if 'location_corpus' == key:
+            item_dict[('', 'Корпус')] = {}
+            item_titles.append(key)
+        if 'location_cabinet' == key:
+            item_dict[('', 'Кабинет')] = {}
             item_titles.append(key)
 
     for ru_title, en_title in zip(item_dict, item_titles):
