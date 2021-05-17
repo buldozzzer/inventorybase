@@ -153,15 +153,18 @@
   #scrollspy-nested{
     position:relative;
     width: 98%;
-    overflow-y:scroll;
+    overflow-y: scroll;
+    overflow-x: scroll;
   }
   #edit-form{
     width: 99%;
     margin: auto;
+    overflow-x: scroll;
   }
   #scrollspy-buttons{
     position:relative;
     overflow-y:scroll;
     width: 105%;
+    overflow-x: scroll;
   }
 </style>
