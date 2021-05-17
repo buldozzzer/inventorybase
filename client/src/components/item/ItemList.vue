@@ -113,12 +113,11 @@
         </p>
       </b-alert>
       <b-alert
-        style="position: absolute"
         :show="dismissCountDownError"
         dismissible
         @dismissed="dismissCountDownError=0"
         @dismiss-count-down="countDownChangedError">
-        <p>
+        <p style="text-align: center;">
           <b-icon icon="x"
                   variant="danger"
                   font-scale="2"
