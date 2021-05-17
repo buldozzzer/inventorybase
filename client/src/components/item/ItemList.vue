@@ -102,7 +102,7 @@
         dismissible
         @dismissed="dismissCountDown=0"
         @dismiss-count-down="countDownChanged">
-        <p>
+        <p style="text-align: center;">
           <b-icon icon="check2"
                   variant="success"
                   font-scale="2"

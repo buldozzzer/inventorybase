@@ -34,6 +34,8 @@
       </b-col>
     </b-row>
     <confirm-form :message="message"
+                  :payload="itemsForEdit"
+                  dynamic-id="confirm-modal"
                   :op="editItems"/>
   </div>
 </template>
@@ -135,16 +137,19 @@
   #scrollspy-nested{
     position:relative;
     width: 98%;
-    overflow-y:scroll
+    overflow-y:scroll;
+    overflow-x: hidden;
   }
   #edit-form{
-    width: 98%;
+    width: 97%;
     margin: auto;
+    overflow-x: hidden;
   }
   #scrollspy-buttons{
     position:relative;
     overflow-y:scroll;
     width: 105%;
     overflow-x: hidden;
+
   }
 </style>
