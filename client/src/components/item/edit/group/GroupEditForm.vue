@@ -19,6 +19,7 @@
           <b-col>
             <form-template :item-form="itemForm"
                            :categories="categories"
+                           :show-components="showComponents"
                            :location_units="location_units"
                            :location_objects="location_objects"
                            :location_corpuses="location_corpuses"
