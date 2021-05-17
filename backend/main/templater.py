@@ -25,7 +25,15 @@ ALLOWED_TEMPLATES = {
     'last_check': '{{последняя проверка}}',
     'comment': '{{примечания}}',
     'user': '{{кому передали}}',
-    'components': '{{компоненты}}'
+    'components': '{{компоненты}}',
+    'serial_n': '{{заводской номер}}',
+    'category': '{{категория}}',
+    'year': '{{год}}',
+    'cost': '{{цена}}',
+    'location_object': '{{объект}}',
+    'location_unit': '{{подразделение}}',
+    'location_corpus': '{{корпус}}',
+    'location_cabinet': '{{кабинет}}'
 }
 
 
