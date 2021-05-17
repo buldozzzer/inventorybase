@@ -9,7 +9,7 @@
       <b-col>
         <b-button id="add-component-button"
                   @click="showComponentsFunc">
-          Изменить компоненты
+          Компоненты
         </b-button>
       </b-col>
     </b-row>

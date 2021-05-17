@@ -18,7 +18,7 @@
         <div id="scrollspy-buttons"
              :style="{ height: scroll_form }"
              ref="buttons">
-          <b-button variant="dark"
+          <b-button variant="success"
                     v-b-modal.confirm-modal>
             Внести изменения
           </b-button>
