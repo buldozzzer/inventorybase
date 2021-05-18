@@ -3,6 +3,7 @@
     <b-modal ref="confirmModal"
              :id="dynamicId"
              :title="title"
+             no-close-on-backdrop
              hide-footer
              centered
              hide-header-close>

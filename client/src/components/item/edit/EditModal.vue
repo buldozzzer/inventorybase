@@ -4,6 +4,7 @@
            ref="editItemModal"
            title="Изменить запись в базе мат. ценностей"
            size="xl"
+           no-close-on-backdrop
            @hidden="clearForm"
            @show="clearForm"
            hide-footer>

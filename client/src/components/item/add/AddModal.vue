@@ -5,6 +5,7 @@
            id="add-item-modal"
            title="Добавить запись в базу мат. ценностей"
            size="xl"
+           no-close-on-backdrop
            @hidden="clearForm"
            @show="clearForm"
            hide-footer>
