@@ -96,7 +96,7 @@
              ref="filtersForList"
              :employee-initials="employeeInitials">
     </filters>
-    <div style="position: absolute; z-index: 999; width: 100%">
+    <div style="position: absolute; z-index: 999; width: 30%; bottom: 0; right: 0">
       <b-alert
         :show="dismissCountDown"
         dismissible
