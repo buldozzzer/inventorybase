@@ -1905,6 +1905,7 @@
     line-height: 15px;
     color: black;
     padding: 5px;
+    word-break: break-all;
   }
   .button-select-rows{
     color: #000000;
