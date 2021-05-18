@@ -44,6 +44,7 @@
                                 v-for="component in itemForm['components']"
                                 :key="component.id"
                                 :components="itemForm['components']"
+                                :employee-initials="employeeInitials"
                                 :component="component"
                 />
                 <b-row>
