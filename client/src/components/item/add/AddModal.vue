@@ -45,6 +45,7 @@
           </b-col>
           <b-col>
             <component-list v-show="showComponents"
+                            :employee-initials="employeeInitials"
                             ref="componentList"/>
           </b-col>
         </b-row>

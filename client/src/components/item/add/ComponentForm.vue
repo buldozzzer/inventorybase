@@ -190,6 +190,24 @@
           </b-form-group>
         </b-col>
       </b-row>
+      <b-row>
+        <b-col>
+        <b-form-group id="form-user-group"
+                      label="Лицо,которому передано в пользование:"
+                      label-for="form-user-input">
+          <!--              :state="isIntroduced(itemForm.user, '')"-->
+          <b-form-input id="form-user-input"
+                        v-model="component.user"
+                        list="employee-list"
+                        placeholder="Иванов И.И.">
+          </b-form-input>
+          <datalist id="employee-list">
+            <option>---------</option>
+            <option v-for="employee in employeeInitials">{{ employee }}</option>
+          </datalist>
+        </b-form-group>
+      </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
@@ -198,7 +216,7 @@
 /* eslint-disable */
   export default {
     name: "ComponentForm",
-    props: ['component'],
+    props: ['component', 'employeeInitials'],
     data(){
       return{
         locations: [],

@@ -16,6 +16,7 @@
         style="position:relative; height:650px; overflow-y:scroll;">
         <component-form v-for="component in components"
                         :key="component.id"
+                        :employeeInitials="employeeInitials"
                         :component="component"
         />
         <b-row>
@@ -40,7 +41,7 @@
 
   export default {
     name: "ComponentList",
-    props: ['payload'],
+    props: ['payload', 'employeeInitials'],
     components: {
       ComponentForm
     },
@@ -78,7 +79,8 @@
               corpus: '',
               unit: '',
               cabinet: ''
-            }
+            },
+            user: ''
           }
           this.components.push(componentForm)
           this.index += 1
@@ -101,7 +103,8 @@
             corpus: '',
             unit: '',
             cabinet: ''
-          }
+          },
+          user: ''
         }
         this.components.push(componentForm)
         this.index += 1

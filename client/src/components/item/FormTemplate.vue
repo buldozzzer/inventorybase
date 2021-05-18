@@ -82,7 +82,7 @@
     <b-row>
       <b-col cols="6">
         <b-form-group id="form-unit_from-group"
-                      label="Подразделение, откуда поступило:"
+                      label="Откуда поступило:"
                       label-for="form-unit_from-input">
           <b-form-input id="form-unit_from-input"
                         list="unit-list"
@@ -183,7 +183,7 @@
     </b-row>
 
     <b-row>
-      <b-col cols="6">
+      <b-col v-if="!showComponents">
         <b-form-group id="form-user-group"
                       label="Лицо,которому передано в пользование:"
                       label-for="form-user-input">
@@ -196,7 +196,7 @@
         </b-form-group>
       </b-col>
 
-      <b-col cols="6">
+      <b-col>
         <b-form-group id="form-date_of_transfer-group"
                       label="Дата передачи во временное пользование:"
                       label-for="form-date_of_transfer-input">
