@@ -22,6 +22,7 @@
             <component-list ref="componentList"
                             class="mt-3"
                             v-if="showComponents"
+                            :employee-initials="employeeInitials"
                             :payload="itemForm['components']">
             </component-list>
           </b-col>
