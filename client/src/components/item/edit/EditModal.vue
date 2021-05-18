@@ -160,7 +160,8 @@
             corpus: '',
             cabinet: '',
             unit: ''
-          }
+          },
+          user: ''
         }
         this.itemForm.components.push(componentForm)
         this.index += 1

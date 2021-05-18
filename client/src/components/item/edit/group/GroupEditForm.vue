@@ -147,7 +147,8 @@
             corpus: '',
             unit: '',
             cabinet: ''
-          }
+          },
+          user: ''
         }
         this.itemForm['components'].push(componentForm)
         this.index += 1
