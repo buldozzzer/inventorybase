@@ -14,12 +14,21 @@
                          label="Сохранённые шаблоны:"
                          label-for="documents-input">
             <b-form-select id="documents-input"
-                           v-model="doc"
-                           :options="docs">
+                           v-model="doc">
               <template #first>
                 <b-form-select-option :value="null"
                                       disabled>
                   Выберите документ из списка
+                </b-form-select-option>
+              </template>
+              <template v-for="doc in docs">
+                <b-form-select-option :value="doc">
+                  <b-col style="text-align: left">
+                    {{doc}}
+                  </b-col>
+                  <b-col style="text-align: left" type="btn">
+                    {{doc}}
+                  </b-col>
                 </b-form-select-option>
               </template>
             </b-form-select>
