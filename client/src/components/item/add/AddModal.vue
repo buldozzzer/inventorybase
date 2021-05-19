@@ -218,6 +218,7 @@
           location_corpus: '',
           location_cabinet: ''
         }
+        this.showComponents = false
       },
     }
   }
