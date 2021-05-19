@@ -5,7 +5,6 @@ def prepare_data(item):
                 item[key_i] = item[key_i].strip()
             else:
                 for component in item['components']:
-                    print(component)
                     for key_c in component:
                         if component[key_c] is not None:
                             if key_c == 'id':

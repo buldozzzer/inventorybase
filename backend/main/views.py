@@ -91,6 +91,7 @@ class ItemView(APIView):
                 response status 404 otherwise.
         """
         updated_fields = request.data
+        updated_fields.pop("_showDetails")
         prep_updated_fields = utils.prepare_data(updated_fields)
         collection = mongo.get_conn()['main_item']
         if collection:
