@@ -1,4 +1,5 @@
 <template>
+<!--eslint-disable-->
   <div>
     <h4 :id="'component-'+component.id">
       {{ component.name !== '' ? component.name : 'Компонент ' + (component.id + 1) }}
@@ -203,7 +204,8 @@
             </b-form-input>
             <datalist id="employee-list">
               <option>---------</option>
-              <option v-for="employee in employeeInitials">{{ employee }}</option>
+
+              <option v-for="employee in employeeInitials" :v-key="employee">{{ employee }}</option>
             </datalist>
           </b-form-group>
         </b-col>

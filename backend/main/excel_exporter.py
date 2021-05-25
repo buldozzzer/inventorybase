@@ -237,7 +237,7 @@ def write(payload):
     prepared_data = distribute_to_columns(payload)
     filename = os.getcwd() + \
                '/media/generated/report_' + \
-               dt.datetime.now().strftime('%d-%m-%Y_%H:%M:%S') + '.xlsx'
+               dt.datetime.now().strftime('%d-%m-%Y') + '.xlsx'
 
     df = pd.DataFrame(prepared_data, index=[i for i in range(1, len(payload) + 1)])
     df.to_excel(filename, sheet_name='Main')
@@ -257,13 +257,14 @@ def export_to_excel(payload: list):
         filename = os.getcwd() + \
                    '/media/generated/report_' + \
                    dt.datetime.now().strftime('%d-%m-%Y_%H:%M:%S') + '.xlsx'
+        # dt.datetime.now().strftime('%d-%m-%Y_%H:%M:%S')
         temp_df = pd.DataFrame(data=merge_data, index=index)
         temp_df.to_excel(filename, sheet_name='Main')
 
     else:
         filename = write(payload)
 
-    result_path = make_archive(os.getcwd() + '/media/Документы',
+    result_path = make_archive(os.getcwd() + '/media/Документы' + dt.datetime.now().strftime('%d-%m-%Y'),
                                'zip',
                                root_dir=os.getcwd() + '/media/generated',
                                base_dir='.')

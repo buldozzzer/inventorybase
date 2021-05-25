@@ -1,6 +1,7 @@
 import os
 import re
 from pathlib import Path
+import datetime as dt
 from shutil import make_archive
 
 import docx
@@ -153,21 +154,37 @@ def final_replacement(filename, payload, merge_doc):
                     docx_write(document, template, str(item[template]))
                 else:
                     docx_write(document, template, '<поле отсутствует>')
-                if os.name == 'nt':
-                    document.save(os.getcwd() + '/media/generated/Документ-{}.docx'.format(i + 1))
-                elif os.name == 'posix':
-                    document.save(os.getcwd() + '/media/generated/Документ-{}.docx'.format(i + 1))
+                # if os.name == 'nt':
+                #     if str(item[template]) != '':
+                #         fullname = os.path.basename(filename)
+                #         name = os.path.splitext(fullname)[0]
+                #         document.save(os.getcwd() + '/media/generated/{} - {}.docx'.
+                #                       format(name, item['{{инвентарный номер}}']))
+                #     else:
+                #         fullname = os.path.basename(filename)
+                #         name = os.path.splitext(fullname)[0]
+                #         document.save(os.getcwd() + '/media/generated/{} - {}.docx'.format(name, i + 1))
+                # elif os.name == 'posix':
+                if str(item['{{инвентарный номер}}']) != '':
+                    fullname = os.path.basename(filename)
+                    name = os.path.splitext(fullname)[0]
+                    document.save(os.getcwd() + '/media/generated/{} - {}.docx'.
+                                  format(name, item['{{инвентарный номер}}']))
+                else:
+                    fullname = os.path.basename(filename)
+                    name = os.path.splitext(fullname)[0]
+                    document.save(os.getcwd() + '/media/generated/{} - {}.docx'.format(name, i + 1))
             except KeyError as error:
                 continue
     if merge_doc:
         documents = os.listdir(os.getcwd() + '/media/generated')
         combine_word_documents(documents)
-        result_path = make_archive(os.getcwd() + '/media/Документы',
+        result_path = make_archive(os.getcwd() + '/media/Документы_' + dt.datetime.now().strftime('%d-%m-%Y'),
                                    'zip',
                                    root_dir=os.getcwd() + '/media/generated',
                                    base_dir='.')
     else:
-        result_path = make_archive(os.getcwd() + '/media/Документы',
+        result_path = make_archive(os.getcwd() + '/media/Документы_' + dt.datetime.now().strftime('%d-%m-%Y'),
                                    'zip',
                                    root_dir=os.getcwd() + '/media/generated',
                                    base_dir='.')

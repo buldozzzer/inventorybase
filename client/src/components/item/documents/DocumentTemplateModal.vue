@@ -1,4 +1,5 @@
 <template>
+<!--eslint-disable-->
   <b-modal ref="documentTemplateModal"
            id="document-template-modal"
            title="Экспорт записей в шаблоны документов"
@@ -21,8 +22,8 @@
                   Выберите документ из списка
                 </b-form-select-option>
               </template>
-              <template v-for="doc in docs">
-                <b-form-select-option :value="doc">
+              <template v-for="doc in docs" :v-key="doc">
+                <b-form-select-option :value="doc" >
                   <b-col style="text-align: left">
                     {{doc}}
                   </b-col>
