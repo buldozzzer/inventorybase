@@ -70,6 +70,7 @@
         <b-col cols="2" align-self="center">
           <b-button-group>
             <b-button variant="light"
+                      :title="exportToExcelTitle"
                       v-b-modal.excel-exporter-modal
                       :disabled="selected.length === 0"
                       class="mt-3">
@@ -77,6 +78,7 @@
             </b-button>
             <b-dropdown right
                         variant="light"
+                        :title="exportToTemplateTitle"
                         class="mt-3">
               <b-dropdown-item v-b-modal.document-template-modal>
                 <b-icon icon="file-earmark-code"
@@ -1586,6 +1588,18 @@
           return 'Выбрать все записи'
         else
           return 'Отменить выбор'
+      },
+      exportToExcelTitle: function(){
+        if(this.selected.length === 0)
+          return 'Недоступно: выберите записи для экспорта'
+        else
+          return 'Экспортировать выбранные записи в .xlsx'
+      },
+      exportToTemplateTitle: function(){
+        if(this.selected.length === 0)
+          return 'Экспорт данных недоступен:\nвыберите записи для экспорта'
+        else
+          return 'Экспортировать выбранные записи в шаблоны .docx'
       }
     },
     methods: {
