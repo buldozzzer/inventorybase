@@ -72,7 +72,12 @@
             let url = window.URL.createObjectURL(blob);
             let a = document.createElement('a');
             a.href = url;
-            a.download = "Документы.zip";
+            let today = new Date();
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0');
+            let yyyy = today.getFullYear();
+            today = mm + '-' + dd + '-' + yyyy;
+            a.download = "Документы_" + today + ".zip";
             document.body.appendChild(a);
             a.click();
             a.remove();
