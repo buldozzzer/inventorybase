@@ -64,19 +64,19 @@
 
   export default {
     name: "Filters",
-    props: ['employeeInitials'],
+    props: ['employeeInitials', 'filters'],
     data() {
       return {
         otssCategories: [],
         conditions: [],
         operation: ['Используется', 'Не используется', {text: '-', value: null}],
         units: [],
-        filters: {
-          responsible: null,
-          otss_category: null,
-          condition: null,
-          in_operation: null,
-        },
+        // filters: {
+        //   responsible: null,
+        //   otss_category: null,
+        //   condition: null,
+        //   in_operation: null,
+        // },
         employees: [],
         fuseString: ''
       }
@@ -154,6 +154,10 @@
       fuseString: function (){
         this.$parent.$data.fuseString = this.fuseString
         bus.$emit('changeFuseString', this.fuseString)
+      },
+      filters: function () {
+        this.$parent.$data.filters = this.filters
+        bus.$emit('changeFilters', this.filters)
       }
     },
     async created(){

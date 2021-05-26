@@ -103,6 +103,7 @@
     <filters class="mt-3"
              v-show="showFilters === true"
              ref="filtersForList"
+             :filters="filters"
              :employee-initials="employeeInitials">
     </filters>
     <div style="position: absolute; z-index: 999; width: 30%; bottom: 0; right: 0">
@@ -1807,11 +1808,6 @@
       selectToEditItem(item) {
         this.$refs.editItemModal.itemForm = item
       },
-      setFilters() {
-        if(this.showFilters) {
-          this.filters = this.$refs.filtersForList.filters
-        }
-      },
       filterFunction(row, val) {
         const {
           responsible: r,
@@ -1910,9 +1906,9 @@
       await this.fetchCategories()
       await this.fetchEmployees()
       await this.fetchLocations()
-      await this.setFilters()
       await this.fetchOTSS()
       await this.fetchUnits()
+      await bus.$on('changeFilters', (data) => this.filters = data)
       await bus.$on('updateList', () => this.fetchItems())
       await bus.$on('cancel', () => {this.selected = []})
       await bus.$on('resetFilters', (data) => {
