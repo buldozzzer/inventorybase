@@ -91,6 +91,13 @@
             </b-dropdown>
           </b-button-group>
         </b-col>
+        <b-col cols="1">
+          <div class="mt-3">
+            {{ 'Всего: ' + items.length }}
+            <br>
+            {{ 'Выбрано: ' + selected.length }}
+          </div>
+        </b-col>
       </b-row>
     </div>
     <filters class="mt-3"
@@ -198,23 +205,28 @@
       </template>
 
       <template #head(selected)="scope">
-        <b-button-group>
-          <button :title="allRows"
-                  class="button-select-rows"
-                  @click="selectAllRows">
-            <b-icon icon="check-square"
-                    v-if="selected.length === 0"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    font-scale="1"
-                    aria-hidden="false"></b-icon>
-            <b-icon icon="check-square-fill"
-                    v-else
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    font-scale="1"
-                    aria-hidden="false"></b-icon>
-          </button>
+        <button :title="allRows"
+                @click="selectAll"
+                class="button-select-rows">
+          ☑
+        </button>
+<!--        <b-icon icon="check-square"-->
+<!--                :title="allRows"-->
+<!--                type="btn"-->
+<!--                data-toggle="tooltip"-->
+<!--                @click="selectAll"-->
+<!--                v-if="selected.length === 0"-->
+<!--                data-placement="top"-->
+<!--                font-scale="1"-->
+<!--                aria-hidden="false"></b-icon>-->
+<!--        <b-icon icon="check-square-fill"-->
+<!--                v-else-->
+<!--                data-toggle="tooltip"-->
+<!--                type="btn"-->
+<!--                @click="selectAll"-->
+<!--                data-placement="top"-->
+<!--                font-scale="1"-->
+<!--                aria-hidden="false"></b-icon>-->
           <b-dropdown text="Поля"
                       variant="warning"
                       role="menu">
@@ -238,7 +250,6 @@
               </b-dropdown-text>
             </div>
           </b-dropdown>
-        </b-button-group>
       </template>
       <template #head(index)="scope">
         <div>Номер</div>
@@ -1772,13 +1783,16 @@
       },
       onRowSelected(items) {
         this.selected = items
+        this.$refs.selectableTable.sortBy = 'name'
         this.selectedItem = this.selected[0]
       },
-      selectAllRows() {
+      selectAll() {
         if (this.selected.length === 0) {
           this.$refs.selectableTable.selectAllRows()
+          this.$refs.selectableTable.sortBy = 'name'
         } else {
           this.selected = []
+          this.$refs.selectableTable.sortBy = 'name'
           this.$refs.selectableTable.clearSelected()
         }
       },
