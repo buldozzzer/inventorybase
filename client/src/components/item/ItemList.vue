@@ -650,7 +650,7 @@
       <template #cell(selected)="row">
         <b-container>
           <b-row class="text-center">
-            <b-col cols="4">
+            <b-col cols="3">
               <b-icon icon="check2"
                       v-show="row.rowSelected"
                       data-toggle="tooltip"
@@ -659,7 +659,20 @@
                       font-scale="1.2">
               </b-icon>
             </b-col>
-            <b-col cols="8">
+            <b-col v-if="row.item.components.length !== 0" cols="2">
+              <b-icon v-if="row.detailsShowing"
+                      icon="eye-slash"
+                      font-scale="1"
+                      @click="row.toggleDetails">
+              </b-icon>
+              <b-icon v-else
+                      icon="eye"
+                      font-scale="1"
+                      @click="row.toggleDetails">
+              </b-icon>
+            </b-col>
+            <b-col>
+
               <b-icon icon="pencil-square"
                       variant="primary"
                       data-toggle="tooltip"
@@ -1287,10 +1300,12 @@
           {
             key: "Наименование",
             show: true
-          }, {
-            key: "Компоненты",
-            show: false
-          }, {
+          },
+          // {
+          //   key: "Компоненты",
+          //   show: false
+          // },
+          {
             key: "Ответственный",
             show: true
           },
@@ -1397,11 +1412,13 @@
             label: "Наименование",
             sortable: true,
             class: 'text-center'
-          }, {
-            key: "components",
-            label: "Компоненты",
-            class: 'text-center'
-          }, {
+          },
+          // {
+          //   key: "components",
+          //   label: "Компоненты",
+          //   class: 'text-center'
+          // },
+          {
             key: "responsible",
             label: "Ответственный",
             sortable: true,
@@ -1992,9 +2009,12 @@
     text-align: justify;
   }
   #cell-selected{
-    max-width: 130px;
-    min-width: 130px;
+    max-width: 150px;
+    min-width: 150px;
     text-align: justify;
+  }
+  #cell-components{
+    visibility: hidden;
   }
   th.table-b-table-default{
     vertical-align: middle;
@@ -2008,11 +2028,5 @@
   /*}*/
   #firstRow{
     width: 98%;
-  }
-
-  /deep/ .table > tbody > tr.b-table-row-selected,
-  /deep/ .table > tbody > tr.b-table-row-selected > td,
-  /deep/ .table > tbody > tr.b-table-row-selected > th {
-    background-color: #91c27d;
   }
 </style>

@@ -25,6 +25,10 @@
                        :key="title['key']">
         {{ title['key'] }}
       </b-form-checkbox>
+      <b-form-checkbox @click="pushComponents = !pushComponents"
+                       v-model="pushComponents">
+        Компоненты
+      </b-form-checkbox>
     </b-form>
   </b-modal>
 </template>
@@ -36,6 +40,7 @@
     props: ["titles", "itemFields", "selected"],
     data(){
       return {
+        pushComponents: false,
         fields: []
       }
     },
@@ -57,6 +62,12 @@
             itemToExport[t] = this.selected[item][t.toString()]
           }
           payload.push(itemToExport)
+        }
+        debugger;
+        if (this.pushComponents) {
+          for (let i = 0; i < this.selected.length; i++) {
+            payload[i]['components'] = this.selected[i]['components']
+          }
         }
 
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/to_excel/`, {
