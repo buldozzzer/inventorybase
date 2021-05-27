@@ -1,6 +1,6 @@
 <template>
   <b-col class="mt-3">
-    <b-row id="firstRow">
+    <b-row id="firstRow" :href="'item-' + itemForm['_id']">
       <b-col :cols=9 id="colname">
         <h3 :title="itemForm.name">
           {{ itemForm.name }}

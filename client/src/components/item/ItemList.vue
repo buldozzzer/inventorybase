@@ -146,6 +146,7 @@
              bordered
              small
              id="table"
+             selected-variant="success"
              class="mt-3"
              ref="selectableTable"
              selectable
@@ -2007,5 +2008,11 @@
   /*}*/
   #firstRow{
     width: 98%;
+  }
+
+  /deep/ .table > tbody > tr.b-table-row-selected,
+  /deep/ .table > tbody > tr.b-table-row-selected > td,
+  /deep/ .table > tbody > tr.b-table-row-selected > th {
+    background-color: #91c27d;
   }
 </style>

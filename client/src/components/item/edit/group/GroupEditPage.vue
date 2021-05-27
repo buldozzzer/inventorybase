@@ -28,7 +28,9 @@
                           :key="item['_id']"
                           :href="'#item-' + item['_id']"
                           @click="scrollIntoView">
-                {{ item.name ? item.name : 'Материальная ценность ' + (item.index + 1) }}
+                <div>
+                  {{ item.name ? item.name : 'Материальная ценность ' + (item.index + 1) }}
+                </div>
               </b-nav-item>
             </b-nav>
           </b-navbar>
@@ -164,6 +166,7 @@
   #scrollspy-buttons{
     position:relative;
     overflow-y:scroll;
+    white-space: normal;
     width: 105%;
     overflow-x: scroll;
   }
