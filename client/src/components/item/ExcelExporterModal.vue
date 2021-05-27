@@ -63,7 +63,6 @@
           }
           payload.push(itemToExport)
         }
-        debugger;
         if (this.pushComponents) {
           for (let i = 0; i < this.selected.length; i++) {
             payload[i]['components'] = this.selected[i]['components']
