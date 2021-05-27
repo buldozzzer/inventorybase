@@ -95,6 +95,8 @@
           <div class="mt-3">
             {{ 'Всего: ' + items.length }}
             <br>
+            {{ 'Показано: ' + filteredItems }}
+            <br>
             {{ 'Выбрано: ' + selected.length }}
           </div>
         </b-col>
@@ -1550,6 +1552,7 @@
           condition: null,
           in_operation: null
         },
+        shownItems: null,
         fuseString: '',
         location_units: [],
         location_objects: [],
@@ -1600,6 +1603,13 @@
           return 'Выбрать все записи'
         else
           return 'Отменить выбор'
+      },
+      filteredItems: function() {
+        if(this.$refs.selectableTable != null) {
+          return this.$refs.selectableTable.filteredItems.length
+        } else {
+          return this.items
+        }
       },
       exportToExcelTitle: function(){
         if(this.selected.length === 0)
@@ -1821,7 +1831,6 @@
           !c || c === row.condition,
           !op || op === row.in_operation
         ].every(Boolean);
-
       },
       fuseSearch() {
         this.$search(this.fuseString, this.items,
@@ -1908,9 +1917,10 @@
       await this.fetchLocations()
       await this.fetchOTSS()
       await this.fetchUnits()
-      await bus.$on('changeFilters', (data) => this.filters = data)
       await bus.$on('updateList', () => this.fetchItems())
-      await bus.$on('cancel', () => {this.selected = []})
+      await bus.$on('cancel', () => {
+        this.selected = []
+      })
       await bus.$on('resetFilters', (data) => {
         this.filters = data;
         this.fuseString = ''

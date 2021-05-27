@@ -155,10 +155,6 @@
         this.$parent.$data.fuseString = this.fuseString
         bus.$emit('changeFuseString', this.fuseString)
       },
-      filters: function () {
-        this.$parent.$data.filters = this.filters
-        bus.$emit('changeFilters', this.filters)
-      }
     },
     async created(){
       await this.createEmployeeList()
