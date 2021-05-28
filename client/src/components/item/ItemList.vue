@@ -1263,36 +1263,50 @@
           {
             key: 'name',
             label: "Наименование",
+            class: 'text-center'
           },
           {
             key: "serial_n",
             label: "Серийный номер",
+            class: 'text-center'
           },
           {
             key: "category",
             label: "Категория",
+            class: 'text-center'
           },
           {
             key: "type",
             label: "Тип",
+            class: 'text-center'
           }, {
             key: "view",
             label: "Вид",
+            class: 'text-center'
           }, {
             key: "location",
             label: "Местонахождение",
+            class: 'text-center'
           },{
             key: "year",
             label: "Год выпуска",
+            class: 'text-center'
           },{
             key: "cost",
             label: "Цена",
+            class: 'text-center'
           },{
             key: "in_operation",
             label: "Используется",
+            class: 'text-center'
           },{
             key: "condition",
             label: "Состояние",
+            class: 'text-center'
+          },{
+            key: "user",
+            label: "Кому передано в пользование",
+            class: 'text-center'
           },
         ],
         titles: [
