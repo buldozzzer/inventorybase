@@ -1259,8 +1259,11 @@
         sortBy: 'name',
         showFilters: false,
         componentFields: [
-          'index',
           {
+            key: 'index',
+            label: "Номер",
+            class: 'text-center'
+          }, {
             key: 'name',
             label: "Наименование",
             class: 'text-center'
