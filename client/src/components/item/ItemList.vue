@@ -270,7 +270,8 @@
         </div>
         <b-modal ref="name" centered
                  title="Измените значение поля"
-                 size="sm" hide-footer
+                 size="xl"
+                 hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
@@ -297,7 +298,6 @@
         <b-modal ref="responsible"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -333,7 +333,6 @@
         <b-modal ref="user"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -369,7 +368,6 @@
         <b-modal ref="inventory_n"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -401,7 +399,6 @@
         <b-modal ref="in_operation"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -434,7 +431,6 @@
         <b-modal ref="in_operation"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -467,7 +463,6 @@
         <b-modal ref="condition"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -499,7 +494,7 @@
         </div>
         <b-modal ref="unit_from" centered
                  title="Измените значение поля"
-                 size="sm" hide-footer
+                 hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
@@ -530,7 +525,7 @@
         <b-modal ref="fault_document_requisites"
                  centered
                  title="Измените значение поля"
-                 size="sm" hide-footer
+                 hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
@@ -562,7 +557,7 @@
         <b-modal ref="number_of_receipt"
                  centered
                  title="Измените значение поля"
-                 size="sm" hide-footer
+                 hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
@@ -594,7 +589,7 @@
         <b-modal ref="requisites"
                  centered
                  title="Измените значение поля"
-                 size="sm" hide-footer
+                 hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
@@ -703,7 +698,7 @@
         <b-modal ref="otss_requisites"
                  centered
                  title="Измените значение поля"
-                 size="sm" hide-footer
+                 hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
@@ -735,7 +730,7 @@
         <b-modal ref="spsi_requisites"
                  centered
                  title="Измените значение поля"
-                 size="sm" hide-footer
+                 hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
@@ -767,7 +762,7 @@
         <b-modal ref="spsi_requisites"
                  centered
                  title="Измените значение поля"
-                 size="sm" hide-footer
+                 hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
@@ -799,7 +794,7 @@
         <b-modal ref="transfer_requisites"
                  centered
                  title="Измените значение поля"
-                 size="sm" hide-footer
+                 hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
@@ -831,7 +826,7 @@
         <b-modal ref="comment"
                  centered
                  title="Измените значение поля"
-                 size="sm" hide-footer
+                 hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
@@ -863,7 +858,7 @@
         <b-modal ref="date_of_receipt"
                  centered
                  title="Измените значение поля"
-                 size="sm" hide-footer
+                 hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
@@ -898,7 +893,7 @@
         <b-modal ref="transfer_date"
                  centered
                  title="Измените значение поля"
-                 size="sm" hide-footer
+                 hide-footer
                  hide-header-close>
           <b-form class="w-100">
             <div class="container mt-3">
@@ -940,7 +935,6 @@
         <b-modal ref="serial_n"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -972,7 +966,6 @@
         <b-modal ref="category"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -1005,7 +998,6 @@
         <b-modal ref="year"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -1038,7 +1030,6 @@
         <b-modal ref="cost"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -1071,7 +1062,6 @@
         <b-modal ref="location_object"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -1104,7 +1094,6 @@
         <b-modal ref="location_unit"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -1137,7 +1126,6 @@
         <b-modal ref="location_corpus"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
@@ -1170,7 +1158,6 @@
         <b-modal ref="location_cabinet"
                  centered
                  title="Измените значение поля"
-                 size="sm"
                  hide-footer
                  hide-header-close>
           <b-form class="w-100">
