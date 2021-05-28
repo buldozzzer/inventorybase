@@ -439,7 +439,7 @@
                 <b-form-select id="form-select"
                                type="text"
                                class="mt-3"
-                               :options="operation"
+                               :options="operations"
                                v-model="editableRow.in_operation"
                                :value="editableRow.in_operation">
                 </b-form-select>
@@ -1248,7 +1248,7 @@
         otss: [1, 2, 3, 'Не секретно'],
         units: [],
         conditions: ['Исправно', 'Неисправно'],
-        operation: ['Используется', 'Не используется'],
+        operations: ['Используется', 'Не используется'],
         m: '',
         editableRow: '',
         categories: [],
@@ -1280,10 +1280,6 @@
             label: "Тип",
             class: 'text-center'
           }, {
-            key: "view",
-            label: "Вид",
-            class: 'text-center'
-          }, {
             key: "location",
             label: "Местонахождение",
             class: 'text-center'
@@ -1297,7 +1293,7 @@
             class: 'text-center'
           },{
             key: "in_operation",
-            label: "Используется",
+            label: "Используется?",
             class: 'text-center'
           },{
             key: "condition",

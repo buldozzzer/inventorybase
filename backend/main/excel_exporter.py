@@ -47,10 +47,14 @@ def get_nested_components(payload: list):
         ('Компоненты', 'Наименование'): {},
         ('Компоненты', 'Серийный номер'): {}, ('Компоненты', 'Тип'): {},
         ('Компоненты', 'Категория'): {}, ('Компоненты', 'Год выпуска'): {},
-        ('Компоненты', 'Цена'): {}, ('Компоненты', 'Местонахождение'): {}
+        ('Компоненты', 'Цена'): {}, ('Компоненты', 'Местонахождение'): {},
+        ('Компоненты', 'Используется?'): {}, ('Компоненты', 'Состояние'): {},
+        ('Компоненты', 'Кому передано в пользование'): {},
     }
 
-    component_titles = ['name', 'serial_n', 'type', 'category', 'year', 'cost', 'location']
+    component_titles = ['name', 'serial_n', 'type',
+                        'category', 'year', 'cost',
+                        'location', 'in_operation', 'condition', 'user']
 
     for key, title in zip(component_titles, nested_components):
         component_cell = {}
