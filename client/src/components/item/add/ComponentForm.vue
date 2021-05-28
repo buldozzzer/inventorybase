@@ -218,7 +218,7 @@
             <b-form-select id="form-in_operation-input"
                            type="radio"
                            v-model="component.in_operation"
-                           :options="operation">
+                           :options="operations">
             </b-form-select>
           </b-form-group>
         </b-col>
@@ -249,7 +249,7 @@
         categories: [],
         types: [],
         conditions: ['Исправно', 'Неисправно'],
-        operation: ['Используется', 'Не используется'],
+        operations: ['Используется', 'Не используется'],
       }
     },
     computed:{

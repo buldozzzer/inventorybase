@@ -80,7 +80,9 @@
               unit: '',
               cabinet: ''
             },
-            user: ''
+            user: '',
+            in_operation: '',
+            condition: ''
           }
           this.components.push(componentForm)
           this.index += 1
@@ -104,7 +106,9 @@
             unit: '',
             cabinet: ''
           },
-          user: ''
+          user: '',
+          in_operation: '',
+          condition: ''
         }
         this.components.push(componentForm)
         this.index += 1
