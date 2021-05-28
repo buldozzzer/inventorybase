@@ -167,6 +167,30 @@
           </b-form-group>
         </b-col>
       </b-row>
+      <b-row>
+        <b-col cols="6">
+          <b-form-group id="form-in_operation-group"
+                        label="Использование:"
+                        label-for="form-in_operation-input">
+            <b-form-select id="form-in_operation-input"
+                           type="radio"
+                           v-model="component.in_operation"
+                           :options="operations">
+            </b-form-select>
+          </b-form-group>
+        </b-col>
+        <b-col cols="6">
+          <b-form-group id="form-condition-group"
+                        label="Состояние:"
+                        label-for="form-condition-input">
+            <b-form-select id="form-condition-input"
+                           type="radio"
+                           v-model="component.condition"
+                           :options="conditions">
+            </b-form-select>
+          </b-form-group>
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
@@ -178,6 +202,8 @@
     props:['component', 'employeeInitials'],
     data(){
       return{
+        conditions: ['Исправно', 'Неисправно'],
+        operations: ['Используется', 'Не используется'],
       }
     },
     methods:{
