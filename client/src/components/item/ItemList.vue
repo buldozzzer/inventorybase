@@ -614,21 +614,21 @@
         </b-modal>
       </template>
 
-      <template #cell(components)="row">
-        <b-icon v-if="row.detailsShowing"
-                icon="eye-slash"
-                font-scale="2"
-                @click="row.toggleDetails">
-        </b-icon>
-        <b-icon v-else
-                icon="eye"
-                font-scale="2"
-                @click="row.toggleDetails">
-        </b-icon>
-      </template>
+<!--      <template #cell(components)="row">-->
+<!--        <b-icon v-if="row.detailsShowing"-->
+<!--                icon="eye-slash"-->
+<!--                font-scale="2"-->
+<!--                @click="row.toggleDetails">-->
+<!--        </b-icon>-->
+<!--        <b-icon v-else-->
+<!--                icon="eye"-->
+<!--                font-scale="2"-->
+<!--                @click="row.toggleDetails">-->
+<!--        </b-icon>-->
+<!--      </template>-->
 
       <template #row-details="row">
-        <b-table resposive :items="row.item.components" :fields="componentFields">
+        <b-table :items="row.item.components" :fields="componentFields">
           <template #cell(index)="data">
             {{ data.index + 1 }}
           </template>
@@ -1281,6 +1281,18 @@
           }, {
             key: "location",
             label: "Местонахождение",
+          },{
+            key: "year",
+            label: "Год выпуска",
+          },{
+            key: "cost",
+            label: "Цена",
+          },{
+            key: "in_operation",
+            label: "Используется",
+          },{
+            key: "condition",
+            label: "Состояние",
           },
         ],
         titles: [
