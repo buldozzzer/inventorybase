@@ -148,7 +148,9 @@
             unit: '',
             cabinet: ''
           },
-          user: ''
+          user: '',
+          in_operation: '',
+          condition: ''
         }
         this.itemForm['components'].push(componentForm)
         this.index += 1
