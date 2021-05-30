@@ -311,7 +311,8 @@
                               :value="editableRow.responsible">
                 </b-form-input>
                 <datalist id="employee-list">
-                  <option v-for="employee in employeeInitials">{{ employee }}</option>
+                  <option v-for="employee in employeeInitials"
+                          :v-key="employee">{{ employee }}</option>
                 </datalist>
               </b-form-group>
               <div class="mt-3">
@@ -346,7 +347,8 @@
                               :value="editableRow.user">
                 </b-form-input>
                 <datalist id="user-list">
-                  <option v-for="employee in employeeInitials">{{ employee }}</option>
+                  <option v-for="employee in employeeInitials"
+                          :v-key="employee">{{ employee }}</option>
                 </datalist>
               </b-form-group>
               <div class="mt-3">
@@ -506,7 +508,8 @@
                             :value="editableRow.unit_from">
               </b-form-input>
               <datalist id="unit_from-list">
-                <option v-for="unit in units">{{ unit }}</option>
+                <option v-for="unit in units"
+                        :v-key="unit">>{{ unit }}</option>
               </datalist>
               <div class="mt-3">
                 <b-button variant="success" @click="onSubmit('unit_from', editableRow)">Изменить</b-button>

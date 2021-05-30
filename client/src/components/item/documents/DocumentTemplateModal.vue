@@ -1,84 +1,119 @@
 <template>
 <!--eslint-disable-->
-  <b-modal ref="documentTemplateModal"
-           id="document-template-modal"
-           title="Экспорт записей в шаблоны документов"
-           centered
-           size="xl"
-           @hidden="clear"
-           @show="clear"
-           hide-footer>
-    <b-container>
-      <b-row id="firstRow">
-        <b-col cols="7" align="center">
-          <b-input-group id="documents"
-                         label="Сохранённые шаблоны:"
-                         label-for="documents-input">
-            <b-form-select id="documents-input"
-                           v-model="doc">
-              <template #first>
-                <b-form-select-option :value="null"
-                                      disabled>
-                  Выберите документ из списка
-                </b-form-select-option>
-              </template>
-              <template v-for="doc in docs" :v-key="doc">
-                <b-form-select-option :value="doc" >
-                  <b-col style="text-align: left">
+  <div>
+    <b-modal ref="documentTemplateModal"
+             id="document-template-modal"
+             title="Экспорт записей в шаблоны документов"
+             centered
+             size="xl"
+             @hidden="clear"
+             @show="clear"
+             hide-footer>
+      <b-container>
+        <b-row id="firstRow">
+          <b-col cols="5" align="center">
+            <b-input-group id="documents"
+                           label="Сохранённые шаблоны:"
+                           label-for="documents-input">
+              <b-form-select id="documents-input"
+                             v-model="doc">
+                <template #first>
+                  <b-form-select-option :value="null"
+                                        disabled>
+                    Выберите документ из списка
+                  </b-form-select-option>
+                </template>
+                <template v-for="doc in docs" :v-key="doc">
+                  <b-form-select-option :value="doc">
+                    <b-col style="text-align: left">
+                      {{doc}}
+                    </b-col>
+                  </b-form-select-option>
+                </template>
+              </b-form-select>
+            </b-input-group>
+          </b-col>
+          <b-col align="center">
+            <b-button @click="showFieldFromModal('control')" variant="primary">
+              Упаврление шаблонами
+            </b-button>
+            <b-modal ref="control"
+                 centered
+                 title="Управление шаблонами"
+                 hide-footer>
+              <b-container>
+                <b-row v-for="doc in docs" :v-key="doc">
+                  <b-col cols="10">
                     {{doc}}
                   </b-col>
-                  <b-col style="text-align: left" type="btn">
-                    {{doc}}
+                  <b-col cols="1">
+                    <b-icon icon="trash"
+                            variant="danger"
+                            font-scale="1"
+                            type="button"
+                            data-toggle="tooltip"
+                            data-placement="top">
+                    </b-icon>
                   </b-col>
-                </b-form-select-option>
-              </template>
-            </b-form-select>
-          </b-input-group>
-        </b-col>
-        <b-col cols="4" align="center">
-          <label for="uploadFile" class="btn">Добавьте файл</label>
-          <input type="file"
-                 id="uploadFile"
-                 ref="uploadFile"
-                 style="visibility:hidden;"
-                 @change="getFileFromInputTag">
-        </b-col>
-        <b-col cols="1" align="center">
-          <b-icon icon="info-circle"
-                  data-toggle="tooltip"
-                  data-placement="top"
-                  font-scale="1"
-                  :title="info"
-                  aria-hidden="false"></b-icon>
-        </b-col>
-      </b-row>
-      <b-row class="mt-3">
-        <b-col class="ml-3">
-          <b-form-checkbox
-            :disabled="!doc"
-            id="checkbox-1"
-            v-model="merge_docs"
-            name="checkbox-1"
-            :value="true"
-            :unchecked-value="false">
-            Слить документы в один
-          </b-form-checkbox>
-        </b-col>
-      </b-row>
-      <b-row id="withoutItems" class="mt-3" v-if="selected.length === 0">
-        <div id="warn">
-          Выберите мат. ценности
-        </div>
-      </b-row>
-      <b-row v-else class="mt-3">
-        <b-button block
-                  @click="downloadFiles"
-                  variant="success">
-          Скачать шаблон
-        </b-button>
-      </b-row>
-    </b-container>
-  </b-modal>
+                  <b-col cols="1">
+                    <b-icon icon="download"
+                            variant="success"
+                            font-scale="1"
+                            type="button"
+                            data-toggle="tooltip"
+                            data-placement="top">
+                    </b-icon>
+                  </b-col>
+                </b-row>
+              </b-container>
+            </b-modal>
+          </b-col>
+
+          <b-col cols="3" align="center">
+            <label for="uploadFile" class="btn">Добавьте файл</label>
+            <input type="file"
+                   id="uploadFile"
+                   ref="uploadFile"
+                   style="visibility:hidden;"
+                   @change="getFileFromInputTag">
+          </b-col>
+          <b-col cols="1" align="center">
+            <b-icon icon="info-circle"
+                    data-toggle="tooltip"
+                    data-placement="top"
+                    font-scale="1"
+                    :title="info"
+                    aria-hidden="false"></b-icon>
+          </b-col>
+        </b-row>
+        <b-row class="mt-3">
+          <b-col class="ml-3">
+            <b-form-checkbox
+              :disabled="!doc"
+              id="checkbox-1"
+              v-model="merge_docs"
+              name="checkbox-1"
+              :value="true"
+              :unchecked-value="false">
+              Слить документы в один
+            </b-form-checkbox>
+          </b-col>
+        </b-row>
+        <b-row id="withoutItems" class="mt-3" v-if="selected.length === 0">
+          <div id="warn">
+            Выберите мат. ценности
+          </div>
+        </b-row>
+        <b-row v-else class="mt-3">
+          <b-button block
+                    @click="downloadFiles"
+                    variant="success">
+            Скачать шаблон
+          </b-button>
+        </b-row>
+      </b-container>
+    </b-modal>
+  </div>
 </template>
 
 <script>
@@ -160,7 +195,10 @@ export default {
             a.click();
             a.remove();
           });
-      }
+      },
+      showFieldFromModal(id) {
+        this.$refs[id].show()
+      },
     },
     watch:{
       file: function () {
