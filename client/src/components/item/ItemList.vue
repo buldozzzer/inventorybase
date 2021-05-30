@@ -91,7 +91,7 @@
             </b-dropdown>
           </b-button-group>
         </b-col>
-        <b-col cols="1">
+        <b-col cols="1" align="left">
           <div class="mt-3">
             {{ 'Всего: ' + items.length }}
             <br>

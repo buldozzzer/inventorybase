@@ -714,6 +714,19 @@ class TemplaterView(APIView):
                             .format(str(file))},
                             status=400)
 
+    def delete(self, request):
+        filename = request.data['filename']
+        full_path = os.getcwd() + '/media/templates/' + filename
+        os.remove(full_path)
+        return Response({'message': 'Файл {} успешно удален.'
+                        .format(str(filename))},
+                        status=204)
+
+    def put(self, request):
+        filename = request.data['filename']
+        full_path = os.getcwd() + '/media/templates/' + filename
+        return FileResponse(open(full_path, 'rb'), status=201)
+
 
 class DownloadDocsView(APIView):
     def post(self, request):
