@@ -123,12 +123,25 @@ class EmployeeView(APIView):
         result = []
         collection = mongo.get_conn()['main_employee']
         employees = collection.find()
+
         if collection:
             for document in employees:
                 document['_id'] = str(document['_id'])
                 result.append(document)
+        collection = mongo.get_conn()['main_item']
+        items = collection.find()
+        set_employees = set()
+        if collection:
+            for document in items:
+                set_employees.add(document['responsible'])
+                set_employees.add(document['user'])
+                for component in document['components']:
+                    set_employees.add(component['user'])
+            if '' in set_employees:
+                set_employees.remove('')
         return Response({
-            'employees': result
+            'employees': result,
+            'prep_employees': set_employees
         }, status=200)
 
     def post(self, request):

@@ -71,6 +71,7 @@
         location_objects: [],
         location_corpuses: [],
         location_cabinets: [],
+        prep_employees: [],
       }
     },
     methods: {
@@ -176,6 +177,7 @@
           mode: "cors",
         })
         this.employeeList = await response.json()
+        this.prep_employees = this.employeeList['prep_employees']
         this.employeeList = this.employeeList['employees']
         this.employeeToString()
       },

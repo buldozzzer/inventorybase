@@ -106,7 +106,7 @@
              v-show="showFilters === true"
              ref="filtersForList"
              :filters="filters"
-             :employee-initials="employeeInitials">
+             :prep_employees="prep_employees">
     </filters>
     <div style="position: absolute; z-index: 999; width: 30%; bottom: 0; right: 0">
       <b-alert
@@ -1591,6 +1591,7 @@
         location_objects: [],
         location_corpuses: [],
         location_cabinets: [],
+        prep_employees: [],
       };
     },
     computed: {
@@ -1769,6 +1770,7 @@
           mode: "cors",
         })
         this.employeeList = await response.json()
+        this.prep_employees = this.employeeList['prep_employees']
         this.employeeList = this.employeeList['employees']
         this.employeeToString()
       },
@@ -1847,6 +1849,7 @@
             this.employeeList[i].name[0] + '.' +
             this.employeeList[i].secname[0] + '.');
         }
+        this.prep_employees = new Set(this.prep_employees.concat(this.employeeInitials))
       },
       selectToEditItem(item) {
         this.$refs.editItemModal.itemForm = item
@@ -1937,6 +1940,7 @@
         if (this.showFilters) {
           let _height = document.documentElement.clientHeight * 0.81 - 117
           this.sliderValue = _height.toString() + 'px'
+          bus.$emit('fetchEmployees')
         } else {
           let _height = document.documentElement.clientHeight * 0.83
           this.sliderValue = _height.toString() + 'px'

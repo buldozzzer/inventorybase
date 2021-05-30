@@ -64,7 +64,7 @@
 
   export default {
     name: "Filters",
-    props: ['employeeInitials', 'filters'],
+    props: ['prep_employees', 'filters'],
     data() {
       return {
         otssCategories: [],
@@ -82,14 +82,9 @@
       }
     },
     methods:{
-      async createEmployeeList() {
-        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/employee/`,
-        {
-          mode: "cors",
-        })
-        let payload = await response.json()
-        payload = payload['employees']
-        this.employeeToString(payload)
+      createEmployeeList() {
+        this.employees = []
+        this.prep_employees.forEach(element => this.employees.push(element))
         this.employees.push({value: null, text: '-'})
       },
       employeeToString(payload) {
@@ -157,10 +152,10 @@
       },
     },
     async created(){
-      await this.createEmployeeList()
       await this.fetchOTSS()
       await this.fetchConditions()
-    }
+      await bus.$on('fetchEmployees', () => {this.createEmployeeList()})
+    },
   }
 </script>
 

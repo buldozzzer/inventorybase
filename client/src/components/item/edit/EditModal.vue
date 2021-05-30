@@ -119,13 +119,6 @@
       }
     },
     methods: {
-      async fetchEmployees() {
-        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/employee/`,
-        {
-          mode: "cors",
-        })
-        this.employeeList = await response.json()
-      },
       onReset(evt) {
         evt.preventDefault();
         this.$refs.editItemModal.hide();
