@@ -34,7 +34,9 @@
             </b-input-group>
           </b-col>
           <b-col align="center">
-            <b-button @click="showFieldFromModal('control')" variant="primary">
+            <b-button @click="showFieldFromModal('control')"
+                      :disabled="docs.length === 0"
+                      variant="primary">
               Упаврление шаблонами
             </b-button>
             <b-modal ref="control"
@@ -51,6 +53,7 @@
                             variant="danger"
                             font-scale="1"
                             type="button"
+                            @click="removeTemplate(doc)"
                             data-toggle="tooltip"
                             data-placement="top">
                     </b-icon>
@@ -60,6 +63,7 @@
                             variant="success"
                             font-scale="1"
                             type="button"
+                            @click="downloadTemplate(doc)"
                             data-toggle="tooltip"
                             data-placement="top">
                     </b-icon>
@@ -165,7 +169,7 @@ export default {
       getFileFromInputTag() {
         this.file = this.$refs.uploadFile.files[0]
       },
-      async downloadFiles(){
+      async downloadFiles() {
         let payload = {
           filename: this.doc,
           items: this.selected,
@@ -199,6 +203,43 @@ export default {
       showFieldFromModal(id) {
         this.$refs[id].show()
       },
+      async removeTemplate(filename){
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/docs/${filename}/`,
+            {
+              method: 'DELETE',
+              mode: 'cors',
+              headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+              },
+            });
+          if (response.status !== 204) {
+            alert(JSON.stringify(await response.json(), null, 2));
+          }
+          await this.fetchDocs()
+      },
+      async downloadTemplate(filename){
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/docs/${filename}/`,
+            {
+              method: 'PUT',
+              mode: 'cors',
+              headers: {
+                'Accept': 'application/json',
+                'Content-type': 'application/json'
+              },
+            }).then(response => response.blob())
+          .then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = filename;
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          });
+        await this.fetchDocs()
+      },
+
     },
     watch:{
       file: function () {

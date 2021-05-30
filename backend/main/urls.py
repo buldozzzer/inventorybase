@@ -48,7 +48,8 @@ urlpatterns = [
 
     path('recognizer/', views.RecognizerView.as_view(), name='recognizer'),
 
-    path('docs/', views.TemplaterView.as_view(), name='documents'),
+    path('docs/', views.TemplaterView.as_view(), name='g_a_documents'),
+    path('docs/<pk>/', views.TemplaterView.as_view(), name='d_r_documents'),
 
     path('download-docs/', views.DownloadDocsView.as_view(), name='download-documents'),
 
