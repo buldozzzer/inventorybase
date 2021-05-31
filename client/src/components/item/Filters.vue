@@ -37,11 +37,6 @@
             ></b-form-input>
           </b-form-group>
         </b-col>
-<!--        <b-col>-->
-<!--          <0/inventorybase/apiutton variant="dark" @click="changeString">-->
-<!--            Применить фильтры-->
-<!--          </0/inventorybase/apiutton>-->
-        <!--        </b-col>-->
         <b-col align="center">
           <b-icon icon="arrow-counterclockwise"
                   type="button"
@@ -52,6 +47,45 @@
                   font-scale="2"
                   aria-hidden="false"
                   @click="resetFilters"></b-icon>
+        </b-col>
+      </b-row>
+
+      <b-row class="text-center">
+        <b-col>
+          <b-form-group label="Кому передано:">
+            <b-form-select
+              v-model="filters.user"
+              :options="employees"/>
+          </b-form-group>
+        </b-col>
+        <b-col>
+          <b-form-group label="Объект:">
+            <b-form-select
+              v-model="filters.location_object"
+              :options="points[0]"/>
+          </b-form-group>
+        </b-col>
+        <b-col>
+          <b-form-group label="Подразделение:">
+            <b-form-select
+              v-model="filters.location_unit"
+              :options="points[3]"/>
+          </b-form-group>
+        </b-col>
+        <b-col>
+          <b-form-group label="Использование:">
+            <b-form-select
+              v-model="filters.location_corpus"
+              :options="points[2]"/>
+          </b-form-group>
+        </b-col>
+        <b-col>
+          <b-form-group label="По контексту:">
+            <b-form-select
+              v-model="filters.location_cabinet"
+              :options="points[1]">
+            </b-form-select>
+          </b-form-group>
         </b-col>
       </b-row>
     </b-container>
@@ -78,7 +112,30 @@
         //   in_operation: null,
         // },
         employees: [],
-        fuseString: ''
+        fuseString: '',
+        locations: []
+      }
+    },
+    computed:{
+      points: function () {
+        let objects = []
+        let cabinets = []
+        let corpuses = []
+        let units =[]
+
+        for(let i = 0; i < this.locations.length; ++i){
+          objects.push(this.locations[i]['object'])
+          cabinets.push(this.locations[i]['cabinet'])
+          corpuses.push(this.locations[i]['corpus'])
+          units.push(this.locations[i]['unit'])
+        }
+
+        objects.push({value: null, text: '-'})
+        cabinets.push({value: null, text: '-'})
+        corpuses.push({value: null, text: '-'})
+        units.push({value: null, text: '-'})
+
+        return [objects, cabinets, corpuses, units]
       }
     },
     methods:{
@@ -122,15 +179,9 @@
         this.conditions.push({text: '-', value: null})
       },
       resetFilters(){
-        this.filters = {
-          responsible: null,
-          otss_category: null,
-          condition: null,
-          in_operation: null
-        }
         this.$parent.$data.fuseString = ''
         this.fuseString =''
-        bus.$emit('resetFilters', this.filters)
+        bus.$emit('resetFilters')
       },
       async fetchUnits() {
         let tempArr = []
@@ -143,7 +194,15 @@
         for (let i = 0; i < tempArr.length; ++i){
           this.units.push(tempArr[i]['unit'])
         }
-      }
+      },
+      async fetchLocations() {
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/location/`,
+        {
+          mode: "cors",
+        })
+        this.locations = await response.json()
+        this.locations = this.locations['locations']
+      },
     },
     watch:{
       fuseString: function (){
@@ -154,6 +213,7 @@
     async created(){
       await this.fetchOTSS()
       await this.fetchConditions()
+      await this.fetchLocations()
       await bus.$on('fetchEmployees', () => {this.createEmployeeList()})
     },
   }

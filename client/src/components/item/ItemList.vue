@@ -631,7 +631,9 @@
 <!--      </template>-->
 
       <template #row-details="row">
-        <b-table :items="row.item.components" :fields="componentFields">
+        <b-table :items="row.item.components"
+                 :filter-function="filterFunction"
+                 :fields="componentFields">
           <template #cell(index)="data">
             {{ data.index + 1 }}
           </template>
@@ -1584,7 +1586,12 @@
           responsible: null,
           otss_category: null,
           condition: null,
-          in_operation: null
+          in_operation: null,
+          user: null,
+          location_object: null,
+          location_cabinet: null,
+          location_corpus: null,
+          location_unit:null
         },
         shownItems: null,
         fuseString: '',
@@ -1858,15 +1865,25 @@
       filterFunction(row, val) {
         const {
           responsible: r,
+          user: u,
           otss_category: o,
           condition: c,
-          in_operation: op
+          in_operation: op,
+          location_object: obj,
+          location_cabinet: cab,
+          clocation_corpus: corp,
+          location_unit: unit
         } = val;
         return [
           !r || r === row.responsible,
           !o || o === row.otss_category,
           !c || c === row.condition,
-          !op || op === row.in_operation
+          !u || u === row.user,
+          !op || op === row.in_operation,
+          !obj || obj === row.location_object,
+          !cab || cab === row.location_cabinet,
+          !corp || corp === row.location_corpus,
+          !unit || unit === row.location_unit,
         ].every(Boolean);
       },
       fuseSearch() {
@@ -1959,8 +1976,10 @@
       await bus.$on('cancel', () => {
         this.selected = []
       })
-      await bus.$on('resetFilters', (data) => {
-        this.filters = data;
+      await bus.$on('resetFilters', () => {
+        for (let key in this.filters) {
+          this.filters[key] = null;
+        }
         this.fuseString = ''
       })
       await bus.$on('updateDocList', () => { this.showAlert() })
