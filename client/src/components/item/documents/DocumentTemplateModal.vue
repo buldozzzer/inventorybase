@@ -16,18 +16,12 @@
                            label="Сохранённые шаблоны:"
                            label-for="documents-input">
               <b-form-select id="documents-input"
+                             :options="docs"
                              v-model="doc">
                 <template #first>
                   <b-form-select-option :value="null"
                                         disabled>
                     Выберите документ из списка
-                  </b-form-select-option>
-                </template>
-                <template v-for="doc in docs" :v-key="doc">
-                  <b-form-select-option :value="doc">
-                    <b-col style="text-align: left">
-                      {{doc}}
-                    </b-col>
                   </b-form-select-option>
                 </template>
               </b-form-select>
@@ -44,31 +38,33 @@
                  title="Управление шаблонами"
                  hide-footer>
               <b-container>
-                <b-row v-for="doc in docs" :v-key="doc">
-                  <b-col cols="10">
-                    {{doc}}
-                  </b-col>
-                  <b-col cols="1">
-                    <b-icon icon="trash"
-                            variant="danger"
-                            font-scale="1"
-                            type="button"
-                            @click="removeTemplate(doc)"
-                            data-toggle="tooltip"
-                            data-placement="top">
-                    </b-icon>
-                  </b-col>
-                  <b-col cols="1">
-                    <b-icon icon="download"
-                            variant="success"
-                            font-scale="1"
-                            type="button"
-                            @click="downloadTemplate(doc)"
-                            data-toggle="tooltip"
-                            data-placement="top">
-                    </b-icon>
-                  </b-col>
-                </b-row>
+                <div v-for="doc in docs" :v-key="doc">
+                  <b-row>
+                    <b-col cols="10">
+                      {{doc}}
+                    </b-col>
+                    <b-col cols="1">
+                      <b-icon icon="trash"
+                              variant="danger"
+                              font-scale="1"
+                              type="button"
+                              @click="removeTemplate(doc)"
+                              data-toggle="tooltip"
+                              data-placement="top">
+                      </b-icon>
+                    </b-col>
+                    <b-col cols="1">
+                      <b-icon icon="download"
+                              variant="success"
+                              font-scale="1"
+                              type="button"
+                              @click="downloadTemplate(doc)"
+                              data-toggle="tooltip"
+                              data-placement="top">
+                      </b-icon>
+                    </b-col>
+                  </b-row>
+                </div>
               </b-container>
             </b-modal>
           </b-col>
