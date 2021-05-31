@@ -108,7 +108,7 @@
              :filters="filters"
              :prep_employees="prep_employees">
     </filters>
-    <div style="position: absolute; z-index: 999; width: 30%; bottom: 0; right: 0">
+    <div style="position: absolute; z-index: 9999; width: 30%; bottom: 0; right: 0">
       <b-alert
         :show="dismissCountDown"
         dismissible
@@ -1212,7 +1212,8 @@
                           :titles="titles"
                           :selected="selected"
                           :item-fields="itemFields"/>
-    <document-template-modal :selected="selected"/>
+    <document-template-modal :selected="selected"
+                             :show-alert="showAlert"/>
   </div>
 </template>
 
@@ -1962,7 +1963,7 @@
         this.filters = data;
         this.fuseString = ''
       })
-
+      await bus.$on('updateDocList', () => { this.showAlert() })
     },
     mounted() {
       let _height = document.documentElement.clientHeight * 0.83

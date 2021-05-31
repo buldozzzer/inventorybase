@@ -27,6 +27,14 @@
               </b-form-select>
             </b-input-group>
           </b-col>
+          <b-col cols="3" align="center">
+            <label for="uploadFile" class="btn">Добавьте файл</label>
+            <input type="file"
+                   id="uploadFile"
+                   ref="uploadFile"
+                   style="visibility:hidden;"
+                   @change="getFileFromInputTag">
+          </b-col>
           <b-col align="center">
             <b-button @click="showFieldFromModal('control')"
                       :disabled="docs.length === 0"
@@ -68,22 +76,10 @@
               </b-container>
             </b-modal>
           </b-col>
-
-          <b-col cols="3" align="center">
-            <label for="uploadFile" class="btn">Добавьте файл</label>
-            <input type="file"
-                   id="uploadFile"
-                   ref="uploadFile"
-                   style="visibility:hidden;"
-                   @change="getFileFromInputTag">
-          </b-col>
           <b-col cols="1" align="center">
-            <b-icon icon="info-circle"
-                    data-toggle="tooltip"
-                    data-placement="top"
-                    font-scale="1"
-                    :title="info"
-                    aria-hidden="false"></b-icon>
+            <b-dropdown id="dropdown-info" text="Шаблоны" variant="light">
+              <b-dropdown-text class="align-left">{{info}}</b-dropdown-text>
+            </b-dropdown>
           </b-col>
         </b-row>
         <b-row class="mt-3">
@@ -99,7 +95,11 @@
             </b-form-checkbox>
           </b-col>
         </b-row>
-        <b-row id="withoutItems" class="mt-3" v-if="selected.length === 0">
+        <b-row id="withoutItems"
+               class="mt-3"
+               @click="$bvModal.hide('document-template-modal')"
+               v-if="selected.length === 0"
+               type="button">
           <div id="warn">
             Выберите мат. ценности
           </div>
@@ -122,14 +122,14 @@
 
 export default {
     name: "DocumentTemplateModal",
-    props: ["selected"],
+    props: ["selected", "showAlert"],
     data(){
       return {
         docs: [],
         doc: null,
         file: null,
         merge_docs: false,
-        info: 'Допустимые шаблоны:\n'
+        info: 'Допустимые шаблоны:\n',
       }
     },
     methods: {
@@ -211,8 +211,9 @@ export default {
             });
           if (response.status !== 204) {
             alert(JSON.stringify(await response.json(), null, 2));
+          } else {
+            bus.$emit('updateDocList')
           }
-          await this.fetchDocs()
       },
       async downloadTemplate(filename){
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/docs/${filename}/`,
@@ -265,5 +266,11 @@ export default {
   }
   #firstRow{
     max-height: 39px;
+  }
+
+  #dropdown-info {
+    color: #000;
+    background-color: #fff;
+    border-color: #fff;
   }
 </style>
