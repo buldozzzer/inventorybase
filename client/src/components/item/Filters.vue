@@ -80,12 +80,15 @@
           </b-form-group>
         </b-col>
         <b-col>
-          <b-form-group label="По контексту:">
+          <b-form-group label="Кабинет:">
             <b-form-select
               v-model="filters.location_cabinet"
               :options="points[1]">
             </b-form-select>
           </b-form-group>
+        </b-col>
+        <b-col>
+
         </b-col>
       </b-row>
     </b-container>
