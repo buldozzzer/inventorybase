@@ -14,8 +14,7 @@ RUN apt-get update
 RUN apt-get install ffmpeg libsm6 libxext6  -y
 RUN pip install -r requirements.txt
 COPY ./backend/ /app/
-COPY ./mongo_client.py /usr/local/lib/python3.8/dist-packages/pymongo/mongo_client.py
-COPY ./mongo_client.py /usr/local/lib/python3.9/dist-packages/pymongo/mongo_client.py
+COPY ./mongo_client.py /usr/local/lib/python3.9/site-packages/pymongo/mongo_client.py
 COPY ./mongo_client.py /app/venv/lib/python3.8/site-packages/pymongo/mongo_client.py
 COPY --from=static /app/dist/inventorybase/static/css /app/inventorybase/static/css
 COPY --from=static /app/dist/inventorybase/static/js /app/inventorybase/static/js

@@ -87,7 +87,7 @@ class MongoClient(common.BaseObject):
     resources related to this, including background threads for monitoring,
     and connection pools.
     """
-    HOST = "items_db"
+    HOST = 'items_db'
     PORT = 27017
     # Define order to retrieve options from ClientOptions for __repr__.
     # No host/port; these are retrieved from TopologySettings.

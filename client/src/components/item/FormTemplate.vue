@@ -406,6 +406,9 @@
         let tempArr = []
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/otss/`,
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         tempArr = await response.json()
@@ -418,6 +421,9 @@
         let tempArr = []
         const response = await fetch('http://localhost:8000/inventorybase/api/v1/condition/',
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         tempArr = await response.json()
@@ -430,6 +436,9 @@
         let tempArr = []
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/unit/`,
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         tempArr = await response.json()

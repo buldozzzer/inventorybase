@@ -159,6 +159,9 @@
         let categories = {}
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/otss/`,
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         categories = await response.json()
@@ -172,6 +175,9 @@
         let tempArr = []
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/condition/`,
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         tempArr = await response.json()
@@ -190,6 +196,9 @@
         let tempArr = []
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/unit/`,
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         tempArr = await response.json()
@@ -201,6 +210,9 @@
       async fetchLocations() {
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/location/`,
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         this.locations = await response.json()

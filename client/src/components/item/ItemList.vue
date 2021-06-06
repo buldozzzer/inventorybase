@@ -1711,6 +1711,9 @@
       async fetchOTSS() {
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/otss/`,
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         this.otss = await response.json()
@@ -1724,6 +1727,9 @@
       async fetchLocations() {
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/location/`,
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         let temp = await response.json()
@@ -1746,6 +1752,9 @@
       async fetchCategories() {
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/category/`,
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         this.categories = await response.json()
@@ -1759,6 +1768,9 @@
       async fetchUnits() {
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/unit/`,
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         this.units = await response.json()
@@ -1775,6 +1787,9 @@
       async fetchEmployees() {
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/employee/`,
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         this.employeeList = await response.json()
@@ -1785,6 +1800,9 @@
       async fetchItems() {
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/item/`,
         {
+          headers: {
+            'Accept': 'application/json',
+          },
           mode: "cors",
         })
         this.items = await response.json()
