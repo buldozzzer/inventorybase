@@ -34,7 +34,7 @@
 
 Открытие контейнера в интерактивном режиме:
 - ```
-  docker-compose exec mongo bash
+  docker-compose exec mongo /bin/bash
   ```
 
 - ```
@@ -45,4 +45,18 @@
   exit
   ```
 
-http://localhost:8080/#/items — клиент
+http://localhost:8000/inventorybase/#/items — клиент
+
+### Запуск скрипта импорта данных в базу
+
+Скрипт на вход принимает .xlsx-файл, содержащий один лист информации
+собирание 
+- ```
+  cd import_script
+  ```
+- ```
+  docker build -t import .
+  ```
+- ```
+  docker run -v /путь/к/.xlsx-файлу:/input --network=inventorybase_default import insert_data /input
+  ```  
