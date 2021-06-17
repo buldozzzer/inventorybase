@@ -11,7 +11,7 @@ ENV MONGO_HOST=items_db
 WORKDIR /app
 COPY ./backend/requirements.txt /app/
 RUN apt-get update
-RUN apt-get install ffmpeg libsm6 libxext6  -y
+RUN apt-get install ffmpeg libsm6 libxext6 libdmtx0b -y
 RUN pip install -r requirements.txt
 COPY ./backend/ /app/
 COPY ./mongo_client.py /usr/local/lib/python3.9/site-packages/pymongo/mongo_client.py
