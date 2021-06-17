@@ -214,15 +214,3 @@ def combine_word_documents(files):
     merged_document.save('Документы.docx')
     os.chdir('../..')
     return True
-
-
-def del_all():
-    """
-    Удаляет все лишние файлы после завершения работы
-    :return:
-    """
-    for file in Path(os.getcwd() + '/media/generated/').glob('*.docx'):
-        try:
-            file.unlink()
-        except OSError as error:
-            print(error)

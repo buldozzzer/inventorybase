@@ -53,4 +53,6 @@ urlpatterns = [
 
     path('download-docs/', views.DownloadDocsView.as_view(), name='download-documents'),
 
+    path('download-codes/', views.EncodeView.as_view(), name='download-code'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

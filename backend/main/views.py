@@ -648,7 +648,7 @@ class ExcelExporterView(APIView):
         """
         payload = request.data
         result = excel_exporter.export_to_excel(payload=payload)
-        excel_exporter.del_all()
+        utils.del_all('/media/generated/', '*.xlsx')
         return FileResponse(open(result, 'rb'), status=201)
 
 
@@ -749,5 +749,14 @@ class DownloadDocsView(APIView):
         result = templater.final_replacement(os.getcwd() + '/media/templates/' + filename,
                                              items,
                                              merge_doc)
-        templater.del_all()
+        utils.del_all('/media/generated/', '*.docx')
+        return FileResponse(open(result, 'rb'), status=201)
+
+
+class EncodeView(APIView):
+    def post(self, request):
+        path_to_doc = os.getcwd() + '/media/Коды.docx'
+        os.remove(path_to_doc)
+        result = utils.create_data_matrix(request.data['payload'])
+        utils.del_all('/media/codes/', '*.png')
         return FileResponse(open(result, 'rb'), status=201)

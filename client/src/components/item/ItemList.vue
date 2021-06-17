@@ -101,6 +101,16 @@
           </div>
         </b-col>
       </b-row>
+      <b-row>
+        <b-col align="center">
+          <b-button variant="light"
+                    @click="encode"
+                    :disabled="selected.length === 0"
+                    class="mt-3">
+            Сгенерировать коды
+          </b-button>
+        </b-col>
+      </b-row>
     </div>
     <filters class="mt-3"
              v-show="showFilters === true"
@@ -1966,7 +1976,40 @@
         this.fetchItems()
 
       },
-
+      async encode(){
+        let payload = { payload: []}
+        for(let i = 0; i < this.selected.length; i++){
+          let item = {
+            inventory_n: this.selected[i].inventory_n,
+            serial_n: this.selected[i].serial_n
+          }
+          payload.payload.push(item)
+        }
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/download-codes/`,
+          {
+            method: 'POST',
+            mode: "cors",
+            body: JSON.stringify(payload),
+            headers: {
+              'Accept': 'application/json',
+              'Content-type': 'application/json'
+            },
+          }).then(response => response.blob())
+          .then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            let today = new Date();
+            let dd = String(today.getDate()).padStart(2, '0');
+            let mm = String(today.getMonth() + 1).padStart(2, '0');
+            let yyyy = today.getFullYear();
+            today = mm + '-' + dd + '-' + yyyy;
+            a.download = "Коды.docx";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          });
+      }
     },
     watch:{
       fuseString: function () {
