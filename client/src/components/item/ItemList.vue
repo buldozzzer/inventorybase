@@ -669,20 +669,21 @@
                       font-scale="1.2">
               </b-icon>
             </b-col>
-            <b-col v-if="row.item.components.length !== 0" cols="2">
-              <b-icon v-if="row.detailsShowing"
-                      icon="eye-slash"
-                      font-scale="1"
-                      @click="row.toggleDetails">
-              </b-icon>
-              <b-icon v-else
-                      icon="eye"
-                      font-scale="1"
-                      @click="row.toggleDetails">
-              </b-icon>
+            <b-col cols="2">
+              <div v-show="row.item.components.length !== 0">
+                <b-icon v-if="row.detailsShowing"
+                        icon="eye-slash"
+                        font-scale="1"
+                        @click="row.toggleDetails">
+                </b-icon>
+                <b-icon v-else
+                        icon="eye"
+                        font-scale="1"
+                        @click="row.toggleDetails">
+                </b-icon>
+              </div>
             </b-col>
             <b-col>
-
               <b-icon icon="pencil-square"
                       variant="primary"
                       data-toggle="tooltip"
