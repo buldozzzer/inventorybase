@@ -96,7 +96,7 @@ DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'NAME': 'ItemsDB',
-        'HOST': 'localhost',
+        'HOST': os.getenv('MONGO_HOST'),
         'PORT': 27017
     }
 }

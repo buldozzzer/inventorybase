@@ -66,9 +66,8 @@ def get_nested_components(payload: list):
     for sample in nested_components[('Компоненты', 'Местонахождение')]:
         nested_components[('Компоненты', 'Местонахождение')][sample] = \
             'Объект: ' + nested_components[('Компоненты', 'Местонахождение')][sample]['object'] + \
-            ',\nкорпус: ' + nested_components[('Компоненты', 'Местонахождение')][sample]['object'] + \
-            ',\nкабинет: ' + nested_components[('Компоненты', 'Местонахождение')][sample]['object'] + \
-            ',\nподразделние: ' + nested_components[('Компоненты', 'Местонахождение')][sample]['object']
+            ',\nкорпус: ' + nested_components[('Компоненты', 'Местонахождение')][sample]['corpus'] + \
+            ',\nкабинет: ' + nested_components[('Компоненты', 'Местонахождение')][sample]['cabinet']
 
     return nested_components
 

@@ -163,10 +163,27 @@
              :sort-by.sync="sortBy"
              :sticky-header="sliderValue"
              :items="items"
+             primary-key="index"
              :fields="fields"
              :filter-function="filterFunction"
              :filter="filters"
              @row-selected="onRowSelected">
+<!--      <b-table striped hover-->
+<!--             bordered-->
+<!--             small-->
+<!--             id="table"-->
+<!--             selected-variant="success"-->
+<!--             class="mt-3"-->
+<!--             ref="selectableTable"-->
+<!--             selectable-->
+<!--             :sort-by.sync="sortBy"-->
+<!--             :sticky-header="sliderValue"-->
+<!--             :items="items"-->
+<!--             primary-key="index"-->
+<!--             :fields="fields"-->
+<!--             :filter-function="filterFunction"-->
+<!--             :filter="filters"-->
+<!--             @row-selected="onRowSelected">-->
       <template #table-colgroup="scope">
         <col
           v-for="field in scope.fields"
