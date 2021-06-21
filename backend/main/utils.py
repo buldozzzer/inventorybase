@@ -36,13 +36,12 @@ def create_data_matrix(payload: list):
         img = Image.frombytes("RGB", (encoded.width, encoded.height), encoded.pixels)
         img.save(path_to_image)
         scale_image(path_to_image, path_to_resized_image, 50, 50)
-        if not os.path.exists(path_to_doc):
+        if not os.path.isfile(path_to_doc):
             document = Document()
             document.save(path_to_doc)
-        else:
-            document = Document(path_to_doc)
-            document.add_picture(path_to_resized_image)
-            document.save(path_to_doc)
+        document = Document(path_to_doc)
+        document.add_picture(path_to_resized_image)
+        document.save(path_to_doc)
     return path_to_doc
 
 

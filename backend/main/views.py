@@ -756,7 +756,8 @@ class DownloadDocsView(APIView):
 class EncodeView(APIView):
     def post(self, request):
         path_to_doc = os.getcwd() + '/media/Коды.docx'
-        os.remove(path_to_doc)
+        if os.path.isfile(path_to_doc):
+            os.remove(path_to_doc)
         result = utils.create_data_matrix(request.data['payload'])
         utils.del_all('/media/codes/', '*.png')
         return FileResponse(open(result, 'rb'), status=201)

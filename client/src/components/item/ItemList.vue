@@ -88,6 +88,14 @@
                         aria-hidden="false"></b-icon>
                 Шаблоны
               </b-dropdown-item>
+              <b-dropdown-item :disabled="selected.length === 0" @click="encode">
+                <b-icon icon="upc-scan"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        font-scale="1"
+                        aria-hidden="false"></b-icon>
+                Сгенерировать коды
+              </b-dropdown-item>
             </b-dropdown>
           </b-button-group>
         </b-col>
@@ -99,16 +107,6 @@
             <br>
             {{ 'Выбрано: ' + selected.length }}
           </div>
-        </b-col>
-      </b-row>
-      <b-row>
-        <b-col align="center">
-          <b-button variant="light"
-                    @click="encode"
-                    :disabled="selected.length === 0"
-                    class="mt-3">
-            Сгенерировать коды
-          </b-button>
         </b-col>
       </b-row>
     </div>
@@ -717,7 +715,15 @@
                       data-placement="top"
                       title="Удалить"
                       v-b-modal.confirm-modal
-                      @click="selectToRemoveItem(row.item)">
+                      @click="selectItemToRemove(row.item)">
+              </b-icon>
+              <b-icon icon="upc-scan"
+                      variant="dark"
+                      font-scale="1"
+                      data-toggle="tooltip"
+                      data-placement="top"
+                      title="Сгенерировать DM-код"
+                      @click="encodeSingleItem(row.item)">
               </b-icon>
             </b-col>
           </b-row>
@@ -1836,8 +1842,35 @@
         this.items = await response.json()
         this.items = this.items['items']
       },
-      async selectToRemoveItem(item) {
+      selectItemToRemove(item) {
         this.selected.push(item)
+      },
+      async encodeSingleItem(item) {
+        let payload = {payload: []}
+        let data = {
+          inventory_n: item.inventory_n,
+          serial_n: item.serial_n
+        }
+        payload.payload.push(data)
+        const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/download-codes/`,
+          {
+            method: 'POST',
+            mode: "cors",
+            body: JSON.stringify(payload),
+            headers: {
+              'Accept': 'application/json',
+              'Content-type': 'application/json'
+            },
+          }).then(response => response.blob())
+          .then(blob => {
+            let url = window.URL.createObjectURL(blob);
+            let a = document.createElement('a');
+            a.href = url;
+            a.download = "Коды.docx";
+            document.body.appendChild(a);
+            a.click();
+            a.remove();
+          });
       },
       async removeItems(selectedItems) {
         for (let item of selectedItems) {
@@ -2127,8 +2160,8 @@
     text-align: justify;
   }
   #cell-selected{
-    max-width: 150px;
-    min-width: 150px;
+    max-width: 170px;
+    min-width: 170px;
     text-align: justify;
   }
   #cell-components{
