@@ -27,9 +27,10 @@ def prepare_data(item):
 
 def create_data_matrix(payload: list):
     path_to_doc = os.getcwd() + '/media/Коды.docx'
+    row_num = 0
     for item in payload:
-        data_to_encode = "inv:" + item['inventory_n'] + \
-                         " ser:" + item['serial_n']
+        data_to_encode = "Инв:" + item['inventory_n'] + \
+                         " Сер:" + item['serial_n']
         path_to_image = os.getcwd() + '/media/codes/' + data_to_encode + '.png'
         path_to_resized_image = os.getcwd() + '/media/codes/' + data_to_encode + '_resize.png'
         encoded = encode(data_to_encode.encode("utf8"))
@@ -40,7 +41,14 @@ def create_data_matrix(payload: list):
             document = Document()
             document.save(path_to_doc)
         document = Document(path_to_doc)
-        document.add_picture(path_to_resized_image)
+        tbl = document.add_table(rows=1, cols=1)
+        row_cells = tbl.add_row().cells
+        paragraph = row_cells[0].paragraphs[0]
+        run = paragraph.add_run()
+        run.add_picture(path_to_resized_image)
+        paragraph = row_cells[0].paragraphs[0]
+        run = paragraph.add_run()
+        run.text = data_to_encode
         document.save(path_to_doc)
     return path_to_doc
 
