@@ -53,8 +53,6 @@ def scale_image(input_image_path,
                 ):
     original_image = Image.open(input_image_path)
     w, h = original_image.size
-    print('The original image size is {wide} wide x {height} '
-          'high'.format(wide=w, height=h))
 
     if width and height:
         max_size = (width, height)
@@ -71,8 +69,6 @@ def scale_image(input_image_path,
 
     scaled_image = Image.open(output_image_path)
     width, height = scaled_image.size
-    print('The scaled image size is {wide} wide x {height} '
-          'high'.format(wide=width, height=height))
 
 
 def del_all(dir: str, ext: str):

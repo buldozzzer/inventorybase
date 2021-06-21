@@ -73,8 +73,8 @@ def find_docx_templates(doc):
         print(error)
         # log.exception('Error with {}'.format(str(error)))
 
-    sorted(list(templates))
-    return templates
+    return sorted(list(templates))
+    # return templates
 
 
 def get_docx_templates(filename):
@@ -199,6 +199,7 @@ def combine_word_documents(files):
     :return:
     """
     merged_document = docx.Document()
+    project_dir = os.getcwd()
     os.chdir(os.getcwd() + '/media/generated/')
     for index, file in enumerate(files):
         if index == 0:
@@ -212,5 +213,26 @@ def combine_word_documents(files):
                 merged_document.element.body.append(element)
     # del_all()
     merged_document.save('Документы.docx')
-    os.chdir('../..')
+    os.chdir(project_dir)
     return True
+
+# def combine_word_documents(files):
+#     """
+#     Метод для слияния файлов в один
+#     :param files: Пути к документам в папке
+#     :return:
+#     """
+#     merged_document = docx.Document()
+#     for index, file in enumerate(files):
+#         if index == 0:
+#             merged_document = docx.Document(os.getcwd() + '/media/generated/' + file)
+#             merged_document.add_page_break()
+#         else:
+#             sub_doc = docx.Document(os.getcwd() + '/media/generated/' + file)
+#             if index < len(files) - 1:
+#                 sub_doc.add_page_break()
+#             for element in sub_doc.element.body:
+#                 merged_document.element.body.append(element)
+#     # del_all()
+#     merged_document.save(os.getcwd() + '/media/generated/Документы.docx')
+#     return True

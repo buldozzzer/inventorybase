@@ -1,23 +1,14 @@
-import json
 import os
-import unittest
 
+import docx
 from bson import ObjectId
 from pymongo import MongoClient
 from rest_framework import status
 from rest_framework.test import APITestCase
+import datetime as dt
 
-from . import mongo, utils
 from . import excel_exporter as ee
-
-
-class TestConnection(unittest.TestCase):
-    def setUp(self):
-        self.connection = mongo.get_conn()
-
-    def test_connection(self):
-        # self.assertEqual(self.connection, MongoClient('localhost', 27017)['ItemsDB'])
-        self.assertEqual(self.connection, MongoClient(os.getenv('MONGO_HOST'), 27017)['ItemsDB'])
+from . import mongo, utils, templater
 
 
 class EmployeeTests(APITestCase):
@@ -589,6 +580,14 @@ class ExcelExporterTests(APITestCase):
     def test_export_to_excel(self):
         self.assertNotEqual(None, ee.export_to_excel(self.payload))
 
+    def test_prep_data(self):
+        before = [{
+            'components': [],
+            '_id': 'to_pop',
+            'name': 'name'
+        }]
+        self.assertEqual(True, ee.prep_data(before))
+
 
 class TestConnectionTests(APITestCase):
 
@@ -596,7 +595,8 @@ class TestConnectionTests(APITestCase):
         response = self.client.get('/inventorybase/api/v1/test/', format='json')
         self.assertEqual(response.status_code, status.HTTP_200_OK)
 
-class UtilsTests(unittest.TestCase):
+
+class UtilsTests(APITestCase):
     def setUp(self):
         self.item = {
                 'name': '           name_1          ',
@@ -656,9 +656,7 @@ class UtilsTests(unittest.TestCase):
             }
         self.data_to_encode = [{'inventory_n': 'blablabla',
                                    'serial_n': 'blablabla'}]
-
-    def test_strip(self):
-        final_item = {
+        self.final_item = {
                 'name': 'name_1',
                 'user': 'test_user',
                 'responsible': 'test_responsible',
@@ -714,7 +712,9 @@ class UtilsTests(unittest.TestCase):
                 'comment': 'test_comment',
                 'last_check': 'test_last_check',
             }
-        self.assertEqual(final_item, utils.prepare_data(self.item))
+
+    def test_strip(self):
+        self.assertEqual(self.final_item, utils.prepare_data(self.item))
 
     def test_datamatrix_output_docx_file(self):
         utils.create_data_matrix(self.data_to_encode)
@@ -722,10 +722,122 @@ class UtilsTests(unittest.TestCase):
 
     def test_datamatrix_generated_png_file(self):
         utils.create_data_matrix(self.data_to_encode)
+        work_dir = os.getcwd()
+        if work_dir.find('generated') != -1:
+            work_dir = work_dir[:work_dir.find('generated')]
+            print(work_dir)
         self.assertEqual(True, os.path.isfile(os.getcwd() + '/media/codes/inv:blablabla ser:blablabla.png'))
 
-    def delete_all_files(self):
+    def test_delete_all_files(self):
         utils.create_data_matrix(self.data_to_encode)
         utils.del_all('/media/codes/', '*.png')
         self.assertEqual([], os.listdir(os.getcwd() + '/media/codes/'))
 
+    def test_connection(self):
+        self.assertEqual(mongo.get_conn(), MongoClient(os.getenv('MONGO_HOST'), 27017)['ItemsDB'])
+
+
+class TemplaterTests(APITestCase):
+    def setUp(self):
+        self.final_items = [{
+                'name': 'name_2',
+                'user': 'user',
+                'responsible': 'test_responsible',
+                'components': [{
+                    'name': 'comp_name1_sample1',
+                    'serial_n': 'comp_serial_n_sample1',
+                    'type': 'comp_type_sample1',
+                    'view': 'comp_view_sample1',
+                    'category': 'comp_category_sample1',
+                    'year': 'comp_year_sample1',
+                    'cost': 'comp_cost_sample1',
+                    'location': {
+                        'object': 'comp_object_sample1',
+                        'corpus': 'comp_corpus_sample1',
+                        'unit': 'comp_unit_sample1',
+                        'cabinet': 'comp_cabinet_sample1',
+                    },
+                    'in_operation': '',
+                    'condition': '+',
+                    'user': '+'
+                },
+                    {
+                        'name': 'comp_name2_sample1',
+                        'serial_n': 'comp_serial_n_sample1',
+                        'type': 'comp_type_sample1',
+                        'view': 'comp_view_sample1',
+                        'category': 'comp_category_sample1',
+                        'year': 'comp_year_sample1',
+                        'cost': 'comp_cost_sample1',
+                        'location': {
+                            'object': 'comp_object_sample1',
+                            'corpus': 'comp_corpus_sample1',
+                            'unit': 'comp_unit_sample1',
+                            'cabinet': 'comp_cabinet_sample1',
+                        },
+                        'in_operation': '+',
+                        'condition': '+',
+                        'user': '+'
+                    }],
+                'inventory_n': 'test_inventory_n',
+                'otss_category': 'test_otss_category',
+                'condition': 'test_condition',
+                'unit_from': 'test_unit_from',
+                'in_operation': 'test_in_operation',
+                'fault_document_requisites': 'test_fault_document_requisites',
+                'date_of_receipt': 'test_date_of_receipt',
+                'number_of_receipt': 'test_number_of_receipt',
+                'requisites': 'test_requisites',
+                'transfer_date': 'test_transfer_date',
+                'otss_requisites': 'test_otss_requisites',
+                'spsi_requisites': 'test_spsi_requisites',
+                'transfer_requisites': 'test_transfer_requisites',
+                'comment': 'test_comment',
+                'last_check': 'test_last_check',
+            }]
+
+    def test_size(self):
+        self.assertEqual(6, templater.docx_size(os.getcwd()+'/media/templates/test.docx'))
+
+    def test_find_templates(self):
+        self.assertNotEqual([], templater.find_docx_templates(docx.Document(os.getcwd()+'/media/templates/test.docx')))
+
+    def test_find(self):
+        self.assertEqual(['{{инвентарный номер}}',
+                          '{{наименование}}',
+                          '{{наименование}}',
+                          '{{наименование}}',
+                          '{{ответственный сотрудник}}',
+                          '{{ответственный сотрудник}}'],
+                         templater.find_docx_templates(docx.Document(os.getcwd() + '/media/templates/test.docx')))
+
+    def test_check_templates(self):
+        self.assertEqual(set(), templater.check_templates(['{{инвентарный номер}}',
+                                                           '{{наименование}}',
+                                                           '{{наименование}}',
+                                                           '{{наименование}}',
+                                                           '{{ответственный сотрудник}}',
+                                                           '{{ответственный сотрудник}}']))
+
+    def test_prep_data(self):
+        items = [{
+            'name': 'name_1',
+            'inventory_n': None,
+            'comment': None,
+        }]
+        final_items = [{
+            '{{наименование}}': 'name_1',
+            '{{инвентарный номер}}': '',
+            '{{примечания}}': '',
+        }]
+        self.assertEqual(final_items, templater.prep_data(items))
+
+    def test_make_archive(self):
+        result_path = os.getcwd() + '/media/Документы_' + dt.datetime.now().strftime('%d-%m-%Y') + '.zip'
+        self.assertEqual(result_path, templater.final_replacement(os.getcwd() + '/media/templates/test.docx',
+                                                                  self.final_items, False))
+
+    def test_merge_docs(self):
+        utils.del_all('/media/generated/', '*.xlsx')
+        documents = os.listdir(os.getcwd() + '/media/generated')
+        self.assertEqual(True, templater.combine_word_documents(documents))

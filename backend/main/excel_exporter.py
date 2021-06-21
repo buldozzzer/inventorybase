@@ -209,6 +209,7 @@ def prep_data(payload):
             item.pop('components')
         if '_id' in item:
             item.pop('_id')
+    return True
 
 
 def distribute_to_columns(payload):

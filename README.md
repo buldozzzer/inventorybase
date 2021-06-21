@@ -60,3 +60,11 @@ http://localhost:8000/inventorybase/#/items — клиент
 - ```
   docker run -v /путь/к/.xlsx-файлу:/input --network=inventorybase_default import insert_data /input
   ```  
+
+### Тестирование
+- ```
+  coverage run manage.py test main
+  ```
+- ```
+  coverage report main/*.py
+  ```
