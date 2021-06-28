@@ -687,11 +687,17 @@
               <div v-show="row.item.components.length !== 0">
                 <b-icon v-if="row.detailsShowing"
                         icon="eye-slash"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Скрыть компоненты"
                         font-scale="1"
                         @click="row.toggleDetails">
                 </b-icon>
                 <b-icon v-else
                         icon="eye"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        title="Показать компоненты"
                         font-scale="1"
                         @click="row.toggleDetails">
                 </b-icon>
@@ -2098,7 +2104,7 @@
     },
     mounted() {
       debugger;
-      let _height = document.documentElement.clientHeight * 0.85
+      let _height = document.documentElement.clientHeight * 0.81
       this.sliderValue = _height.toString() + 'px'
     }
   };
