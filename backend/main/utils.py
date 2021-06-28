@@ -4,6 +4,7 @@ from PIL import Image
 from pylibdmtx.pylibdmtx import encode
 from pathlib import Path
 from docx import Document
+import xlsxwriter
 
 
 def prepare_data(item):
@@ -29,8 +30,8 @@ def create_data_matrix(payload: list):
     path_to_doc = os.getcwd() + '/media/Коды.docx'
     row_num = 0
     for item in payload:
-        data_to_encode = "Инв:" + item['inventory_n'] + \
-                         " Сер:" + item['serial_n']
+        data_to_encode = "Inv:" + item['inventory_n'] + \
+                         " Ser:" + item['serial_n']
         path_to_image = os.getcwd() + '/media/codes/' + data_to_encode + '.png'
         path_to_resized_image = os.getcwd() + '/media/codes/' + data_to_encode + '_resize.png'
         encoded = encode(data_to_encode.encode("utf8"))
@@ -88,3 +89,25 @@ def del_all(dir: str, ext: str):
             file.unlink()
         except OSError as error:
             print(error)
+
+
+def create_data_matrix_xlsx(payload: list):
+    path_to_doc = 'media/Коды.xlsx'
+    rownum = 2
+    workbook = xlsxwriter.Workbook(path_to_doc)
+    worksheet = workbook.add_worksheet()
+    for item in payload:
+        data_to_encode = "Inv:" + item['inventory_n'] + \
+                         " Ser:" + item['serial_n']
+        path_to_image = os.getcwd() + '/media/codes/' + data_to_encode + '.png'
+        path_to_resized_image = os.getcwd() + '/media/codes/' + data_to_encode + '_resize.png'
+        encoded = encode(data_to_encode.encode("utf8"))
+        img = Image.frombytes("RGB", (encoded.width, encoded.height), encoded.pixels)
+        img.save(path_to_image)
+        scale_image(path_to_image, path_to_resized_image, 60, 60)
+        worksheet.set_column('A:A', 30)
+        worksheet.write('A' + str(rownum), data_to_encode)
+        worksheet.insert_image('B' + str(rownum), path_to_resized_image)
+        rownum += 3
+    workbook.close()
+    return path_to_doc

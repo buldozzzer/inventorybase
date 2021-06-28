@@ -49,3 +49,4 @@ toml==0.10.2
 treepoem==3.10.0
 whitenoise==5.2.0
 wrapt==1.12.1
+XlsxWriter==1.4.3
