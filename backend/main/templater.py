@@ -32,9 +32,22 @@ ALLOWED_TEMPLATES = {
     'year': '{{год}}',
     'cost': '{{цена}}',
     'location_object': '{{объект}}',
-    'location_unit': '{{подразделение}}',
     'location_corpus': '{{корпус}}',
     'location_cabinet': '{{кабинет}}'
+}
+
+COMPONENT_HEADERS = {
+    'id': 'Номер: ',
+    'name': 'Наименование: ',
+    'serial_n': 'Серийный номер: ',
+    'category': 'Категория: ',
+    'type': 'Тип: ',
+    'year': 'Год выпуска: ',
+    'cost': 'Цена: ',
+    'in_operation': 'Используется: ',
+    'condition': 'Состояние: ',
+    'user': 'Кому передано: ',
+    'location': 'Местонахождение: ',
 }
 
 
@@ -105,11 +118,12 @@ def check_templates(all_templates):
 
 def prep_data(payload: list):
     global ALLOWED_TEMPLATES
-    keys = ALLOWED_TEMPLATES.keys()
     prep_payload = []
     for item in payload:
         prep_item = {}
         for field in item:
+            if field == '_showDetails':
+                continue
             prep_item[ALLOWED_TEMPLATES[field]] = item[field]
             if prep_item[ALLOWED_TEMPLATES[field]] is None:
                 prep_item[ALLOWED_TEMPLATES[field]] = ''
@@ -141,6 +155,23 @@ def docx_write(document, substr, replace):
                 docx_write(cell, substr, replace)
 
 
+def prep_components(components: list):
+    global COMPONENT_HEADERS
+    result = ''
+    for component in components:
+        for header in COMPONENT_HEADERS:
+            if header != 'location':
+                result += COMPONENT_HEADERS[header] + \
+                                 str(component[header]) + ', '
+            else:
+                result += COMPONENT_HEADERS['location'] + \
+                                 'объект: ' + component['location']['object'] + ', ' + \
+                                 'корпус: ' + component['location']['corpus'] + ', ' + \
+                                 'кабинет: ' + component['location']['cabinet']
+        result += ';\n'
+    return result
+
+
 def final_replacement(filename, payload, merge_doc):
     if not os.path.isdir(os.getcwd() + '/media/generated'):
         os.mkdir(os.getcwd() + '/media/generated')
@@ -151,7 +182,10 @@ def final_replacement(filename, payload, merge_doc):
         for template in replaceable_templates:
             try:
                 if str(item[template]) != '':
-                    docx_write(document, template, str(item[template]))
+                    if template != '{{компоненты}}':
+                        docx_write(document, template, str(item[template]))
+                    else:
+                        docx_write(document, template, prep_components(item[template]))
                 else:
                     docx_write(document, template, '<поле отсутствует>')
                 # if os.name == 'nt':
