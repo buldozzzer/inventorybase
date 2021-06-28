@@ -31,7 +31,6 @@
             <form-template :itemForm="itemForm"
                            :categories="categories"
                            :show-components="showComponents"
-                           :location_units="location_units"
                            :location_objects="location_objects"
                            :location_corpuses="location_corpuses"
                            :location_cabinets="location_cabinets"
@@ -93,7 +92,6 @@
     props: ['employeeInitials',
       'editItem',
       'categories',
-      'location_units',
       'location_objects',
       'location_corpuses',
       'location_cabinets'],
@@ -152,7 +150,6 @@
             object: '',
             corpus: '',
             cabinet: '',
-            unit: ''
           },
           user: '',
           in_operation: '',

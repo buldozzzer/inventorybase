@@ -151,26 +151,6 @@
       </b-row>
 
       <b-row>
-<!--        <b-col cols="6">-->
-<!--          <b-form-group id="form-comp_unit-group"-->
-<!--                        label="Подразделение:"-->
-<!--                        label-for="form-comp_unit-input">-->
-<!--            <b-form-input id="form-comp_unit-input"-->
-<!--                          type="text"-->
-<!--                          list="unit-list"-->
-<!--                          v-model="component.location.unit">-->
-<!--              &lt;!&ndash;                                required&ndash;&gt;-->
-<!--              &lt;!&ndash;                                :state="check(component.location.unit, '')"&ndash;&gt;-->
-<!--            </b-form-input>-->
-<!--            <datalist id="unit-list">-->
-<!--              <option>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
-<!--              <option v-for="unit in points[3]"-->
-<!--                      :key="unit">{{ unit }}-->
-<!--              </option>-->
-<!--            </datalist>-->
-<!--          </b-form-group>-->
-<!--        </b-col>-->
-
         <b-col cols="12">
           <b-form-group id="form-comp_cabinet-group"
                         label="Кабинет:"
@@ -179,8 +159,6 @@
                           type="text"
                           list="cabinet-list"
                           v-model="component.location.cabinet">
-              <!--                                required-->
-              <!--                                :state="check(component.location.cabinet, '')"-->
             </b-form-input>
             <datalist id="cabinet-list">
               <option>---------</option>
@@ -257,12 +235,10 @@
         let objects = []
         let cabinets = []
         let corpuses = []
-        // let units =[]
         for(let i = 0; i < this.locations.length; ++i){
           objects.push(this.locations[i]['object'])
           cabinets.push(this.locations[i]['cabinet'])
           corpuses.push(this.locations[i]['corpus'])
-          // units.push(this.locations[i]['unit'])
         }
         return [objects, cabinets, corpuses]
       }

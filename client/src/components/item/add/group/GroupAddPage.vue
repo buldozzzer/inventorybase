@@ -67,7 +67,6 @@
         listOfNewItems: [],
         parent: null,
         categories: [],
-        location_units: [],
         location_objects: [],
         location_corpuses: [],
         location_cabinets: [],
@@ -103,7 +102,6 @@
             year: '',
             cost: '',
             location_object: '',
-            location_unit: '',
             location_corpus: '',
             location_cabinet: ''
           }
@@ -143,7 +141,6 @@
           year: '',
           cost: '',
           location_object: '',
-          location_unit: '',
           location_corpus: '',
           location_cabinet: ''
         }
@@ -209,7 +206,6 @@
             year: this.listOfNewItems[i].year,
             cost: this.listOfNewItems[i].cost,
             location_object: this.listOfNewItems[i].location_object,
-            location_unit: this.listOfNewItems[i].location_unit,
             location_corpus: this.listOfNewItems[i].location_corpus,
             location_cabinet: this.listOfNewItems[i].location_cabinet
           };

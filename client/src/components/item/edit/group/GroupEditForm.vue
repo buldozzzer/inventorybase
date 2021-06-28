@@ -20,7 +20,6 @@
             <form-template :item-form="itemForm"
                            :categories="categories"
                            :show-components="showComponents"
-                           :location_units="location_units"
                            :location_objects="location_objects"
                            :location_corpuses="location_corpuses"
                            :location_cabinets="location_cabinets"
@@ -80,7 +79,6 @@
     data(){
       return {
         categories: [],
-        location_units: [],
         location_objects: [],
         location_corpuses: [],
         location_cabinets: [],
@@ -115,9 +113,6 @@
           if (temp[i].corpus !== '') {
             this.location_corpuses.push(temp[i].corpus)
           }
-          if (temp[i].unit !== '') {
-            this.location_units.push(temp[i].unit)
-          }
         }
       },
       async fetchCategories() {
@@ -145,7 +140,6 @@
           location: {
             object: '',
             corpus: '',
-            unit: '',
             cabinet: ''
           },
           user: '',
