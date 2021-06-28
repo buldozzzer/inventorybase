@@ -667,7 +667,6 @@
             Объект: {{ data.item.location.object }}<br>
             Корпус: {{ data.item.location.corpus }}<br>
             Кабинет: {{ data.item.location.cabinet }}<br>
-            Подразделение: {{ data.item.location.unit }}
           </template>
         </b-table>
       </template>
