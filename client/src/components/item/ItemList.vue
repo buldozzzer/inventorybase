@@ -1855,9 +1855,14 @@
       },
       async encodeSingleItem(item) {
         let payload = {payload: []}
+        let c_serial_n = []
+        for(let j = 0; j < item.components.length; j++){
+          c_serial_n.push(item.components[j].serial_n)
+        }
         let data = {
           inventory_n: item.inventory_n,
-          serial_n: item.serial_n
+          serial_n: item.serial_n,
+          c_serial_n: c_serial_n
         }
         payload.payload.push(data)
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/download-codes/`,
@@ -2036,9 +2041,14 @@
       async encode(){
         let payload = { payload: []}
         for(let i = 0; i < this.selected.length; i++){
+          let c_serial_n = []
+          for(let j = 0; j < this.selected[i].components.length; j++){
+            c_serial_n.push(this.selected[i].components[j].serial_n)
+          }
           let item = {
             inventory_n: this.selected[i].inventory_n,
-            serial_n: this.selected[i].serial_n
+            serial_n: this.selected[i].serial_n,
+            c_serial_n: c_serial_n
           }
           payload.payload.push(item)
         }

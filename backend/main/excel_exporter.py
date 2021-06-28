@@ -80,7 +80,6 @@ def distribute_to_columns(payload):
                                                  'корпус: ' + component['location']['corpus'] + ', ' + \
                                                  'кабинет: ' + component['location']['cabinet']
                         result_string += ';\n'
-                    print(result_string)
                     columns[ALLOWED_HEADERS['components']] += [result_string]
     return columns
 
