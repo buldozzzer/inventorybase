@@ -77,7 +77,6 @@
             location: {
               object: '',
               corpus: '',
-              unit: '',
               cabinet: ''
             },
             user: '',
@@ -103,7 +102,6 @@
           location: {
             object: '',
             corpus: '',
-            unit: '',
             cabinet: ''
           },
           user: '',

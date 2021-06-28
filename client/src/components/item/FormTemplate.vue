@@ -343,18 +343,6 @@
         </b-form-group>
       </b-col>
       <b-col cols="6">
-        <b-form-group id="form-location_unit-group"
-                      label="Подразделение:"
-                      label-for="form-location_unit-input">
-          <b-form-select id="form-location_unit-input"
-                         :options="location_units"
-                         v-model="itemForm.location_unit">
-          </b-form-select>
-        </b-form-group>
-      </b-col>
-    </b-row>
-    <b-row v-if="!showComponents">
-      <b-col cols="6">
         <b-form-group id="form-location_corpus-group"
                       label="Корпус:"
                       label-for="form-location_corpus-input">
@@ -364,7 +352,9 @@
           </b-form-select>
         </b-form-group>
       </b-col>
-      <b-col cols="6">
+    </b-row>
+    <b-row v-if="!showComponents">
+      <b-col>
         <b-form-group id="form-location_cabinet-group"
                       label="Кабинет:"
                       label-for="form-location_cabinet-input">
@@ -374,6 +364,16 @@
           </b-form-select>
         </b-form-group>
       </b-col>
+<!--      <b-col cols="6">-->
+<!--        <b-form-group id="form-location_unit-group"-->
+<!--                      label="Подразделение:"-->
+<!--                      label-for="form-location_unit-input">-->
+<!--          <b-form-select id="form-location_unit-input"-->
+<!--                         :options="location_units"-->
+<!--                         v-model="itemForm.location_unit">-->
+<!--          </b-form-select>-->
+<!--        </b-form-group>-->
+<!--      </b-col>-->
     </b-row>
   </b-container>
 </template>

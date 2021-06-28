@@ -151,27 +151,27 @@
       </b-row>
 
       <b-row>
-        <b-col cols="6">
-          <b-form-group id="form-comp_unit-group"
-                        label="Подразделение:"
-                        label-for="form-comp_unit-input">
-            <b-form-input id="form-comp_unit-input"
-                          type="text"
-                          list="unit-list"
-                          v-model="component.location.unit">
-              <!--                                required-->
-              <!--                                :state="check(component.location.unit, '')"-->
-            </b-form-input>
-            <datalist id="unit-list">
-              <option>---------</option>
-              <option v-for="unit in points[3]"
-                      :key="unit">{{ unit }}
-              </option>
-            </datalist>
-          </b-form-group>
-        </b-col>
+<!--        <b-col cols="6">-->
+<!--          <b-form-group id="form-comp_unit-group"-->
+<!--                        label="Подразделение:"-->
+<!--                        label-for="form-comp_unit-input">-->
+<!--            <b-form-input id="form-comp_unit-input"-->
+<!--                          type="text"-->
+<!--                          list="unit-list"-->
+<!--                          v-model="component.location.unit">-->
+<!--              &lt;!&ndash;                                required&ndash;&gt;-->
+<!--              &lt;!&ndash;                                :state="check(component.location.unit, '')"&ndash;&gt;-->
+<!--            </b-form-input>-->
+<!--            <datalist id="unit-list">-->
+<!--              <option>-&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</option>-->
+<!--              <option v-for="unit in points[3]"-->
+<!--                      :key="unit">{{ unit }}-->
+<!--              </option>-->
+<!--            </datalist>-->
+<!--          </b-form-group>-->
+<!--        </b-col>-->
 
-        <b-col cols="6">
+        <b-col cols="12">
           <b-form-group id="form-comp_cabinet-group"
                         label="Кабинет:"
                         label-for="form-comp_cabinet-input">

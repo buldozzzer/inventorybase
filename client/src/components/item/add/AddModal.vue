@@ -100,7 +100,6 @@
           year: '',
           cost: '',
           location_object: '',
-          location_unit: '',
           location_corpus: '',
           location_cabinet: ''
         },
