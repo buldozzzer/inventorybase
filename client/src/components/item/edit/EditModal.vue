@@ -143,7 +143,6 @@
           serial_n: '',
           category: '',
           type: '',
-          view: '',
           year: '',
           cost: '',
           location: {

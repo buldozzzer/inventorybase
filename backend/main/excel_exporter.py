@@ -1,6 +1,5 @@
 import datetime as dt
 import os
-from pathlib import Path
 from shutil import make_archive
 
 import pandas as pd
@@ -29,184 +28,28 @@ ALLOWED_HEADERS = {
     'year': 'Год выпуска',
     'cost': 'Цена',
     'location_object': 'Объект',
-    'location_unit': 'Подразделение',
     'location_corpus': 'Корпус',
-    'location_cabinet': 'Кабинет'
+    'location_cabinet': 'Кабинет',
+    'components': 'Компоненты'
 }
 
-
-def get_nested_components(payload: list):
-    """
-    This method extracts information about nested components
-    and forms dict of dicts in which key is pair of item index
-    and number of item`s nested component
-    :param payload: item list
-    :return: return list of nested components
-    """
-    nested_components = {
-        ('Компоненты', 'Наименование'): {},
-        ('Компоненты', 'Серийный номер'): {}, ('Компоненты', 'Тип'): {},
-        ('Компоненты', 'Категория'): {}, ('Компоненты', 'Год выпуска'): {},
-        ('Компоненты', 'Цена'): {}, ('Компоненты', 'Местонахождение'): {},
-        ('Компоненты', 'Используется?'): {}, ('Компоненты', 'Состояние'): {},
-        ('Компоненты', 'Кому передано в пользование'): {},
-    }
-
-    component_titles = ['name', 'serial_n', 'type',
-                        'category', 'year', 'cost',
-                        'location', 'in_operation', 'condition', 'user']
-
-    for key, title in zip(component_titles, nested_components):
-        component_cell = {}
-        for i in range(len(payload)):
-            for j in range(len(payload[i]['components'])):
-                component_cell[(i + 1, j + 1)] = payload[i]['components'][j][key]
-        nested_components[title] = component_cell
-
-    for sample in nested_components[('Компоненты', 'Местонахождение')]:
-        nested_components[('Компоненты', 'Местонахождение')][sample] = \
-            'Объект: ' + nested_components[('Компоненты', 'Местонахождение')][sample]['object'] + \
-            ',\nкорпус: ' + nested_components[('Компоненты', 'Местонахождение')][sample]['corpus'] + \
-            ',\nкабинет: ' + nested_components[('Компоненты', 'Местонахождение')][sample]['cabinet']
-
-    return nested_components
-
-
-def get_items(payload: list):
-    """
-    :param payload: item list
-    :return: dict of items without nested components
-    """
-    item_dict = {}
-    item_titles = []
-
-    for key in payload[0].keys():
-        if 'name' == key:
-            item_dict[('', 'Наименование')] = {}
-            item_titles.append(key)
-        if 'responsible' == key:
-            item_dict[('', 'Ответственный сотрудник')] = {}
-            item_titles.append(key)
-        if 'inventory_n' == key:
-            item_dict[('', 'Инвентарный номер')] = {}
-            item_titles.append(key)
-        if 'otss_category' == key:
-            item_dict[('', 'Категория ОТСС')] = {}
-            item_titles.append(key)
-        if 'condition' == key:
-            item_dict[('', 'Состояние')] = {}
-            item_titles.append(key)
-        if 'unit_from' == key:
-            item_dict[('', 'Подразделение, откуда поступила мат. ценность')] = {}
-            item_titles.append(key)
-        if 'in_operation' == key:
-            item_dict[('', 'Используется?')] = {}
-            item_titles.append(key)
-        if 'fault_document_requisites' == key:
-            item_dict[('', 'Документы о неисправности')] = {}
-            item_titles.append(key)
-        if 'date_of_receipt' == key:
-            item_dict[('', 'Дата_поступления на учет')] = {}
-            item_titles.append(key)
-        if 'number_of_receipt' == key:
-            item_dict[('', 'Номер требования о поступлении на учет')] = {}
-            item_titles.append(key)
-        if 'requisites' == key:
-            item_dict[('', 'Реквизиты книги учета мат. ценностей')] = {}
-            item_titles.append(key)
-        if 'transfer_date' == key:
-            item_dict[('', 'Дата передачи во временное пользование')] = {}
-            item_titles.append(key)
-        if 'otss_requisites' == key:
-            item_dict[('', 'Реквизиты документа о категории ОТСС')] = {}
-            item_titles.append(key)
-        if 'spsi_requisites' == key:
-            item_dict[('', 'Реквизиты документа о прохождении СПСИ')] = {}
-            item_titles.append(key)
-        if 'transfer_requisites' == key:
-            item_dict[('', 'Реквизиты о передаче в пользование')] = {}
-            item_titles.append(key)
-        if 'last_check' == key:
-            item_dict[('', 'Дата последней проверки')] = {}
-            item_titles.append(key)
-        if 'comment' == key:
-            item_dict[('', 'Примечания')] = {}
-            item_titles.append(key)
-        if 'user' == key:
-            item_dict[('', 'Сотрудник, которому передали в пользование')] = {}
-            item_titles.append(key)
-        if 'serial_n' == key:
-            item_dict[('', 'Заводской номер')] = {}
-            item_titles.append(key)
-        if 'category' == key:
-            item_dict[('', 'Категория')] = {}
-            item_titles.append(key)
-        if 'year' == key:
-            item_dict[('', 'Год выпуска')] = {}
-            item_titles.append(key)
-        if 'cost' == key:
-            item_dict[('', 'Цена')] = {}
-            item_titles.append(key)
-        if 'location_object' == key:
-            item_dict[('', 'Объект')] = {}
-            item_titles.append(key)
-        if 'location_unit' == key:
-            item_dict[('', 'Подразделение')] = {}
-            item_titles.append(key)
-        if 'location_corpus' == key:
-            item_dict[('', 'Корпус')] = {}
-            item_titles.append(key)
-        if 'location_cabinet' == key:
-            item_dict[('', 'Кабинет')] = {}
-            item_titles.append(key)
-
-    for ru_title, en_title in zip(item_dict, item_titles):
-        temp_dict = {}
-        for i in range(len(payload)):
-            temp_dict[(i + 1, 1)] = payload[i][en_title]
-        item_dict[ru_title] = temp_dict
-
-    return item_dict
-
-
-def get_indices(merge_df: dict):
-    """
-    :param merge_df: merged dict of items and their nested components
-    :return: multiindex for items and their nested components
-    """
-    arrays = [[], []]
-
-    for key in merge_df[('', 'Наименование')]:
-        arrays[0].append(key[0])
-        arrays[1].append(key[1])
-
-    if ('Компоненты', 'Наименование') in merge_df:
-        tuples = list(zip(*arrays))
-        for key in merge_df[('Компоненты', 'Наименование')]:
-            if key not in tuples:
-                arrays[0].append(key[0])
-                arrays[1].append(key[1])
-
-    else:
-        tuples = list(zip(*arrays))
-        for key in merge_df:
-            for multiindex in merge_df[key]:
-                if multiindex not in tuples:
-                    arrays[0].append(multiindex[0])
-                    arrays[1].append(multiindex[1])
-
-    tuples = list(zip(*arrays))
-    tuples.sort(key=lambda key: key[0])
-
-    index = pd.MultiIndex.from_tuples(tuples, names=[None, None])
-
-    return index
+COMPONENT_HEADERS = {
+    'id': 'Номер: ',
+    'name': 'Наименование: ',
+    'serial_n': 'Серийный номер: ',
+    'category': 'Категория: ',
+    'type': 'Тип: ',
+    'year': 'Год выпуска: ',
+    'cost': 'Цена: ',
+    'in_operation': 'Используется: ',
+    'condition': 'Состояние: ',
+    'user': 'Кому передано: ',
+    'location': 'Местонахождение: ',
+}
 
 
 def prep_data(payload):
     for item in payload:
-        if 'components' in item:
-            item.pop('components')
         if '_id' in item:
             item.pop('_id')
     return True
@@ -214,6 +57,7 @@ def prep_data(payload):
 
 def distribute_to_columns(payload):
     global ALLOWED_HEADERS
+    global COMPONENT_HEADERS
     columns = {}
     for key in payload[0]:
         if key in payload[0]:
@@ -221,19 +65,24 @@ def distribute_to_columns(payload):
     for key in ALLOWED_HEADERS:
         for item in payload:
             if key in item:
-                columns[ALLOWED_HEADERS[key]] += [item[key]]
+                if key != 'components':
+                    columns[ALLOWED_HEADERS[key]] += [item[key]]
+                else:
+                    result_string = ''
+                    for component in item['components']:
+                        for header in COMPONENT_HEADERS:
+                            if header != 'location':
+                                result_string += COMPONENT_HEADERS[header] + \
+                                                 str(component[header]) + ', '
+                            else:
+                                result_string += COMPONENT_HEADERS['location'] + \
+                                                 'объект: ' + component['location']['object'] + ', ' + \
+                                                 'корпус: ' + component['location']['corpus'] + ', ' + \
+                                                 'кабинет: ' + component['location']['cabinet']
+                        result_string += ';\n'
+                    print(result_string)
+                    columns[ALLOWED_HEADERS['components']] += [result_string]
     return columns
-
-
-def change_headers(payload):
-    global ALLOWED_HEADERS
-    prepared_data = []
-    for item in payload:
-        prepared_item = {}
-        for key in item:
-            prepared_item[ALLOWED_HEADERS[key]] = item[key]
-        prepared_data += [prepared_item]
-    return prepared_data
 
 
 def write(payload):
@@ -249,24 +98,7 @@ def write(payload):
 
 
 def export_to_excel(payload: list):
-    """
-    :param payload: item list
-    :return: name of created file
-    """
-    if 'components' in payload[0]:
-        nested_components = get_nested_components(payload)
-        items = get_items(payload)
-        merge_data = {**items, **nested_components}
-        index = get_indices(merge_data)
-        filename = os.getcwd() + \
-                   '/media/generated/Отчёт_' + \
-                   dt.datetime.now().strftime('%d-%m-%Y_%H:%M:%S') + '.xlsx'
-        # dt.datetime.now().strftime('%d-%m-%Y_%H:%M:%S')
-        temp_df = pd.DataFrame(data=merge_data, index=index)
-        temp_df.to_excel(filename, sheet_name='Main')
-
-    else:
-        filename = write(payload)
+    filename = write(payload)
 
     result_path = make_archive(os.getcwd() + '/media/Документы_' + dt.datetime.now().strftime('%d-%m-%Y'),
                                'zip',
