@@ -1653,6 +1653,8 @@
           for(let i = 0; i < indexArr.length; i++){
             this.titles[indexArr[i]].show = false
           }
+          let _height = document.documentElement.clientHeight * 0.81
+          this.sliderValue = _height.toString() + 'px'
         })
         for(let i = 0; i < this.itemFields.length; i++){
           showingFields.push(this.itemFields[i])
@@ -1670,6 +1672,8 @@
           for(let i = 0; i < this.titles.length; i++){
             this.titles[i].show = true
           }
+          let _height = document.documentElement.clientHeight * 0.83
+          this.sliderValue = _height.toString() + 'px'
         })
         return showingFields
       },
@@ -1716,6 +1720,8 @@
         if (!this.full) {
           bus.$emit('fullTable')
           this.full = true
+          let _height = document.documentElement.clientHeight * 0.81
+          this.sliderValue = _height.toString() + 'px'
         }
         else {
           bus.$emit('clippedTable')
@@ -1814,9 +1820,7 @@
         }
         this.units = temp
       },
-      stickyHeaderHeightToString() {
-        return this.sliderValue.toString() + 'px'
-      },
+
       async fetchEmployees() {
         const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/employee/`,
         {
@@ -2065,11 +2069,11 @@
       },
       showFilters: function () {
         if (this.showFilters) {
-          let _height = document.documentElement.clientHeight * 0.81 - 117
+          let _height = document.documentElement.clientHeight * 0.81 - 222
           this.sliderValue = _height.toString() + 'px'
           bus.$emit('fetchEmployees')
         } else {
-          let _height = document.documentElement.clientHeight * 0.83
+          let _height = document.documentElement.clientHeight * 0.81
           this.sliderValue = _height.toString() + 'px'
         }
       },
@@ -2094,7 +2098,8 @@
       await bus.$on('updateDocList', () => { this.showAlert() })
     },
     mounted() {
-      let _height = document.documentElement.clientHeight * 0.83
+      debugger;
+      let _height = document.documentElement.clientHeight * 0.85
       this.sliderValue = _height.toString() + 'px'
     }
   };

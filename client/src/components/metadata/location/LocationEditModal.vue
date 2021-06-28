@@ -48,15 +48,6 @@
                               placeholder="Введите номер кабинета"
                               :state="check(form.cabinet, '')">
                 </b-form-input>
-                <b-form-input id="form-unit-input"
-                              type="text"
-                              class="mt-3"
-                              v-model="form.unit"
-                              :value="form.unit"
-                              required
-                              placeholder="Введите подразделение"
-                              :state="check(form.unit, '')">
-                </b-form-input>
               </b-form-group>
             </div>
           </div>
@@ -78,7 +69,6 @@
           object: '',
           corpus: '',
           cabinet: '',
-          unit: ''
         }
       }
     },

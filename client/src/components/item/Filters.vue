@@ -66,14 +66,7 @@
           </b-form-group>
         </b-col>
         <b-col>
-          <b-form-group label="Подразделение:">
-            <b-form-select
-              v-model="filters.location_unit"
-              :options="points[3]"/>
-          </b-form-group>
-        </b-col>
-        <b-col>
-          <b-form-group label="Использование:">
+          <b-form-group label="Корпус:">
             <b-form-select
               v-model="filters.location_corpus"
               :options="points[2]"/>
@@ -86,6 +79,9 @@
               :options="points[1]">
             </b-form-select>
           </b-form-group>
+        </b-col>
+        <b-col>
+
         </b-col>
         <b-col>
 
@@ -124,21 +120,18 @@
         let objects = []
         let cabinets = []
         let corpuses = []
-        let units =[]
 
         for(let i = 0; i < this.locations.length; ++i){
           objects.push(this.locations[i]['object'])
           cabinets.push(this.locations[i]['cabinet'])
           corpuses.push(this.locations[i]['corpus'])
-          units.push(this.locations[i]['unit'])
         }
 
         objects.push({value: null, text: '-'})
         cabinets.push({value: null, text: '-'})
         corpuses.push({value: null, text: '-'})
-        units.push({value: null, text: '-'})
 
-        return [objects, cabinets, corpuses, units]
+        return [objects, cabinets, corpuses]
       }
     },
     methods:{

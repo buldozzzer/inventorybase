@@ -364,16 +364,6 @@
           </b-form-select>
         </b-form-group>
       </b-col>
-<!--      <b-col cols="6">-->
-<!--        <b-form-group id="form-location_unit-group"-->
-<!--                      label="Подразделение:"-->
-<!--                      label-for="form-location_unit-input">-->
-<!--          <b-form-select id="form-location_unit-input"-->
-<!--                         :options="location_units"-->
-<!--                         v-model="itemForm.location_unit">-->
-<!--          </b-form-select>-->
-<!--        </b-form-group>-->
-<!--      </b-col>-->
     </b-row>
   </b-container>
 </template>
@@ -386,7 +376,6 @@
       'showComponents',
       'categories',
       'employeeInitials',
-      'location_units',
       'location_objects',
       'location_corpuses',
       'location_cabinets'],

@@ -56,9 +56,6 @@
           {
             key: 'cabinet', label: "Кабинет", sortable: true, class: 'text-center'
           },
-          {
-            key: 'unit', label: "Подразделение", sortable: true, class: 'text-center'
-          },
         ]
       }
     },
