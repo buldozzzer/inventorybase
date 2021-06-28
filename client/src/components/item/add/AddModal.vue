@@ -36,7 +36,6 @@
                            :itemForm="itemForm"
                            :categories="categories"
                            :show-components="showComponents"
-                           :location_units="location_units"
                            :location_objects="location_objects"
                            :location_corpuses="location_corpuses"
                            :location_cabinets="location_cabinets"
@@ -65,7 +64,6 @@
     name: "AddModal",
     props: ['employeeInitials',
       'categories',
-      'location_units',
       'location_objects',
       'location_corpuses',
       'location_cabinets'],
@@ -170,7 +168,6 @@
           year: this.itemForm.year,
           cost: this.itemForm.cost,
           location_object: this.itemForm.location_object,
-          location_unit: this.itemForm.location_unit,
           location_corpus: this.itemForm.location_corpus,
           location_cabinet: this.itemForm.location_cabinet
         };
@@ -213,7 +210,6 @@
           year: '',
           cost: '',
           location_object: '',
-          location_unit: '',
           location_corpus: '',
           location_cabinet: ''
         }

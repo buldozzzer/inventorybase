@@ -257,14 +257,14 @@
         let objects = []
         let cabinets = []
         let corpuses = []
-        let units =[]
+        // let units =[]
         for(let i = 0; i < this.locations.length; ++i){
           objects.push(this.locations[i]['object'])
           cabinets.push(this.locations[i]['cabinet'])
           corpuses.push(this.locations[i]['corpus'])
-          units.push(this.locations[i]['unit'])
+          // units.push(this.locations[i]['unit'])
         }
-        return [objects, cabinets, corpuses, units]
+        return [objects, cabinets, corpuses]
       }
     },
     methods:{
