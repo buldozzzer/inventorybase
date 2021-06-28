@@ -1125,37 +1125,37 @@
         </b-modal>
       </template>
 
-      <template #cell(location_unit)="row">
-        <div @dblclick="showFieldFromModal('location_unit'), editableRow=row.item"
-             class="text-center">
-          {{ row.item.location_unit ? row.item.location_unit : '&nbsp' }}
-        </div>
-        <b-modal ref="location_unit"
-                 centered
-                 title="Измените значение поля"
-                 hide-footer
-                 hide-header-close>
-          <b-form class="w-100">
-            <div class="container mt-3">
-              <b-form-group label-for="form-input">
-                <b-form-select id="form-input"
-                              type="text"
-                              class="mt-3"
-                              :options="location_units"
-                              v-model="editableRow.location_unit"
-                              :value="editableRow.location_unit">
-                </b-form-select>
-              </b-form-group>
-              <div class="mt-3">
-                <b-button variant="success" @click="onSubmit('location_unit', editableRow)">
-                  Изменить
-                </b-button>
-                <b-button variant="danger" @click="onReset('location_unit')">Отмена</b-button>
-              </div>
-            </div>
-          </b-form>
-        </b-modal>
-      </template>
+<!--      <template #cell(location_unit)="row">-->
+<!--        <div @dblclick="showFieldFromModal('location_unit'), editableRow=row.item"-->
+<!--             class="text-center">-->
+<!--          {{ row.item.location_unit ? row.item.location_unit : '&nbsp' }}-->
+<!--        </div>-->
+<!--        <b-modal ref="location_unit"-->
+<!--                 centered-->
+<!--                 title="Измените значение поля"-->
+<!--                 hide-footer-->
+<!--                 hide-header-close>-->
+<!--          <b-form class="w-100">-->
+<!--            <div class="container mt-3">-->
+<!--              <b-form-group label-for="form-input">-->
+<!--                <b-form-select id="form-input"-->
+<!--                              type="text"-->
+<!--                              class="mt-3"-->
+<!--                              :options="location_units"-->
+<!--                              v-model="editableRow.location_unit"-->
+<!--                              :value="editableRow.location_unit">-->
+<!--                </b-form-select>-->
+<!--              </b-form-group>-->
+<!--              <div class="mt-3">-->
+<!--                <b-button variant="success" @click="onSubmit('location_unit', editableRow)">-->
+<!--                  Изменить-->
+<!--                </b-button>-->
+<!--                <b-button variant="danger" @click="onReset('location_unit')">Отмена</b-button>-->
+<!--              </div>-->
+<!--            </div>-->
+<!--          </b-form>-->
+<!--        </b-modal>-->
+<!--      </template>-->
 
       <template #cell(location_corpus)="row">
         <div @dblclick="showFieldFromModal('location_corpus'), editableRow=row.item"
@@ -1225,19 +1225,19 @@
     <add-modal ref="addItemModal"
                :employee-initials="employeeInitials"
                :categories="categories"
-               :location_units="location_units"
                :location_objects="location_objects"
                :location_corpuses="location_corpuses"
                :location_cabinets="location_cabinets"/>
+<!--                   :location_units="location_units"-->
 
     <edit-modal ref="editItemModal"
                 :employee-initials="employeeInitials"
                 :edit-item="editItem"
                 :categories="categories"
-                :location_units="location_units"
                 :location_objects="location_objects"
                 :location_corpuses="location_corpuses"
                 :location_cabinets="location_cabinets"/>
+<!--                    :location_units="location_units"-->
     <confirm-form :payload="selected"
                   :dynamic-id="dynamicId"
                   :message="message"
@@ -1628,7 +1628,7 @@
         },
         shownItems: null,
         fuseString: '',
-        location_units: [],
+        // location_units: [],
         location_objects: [],
         location_corpuses: [],
         location_cabinets: [],
@@ -1777,9 +1777,9 @@
           if (temp[i].corpus !== '') {
             this.location_corpuses.push(temp[i].corpus)
           }
-          if (temp[i].unit !== '') {
-            this.location_units.push(temp[i].unit)
-          }
+          // if (temp[i].unit !== '') {
+          //   this.location_units.push(temp[i].unit)
+          // }
         }
       },
       async fetchCategories() {
