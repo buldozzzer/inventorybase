@@ -1434,10 +1434,10 @@
             key: "Объект",
             show: false
           },
-          {
-            key: "Подразделение",
-            show: false
-          },
+          // {
+          //   key: "Подразделение",
+          //   show: false
+          // },
           {
             key: "Корпус",
             show: false
@@ -1591,12 +1591,12 @@
             sortable: true,
             class: 'text-center'
           },
-          {
-            key: "location_unit",
-            label: "Подразделение",
-            sortable: true,
-            class: 'text-center'
-          },
+          // {
+          //   key: "location_unit",
+          //   label: "Подразделение",
+          //   sortable: true,
+          //   class: 'text-center'
+          // },
           {
             key: "location_corpus",
             label: "Корпус",
@@ -1625,7 +1625,6 @@
           location_object: null,
           location_cabinet: null,
           location_corpus: null,
-          location_unit:null
         },
         shownItems: null,
         fuseString: '',
@@ -1950,8 +1949,7 @@
           in_operation: op,
           location_object: obj,
           location_cabinet: cab,
-          clocation_corpus: corp,
-          location_unit: unit
+          location_corpus: corp,
         } = val;
         return [
           !r || r === row.responsible,
@@ -1962,7 +1960,6 @@
           !obj || obj === row.location_object,
           !cab || cab === row.location_cabinet,
           !corp || corp === row.location_corpus,
-          !unit || unit === row.location_unit,
         ].every(Boolean);
       },
       fuseSearch() {
@@ -2018,7 +2015,7 @@
           year: form.year,
           cost: form.cost,
           location_object: form.location_object,
-          location_unit: form.location_unit,
+          // location_unit: form.location_unit,
           location_corpus: form.location_corpus,
           location_cabinet: form.location_cabinet
         }
