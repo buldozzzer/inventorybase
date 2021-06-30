@@ -1,10 +1,9 @@
 <template>
-  <b-container>
-    <b-row>
+  <b-container class="mt-3">
+    <b-row v-if="check">
       <b-col cols="6">
         <form class="dropForm mt-3 mb-3">
           <div ref="dropZone" id="dropZone" class="doc" v-if="file == null">
-            <!--            <h6 id="header">Добавьте файл.</h6>-->
             <label id="header" for="uploadImage" class="btn">Добавьте файл</label>
           </div>
           <b-icon icon="x"
@@ -47,6 +46,14 @@
         </div>
       </b-col>
     </b-row>
+    <b-row v-else>
+      <b-col align="center">
+        <h3>Модуль распознавания не запущен</h3>
+        <b-button @click="checkConnection" variant="primary">
+          Проверить активность модуля
+        </b-button>
+      </b-col>
+    </b-row>
   </b-container>
 </template>
 
@@ -66,7 +73,7 @@
         file: null,
         extracting_data: null,
         isLoad: null,
-
+        check: false
       }
     },
     mounted() {
@@ -95,7 +102,10 @@
             alert('Разрешены только изображения.');
             document.getElementById('header')
           }
-          const response = await fetch(`${process.env.ROOT_API}/inventorybase/api/v1/recognizer/`, {
+          // `${process.env.ROOT_API}/inventorybase/api/v1/recognizer/`
+          const response = await fetch(
+            `${process.env.OCR_API}`,
+            {
             method: 'POST',
             mode: 'cors',
             headers: {
@@ -113,6 +123,19 @@
       }
     },
     methods: {
+      async checkConnection() {
+        const response = await fetch(
+          `${process.env.OCR_API}`,
+          {
+            headers: {
+              'Accept': 'application/json',
+            },
+            mode: "cors",
+          }
+        )
+        this.check = await response.json()
+        this.check = this.check['check']
+      },
       getImagePreview() {
         if (/\.(jpe?g|png)$/i.test(this.file.name)) {
           let reader = new FileReader();
@@ -134,6 +157,7 @@
     },
     async created() {
       await bus.$on('removeImage', () => {this.isLoad = null})
+      await this.checkConnection()
     },
   }
 </script>
@@ -231,4 +255,5 @@
     margin-right: auto;
     margin-top: 180px;
   }
+
 </style>

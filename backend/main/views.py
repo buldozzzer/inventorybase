@@ -1,33 +1,15 @@
-# Представления для работы через Djongo
-# from rest_framework.viewsets import ModelViewSet
-#
-# from .models import Item, employee
-# from .serializers import EmployeeSerializer, ItemSerializer
-#
-#
-# class ItemViewSet(ModelViewSet):
-#     queryset = Item.objects.all()
-#     serializer_class = ItemSerializer
-#
-#
-# class EmployeeViewSet(ModelViewSet):
-#     queryset = employee.objects.all()
-#     serializer_class = EmployeeSerializer
 import os
 import socket
-import uuid
 
 from bson import ObjectId
-from django.conf import settings
 from django.core.files.storage import default_storage
+from django.http import FileResponse
 from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from django.http import FileResponse
 
 from . import excel_exporter
 from . import mongo
-from . import recognizer
 from . import templater
 from . import utils
 
@@ -652,18 +634,18 @@ class ExcelExporterView(APIView):
         return FileResponse(open(result, 'rb'), status=201)
 
 
-class RecognizerView(APIView):
-    def post(self, request):
-        payload = request.data
-        filename = "{}.png".format(str(uuid.uuid4()))
-        with default_storage.open(filename, 'wb+') as destination:
-            for chunk in payload['file'].chunks():
-                destination.write(chunk)
-        print(settings.MEDIA_ROOT + filename)
-        result = recognizer.recognizer('media/' + filename)
-        return Response({
-            'extracting_data': result
-        }, status=201)
+# class RecognizerView(APIView):
+#     def post(self, request):
+#         payload = request.data
+#         filename = "{}.png".format(str(uuid.uuid4()))
+#         with default_storage.open(filename, 'wb+') as destination:
+#             for chunk in payload['file'].chunks():
+#                 destination.write(chunk)
+#         print(settings.MEDIA_ROOT + filename)
+#         result = recognizer.recognizer('media/' + filename)
+#         return Response({
+#             'extracting_data': result
+#         }, status=201)
 
 
 # class TemplaterView(APIView):
