@@ -38,6 +38,14 @@
                         aria-hidden="false"></b-icon>
                 Распознать текст
               </b-dropdown-item>
+              <b-dropdown-item v-b-modal.android-modal>
+                <b-icon icon="ui-checks"
+                        data-toggle="tooltip"
+                        data-placement="top"
+                        font-scale="1"
+                        aria-hidden="false"></b-icon>
+                Файл инвентаризации
+              </b-dropdown-item>
             </b-dropdown>
           </b-button-group>
         </b-col>
@@ -680,7 +688,7 @@
                       data-toggle="tooltip"
                       data-placement="top"
                       title="Выбрано"
-                      font-scale="1.2">
+                      font-scale="1">
               </b-icon>
             </b-col>
             <b-col cols="2">
@@ -1255,6 +1263,7 @@
                           :item-fields="itemFields"/>
     <document-template-modal :selected="selected"
                              :show-alert="showAlert"/>
+    <inventory-modal ref="androidModal"/>
   </div>
 </template>
 
@@ -1265,6 +1274,7 @@
   import 'vue-range-slider/dist/vue-range-slider.css'
   import {bus} from '../../main'
   import Filters from "./Filters";
+  import InventoryModal from "./InventoryModal";
   import AddModal from './add/AddModal';
   import EditModal from './edit/EditModal';
   import ConfirmForm from "./ConfirmForm";
@@ -1283,7 +1293,8 @@
       Filters,
       ConfirmForm,
       FieldModalForm,
-      DocumentTemplateModal
+      DocumentTemplateModal,
+      InventoryModal
     },
     data() {
       return {
@@ -2113,7 +2124,6 @@
       await bus.$on('updateDocList', () => { this.showAlert() })
     },
     mounted() {
-      debugger;
       let _height = document.documentElement.clientHeight * 0.81
       this.sliderValue = _height.toString() + 'px'
     }

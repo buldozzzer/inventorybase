@@ -102,15 +102,18 @@ def save_image(data_to_encode):
 
 
 def get_data_to_encode(item: dict):
-    all = []
-    data_to_encode = "Inv:" + item['inventory_n'] + \
-                     " Ser:" + item['serial_n']
-    all += [data_to_encode]
-    for c_serial_n in item['c_serial_n']:
+    if len(item['c_serial_n']) == 0:
+        all_data = []
         data_to_encode = "Inv:" + item['inventory_n'] + \
-                         " Ser:" + c_serial_n
-        all += [data_to_encode]
-    return all
+                         " Ser:" + item['serial_n']
+        all_data += [data_to_encode]
+    else:
+        all_data = []
+        for c_serial_n in item['c_serial_n']:
+            data_to_encode = "Inv:" + item['inventory_n'] + \
+                             " Ser:" + c_serial_n
+            all_data += [data_to_encode]
+    return all_data
 
 
 def create_data_matrix_xlsx(payload: list):

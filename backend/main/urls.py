@@ -55,4 +55,6 @@ urlpatterns = [
 
     path('download-codes/', views.EncodeView.as_view(), name='download-code'),
 
+    path('android/', views.AndroidView.as_view(), name='android'),
+
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

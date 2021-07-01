@@ -8,7 +8,7 @@ from django.shortcuts import render
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from . import excel_exporter
+from . import excel_exporter, for_android
 from . import mongo
 from . import templater
 from . import utils
@@ -744,3 +744,17 @@ class EncodeView(APIView):
         result = utils.create_data_matrix_xlsx(request.data['payload'])
         utils.del_all('/media/codes/', '*.png')
         return FileResponse(open(result, 'rb'), status=201)
+
+
+class AndroidView(APIView):
+    def post(self, request):
+        file = request.data['file']
+        if not os.path.isdir(os.getcwd() + '/media/for_android'):
+            os.mkdir(os.getcwd() + '/media/for_android')
+        with default_storage.open(os.getcwd() + '/media/for_android/' + str(file), 'wb+') as destination:
+            for chunk in file.chunks():
+                destination.write(chunk)
+        result = for_android.update(os.getcwd() + '/media/for_android/' + str(file))
+        if result:
+            os.remove(os.getcwd() + '/media/for_android/' + str(file))
+            return Response({'message': 'Success'}, status=201)
